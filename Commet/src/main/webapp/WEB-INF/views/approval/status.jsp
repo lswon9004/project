@@ -157,7 +157,7 @@
 		<div id="page">
 				<c:if test="${begin > pageNum }">
 					<a href="/approval/${user.empno}?p=${begin-1 }" class="page prv">&lt;</a>
-				</c:if>
+				</c:if>  
 				<c:forEach begin="${begin }" end="${end}" var="i">
 					<a href="/approval/${user.empno}?p=${i}">${i}</a>
 				</c:forEach>

@@ -100,11 +100,40 @@
             color: white;
             
         }
+        
+        .pagination a.active {
+            font-weight: bold;
+            background-color: #007bff;
+            color: white;
+            
+        }
+        
         .pagination a:hover {
             background-color: #0056b3;
             color: white;
         }
     </style>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   	<script>
+        $(document).ready(function() {
+            $("#checkInButton").click(function(event) {
+                event.preventDefault(); // 기본 동작을 막음
+                $.ajax({
+                    url: "/attendance/checkInStatus",
+                    method: "GET",
+                    success: function(data) {
+                        if (data) {
+                            alert("출근 버튼을 이미 눌렀습니다.");
+                        } else {
+                            $("#checkInForm").submit(); // 출근 폼 제출
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    
 </head>
 <body>
     <div class="container">

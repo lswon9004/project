@@ -59,9 +59,8 @@
                      <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
-                    <li><a href="/approval/status">결재승인</a></li>
+                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
                     <li><a href="/bullboard">익명게시판</a></li>
-                    <li><a href="/emp_manage">직원관리</a></li>
                 </ul>
                 <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
                 <p class="footer-text">코멧업무포털</p>

@@ -31,14 +31,15 @@ public class AttendanceController {
 	   }
 	@GetMapping("/startTime")
 	@ResponseBody
-	public String startTime(@RequestParam("empno")int empno, @RequestParam("deptno")int deptno, HttpServletRequest req) {
+	public String startTime(@RequestParam("empno")int empno, @RequestParam("deptno")int deptno,
+							HttpServletRequest req) {
 		Date startTime = service.startTime(empno);
 		String formattedDate = null;
 		if(startTime==null) {
 			service.insertStartTmie(empno, deptno);
 			startTime = service.startTime(empno);
+			formattedDate = sdf.format(startTime);
 		}
-		formattedDate = sdf.format(startTime);
 		req.getSession().setAttribute("startTime", startTime);
 		return gson.toJson(formattedDate);
 	}

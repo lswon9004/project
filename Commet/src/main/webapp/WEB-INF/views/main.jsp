@@ -43,11 +43,10 @@
             <div class="header-right">
                 <button id="start">업무시작</button>
                 <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">0d:00/</c:if></p>
+                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">00:00/</c:if></p>
                 <p id="endTime">00:00</p>
                 <nav>
                     <a href="/main">Home</a>
-                    <a href="/cleander">연봉계산기</a>
                     <a href="#">개인정보수정</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -60,10 +59,8 @@
                      <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
-                    <li><a href="/approval/status">결재승인</a></li>
+                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
                     <li><a href="/bullboard">익명게시판</a></li>
-                    <li><a href="/emp_manage">직원관리</a></li>
-                    <li><a href="#">관찰관리</a></li>
                 </ul>
                 <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
                 <p class="footer-text">코멧업무포털</p>
@@ -111,7 +108,17 @@
                 </div>
                     
                     <%
+                 // 날짜 값을 받아서 Calendar 객체 설정
+                    String dateString = request.getParameter("date");
                     Calendar cal = Calendar.getInstance();
+                    if (dateString != null && !dateString.isEmpty()) {
+                        String[] dateParts = dateString.split("-");
+                        int year = Integer.parseInt(dateParts[0]);
+                        int month = Integer.parseInt(dateParts[1]) - 1; // 월은 0부터 시작
+                        int day = Integer.parseInt(dateParts[2]);
+                        cal.set(year, month, day);
+                    }
+
                     int year = cal.get(Calendar.YEAR);
                     int month = cal.get(Calendar.MONTH);
                     cal.set(year, month, 1);
@@ -129,6 +136,9 @@
 
     %>
                     <h2><%= year %>년 <%= month + 1 %>월 달력</h2>
+                    <form >
+                       <input type="date" name="date"><button>확인</button>
+                    </form>
                     <table>
         <thead>
             <tr>
@@ -180,25 +190,25 @@ empno = ${user.empno};
 datea= ${user.att.startTime}
 date = <%= year %> +'-'+('0'+ <%= month + 1 %>).slice(-2)
 $('#start').click(function(){
-	deptno = ${user.deptno};
-	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
-		if (data){			
-			$('#startTime').text(data+'/');						
-		 }else{
-			alert('이미 출근버튼을 누르셨습니다.')
-			alert(date)
-		} 
-	})
+   deptno = ${user.deptno};
+   $.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
+      if (data){         
+         $('#startTime').text(data+'/');
+         console.log(data)
+       }else{
+         alert('이미 출근버튼을 누르셨습니다.')
+      } 
+   })
 })
 $('#end').click(function(){
-	$.getJSON('/endTime',{'empno':empno},function(data){
-		$('#endTime').text(data)
-	})
+   $.getJSON('/endTime',{'empno':empno},function(data){
+      $('#endTime').text(data)
+   })
 })
  function selectDate(date) {
-	$.getJSON('/vacation',{'date':date},function(data){
-		$('#vlist').append(datea)
-	})
+   $.getJSON('/vacation',{'date':date},function(data){
+      $('#vlist').append(datea)
+   })
 }
 </script>
 </html>

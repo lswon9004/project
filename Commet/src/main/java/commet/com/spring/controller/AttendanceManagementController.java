@@ -2,7 +2,6 @@ package commet.com.spring.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -22,12 +21,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import commet.com.spring.dto.AttendanceManagementDto;
-import commet.com.spring.dto.EmpDto;
 import commet.com.spring.service.AttendanceManagementService;
+import commet.swon.emp.EmpDto;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -45,14 +43,14 @@ public class AttendanceManagementController {
     }
     
     @GetMapping("/managementList") // 페이징처리
-    public String getManagementList(@ModelAttribute("user") 
+    public String getManagementList(@ModelAttribute("user") EmpDto dto,
     												@RequestParam(name = "p", defaultValue = "1") int page, Model model) {
     		int count = service.count2();
     		if (count > 0) {
     		int perPage = 10;
         	int startRow = (page - 1) * perPage;
 
-            List<AttendanceManagementDto> attendanceList = service.managementList(startRow);
+            List<AttendanceManagementDto> attendanceList = service.managementList(startRow, dto.getEmpno());
             model.addAttribute("attendanceList", attendanceList);
 
             int pageNum = 5;

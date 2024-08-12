@@ -27,7 +27,7 @@ public class CustomerInfoController {
 
 	@Autowired
 	private CustomerInfoService Service;
-
+	
 	@GetMapping("/customerForm") // 새로운 CustomerInfoDTO 객체를 모델에 추가하여 고객 정보 입력 폼을 표시
 	public String showForm(Model model) {
 		model.addAttribute("customerInfo", new CustomerInfoDTO()); // 새로운DTO 객체를 모델이 추가
@@ -114,7 +114,7 @@ public class CustomerInfoController {
 		workbook.close();
 	}
 
-	@RequestMapping("/customerList") // 페이지 페이징처리
+	@RequestMapping("/customerList") // 페이지 페이징처리 현재는 사용안되고 있음 searchCustomers 메서드에서 페이징 처리 되게 구현
 	public String customerList(@RequestParam(name = "p", defaultValue = "1") int page, Model m) {
 		int count = Service.count();
 			if (count > 0) {

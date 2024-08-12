@@ -63,7 +63,7 @@ public interface AttendanceManagementDao {
     									@Param("endDate") Date endDate);// 검색글 카운팅
 
     
-	@Select("select * from Attendance_Management order by attendance_no desc limit #{start}, #{count}")
+	@Select("select * from Attendance_Management  where empno = #{empno} order by attendance_no desc limit #{start}, #{count}")
 	List<AttendanceManagementDto> managementList(Map<String,Object>m); // 글목록 리스트 최신글이 먼저 보이게 order by CustomerID desc 걸어둠
 	
 	@Select("select count(*) from Attendance_Management")

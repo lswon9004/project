@@ -179,7 +179,6 @@
                             <td><fmt:formatDate value="${attendance.check_out}" pattern="HH:mm:ss"/></td>
                             <td>${attendance.worktype}</td>
                             <td>${attendance.early_leave}</td>
-                            <td>${attendance.working_hours}</td>
                             <td></td>
                     
                         </tr>

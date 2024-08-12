@@ -3,6 +3,8 @@ package commet.com.spring.dto;
 import java.util.Date;
 
 import lombok.Data;
+
+
 @Data
 public class EmpDto {
 	public int empno;

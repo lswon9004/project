@@ -114,7 +114,7 @@ public class CustomerInfoController {
 		workbook.close();
 	}
 
-	@RequestMapping("/customerList") // 페이지 페이징처리
+	@RequestMapping("/customerList") // 페이지 페이징처리 현재는 사용안되고 있음 searchCustomers 메서드에서 페이징 처리 되게 구현
 	public String customerList(@RequestParam(name = "p", defaultValue = "1") int page, Model m) {
 		int count = Service.count();
 			if (count > 0) {

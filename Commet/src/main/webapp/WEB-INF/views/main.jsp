@@ -137,7 +137,7 @@
     %>
                     <h2><%= year %>년 <%= month + 1 %>월 달력</h2>
                     <form >
-                    	<input type="date" name="date"><button>확인</button>
+                       <input type="date" name="date"><button>확인</button>
                     </form>
                     <table>
         <thead>
@@ -190,25 +190,25 @@ empno = ${user.empno};
 datea= ${user.att.startTime}
 date = <%= year %> +'-'+('0'+ <%= month + 1 %>).slice(-2)
 $('#start').click(function(){
-	deptno = ${user.deptno};
-	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
-		if (data){			
-			$('#startTime').text(data+'/');
-			console.log(data)
-		 }else{
-			alert('이미 출근버튼을 누르셨습니다.')
-		} 
-	})
+   deptno = ${user.deptno};
+   $.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
+      if (data){         
+         $('#startTime').text(data+'/');
+         console.log(data)
+       }else{
+         alert('이미 출근버튼을 누르셨습니다.')
+      } 
+   })
 })
 $('#end').click(function(){
-	$.getJSON('/endTime',{'empno':empno},function(data){
-		$('#endTime').text(data)
-	})
+   $.getJSON('/endTime',{'empno':empno},function(data){
+      $('#endTime').text(data)
+   })
 })
  function selectDate(date) {
-	$.getJSON('/vacation',{'date':date},function(data){
-		$('#vlist').append(datea)
-	})
+   $.getJSON('/vacation',{'date':date},function(data){
+      $('#vlist').append(datea)
+   })
 }
 </script>
 </html>

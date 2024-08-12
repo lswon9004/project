@@ -25,9 +25,13 @@
         .prev-month, .next-month {
             color: #ccc;
         }
-        <style>
+        
+        
+         /*         여기서부터 customerList */
+         
         body {
             font-family: Arial, sans-serif;
+            
         }
         h2 {
             text-align: center;
@@ -171,9 +175,9 @@
                 <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
                 <p class="footer-text">코멧업무포털</p>
             </aside>
+            
             <section class="main-content">
     <h2>고객정보</h2>
-    
     <form action="${pageContext.request.contextPath}/deleteCustomer" method="post">
         <div class="button-container">
             <div class="search-form">

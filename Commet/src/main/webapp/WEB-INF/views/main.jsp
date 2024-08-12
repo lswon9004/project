@@ -43,7 +43,7 @@
             <div class="header-right">
                 <button id="start">업무시작</button>
                 <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">0d:00/</c:if></p>
+                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">00:00/</c:if></p>
                 <p id="endTime">00:00</p>
                 <nav>
                     <a href="/main">Home</a>
@@ -111,7 +111,17 @@
                 </div>
                     
                     <%
+                 // 날짜 값을 받아서 Calendar 객체 설정
+                    String dateString = request.getParameter("date");
                     Calendar cal = Calendar.getInstance();
+                    if (dateString != null && !dateString.isEmpty()) {
+                        String[] dateParts = dateString.split("-");
+                        int year = Integer.parseInt(dateParts[0]);
+                        int month = Integer.parseInt(dateParts[1]) - 1; // 월은 0부터 시작
+                        int day = Integer.parseInt(dateParts[2]);
+                        cal.set(year, month, day);
+                    }
+
                     int year = cal.get(Calendar.YEAR);
                     int month = cal.get(Calendar.MONTH);
                     cal.set(year, month, 1);
@@ -129,6 +139,9 @@
 
     %>
                     <h2><%= year %>년 <%= month + 1 %>월 달력</h2>
+                    <form >
+                    	<input type="date" name="date"><button>확인</button>
+                    </form>
                     <table>
         <thead>
             <tr>
@@ -183,10 +196,10 @@ $('#start').click(function(){
 	deptno = ${user.deptno};
 	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
 		if (data){			
-			$('#startTime').text(data+'/');						
+			$('#startTime').text(data+'/');
+			console.log(data)
 		 }else{
 			alert('이미 출근버튼을 누르셨습니다.')
-			alert(date)
 		} 
 	})
 })

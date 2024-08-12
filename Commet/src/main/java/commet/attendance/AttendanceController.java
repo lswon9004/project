@@ -37,8 +37,8 @@ public class AttendanceController {
 		if(startTime==null) {
 			service.insertStartTmie(empno, deptno);
 			startTime = service.startTime(empno);
+			formattedDate = sdf.format(startTime);
 		}
-		formattedDate = sdf.format(startTime);
 		req.getSession().setAttribute("startTime", startTime);
 		return gson.toJson(formattedDate);
 	}

@@ -126,12 +126,25 @@
 				<td>사원번호</td><td><input name="empno" /></td>
 			</tr>
 			<tr>
-				<td>부서번호</td><td><input name="deptno" /></td>
+				<td>부서번호</td>
+				<td>
+                    <select name="deptno">
+                        <option value="200">sdff</option>
+                        <option value="100">qwer</option>
+                        <option value="300">asdf</option>
+                    </select>
+                </td>
 				<td>담당업무</td><td><input name="jop" /></td>
-				<td>직급</td><td><input name="position" /></td>
+				<td>직급</td>
+				<td>
+                    <select name="position">
+                        <option value="대리">대리</option>
+                        <option value="팀장">팀장</option>
+                        <option value="관리자">관리자</option>
+                    </select>
+                </td>
 			</tr>
 			<tr>
-				<td>권한</td><td><input name="annual" /></td>
 				<td>연락처</td><td><input name="phone" /></td>
 			</tr>
 			<tr>

@@ -22,8 +22,9 @@ public class ManageDto {
 	@DateTimeFormat(pattern ="yyyy-MM-dd")
 	Date hiredate;            //입사일
 	int sal;                    //급여
-	int annual;  //권한
+	int annual;  //연가(휴가) 저장하려고 만들어뒀던거
 	String memo;	//메모
 	String imgPath;	//사진경로
 	String deptname;  //부서이름
+	int authority; // 권한(랭크) 저장한공간
 }

@@ -41,7 +41,7 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 		return "manage/newEmp";
 	}
 	
-	@PostMapping("/insert") // newEmp.jsp 에서 post방식으로 insert 보내면 리다이렉트로 직원관리 메인화면으로 이동
+	@PostMapping("/insert") // newEmp.jsp 에서 사원등록하면 리다이렉트로 /emp_manage 요청 empList.jsp 화면보여줌
 	public String insert(@ModelAttribute("dto") ManageDto dto) {
 		service.insertEmp(dto);
 		return "redirect:/emp_manage"; 

@@ -1,6 +1,5 @@
 package commet.swon.emp;
 
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.google.gson.Gson;
 
 import commet.attendance.AttendanceService;
-import jakarta.servlet.http.HttpServletRequest;
 
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
@@ -54,6 +51,7 @@ public class EmpController {
 			} else {
 				if (dto.password.equals(password)) {
 					service.loginCount(0);
+					dto.setRight(noCheck(dto.getPosition()));
 					m.addAttribute("user", dto);
 					if (noCheck(dto.position) < 3) {
 						result = "/main";

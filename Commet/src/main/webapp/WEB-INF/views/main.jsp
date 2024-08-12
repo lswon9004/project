@@ -106,10 +106,10 @@
                         <p>14:50 미팅</p>
                     </div>
                     <div class="note">
-                        <p id="vlist">Add notes</p>
+                        <p id="vlist">Add note</p>
                     </div>
                 </div>
-                
+                    
                     <%
                     Calendar cal = Calendar.getInstance();
                     int year = cal.get(Calendar.YEAR);

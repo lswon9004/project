@@ -31,7 +31,8 @@ public class AttendanceController {
 	   }
 	@GetMapping("/startTime")
 	@ResponseBody
-	public String startTime(@RequestParam("empno")int empno, @RequestParam("deptno")int deptno, HttpServletRequest req) {
+	public String startTime(@RequestParam("empno")int empno, @RequestParam("deptno")int deptno,
+							HttpServletRequest req) {
 		Date startTime = service.startTime(empno);
 		String formattedDate = null;
 		if(startTime==null) {

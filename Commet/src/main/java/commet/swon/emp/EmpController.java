@@ -51,6 +51,7 @@ public class EmpController {
 			} else {
 				if (dto.password.equals(password)) {
 					service.loginCount(0);
+					dto.setRight(noCheck(dto.getPosition()));
 					m.addAttribute("user", dto);
 					if (noCheck(dto.position) < 3) {
 						result = "/main";

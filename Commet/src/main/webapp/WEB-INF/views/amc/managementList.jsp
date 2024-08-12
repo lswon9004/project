@@ -137,7 +137,7 @@
             <label for="endDate">~</label>
             <input type="date" id="endDate" name="endDate" required>
             <button type="submit">검색</button>
-            <button type="button" onclick="location.href='/attendance/managementList?p=1'">전체</button>
+            <button type="button" onclick="location.href='/attendance/managementList?p=1'">초기화</button>
         </form>
         
         	<div class="button-group">

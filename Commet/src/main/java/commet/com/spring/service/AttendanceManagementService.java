@@ -50,10 +50,11 @@ public class AttendanceManagementService {
 	    		return dao.count2();
 	    }
 	    
-	    public List<AttendanceManagementDto>managementList(int start){ //페이징 리스트
+	    public List<AttendanceManagementDto>managementList(int start,int empno){ //페이징 리스트
 				Map<String, Object> m = new HashMap<String, Object>();
 				m.put("start", start);
 				m.put("count", 10);
+				m.put("empno", empno);
 				return dao.managementList(m);
 		}
 	    

@@ -47,7 +47,6 @@
                 <p id="endTime">00:00</p>
                 <nav>
                     <a href="/main">Home</a>
-                    <a href="/cleander">연봉계산기</a>
                     <a href="#">개인정보수정</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -63,7 +62,6 @@
                     <li><a href="/approval/status">결재승인</a></li>
                     <li><a href="/bullboard">익명게시판</a></li>
                     <li><a href="/emp_manage">직원관리</a></li>
-                    <li><a href="#">관찰관리</a></li>
                 </ul>
                 <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
                 <p class="footer-text">코멧업무포털</p>

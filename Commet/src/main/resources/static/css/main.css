@@ -79,6 +79,19 @@ aside {
     text-decoration: none;
     color: #00796b;
 }
+/* 선택된 메뉴 항목 스타일 */
+.menu li a.active {
+    background-color: #77a1d3; /* 선택된 항목 배경색 */
+    color: #fff; /* 선택된 항목 텍스트 색상 */
+    text-decoration: underline; /* 선택된 항목 밑줄 */
+}
+
+/* 마우스를 올렸을 때의 스타일 */
+.menu li a:hover {
+    background-color: #77a1d3; /* 호버 시 배경색 */
+    color: #fff; /* 호버 시 텍스트 색상 */
+    text-decoration: underline;
+}
 
 .footer-text {
     margin-top: 20px;

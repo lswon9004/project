@@ -1,104 +1,32 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.Calendar" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <!-- 메타데이터 설정 -->
     <meta charset="UTF-8">
-    <title>게시판 글쓰기</title>
-    <!-- 폰트 스타일링 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management Portal</title>
+        <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <style>
-        /* 전체 페이지 스타일 */
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .prev-month, .next-month {
+            color: #ccc;
         }
 
-        /* 컨테이너 스타일 */
-        .container {
-            width: 90%;
-            margin: auto;
-            overflow: hidden;
-        }
-
-        /* 헤더 스타일 */
-        header {
-            background: #e6e6e6;
-            color: #000;
-            padding: 20px 0;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* 사용자 정보 스타일 */
-        .user-info {
-            display: flex;
-            align-items: center;
-            margin-left: 20px;
-        }
-
-        .user-info img {
-            border-radius: 50%;
-            margin-right: 10px;
-            width: 50px;
-            height: 50px;
-        }
-
-        .user-info p {
-            margin: 0;
-            padding: 0;
-        }
-
-        /* 제목 스타일 */
-        h1 {
-            margin: 0;
-            padding: 0;
-            font-size: 24px;
-        }
-
-        /* 로그아웃 링크 스타일 */
-        .logout a {
-            color: #333;
-            text-decoration: none;
-            font-size: 16px;
-            margin-right: 20px;
-        }
-
-        /* 네비게이션 스타일 */
-        nav {
-            margin-top: 20px;
-            background: #333;
-            color: #fff;
-        }
-
-        nav ul {
-            padding: 0;
-            list-style: none;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        nav ul li {
-            display: inline;
-            margin: 0;
-        }
-
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            padding: 15px 20px;
-            display: inline-block;
-        }
-
-        nav ul li a:hover, .active {
-            background: #77a1d3;
-        }
-
-        /* 메인 컨텐츠 스타일 */
+	/* 메인 컨텐츠 스타일 */
         main {
             padding: 20px;
             background: #fff;
@@ -149,11 +77,52 @@
 
         .actions button[type="submit"] {
             background: #77a1d3;
-        }
+        }	
     </style>
 </head>
 <body>
-    <div class="container"> <!-- 페이지의 컨테이너 역할 -->
+     <div class="container">
+        <header>
+            <div class="user-info">
+                <img src="profile.jpg" alt="User Profile">
+                <div>
+                    <p>이름: 김자바</p>
+                    <p>직책: ${user.position }</p>
+                    <p>사번: ${user.empno }</p>
+                    <p>김자바 님 환영합니다.</p>
+                </div>
+            </div>
+            <h1>코멧 업무포털</h1>
+            <div class="header-right">
+                <button id="start">업무시작</button>
+                <button id="end">업무종료</button>
+                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">0d:00/</c:if></p>
+                <p id="endTime">00:00</p>
+                <nav>
+                    <a href="/main">Home</a>
+                    <a href="/cleander">연봉계산기</a>
+                    <a href="#">개인정보수정</a>
+                    <a href="/logout">로그아웃</a>
+                </nav>
+            </div>
+        </header>
+        <main>
+            <aside>
+                <ul class="menu">
+                    <li><a href="/customerList">통합업무</a></li>
+                     <li><a href="/attendance/managementList">근태현황</a>
+                    <li><a href="/boards">게시판</a></li>
+                    <li><a href="/approval/${user.empno}">전자결재</a></li>
+                    <li><a href="/approval/status">결재승인</a></li>
+                    <li><a href="/bullboard">익명게시판</a></li>
+                    <li><a href="/emp_manage">직원관리</a></li>
+                    <li><a href="#">관찰관리</a></li>
+                </ul>
+                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
+                <p class="footer-text">코멧업무포털</p>
+            </aside>
+            <section class="main-content">
+       <div class="container"> <!-- 페이지의 컨테이너 역할 -->
         <header> <!-- 페이지의 헤더 영역 -->
             <h1>글쓰기</h1>
         </header>
@@ -178,5 +147,34 @@
             </form>
         </main>
     </div>
+            </section>
+        </main>
+    </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"> 
+empno = ${user.empno};
+datea= ${user.att.startTime}
+$('#start').click(function(){
+	deptno = ${user.deptno};
+	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
+		if (data){			
+			$('#startTime').text(data+'/');						
+		 }else{
+			alert('이미 출근버튼을 누르셨습니다.')
+			alert(date)
+		} 
+	})
+})
+$('#end').click(function(){
+	$.getJSON('/endTime',{'empno':empno},function(data){
+		$('#endTime').text(data)
+	})
+})
+ function selectDate(date) {
+	$.getJSON('/vacation',{'date':date},function(data){
+		$('#vlist').append(datea)
+	})
+}
+</script>
 </html>

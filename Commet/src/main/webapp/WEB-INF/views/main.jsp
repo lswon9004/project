@@ -57,6 +57,7 @@
             <aside>
                 <ul class="menu">
                     <li><a href="/customerList">통합업무</a></li>
+                     <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <li><a href="/approval/status">결재승인</a></li>
@@ -105,10 +106,10 @@
                         <p>14:50 미팅</p>
                     </div>
                     <div class="note">
-                        <p id="vlist">Add notes</p>
+                        <p id="vlist">Add note</p>
                     </div>
                 </div>
-                
+                    
                     <%
                     Calendar cal = Calendar.getInstance();
                     int year = cal.get(Calendar.YEAR);

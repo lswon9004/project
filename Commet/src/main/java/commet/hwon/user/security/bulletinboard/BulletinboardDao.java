@@ -18,7 +18,7 @@ public interface BulletinboardDao {
     void save(@Param("title")String title,@Param("content")String content,@Param("iid")String iid,@Param("password")String password);
    
     //데이터베이스에서 모든 게시글을 조회하는 메서드
-    @Select("SELECT * FROM BULLETIN_BOARD order by ref_date desc limit #{start} , #{count}")    
+    @Select("SELECT * FROM BULLETIN_BOARD order by ref_date")    
     List<BulletinboardDto> findAll(@Param("start")int start,@Param("count")int count);
     
     //페이지 처리
@@ -39,7 +39,7 @@ public interface BulletinboardDao {
     
     //게시글을 삭제하는 메서드
    @Delete("DELETE FROM BULLETIN_BOARD WHERE no = #{no}")
-    int delete(int no);
+    void delete(int no);
    
    //게시글을 검색하는 메서드
        @Select({"<script> SELECT * FROM BULLETIN_BOARD ",
@@ -53,6 +53,8 @@ public interface BulletinboardDao {
        "</where> ",
        "order by ref_date desc limit #{start} , 10 </script>"})
       List<BulletinboardDto> search(@Param("title")String title,@Param("content")String content,@Param("start") int start);
+
+
 
 
 }

@@ -2,6 +2,8 @@ package commet.hwon.user.security.bulletinboard;
 
 import java.util.Date;
 
+import commet.hwon.user.security.hatecount.HatecountDto;
+import commet.hwon.user.security.likecount.LikecountDto;
 import lombok.Data;
 
 @Data
@@ -17,4 +19,7 @@ public class BulletinboardDto {
 	private int ref; // 답글을 달기 위한 참조번호 저장하는 정수형
 	private int re_step; // 답글의 순서를 저장하는 정수형
 	private int re_level; // 답글의 깊이를 저장하는 정수형
+	
+	private LikecountDto likecount; // 좋아요 수
+	private HatecountDto hatecount;//
 }

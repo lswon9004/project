@@ -104,121 +104,74 @@ button:hover {
         <div class="button-box">
            <button onclick="location.href='/bullboard'">목록으로</button>
            <button onclick="location.href='/update/${board.no}'">수정</button>
-             <button onclick="location.href='/delete/${board.no}'">삭제</button>
-     </div>
-        
-        
-   <!-- 댓글 목록 -->
-<div id="reply-list">
-    <!-- 댓글 목록을 여기에 표시합니다. -->
-</div>
-
-<!-- 댓글 작성 폼 -->
-<form id="reply-form" action="/content/${board.no}/replies" method="post">
-    <textarea name="content" placeholder="댓글을 입력하세요." required></textarea>
-    <button type="submit">댓글 작성</button>
-</form>
-
-<!-- 댓글 수정 폼 (숨김 상태) -->
-<form id="reply-edit-form" style="display: none;">
-    <input type="hidden" name="cno" />
-    <textarea name="content" required></textarea>
-    <button type="submit">댓글 수정</button>
-    <button type="button" id="reply-edit-cancel">취소</button>
-</form>
-
+        </div>  
+        <form action="/delete/${board.no}" method="post">
+         <button type="submit">삭제</button>
+     </form>
+       <div class="container">
+        <h2>Replies</h2>
+        <div id="rList">
+            <c:forEach var="reply" items="${replies}">
+                <div class="reply">
+                    <p><strong>${reply.cno}</strong></p>
+                    <p>${reply.content}</p>
+                    <p>${reply.board_no}</p>
+                </div>
+            </c:forEach>
+        </div> 
+    </div>
+     <!-- New Reply Form -->
+            <textarea id="new-reply-content"></textarea>
+            <button id="add-reply" data-board-no="${board.no}">등록</button>
+        </div>
+    
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-$(document).ready(function() {
-    // 댓글 목록 로드
-    function loadReplies() {
-        $.ajax({
-            url: "/content/${board.no}/replies",
-            type: "get",
-            success: function(response) {
-                $("#reply-list").html(response);
-            }
-        });
-    }
+$(document).ready(function() { // 문서가 준비되면 아래의 이벤트 리스너를 활성화
+    $('.comment-update-form').on('submit', function(e) {
+        e.preventDefault(); // 기본 폼 제출 동작을 막음
+        const form = $(this); // 제출된 폼 요소 참조
+        const cno = form.find('input[name="cno"]').val(); // 폼에서 댓글 번호(cno)를 가져옴
+        const text = form.find('input[name="text"]').val(); // 폼에서 댓글 내용을 가져옴
 
-    // 초기 댓글 목록 로드
-    loadReplies();
-
-    // 댓글 작성
-    $("#reply-form").submit(function(e) {
-        e.preventDefault();
-        var content = $(this).find("textarea[name='content']").val();
-
-        $.ajax({
-            url: "/content/${board.no}/replies",
-            type: "post",
-            contentType: "application/json",
-            data: JSON.stringify({ content: content }),
-            success: function(response) {
-                loadReplies();
-                $("#reply-form textarea[name='content']").val('');  // 입력 폼 초기화
+        $.ajax({ // AJAX 요청을 통해 댓글을 서버에 업데이트
+            type: 'POST', // POST 방식으로 요청
+            url: '/comments/update', // 이 경로로 요청
+            data: { cno: cno, text: text }, // 댓글 번호와 수정된 내용을 서버에 전달
+            success: function(response) { // 요청이 성공하면 아래의 수행문 실행
+                form.find('input[name="text"]').val(''); // 입력 필드를 초기화
+                form.closest('.comment').find('p').text(text); // 댓글 내용을 업데이트
+            },
+            error: function(error) { // 요청이 실패하면 오류를 콘솔에 출력
+                console.log(error); 
             }
         });
     });
 
-    // 댓글 수정
-    $(document).on("click", ".reply-edit-button", function() {
-        var cno = $(this).data("cno");
-        var content = $(this).data("content");
+    $('#likeForm button').on('click', function(e) { // 추천 버튼이 클릭될 때 실행할 코드를 정의
+        e.preventDefault(); // 기본 버튼 클릭 동작을 막음
+        const button = $(this); // 클릭된 버튼 요소를 참조
+        const form = button.closest('form'); // 버튼이 속한 폼 요소 참조
+        const empno = form.find('input[name="empno"]').val(); // 폼에서 직원 번호를 가져옴
+        const no = form.find('input[name="no"]').val(); // 폼에서 게시글 번호를 가져옴
+        const url = form.attr('action'); // 폼의 액션 URL을 사져옴
 
-        $("#reply-edit-form").find("input[name='cno']").val(cno);
-        $("#reply-edit-form").find("textarea[name='content']").val(content);
-
-        $("#reply-form").hide();
-        $("#reply-edit-form").show();
-    });
-
-    $("#reply-edit-form").submit(function(e) {
-        e.preventDefault();
-
-        var cno = $(this).find("input[name='cno']").val();
-        var content = $(this).find("textarea[name='content']").val();
-
-        $.ajax({
-            url: "/content/${board.no}/reply/" + cno,
-            type: "put",
-            contentType: "application/json",
-            data: JSON.stringify({ content: content }),
-            success: function(response) {
-                loadReplies();
-                $("#reply-edit-form").hide();
-                $("#reply-form").show();
+        $.ajax({ // AJAX 요청을 통해 추천 상태를 서버에 전송
+            type: 'POST', // POST 방식으로 요청
+            url: url, // 폼의 액션 URL로 요청
+            data: { empno: empno, no: no }, // 직원 번호와 게시글 번호를 서버에 전달
+            success: function(response) { // 요청이 성공하면 아래의 수행문 실행
+                $('#likeCount').text(response.likeCount); // 추천수를 업데이트된 값으로 변경
+                form.attr('action', response.newUrl); // 폼의 액션 URL을 새로운 URL로 변경
+                // 버튼 텍스트를 업데이트
+                button.find('.heart-icon').text(response.action === "unlike" ? '💔' : '❤');
+            },
+            error: function(error) { // 요청 실패시 오류를 콘솔에 출력
+                console.log(error);
             }
         });
-    });
-
-    // 댓글 수정 취소
-    $("#reply-edit-cancel").click(function() {
-        $("#reply-edit-form").hide();
-        $("#reply-form").show();
-    });
-
-    // 댓글 삭제
-    $(document).on("click", ".reply-delete-button", function() {
-        var cno = $(this).data("cno");
-        var password = prompt("댓글 비밀번호를 입력하세요:");
-
-        if (password != null && password !== "") {
-            $.ajax({
-                url: "/content/${board.no}/reply/" + cno + "/delete",
-                type: "delete",
-                contentType: "application/json",
-                data: JSON.stringify({ password: password }),
-                success: function(response) {
-                    loadReplies();
-                }
-            });
-        }
     });
 });
 </script>
-
-</div>
-
 </body>
 </html>

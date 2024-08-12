@@ -5,18 +5,23 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface LikecountDao {
 	
-	@Insert("INSERT INTO likeCount (table, empno, no, count) VALUES (Bulletinboard, #{empno}, #{no}, 1)")
+	 // Insert a like count record
+    @Insert("INSERT INTO likeCount (`table`, empno, no, `count`) VALUES ('Bulletinboard', #{empno}, #{no}, 1)")
     void saveLike(LikecountDto likeDto);
 
-    @Select("SELECT count(*) FROM likeCount WHERE no = #{no} and table = Bulletinboard and count =1")
-    int findByNo(int no);
+    // Find like count by post number
+    @Select("SELECT COUNT(*) FROM likeCount WHERE no = #{no} AND `table` = 'Bulletinboard' AND `count` = 1")
+    int findByNo(@Param("no") int no);
     
-	@Select("select count(*) as count ,no from likeCount WHERE `table` = 'Bulletinboard' and count =1 group by no")
-	List<Map<String, Integer>> likeList();
+    // List like counts grouped by post number
+    @Select("SELECT COUNT(*) AS count, no FROM likeCount WHERE `table` = 'Bulletinboard' AND `count` = 1 GROUP BY no")
+    List<Map<String, Integer>> likeList();
+
 
 }

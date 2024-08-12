@@ -10,5 +10,7 @@ public class HatecountDto {
 	private int count;
 	private int board_no;
 	private int empno;
+	
+	
 
 }

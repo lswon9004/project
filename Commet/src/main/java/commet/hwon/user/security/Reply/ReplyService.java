@@ -8,36 +8,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReplyService {
 	
-	private final ReplyDao replyDao;
+	@Autowired
+	private ReplyDao replydao;
 
-    @Autowired
-    public ReplyService(ReplyDao replyDao) {
-        this.replyDao = replyDao;
+    public List<ReplyDto> selectreplies(int board_no){
+     return replydao.selectReplies(board_no);
     }
-
-    // 댓글 추가
-    public void addReply(ReplyDto replyDto) {
-        replyDao.insertReply(replyDto);
+    
+    public List<ReplyDto> insertReply(ReplyDto replyDto) {
+    	replydao.insertReply(replyDto);
+    	return replydao.selectReplies(replyDto.getBoard_no());
     }
-
-    // 특정 게시글의 댓글 목록 조회
-    public List<ReplyDto> getReplies(int boardNo) {
-        return replyDao.selectReplies(boardNo);
-    }
-
-    // 댓글 삭제 (비밀번호 검증 추가)
-    public void removeReply(int cno, String password) {
-        ReplyDto reply = replyDao.selectReplies(cno)
-                .stream()
-                .filter(r -> r.getCno() == cno)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다."));
-
-        // 비밀번호 검증
-        if (!reply.getPassword().equals(password)) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
-
-        replyDao.deleteReply(cno);
+    
+    public List<ReplyDto> deleteReply(int cno, int board_no) {
+    	replydao.deleteReply(cno);
+    	return replydao.selectReplies(board_no);
     }
 }

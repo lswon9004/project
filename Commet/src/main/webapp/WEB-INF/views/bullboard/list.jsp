@@ -109,11 +109,9 @@
             <tbody>
             
             <c:if test="${count == 0 }">
-            <tr>
-            <td>
-				아직 입력한 글이 없습니다.
-				</td>
-			</tr>
+             <tr>
+               <td colspan="7">아직 입력한 글이 없습니다.</td>
+			 </tr>
 			</c:if>
 			
 			<c:if test="${count != 0 }">
@@ -123,12 +121,13 @@
                           <!-- 게시글 제목에 하이퍼링크 추가 -->
                         <td><a href="/content/${board.no}">${board.title}</a></td>
                         <td>${board.iid}</td>
-                        <td><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                        <td><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></td>
                         <td>${board.readCount +1}</td>
-                        
+                        <td>${board.likecount.count}</td><!-- 좋아요수  -->
+                        <td>${board.hatecount.count}</td> <!-- 싫어요 수 -->
                     </tr>
                 </c:forEach>
-                </c:if>
+               </c:if>
             </tbody>
         </table>
         

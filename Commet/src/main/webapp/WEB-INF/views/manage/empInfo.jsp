@@ -55,6 +55,11 @@
             text-decoration: none;
         }
 
+		form  {
+			disabled: true;
+			
+		}
+		
         h2 {
             font-size: 24px;
             color: #333;
@@ -118,20 +123,41 @@
         .buttons button:last-child {
             background-color: #ccc;
         }
+        
+        /* 숨겨진 등록 버튼 */
+        #submitButton {
+            display: none;
     </style>
     
     <!-- 글수정시 수정버튼을 눌렀을때만 수정 가능 하게 하는 기능인데 -->
     <script>
     function enableEdit() {
-        const inputs = document.querySelectorAll('input, textarea');
-        inputs.forEach(input => input.removeAttribute('readonly'));
-    }
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.removeAttribute('readonly');
+            if (input.tagName.toLowerCase() === 'select') {
+                input.removeAttribute('disabled');
+            }
+        });
 
-    function cancelEdit() {
-        const inputs = document.querySelectorAll('input, textarea');
-        inputs.forEach(input => input.setAttribute('readonly', true));
-        location.href='${pageContext.request.contextPath}/empList';
+//         document.getElementById('addressSearchBtn').style.display = 'inline-block';
+        document.getElementById('submitButton').style.display = 'inline-block'; // 등록 버튼 보이기
+        document.getElementById('modify').style.display = 'none'; // 수정 버튼 숨기기
     }
+    
+//     function cancelEdit() { 사용안함
+//         const inputs = document.querySelectorAll('input, textarea, select');
+//         inputs.forEach(input => {
+//             input.setAttribute('readonly', true);
+//             if (input.tagName.toLowerCase() === 'select') {
+//                 input.setAttribute('disabled', true);
+//             }
+//         });
+
+//         document.getElementById('addressSearchBtn').style.display = 'none';
+//         document.getElementById('submitButton').style.display = 'none'; // 등록 버튼 숨기기
+//         location.href='${pageContext.request.contextPath}/empList';
+//     }
     </script>
     
 </head>
@@ -149,12 +175,26 @@
             <tr>
                 <td>사원 이름:</td><td><input type="text" name="ename" value="${empInfo.ename}" readonly></td>
                 <td>사원 번호:</td><td><input type="text" name="empno" value="${empInfo.empno}" readonly></td>
-                <td>랭크:</td><td><input type="text" name="annual" value="${empInfo.annual}" readonly></td>
+                <td>랭크:</td><td>${empInfo.authority}</td>
             </tr>
             <tr>
-				<td>부서:</td><td><input type="text" name="deptname" value="${empInfo.deptname}" readonly></td>
+				<td>부서:</td> <!-- db에서 dept 부서와 번호 저장 안해두면 작동안할수있음-->
+				<td>	
+					<select name="deptno"> 
+        				<option value="100" ${empInfo.position == '100' ? 'selected' : ''}>qwer</option>
+        				<option value="200" ${empInfo.position == '200' ? 'selected' : ''}>sdff</option>
+        				<option value="300" ${empInfo.position == '300' ? 'selected' : ''}>asdf</option>
+					</select>
+				</td>
 				<td>담당업무:</td><td><input type="text" name="jop" value="${empInfo.jop}" readonly></td>
-				<td>직급:</td><td><input type="text" name="position" value="${empInfo.position}" readonly></td>
+				<td>직급:</td>
+				<td>
+				<select name="position" >
+        			<option value="대리" ${empInfo.position == '대리' ? 'selected' : ''}>대리</option>
+        			<option value="팀장" ${empInfo.position == '팀장' ? 'selected' : ''}>팀장</option>
+        			<option value="관리자" ${empInfo.position == '관리자' ? 'selected' : ''}>관리자</option>
+				</select>
+				</td>
             </tr>
             <tr>
 				<td>연락처:</td><td><input type="text" name="phone" value="${empInfo.phone}" readonly></td>
@@ -179,8 +219,8 @@
             </tr> 
             </table>
             <div class="buttons">
-                <button type="button" onclick="enableEdit()">수정</button>
-                <button type="submit">등록</button>
+                <button type="button" onclick="enableEdit()" id="modify">수정</button>
+                <button type="submit" id="submitButton">등록</button>
                 <button type="button" onclick="location.href='${pageContext.request.contextPath}/emp_manage'">닫기</button>
                
             </div>

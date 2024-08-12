@@ -211,8 +211,14 @@
     
     <script>
     function downloadExcel() {
-        // 체크된 체크박스들 가져오기
+        // 체크박스에 체크된 것들만 엑셀 다운로드
         const checkboxes = document.querySelectorAll('input[name="empnos"]:checked');
+
+        if (checkboxes.length === 0) {
+            alert('다운로드할 항목을 선택해주세요.');
+            return; // 함수 종료, 폼 제출하지 않음
+        }
+        
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = '${pageContext.request.contextPath}/downloadEmpExcel';

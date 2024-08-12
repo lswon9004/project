@@ -28,13 +28,13 @@ public class BulletinboardController {
     private BulletinboardService boardService;
 	
 	@Autowired
-	ReplyService rService;
+	private ReplyService rService;
 	
 	@Autowired
-	LikecountService lService;
+	private LikecountService lService;
 	
 	@Autowired
-	HatecountService hService;
+	private HatecountService hService;
 	
     // 게시글 작성 폼
     @GetMapping("/write")
@@ -46,11 +46,10 @@ public class BulletinboardController {
     // 게시글 저장
    @PostMapping("/save")
    public String saveBoard(@ModelAttribute("board") BulletinboardDto boardDto, 
-           @RequestParam(name = "file",required = false) MultipartFile file,
-           Model model) {
+           @RequestParam(name = "file",required = false) MultipartFile file) {
             boardService.saveBoard(boardDto);
             return "redirect:/bullboard";
-            }
+   }
    
    // 글쓰기 닫기
    @GetMapping("/close")
@@ -60,7 +59,7 @@ public class BulletinboardController {
  
     // 게시글 목록
     @GetMapping("/bullboard")
-    public String board(@RequestParam(name="p", defaultValue = "1") int page,Model model) {
+    public String board(@RequestParam(name="p", defaultValue = "1") int page, Model model) {
     	int count = boardService.count();
     	if (count>0) {
     		int perPage = 10; // 한 페이지에 보일 글의 갯수
@@ -69,19 +68,16 @@ public class BulletinboardController {
         model.addAttribute("boardList", boards);
 
         int pageNum = 5;
-		int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0); //전체 페이지 수
+        int totalPages = (int) Math.ceil((double) count / perPage); // 전체 페이지 수
 		
 		int begin = (page - 1) / pageNum * pageNum + 1;
-		int end = begin + pageNum -1;
-		if(end > totalPages) {
-			end = totalPages;
-		}
+		int end = Math.min(begin + pageNum - 1, totalPages);
+		
 		 model.addAttribute("begin", begin);
 		 model.addAttribute("end", end);
-		 model.addAttribute("pageNum", pageNum);
 		 model.addAttribute("totalPages", totalPages);
-		
         }
+    	
     	model.addAttribute("count", count);
         return "/bullboard/list"; // refcontroller의 list로 리다이렉트
     }
@@ -104,26 +100,25 @@ public class BulletinboardController {
         return "/bullboard/content";
     }
     
-    // 게시글 수정 폼을 보여주는 요청을 처리하는 메서드
+    // 게시글 수정 폼
     @GetMapping("/update/{no}")
     public String showUpdateForm(@PathVariable("no") int no, Model model) {
-        BulletinboardDto dto = boardService.getBoard(no);
-        model.addAttribute("board", dto);
+        BulletinboardDto board = boardService.getBoard(no);
+        model.addAttribute("board", board);
         return "/bullboard/update";
     }
     
     // 게시글을 업데이트 메서드
     @PostMapping("/bullboard/update")
-    public String updateBoard(BulletinboardDto boardDto) {
+    public String updateBoard(@ModelAttribute("board") BulletinboardDto boardDto) {
         boardService.updateBoard(boardDto);
         return "redirect:/bullboard";
     }
     
-    // 게시글을 삭제하는 요청을 처리하는 메서드
+    // 게시글을 삭제
     @PostMapping("/delete/{no}")
-    public String deleteBoard(@PathVariable("no") int no, Model m) {
+    public String deleteBoard(@PathVariable("no") int no) {
     	boardService.deleteBoard(no);
-    	m.addAttribute("result", "delete success");
         return "redirect:/bullboard";
     }
     
@@ -133,10 +128,8 @@ public class BulletinboardController {
                               @RequestParam(name="content", defaultValue = "") String content,
                               @RequestParam(name="p", defaultValue = "1") int page,
                               Model model) {
-        int start = (page - 1) * 10;
-        System.out.println(title);
-        List<BulletinboardDto> searchResults = boardService.searchBoard(title, content, start);
-        System.out.println(searchResults);
+        int startRow = (page - 1) * 10;
+        List<BulletinboardDto> searchResults = boardService.searchBoard(title, content, startRow);
         model.addAttribute("boardList", searchResults);
         return "/bullboard/search";
     }

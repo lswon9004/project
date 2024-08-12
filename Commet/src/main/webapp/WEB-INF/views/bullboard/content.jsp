@@ -76,44 +76,38 @@ button:hover {
      <!-- 게시글 내용 표시 -->
      <form action="/content/${board.no}" method="post"> 
       <div class="details-section">
-        <h2><input type="text" name="title" value="${board.title}"/></h2>
-        <p><strong>작성자</strong><input type="text" name="author" value="${board.iid}" /></p>
-        <p><strong>작성일</strong><input type="text" name="date" value="<fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/>" /></p>
-        
-        <p><strong>조회수</strong><input type="text" name="readCount" value="${board.readCount +1}" /></p>
+        <h2><input type="text" name="title" value="${board.title}" readonly/></h2>
+        <p><strong>작성자</strong><input type="text" name="author" value="${board.iid}" readonly /></p>
+        <p><strong>작성일</strong><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></p>
+        <p><strong>조회수</strong><input type="text" name="readCount" value="${board.readCount +1}" readonly /></p>
          </div>
         
-        <textarea name="content" class="textarea-content">${board.content}
-        </textarea>
+        <textarea name="content" class="textarea-content" readonly>${board.content}</textarea>
         
-         <button class="like-button" data-board-no="${board.no}">👍</button>
+        <div class="like-dislike-box">
+         <button type="button" class="like-button" data-board-no="${board.no}">👍</button>
            <span id="like-count-${board.no}">
               <c:forEach items="${likeList }" var="like">
                 <c:if test="${like.no==board.no }">${like.count}</c:if>
                  </c:forEach>
                   </span>
                 
-                <button class="dislike-button" data-board-no="${board.no}">👎</button>
-          <span id="dislike-count-${board.no}">
-            <c:forEach items="${hateList}" var="hate">
-             <c:if test="${hate.no == board.no }">${hate.count}</c:if>
-            </c:forEach>
-          </span>            
+                <button type="button" class="dislike-button" data-board-no="${board.no}">👎</button>
+                <span id="dislike-count-${board.no}">
+                 <c:forEach items="${hateList}" var="hate">
+                  <c:if test="${hate.no == board.no }">${hate.count}</c:if>
+                    </c:forEach>
+                 </span>  
+         </div>          
         </form>
         
         <div class="button-box">
            <button onclick="location.href='/bullboard'">목록으로</button>
-        </div>
-         
-          <!-- 수정버튼 -->
-         <div class="button-box">
-         <button onclick="location.href='/update/${board.no}'">수정</button>
-         </div>
-           
-            <!-- 삭제 버튼 추가 -->
-   <div class="button-box">
-   <button onclick="location.href='/bullboard'">삭제</button>
-   </div>
+           <button onclick="location.href='/update/${board.no}'">수정</button>
+             <button onclick="location.href='/delete/${board.no}'">삭제</button>
+     </div>
+        
+        
    <!-- 댓글 목록 -->
 <div id="reply-list">
     <!-- 댓글 목록을 여기에 표시합니다. -->
@@ -121,14 +115,14 @@ button:hover {
 
 <!-- 댓글 작성 폼 -->
 <form id="reply-form" action="/content/${board.no}/replies" method="post">
-    <textarea name="content" placeholder="댓글을 입력하세요."></textarea>
+    <textarea name="content" placeholder="댓글을 입력하세요." required></textarea>
     <button type="submit">댓글 작성</button>
 </form>
 
 <!-- 댓글 수정 폼 (숨김 상태) -->
 <form id="reply-edit-form" style="display: none;">
     <input type="hidden" name="cno" />
-    <textarea name="content"></textarea>
+    <textarea name="content" required></textarea>
     <button type="submit">댓글 수정</button>
     <button type="button" id="reply-edit-cancel">취소</button>
 </form>
@@ -136,12 +130,23 @@ button:hover {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function() {
-    // 댓글 목록을 가져와서 표시하는 코드를 여기에 작성합니다.
+    // 댓글 목록 로드
+    function loadReplies() {
+        $.ajax({
+            url: "/content/${board.no}/replies",
+            type: "get",
+            success: function(response) {
+                $("#reply-list").html(response);
+            }
+        });
+    }
 
-    // 댓글 작성 폼의 제출 이벤트 핸들러
+    // 초기 댓글 목록 로드
+    loadReplies();
+
+    // 댓글 작성
     $("#reply-form").submit(function(e) {
         e.preventDefault();
-
         var content = $(this).find("textarea[name='content']").val();
 
         $.ajax({
@@ -150,12 +155,24 @@ $(document).ready(function() {
             contentType: "application/json",
             data: JSON.stringify({ content: content }),
             success: function(response) {
-                // 댓글 목록을 다시 불러와서 표시하는 코드를 여기에 작성합니다.
+                loadReplies();
+                $("#reply-form textarea[name='content']").val('');  // 입력 폼 초기화
             }
         });
     });
 
-    // 댓글 수정 폼의 제출 이벤트 핸들러
+    // 댓글 수정
+    $(document).on("click", ".reply-edit-button", function() {
+        var cno = $(this).data("cno");
+        var content = $(this).data("content");
+
+        $("#reply-edit-form").find("input[name='cno']").val(cno);
+        $("#reply-edit-form").find("textarea[name='content']").val(content);
+
+        $("#reply-form").hide();
+        $("#reply-edit-form").show();
+    });
+
     $("#reply-edit-form").submit(function(e) {
         e.preventDefault();
 
@@ -168,19 +185,38 @@ $(document).ready(function() {
             contentType: "application/json",
             data: JSON.stringify({ content: content }),
             success: function(response) {
-                // 댓글 목록을 다시 불러와서 표시하는 코드를 여기에 작성합니다.
+                loadReplies();
+                $("#reply-edit-form").hide();
+                $("#reply-form").show();
             }
         });
     });
 
-    // 댓글 수정 취소 버튼의 클릭 이벤트 핸들러
+    // 댓글 수정 취소
     $("#reply-edit-cancel").click(function() {
         $("#reply-edit-form").hide();
         $("#reply-form").show();
     });
+
+    // 댓글 삭제
+    $(document).on("click", ".reply-delete-button", function() {
+        var cno = $(this).data("cno");
+        var password = prompt("댓글 비밀번호를 입력하세요:");
+
+        if (password != null && password !== "") {
+            $.ajax({
+                url: "/content/${board.no}/reply/" + cno + "/delete",
+                type: "delete",
+                contentType: "application/json",
+                data: JSON.stringify({ password: password }),
+                success: function(response) {
+                    loadReplies();
+                }
+            });
+        }
+    });
 });
 </script>
-   
 
 </div>
 

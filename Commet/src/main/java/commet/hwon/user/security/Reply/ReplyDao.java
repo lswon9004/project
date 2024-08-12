@@ -10,12 +10,21 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface ReplyDao {
 	
-	@Insert("INSERT INTO reply (cno, id, board_no, content, ref, re_step, re_level, password)VALUES (#{cno}, #{id}, #{board_no}, #{content}, #{ref}, #{re_step}, #{re_level}, #{password})")
-	int insertReply(ReplyDto replyDto);
+	@Insert("""
+	        INSERT INTO reply (id, board_no, content, ref, re_step, re_level, password)
+	        VALUES (#{id}, #{board_no}, #{content}, #{ref}, #{re_step}, #{re_level}, #{password})
+	    """)
+	int insertReply(ReplyDto replyDto);  // 댓글 삽입
 	    
-	   @Select("SELECT * FROM reply WHERE board_no = #{board_no}")
-	   List<ReplyDto> selectReplies(int board_no);
+	@Select("""
+	        SELECT * 
+	        FROM reply 
+	        WHERE board_no = #{board_no}
+	        ORDER BY ref ASC, re_step ASC
+	    """)
+	   List<ReplyDto> selectReplies(int board_no);// 특정 게시글의 모든 댓글 조회
 	    
-	   @Delete("DELETE FROM reply WHERE cno = #{cno}")
+	// 댓글 삭제
+    @Delete("DELETE FROM reply WHERE cno = #{cno}")
 	   int deleteReply(int cno);
 }

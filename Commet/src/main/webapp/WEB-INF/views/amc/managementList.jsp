@@ -126,14 +126,6 @@
         });
     </script>
     
-     <script type="text/javascript">
-        $(document).ready(function(){
-            $("#selectAll").click(function(){
-                $("input[type=checkbox]").prop('checked', this.checked);
-            });
-        });
-    </script>
-
 </head>
 <body>
     <div class="container">
@@ -170,13 +162,12 @@
                     <th>근무유형</th>
                     <th>연차사용</th>
                     <th>잔여연차</th>
-                   	<th><input type="checkbox" id="selectAll"></th>
                 </tr>
             </thead>
             <tbody>
                 <c:if test="${count == 0}">
                     <tr>
-                        <td colspan="8" class="tac">저장된 근태현황이 없습니다.</td>
+                        <td colspan="7" class="tac">저장된 근태현황이 없습니다.</td>
                     </tr>
                 </c:if>
                 <c:if test="${count > 0}">

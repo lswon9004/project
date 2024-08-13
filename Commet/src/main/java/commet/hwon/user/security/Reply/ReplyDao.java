@@ -16,9 +16,11 @@ import commet.user.security.comment.CommentDto;
 @Mapper
 public interface ReplyDao {
 	
-	@Insert("INSERT INTO reply (cno, id, password, board_no, content, ref, re_step, re_level)VALUES (#{cno}, #{id}, #{password}, #{board_no}, #{content}, #{ref}, #{re_step}, #{re_level}")
-	@Options(useGeneratedKeys = true, keyProperty = "cno")	
+	@Insert("INSERT INTO reply (id, password, board_no, content)VALUES (#{id}, #{password}, #{board_no}, #{content})")
 	int insertReply(ReplyDto replyDto);
+	
+	@Update("UPDATE reply SET content = #{content} WHERE cno = #{cno}")
+	int updateReply(ReplyDto replyDto);
 	    
 		@Select("SELECT * FROM reply WHERE board_no = #{board_no}")
 	   List<ReplyDto> selectReplies(@Param("board_no") int board_no);

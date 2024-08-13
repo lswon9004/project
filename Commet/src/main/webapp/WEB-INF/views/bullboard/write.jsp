@@ -79,15 +79,12 @@ button:hover {
             <label>내용</label>
              <!-- 스마트에디터 적용 -->
             <textarea name="content" rows="10" required>${board.content}</textarea>
-            <label>파일</label>
-            <input type="file" name="file">
             <label>비밀번호</label>
             <input type="password" name="password" required>
             <!-- 저장 및 닫기 버튼 기능 -->
             <button type="submit">저장</button> 
             <button type="button" onclick="location.href='close'">닫기</button>
         </form>
-    </div>
-     
+    </div>     
 </body>
 </html>

@@ -20,6 +20,4 @@ public class BulletinboardDto {
 	private int re_step; // 답글의 순서를 저장하는 정수형
 	private int re_level; // 답글의 깊이를 저장하는 정수형
 	
-	private LikecountDto likecount; // 좋아요 수
-	private HatecountDto hatecount;//
 }

@@ -7,21 +7,26 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface LikecountDao {
 	
-	 // Insert a like count record
-    @Insert("INSERT INTO likeCount (`table`, empno, no, `count`) VALUES ('Bulletinboard', #{empno}, #{no}, 1)")
-    void saveLike(LikecountDto likeDto);
-
-    // Find like count by post number
-    @Select("SELECT COUNT(*) FROM likeCount WHERE no = #{no} AND `table` = 'Bulletinboard' AND `count` = 1")
-    int findByNo(@Param("no") int no);
-    
-    // List like counts grouped by post number
-    @Select("SELECT COUNT(*) AS count, no FROM likeCount WHERE `table` = 'Bulletinboard' AND `count` = 1 GROUP BY no")
-    List<Map<String, Integer>> likeList();
-
-
+	@Insert("insert into likecount(`table`, empno, no,count) values('Bulletin_Board',#{empno},#{no},1)")
+	int insertlikeCount(@Param("empno") int empno,@Param("no") int no);
+	
+	@Select("select count(*) from likecount where `table` = 'Bulletin_Board' and no = #{no} and empno = #{empno} and count = 1")
+	int likecountCheck(@Param("empno") int empno,@Param("no") int no);
+	
+	 @Update("UPDATE likecount SET count =  1 WHERE no = #{no} and `table` = 'Bulletin_Board' and empno = #{empno}")
+		    int increaseLikeCount(@Param("empno") int empno,@Param("no") int no);
+	
+	 @Update("UPDATE likecount SET count =  0 WHERE no = #{no} and `table` = 'Bulletin_Board' and empno = #{empno}")
+	    int decreaseLikeCount(@Param("empno") int empno,@Param("no") int no);
+	 
+	 @Select("select count(*) from likecount where count = 1 and `table` = 'Bulletin_Board' and no =#{no}")
+	 int likeCount(int no);
+	 
+	 @Select("select count(*) as count,no from likecount where count = 1 and `table` = 'Bulletin_Board'  group by no")
+	 List<Map<String, Integer>> likeCountList();
 }

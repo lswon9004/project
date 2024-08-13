@@ -15,13 +15,17 @@ public class ReplyService {
      return replydao.selectReplies(board_no);
     }
     
-    public List<ReplyDto> insertReply(ReplyDto replyDto) {
-    	replydao.insertReply(replyDto);
-    	return replydao.selectReplies(replyDto.getBoard_no());
+    public int insertReply(ReplyDto replyDto) {
+    	
+    	return replydao.insertReply(replyDto);
     }
     
-    public List<ReplyDto> deleteReply(int cno, int board_no) {
-    	replydao.deleteReply(cno);
-    	return replydao.selectReplies(board_no);
+    public int deleteReply(int cno) {
+    	
+    	return replydao.deleteReply(cno);
+    }
+    
+    public int updateReply(ReplyDto replyDto) {
+    	return replydao.updateReply(replyDto);
     }
 }

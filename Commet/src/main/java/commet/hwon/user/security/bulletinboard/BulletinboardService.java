@@ -37,10 +37,10 @@ public class BulletinboardService {
     }
     
     //게시글을 삭제하는 메서드
-	public void deleteBoard(int no) {
+	public int deleteBoard(int no, String password) {
 		 // 먼저 참조된 데이터 삭제
        
-        boardDao.delete(no);  // 게시글 삭제 메서드
+        return boardDao.deleteboard(no, password);  // 게시글 삭제 메서드
 		
 	}
    //조회수를 올리는 메서드

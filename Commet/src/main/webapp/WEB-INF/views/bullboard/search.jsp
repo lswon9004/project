@@ -86,7 +86,6 @@ button:hover {
         <div class="search-container">
         <form action="/search" method="get">
             <input type="text" name="title" placeholder="제목">
-            <input type="text" name="content" placeholder="내용">
             <button type="submit">검색</button>
         </form>
         </div>

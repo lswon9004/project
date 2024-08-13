@@ -1,5 +1,7 @@
 package commet.hwon.user.security.hatecount;
 
+
+
 import java.util.List;
 import java.util.Map;
 
@@ -10,17 +12,23 @@ import org.springframework.stereotype.Service;
 public class HatecountService {
 	
 	  @Autowired
-	    private HatecountDao hateDao;
-
-	    public void saveHate(HatecountDto hateDto) {
-	        hateDao.saveHate(hateDto);
-	    }
-
-	    public int getHate(int no) {
-	        return hateDao.findByNo(no);
-	    }
-	    public List<Map<String, Integer>> hateList(){
-	    	return hateDao.hateList();
-	    }
+	   HatecountDao hateDao;
+	  
+	  public int hateCount(int no) {
+		  return hateDao.hateCount(no);
+	  }
+	  
+	  public int increaseHateCount(int no, int empno) {
+		  int i = hateDao.hatecountCheck(empno, no);
+		  if(i>0) {
+			  return hateDao.decreasehateCount(empno, no);
+		  }else {
+			  return hateDao.inserthateCount(empno, no);
+		  }
+	  }
+	  
+	  public  List<Map<String, Integer>> hateCountList(){
+			 return hateDao.hateCountList();
+		 }
 
 }

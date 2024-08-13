@@ -1,7 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,7 +75,7 @@ button:hover {
      <!-- 게시글 내용 표시 -->
      <form action="/content/${board.no}" method="post"> 
       <div class="details-section">
-        <h2><input type="text" name="title" value="${board.title}" readonly/></h2>
+        <h2><input type="text" name="title" value="${board.title}" readonly /></h2>
         <p><strong>작성자</strong><input type="text" name="author" value="${board.iid}" readonly /></p>
         <p><strong>작성일</strong><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></p>
         <p><strong>조회수</strong><input type="text" name="readCount" value="${board.readCount +1}" readonly /></p>
@@ -84,91 +83,99 @@ button:hover {
         
         <textarea name="content" class="textarea-content" readonly>${board.content}</textarea>
         
-        <div class="like-dislike-box">
-         <button type="button" class="like-button" data-board-no="${board.no}">👍</button>
-           <span id="like-count-${board.no}">
-              <c:forEach items="${likeList }" var="like">
-                <c:if test="${like.no==board.no }">${like.count}</c:if>
-                 </c:forEach>
-                  </span>
-                
-                <button type="button" class="dislike-button" data-board-no="${board.no}">👎</button>
-                <span id="dislike-count-${board.no}">
-                 <c:forEach items="${hateList}" var="hate">
-                  <c:if test="${hate.no == board.no }">${hate.count}</c:if>
-                    </c:forEach>
-                 </span>  
-         </div>          
-        </form>
+        <!-- 좋아요 버튼 -->
+        <input type="button" id="like-button" data-board-no="${board.no}" value="👍" />
+         <span id="like-count">${likeCount}</span>
+
+       <!-- 싫어요 버튼 -->
+        <input type="button" id="hate-button" data-board-no="${board.no}" value="👎" />
+        <span id="hate-count">${hateCount}</span>
+       </form>
         
         <div class="button-box">
            <button onclick="location.href='/bullboard'">목록으로</button>
            <button onclick="location.href='/update/${board.no}'">수정</button>
         </div>  
         <form action="/delete/${board.no}" method="post">
+          <label for="password-input">Password:</label>
+           <input type="password" id="password-input1" name="password" />
+         
          <button type="submit">삭제</button>
      </form>
-       <div class="container">
-        <h2>Replies</h2>
-        <div id="rList">
-            <c:forEach var="reply" items="${replies}">
-                <div class="reply">
-                    <p><strong>${reply.cno}</strong></p>
-                    <p>${reply.content}</p>
-                    <p>${reply.board_no}</p>
-                </div>
-            </c:forEach>
-        </div> 
-    </div>
-     <!-- New Reply Form -->
-            <textarea id="new-reply-content"></textarea>
-            <button id="add-reply" data-board-no="${board.no}">등록</button>
-        </div>
     
+     <!-- 댓글 목록 -->
+    <c:forEach var="reply" items="${replies}">
+     <form action="/reply/delete" method="post">
+    	<input type="hidden" name="cno" value="${reply.cno }">
+    	    	<input type="hidden" name="no" value="${board.no }">
+    	
+        <div class="reply">           
+            <p>${reply.content}</p>
+               <label for="password-input">Password:</label>
+            <input type="password" id="password-input-${reply.id}" name="password"> 
+            <button class="delete-reply" data-reply-id="${reply.id}">댓글 삭제</button>
+        </div>
+         </form>
+            </c:forEach>
+    
+     <!-- 댓글 등록 폼 -->
+     <form id="reply-form" action="/content/insert" method="post">
+    <!-- id 입력 -->
+    <label for="id-input">ID:</label>
+    <input type="text" id="id-input" name="id" />
+   
+    <input type="hidden" name="board_no" value="${board.no}"/>
+   
+    <!-- password 입력 -->
+    <label for="password-input">Password:</label>
+    <input type="password" id="password-input2" name="password" />
+   
+    <!-- content 입력 -->
+    <label for="content-input">Comment:</label>
+    <input type="text" id="content-input" name="content" />
+
+    <!-- 제출 버튼 -->
+    <input type="submit" id="submit-reply" value="Submit reply" />
+  </form>
+</div>
+          
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-$(document).ready(function() { // 문서가 준비되면 아래의 이벤트 리스너를 활성화
-    $('.comment-update-form').on('submit', function(e) {
+$(document).ready(function() {
+	boardNo = ${board.no}
+	empno = ${user.empno}// 문서가 준비되면 아래의 이벤트 리스너를 활성화
+    $('.reply-update-form').on('submit', function(e) {
         e.preventDefault(); // 기본 폼 제출 동작을 막음
         const form = $(this); // 제출된 폼 요소 참조
         const cno = form.find('input[name="cno"]').val(); // 폼에서 댓글 번호(cno)를 가져옴
-        const text = form.find('input[name="text"]').val(); // 폼에서 댓글 내용을 가져옴
+        const content = form.find('input[name="content"]').val(); // 폼에서 댓글 내용을 가져옴
 
         $.ajax({ // AJAX 요청을 통해 댓글을 서버에 업데이트
             type: 'POST', // POST 방식으로 요청
-            url: '/comments/update', // 이 경로로 요청
-            data: { cno: cno, text: text }, // 댓글 번호와 수정된 내용을 서버에 전달
+            url: '/reply/update', // 이 경로로 요청
+            data: { cno: cno, content: content }, // 댓글 번호와 수정된 내용을 서버에 전달
             success: function(response) { // 요청이 성공하면 아래의 수행문 실행
-                form.find('input[name="text"]').val(''); // 입력 필드를 초기화
-                form.closest('.comment').find('p').text(text); // 댓글 내용을 업데이트
+                form.find('input[name="content"]').val(''); // 입력 필드를 초기화
+                form.closest('.reply').find('p').text(text); // 댓글 내용을 업데이트
             },
             error: function(error) { // 요청이 실패하면 오류를 콘솔에 출력
                 console.log(error); 
             }
         });
-    });
+    });})
+$(document).ready(function() {
+    // 좋아요 버튼 클릭 이벤트
+    $('#like-button').click(function() {
+    	$.getJSON("/bullboard/like",{'no':boardNo,'empno':empno},function(data){
+    	      alert(data)         
+    })});
 
-    $('#likeForm button').on('click', function(e) { // 추천 버튼이 클릭될 때 실행할 코드를 정의
-        e.preventDefault(); // 기본 버튼 클릭 동작을 막음
-        const button = $(this); // 클릭된 버튼 요소를 참조
-        const form = button.closest('form'); // 버튼이 속한 폼 요소 참조
-        const empno = form.find('input[name="empno"]').val(); // 폼에서 직원 번호를 가져옴
-        const no = form.find('input[name="no"]').val(); // 폼에서 게시글 번호를 가져옴
-        const url = form.attr('action'); // 폼의 액션 URL을 사져옴
+    // 싫어요 버튼 클릭 이벤트
+    $('#hate-button').click(function() {
+    	$.getJSON("/bullboard/hate",{'no':boardNo,'empno':empno},function(data){
+  	      alert(data)     
 
-        $.ajax({ // AJAX 요청을 통해 추천 상태를 서버에 전송
-            type: 'POST', // POST 방식으로 요청
-            url: url, // 폼의 액션 URL로 요청
-            data: { empno: empno, no: no }, // 직원 번호와 게시글 번호를 서버에 전달
-            success: function(response) { // 요청이 성공하면 아래의 수행문 실행
-                $('#likeCount').text(response.likeCount); // 추천수를 업데이트된 값으로 변경
-                form.attr('action', response.newUrl); // 폼의 액션 URL을 새로운 URL로 변경
-                // 버튼 텍스트를 업데이트
-                button.find('.heart-icon').text(response.action === "unlike" ? '💔' : '❤');
-            },
-            error: function(error) { // 요청 실패시 오류를 콘솔에 출력
-                console.log(error);
-            }
+        
         });
     });
 });

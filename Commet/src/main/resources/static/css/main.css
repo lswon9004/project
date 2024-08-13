@@ -8,17 +8,19 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* 전체 레이아웃 및 정렬 */
 .container {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    width: 100%;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 15px 20px;
     background-color: #e0f7fa;
 }
 
@@ -39,9 +41,21 @@ header {
     align-items: center;
 }
 
+/* Header 내의 버튼을 전체 버튼 스타일과 통일 */
 .header-right button {
-    margin: 0 5px;
-    padding: 5px 10px;
+    margin: 5px;
+    padding: 8px 16px;
+    background-color: #00bfff; /* 버튼 배경색 */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 12px; /* 버튼 글씨 크기 */
+    font-weight: bold;
+}
+
+.header-right button:hover {
+    background-color: #0056b3;
 }
 
 .header-right nav {
@@ -72,24 +86,21 @@ aside {
 }
 
 .menu li {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .menu li a {
     text-decoration: none;
     color: #00796b;
-}
-/* 선택된 메뉴 항목 스타일 */
-.menu li a.active {
-    background-color: #77a1d3; /* 선택된 항목 배경색 */
-    color: #fff; /* 선택된 항목 텍스트 색상 */
-    text-decoration: underline; /* 선택된 항목 밑줄 */
+    padding: 10px 15px;
+    display: block;
+    border-radius: 4px;
 }
 
-/* 마우스를 올렸을 때의 스타일 */
-.menu li a:hover {
-    background-color: #77a1d3; /* 호버 시 배경색 */
-    color: #fff; /* 호버 시 텍스트 색상 */
+/* 선택된 메뉴 항목 스타일 */
+.menu li a.active, .menu li a:hover {
+    background-color: #77a1d3;
+    color: #fff;
     text-decoration: underline;
 }
 
@@ -114,11 +125,17 @@ aside {
     border-collapse: collapse;
 }
 
-.status-overview th,
-.status-overview td {
+.status-overview th, .status-overview td, .calendar-grid div {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px; /* 기존 8px에서 10px로 패딩을 늘려서 가독성 향상 */
     text-align: center;
+}
+
+/* 테이블 헤더 색상과 배경색 통일 */
+.status-overview th {
+    background-color: #e0f7fa;
+    color: #333;
+    font-weight: bold;
 }
 
 .notes {

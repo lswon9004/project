@@ -43,7 +43,7 @@
         /* 제목(h2) 스타일 */
         h2 {
             text-align: center; /* 제목을 중앙 정렬 */
-            margin: 20px 0; /* 제목 위아래로 여백 추가 */
+            margin: auto; /* 제목 위아래로 여백 추가 */
         }
         
         /* 고객 리스트 테이블 스타일 */
@@ -83,16 +83,18 @@
             transform: scale(1.2); /* 체크박스 크기를 1.2배로 확대 */
         }
         
-        /* 버튼 스타일링 */
-        button {
-            margin: 5px; /* 버튼 주위에 여백 추가 */
-    		padding: 10px 20px; /* 버튼 내부에 여백 추가 */
-    		background-color: #00bfff; /* 버튼 배경색 설정 */
-   			color: #fff; /* 버튼 텍스트 색상 설정 */
-    		border: none; /* 버튼 경계선 제거 */
-    		cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
-    		border-radius: 4px; /* 버튼의 모서리를 둥글게 설정 */
-        }
+       /* 버튼 스타일 */
+button {
+    margin: 5px;
+    padding: 9px 18px;
+    background-color: #00bfff; /* 버튼 배경색 */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 13px; /* 버튼 글씨 크기 */
+    font-weight: bold;
+}
         
         /* 버튼 호버 시 스타일링 */
         .button:hover {
@@ -212,7 +214,7 @@
         <main>
             <aside>
                 <ul class="menu">
-                    <li><a href="/customerList">통합업무</a></li>
+                    <li><a href="/customerList" class="active">통합업무</a></li>
                      <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>

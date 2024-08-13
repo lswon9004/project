@@ -41,8 +41,8 @@
 	padding: 10px 20px;
 	margin: 5px;
 	border: none;
-	background: #e0f7fa; /* view.jsp의 글쓰기 버튼 색 */
-	color: #000;
+	background: #00bfff; /* view.jsp의 글쓰기 버튼 색 */
+	color: #fff;
 	border-radius: 5px;
 	cursor: pointer;
 	font-family: 'Noto Sans KR', sans-serif; /* th 태그와 동일한 글씨체 */
@@ -144,7 +144,7 @@ table th {
                     <li><a href="/customerList">통합업무</a></li>
                      <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards" class="active">게시판</a></li>
-                    <li><a href="/approval"/${user.empno}">전자결재</a></li>
+                    <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <li><a href="/approval/status">결재승인</a></li>
                     <li><a href="/bullboard">익명게시판</a></li>
                     <li><a href="/emp_manage">직원관리</a></li>

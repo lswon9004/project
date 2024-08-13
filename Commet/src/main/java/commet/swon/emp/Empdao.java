@@ -18,4 +18,6 @@ public interface Empdao {
 	int getLoginCount(int empno);
 	@Select("select empno from emp natural join position where authority = 3 or (deptno =#{deptno} and authority>1)")
 	List<Integer> getEmpnolist(int deptno); 
+	@Select("select email from emp where empno = #{empno}")
+	String emailCheck(int empno);
 }

@@ -1,11 +1,30 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.Calendar" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>직원관리</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management Portal</title>
+        <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .prev-month, .next-month {
+            color: #ccc;
+        }
         body {
             font-family: Arial, sans-serif;
         }
@@ -116,21 +135,49 @@
             border-radius: 4px;
         }
     </style>
-    
-    <!-- jQuery를 사용하여 “전체 선택” 체크박스를 클릭하면 모든 체크박스를 선택하거나 선택 해제할 수 있도록 스크립트를 추가했습니다. -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#selectAll").click(function(){
-                $("input[type=checkbox]").prop('checked', this.checked);
-            });
-        });
-    </script>
 </head>
 <body>
-    <h2>직원관리</h2>
+     <div class="container">
+        <header>
+            <div class="user-info">
+                <img src="profile.jpg" alt="User Profile">
+                <div>
+                    <p>이름: 김자바</p>
+                    <p>직책: ${user.position }</p>
+                    <p>사번: ${user.empno }</p>
+                    <p>김자바 님 환영합니다.</p>
+                </div>
+            </div>
+            <h1>코멧 업무포털</h1>
+            <div class="header-right">
+                <button id="start">업무시작</button>
+                <button id="end">업무종료</button>
+                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">00:00/</c:if></p>
+                <p id="endTime">00:00</p>
+                <nav>
+                    <a href="/main">Home</a>
+                    <a href="#">개인정보수정</a>
+                    <a href="/logout">로그아웃</a>
+                </nav>
+            </div>
+        </header>
+        <main>
+            <aside>
+                <ul class="menu">
+                    <li><a href="/customerList">통합업무</a></li>
+                     <li><a href="/attendance/managementList">근태현황</a>
+                    <li><a href="/boards">게시판</a></li>
+                    <li><a href="/approval/${user.empno}">전자결재</a></li>
+                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
+                    <li><a href="/bullboard">익명게시판</a></li>
+                </ul>
+                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
+                <p class="footer-text">코멧업무포털</p>
+            </aside>
+            <section class="main-content">
+         <h2>직원관리</h2>
     
-    <form action="${pageContext.request.contextPath}/deleteEmp" method="post">
+    <form action="/deleteEmp" method="post">
         <div class="button-container">
             <div class="search-form">
         		<select id="searchType" name="searchType">
@@ -141,9 +188,9 @@
         		<button type="button" class="button" onclick="performSearch()">검색</button>
             </div>
             <div>
-                <button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/insert'">등록
-                <button type="button" class="button" onclick="downloadExcel()">엑셀다운로드</button>
-                <button type="submit" class="button">삭제</button>
+                <input type="button" class="button" onclick="location.href='/insert'" value="등록"/> 
+                <input type="button" class="button" onclick="downloadExcel()" value="엑셀다운로드"/>
+                <input type="submit" class="button" value="삭제"/>
             </div>
         </div>
         <table>
@@ -192,19 +239,24 @@
     </div>
 
     <script>
-        const contextPath = '<%= request.getContextPath() %>';
-
         function performSearch() {
             const searchType = document.getElementById('searchType').value;
-            const searchInput = document.getElementById('searchInput').value;
+            const searchInput = document.getElementById('searchInput').value.trim();// 입력 값을 trim()으로 처리
             
-            let url = contextPath + '/searchEmps?';
+            let url = '/searchEmps?';
             if (searchType === 'empno') {
+                if (isNaN(searchInput) || searchInput === '') { // 숫자가 아니거나 빈 값인 경우 예외 처리
+                    alert('정확한 사원번호를 입력하세요.');
+                    return;
+                }
                 url += 'empno=' + searchInput;
             } else if (searchType === 'ename') {
-                url += 'ename=' + searchInput;
+            	 if (isText(searchInput) || searchInput === '') { //  아니거나 빈 값인 경우 예외 처리
+                     alert('정확한 사원이름을 입력하세요.');
+                     return;
+                 }
+                url += 'ename=' + encodeURIComponent(searchInput);
             }
-            
             location.href = url;
         }
     </script>
@@ -237,5 +289,43 @@
     }
 	</script>
     
+            </section>
+        </main>
+    </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"> 
+empno = ${user.empno};
+datea= ${user.att.startTime}
+$('#start').click(function(){
+	deptno = ${user.deptno};
+	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
+		if (data){			
+			$('#startTime').text(data+'/');
+			console.log(data)
+		 }else{
+			alert('이미 출근버튼을 누르셨습니다.')
+		} 
+	})
+})
+$('#end').click(function(){
+	$.getJSON('/endTime',{'empno':empno},function(data){
+		$('#endTime').text(data)
+	})
+})
+ function selectDate(date) {
+	$.getJSON('/vacation',{'date':date},function(data){
+		$('#vlist').append(datea)
+	})
+}
+</script>
+    <!-- jQuery를 사용하여 “전체 선택” 체크박스를 클릭하면 모든 체크박스를 선택하거나 선택 해제할 수 있도록 스크립트를 추가했습니다. -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#selectAll").click(function(){
+                $("input[type=checkbox]").prop('checked', this.checked);
+            });
+        });
+    </script>
 </html>

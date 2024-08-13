@@ -54,11 +54,6 @@
             color: black;
             text-decoration: none;
         }
-
-		form  {
-			disabled: true;
-			
-		}
 		
         h2 {
             font-size: 24px;
@@ -83,10 +78,26 @@
         th {
             background-color: #f2f2f2;
         }
-
+        
+        button, #addressSearchBtn { /* 주소검색 CSS */
+    	padding: auto;
+    	margin-top: 5px;
+    	border: none;
+   		background-color: #00bfff;
+    	color: #fff;
+    	cursor: pointer;
+    	border-radius: 4px;
+    	align-self: flex-start;
+		}
+				
+		button:hover, #addressSearchBtn:hover {
+    	background-color: #ccc;
+		}
+		
         input[type="text"],
         input[type="email"],
-        textarea {
+        textarea,
+        select {
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
@@ -99,6 +110,13 @@
             background-color: #f4f4f4;
             color: #666;
         }
+
+		select[readonly] {
+		  background-color: #f4f4f4;
+		  color: #666;
+		  pointer-events: none;
+		}
+
 
         textarea {
             resize: none;
@@ -128,7 +146,8 @@
         #submitButton {
             display: none;
     </style>
-    
+    <!-- Daum 주소 검색 API 스크립트 추가 -->
+    <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>    
     <!-- 글수정시 수정버튼을 눌렀을때만 수정 가능 하게 하는 기능인데 -->
     <script>
     function enableEdit() {
@@ -140,24 +159,21 @@
             }
         });
 
-//         document.getElementById('addressSearchBtn').style.display = 'inline-block';
+        document.getElementById('addressSearchBtn').style.display = 'inline-block';
         document.getElementById('submitButton').style.display = 'inline-block'; // 등록 버튼 보이기
         document.getElementById('modify').style.display = 'none'; // 수정 버튼 숨기기
     }
     
-//     function cancelEdit() { 사용안함
-//         const inputs = document.querySelectorAll('input, textarea, select');
-//         inputs.forEach(input => {
-//             input.setAttribute('readonly', true);
-//             if (input.tagName.toLowerCase() === 'select') {
-//                 input.setAttribute('disabled', true);
-//             }
-//         });
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var roadAddr = data.roadAddress; 
+                var jibunAddr = data.jibunAddress; 
 
-//         document.getElementById('addressSearchBtn').style.display = 'none';
-//         document.getElementById('submitButton').style.display = 'none'; // 등록 버튼 숨기기
-//         location.href='${pageContext.request.contextPath}/empList';
-//     }
+                document.getElementById('address').value = roadAddr || jibunAddr;
+            }
+        }).open();
+    }
     </script>
     
 </head>
@@ -167,20 +183,20 @@
     <div class="modal-content">
         <span class="close" onclick="location.href='${pageContext.request.contextPath}/emp_manage'">&times;</span>
         <h2>사원정보</h2>
-        <form action="${pageContext.request.contextPath}/empInfo" method="post">
+        <form action="${pageContext.request.contextPath}/empInfo" method="post" >
             <input type="hidden" name="_method" value="put">
             <input type="hidden" name="empno" value="${empInfo.empno}">
             <img src="${pageContext.request.contextPath}/images/profile.png" alt="Profile Image" width="100">
             <table>
             <tr>
-                <td>사원 이름:</td><td><input type="text" name="ename" value="${empInfo.ename}" readonly></td>
+                <td>사원 이름:</td><td><input type="text" name="ename" value="${empInfo.ename}" required readonly></td>
                 <td>사원 번호:</td><td><input type="text" name="empno" value="${empInfo.empno}" readonly></td>
                 <td>랭크:</td><td>${empInfo.authority}</td>
             </tr>
             <tr>
 				<td>부서:</td> <!-- db에서 dept 부서와 번호 저장 안해두면 작동안할수있음-->
 				<td>	
-					<select name="deptno"> 
+					<select name="deptno" readonly> 
         				<option value="100" ${empInfo.position == '100' ? 'selected' : ''}>qwer</option>
         				<option value="200" ${empInfo.position == '200' ? 'selected' : ''}>sdff</option>
         				<option value="300" ${empInfo.position == '300' ? 'selected' : ''}>asdf</option>
@@ -189,7 +205,7 @@
 				<td>담당업무:</td><td><input type="text" name="jop" value="${empInfo.jop}" readonly></td>
 				<td>직급:</td>
 				<td>
-				<select name="position" >
+				<select name="position" readonly>
         			<option value="대리" ${empInfo.position == '대리' ? 'selected' : ''}>대리</option>
         			<option value="팀장" ${empInfo.position == '팀장' ? 'selected' : ''}>팀장</option>
         			<option value="관리자" ${empInfo.position == '관리자' ? 'selected' : ''}>관리자</option>
@@ -201,7 +217,8 @@
 				<td>이메일:</td><td><input type="text" name="email" value="${empInfo.email}" readonly></td>
             </tr>
             <tr>
- 				<td>주소:</td><td><input type="text" name="address" value="${empInfo.address}" readonly></td>
+ 				<td>주소:</td><td><input type="text" id="address" name="address" value="${empInfo.address}" readonly></td>
+				<td><button type="button" id="addressSearchBtn" onclick="execDaumPostcode()" style="display: none;">주소 검색</button></td> 				
   				<td>상세주소:</td><td><input type="text" name="detailAddr" value="${empInfo.detailAddr}" readonly></td>
             </tr>
             <tr>

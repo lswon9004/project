@@ -1,7 +1,9 @@
 package commet.nowon.user.security.manage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -10,6 +12,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,10 +21,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletResponse;
-
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
@@ -36,16 +38,16 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 		return new ManageDto();
 	}
 	  
-	@GetMapping("/insert") // get 방식으로 /insert 받으면 사원정보입력창으로 이동 
-	public String empform(){
-		return "manage/newEmp";
-	}
-	
-	@PostMapping("/insert") // newEmp.jsp 에서 사원등록하면 리다이렉트로 /emp_manage 요청 empList.jsp 화면보여줌
-	public String insert(@ModelAttribute("dto") ManageDto dto) {
-		service.insertEmp(dto);
-		return "redirect:/emp_manage"; 
-	}
+//	@GetMapping("/insert") // get 방식으로 /insert 받으면 사원정보입력창으로 이동 
+//	public String empform(){
+//		return "manage/newEmp";
+//	}
+//	
+//	@PostMapping("/insert") // newEmp.jsp 에서 사원등록하면 리다이렉트로 /emp_manage 요청 empList.jsp 화면보여줌
+//	public String insert(@ModelAttribute("dto") ManageDto dto) {
+//		service.insertEmp(dto);
+//		return "redirect:/emp_manage"; 
+//	}
 	
 	@GetMapping("/empInfo") // 사원 정보 수정확인
 	public String showForm() {
@@ -105,6 +107,7 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 	  @GetMapping("/searchEmps")//고객명 / 연락처 입력하면 검색하는 메서드 
 	  public String searchEmps(@RequestParam(value = "empno", defaultValue = "0") Integer empno,
 			  						@RequestParam(value = "ename", required = false) String ename, Model model) {
+		  System.out.println(empno);
 	  List<ManageDto> searchResults = service.searchEmps(empno, ename);
 	  model.addAttribute("elist", searchResults);
 	  return "manage/empList";
@@ -148,7 +151,49 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 	  workbook.close(); 
 	  		
 	  }
-	  
+		@PostMapping("/saveinsert") //박선욱 작성
+	    public String saveinsert(ManageDto InserEmpDto) {
+	        service.insertEmp(InserEmpDto);
+	        return "redirect:/emp_manage";
+	    }
+		
+		@GetMapping("/insert") // 새로운 ManageDto 객체를 모델에 추가하여 정보 페이지를 표시 박선욱 작성
+		public String showInfoPage(Model model) {
+			model.addAttribute("InserEmpDto", new ManageDto());
+			return "manage/newEmp";
+		}
+		
+		// 이미지 업로드 처리
+	    @PostMapping("/employee/uploadPhoto") //박선욱 작성
+	    public String uploadPhoto(@RequestParam("imgPath") MultipartFile photo, Model model) {
+	        String newFileName = makeFileName(photo.getOriginalFilename());
+	        File newFile = null;
+
+	        try {
+	            String path = ResourceUtils.getFile("classpath:static/upload/").toPath().toString();
+	            newFile = new File(path, newFileName);
+	            photo.transferTo(newFile);
+	        } catch (IOException | IllegalStateException e) {
+	            e.printStackTrace();
+	        }
+
+	        if (newFile != null) {
+	            model.addAttribute("photoPath", "/upload/" + newFileName);
+	        }
+
+	        return "manage/newEmp"; // 업로드 후 다시 newEmp2 페이지로 이동
+	    }
+
+	    // 파일명 생성 메서드
+	    private String makeFileName(String origName) {
+	        long currentTime = System.currentTimeMillis();
+	        Random random = new Random();
+	        int r = random.nextInt(50);
+	        int index = origName.lastIndexOf(".");
+	        String ext = origName.substring(index + 1);
+	        return currentTime + "_" + r + "." + ext;
+	    }
+
 	  
 	  
 }

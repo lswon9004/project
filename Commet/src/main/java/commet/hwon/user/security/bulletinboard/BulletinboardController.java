@@ -32,10 +32,10 @@ public class BulletinboardController {
 	private ReplyService replyservice;
 	
 	@Autowired
-	private LikecountService lService;
+	private LikecountService likeService;
 	
 	@Autowired
-	private HatecountService hService;
+	private HatecountService hateService;
 	
     // 게시글 작성 폼
     @GetMapping("/write")
@@ -79,7 +79,10 @@ public class BulletinboardController {
     	//게시글 목록 가져오기
     	List<BulletinboardDto> boards = boardService.getAllBoards(startRow, perPage);
     	model.addAttribute("boardList", boards);
-    	
+    	 List<Map<String, Integer>> likCountList = likeService.likeCountList();
+    	 List<Map<String, Integer>> hateCountList = hateService.hateCountList();
+    	model.addAttribute("likeCountList", likCountList);
+    	model.addAttribute("hateCountList", hateCountList);
     	//페이지 네비게이션 시작 및 끝 번호 계산
     	int begin = (page - 1) / pageNum * pageNum + 1;
     	int end = Math.min(begin + pageNum - 1, totalPages);
@@ -105,10 +108,12 @@ public class BulletinboardController {
         List<ReplyDto> replies = replyservice.selectreplies(no); // 댓글 목록을 가져옵니다.
         model.addAttribute("replies", replies); // 댓글 목록을 모델에 추가합니다.
         
-        List<Map<String, Integer>> likeList = lService.likeList(); 
-    	List<Map<String, Integer>> hateList = hService.hateList();
-    	model.addAttribute("likeList", likeList);
-    	model.addAttribute("hateList", hateList);
+        // 좋아요 수를 가져옵니다.
+        int likeCount = likeService.likeCount(no);
+        model.addAttribute("likeCount", likeCount);
+        
+       int hateCount = hateService.hateCount(no);
+        model.addAttribute("hateCount", hateCount);
     	
         return "/bullboard/content";
     }
@@ -130,8 +135,8 @@ public class BulletinboardController {
     
     // 게시글을 삭제
     @PostMapping("/delete/{no}")
-    public String deleteBoard(@PathVariable("no") int no) {
-    	boardService.deleteBoard(no);
+    public String deleteBoard(@PathVariable("no") int no, @RequestParam("password")String password) {
+    	boardService.deleteBoard(no, password);
         return "redirect:/bullboard";
     }
     

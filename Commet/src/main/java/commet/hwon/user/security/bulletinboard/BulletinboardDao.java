@@ -38,8 +38,8 @@ public interface BulletinboardDao {
     void increaseReadCount(int no);
     
     //게시글을 삭제하는 메서드
-   @Delete("DELETE FROM BULLETIN_BOARD WHERE no = #{no}")
-    void delete(int no);
+   @Delete("DELETE FROM BULLETIN_BOARD WHERE no = #{no} and password = #{password}")
+    int deleteboard(@Param("no")int no, @Param("password")String password);
    
    //게시글을 검색하는 메서드
        @Select({"<script> SELECT * FROM BULLETIN_BOARD ",

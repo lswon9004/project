@@ -10,6 +10,17 @@
     <title>Task Management Portal</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <style>
+    
+     button {
+            margin: 5px; /* 버튼 주위에 여백 추가 */
+    		padding: 10px 20px; /* 버튼 내부에 여백 추가 */
+    		background-color: #00bfff; /* 버튼 배경색 설정 */
+   			color: #fff; /* 버튼 텍스트 색상 설정 */
+    		border: none; /* 버튼 경계선 제거 */
+    		cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
+    		border-radius: 4px; /* 버튼의 모서리를 둥글게 설정 */
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
@@ -62,7 +73,7 @@
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
                     <li><a href="/bullboard">익명게시판</a></li>
                 </ul>
-                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
+                 <p class="footer-text">현재시간 : <span id="current-time"></span></p>
                 <p class="footer-text">코멧업무포털</p>
             </aside>
             <section class="main-content">
@@ -133,11 +144,10 @@
                     // 다음 달의 첫 번째 날
                     Calendar nextCal = (Calendar) cal.clone();
                     nextCal.add(Calendar.MONTH, 1);
-
-    %>
+                    %>
                     <h2><%= year %>년 <%= month + 1 %>월 달력</h2>
                     <form >
-                    	<input type="date" name="date"><button>확인</button>
+                       <input type="date" name="date"><button>확인</button>
                     </form>
                     <table>
         <thead>
@@ -190,25 +200,49 @@ empno = ${user.empno};
 datea= ${user.att.startTime}
 date = <%= year %> +'-'+('0'+ <%= month + 1 %>).slice(-2)
 $('#start').click(function(){
-	deptno = ${user.deptno};
-	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
-		if (data){			
-			$('#startTime').text(data+'/');
-			console.log(data)
-		 }else{
-			alert('이미 출근버튼을 누르셨습니다.')
-		} 
-	})
+   deptno = ${user.deptno};
+   $.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
+      if (data){         
+         $('#startTime').text(data+'/');
+         console.log(data)
+       }else{
+         alert('이미 출근버튼을 누르셨습니다.')
+      } 
+   })
 })
 $('#end').click(function(){
-	$.getJSON('/endTime',{'empno':empno},function(data){
-		$('#endTime').text(data)
-	})
+   $.getJSON('/endTime',{'empno':empno},function(data){
+      $('#endTime').text(data)
+   })
 })
  function selectDate(date) {
-	$.getJSON('/vacation',{'date':date},function(data){
-		$('#vlist').append(datea)
-	})
+   $.getJSON('/vacation',{'date':date},function(data){
+      $('#vlist').append(datea)
+   })
 }
+</script>
+
+<!--현재시간 -->
+<script>
+    function updateTime() {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            weekday: 'long', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit'
+        };
+        const currentTimeString = now.toLocaleDateString('ko-KR', options);
+        document.getElementById('current-time').innerText = currentTimeString;
+    }
+
+    // 처음 페이지 로드 시 시간을 표시
+    updateTime();
+
+    // 매 초마다 시간을 업데이트
+    setInterval(updateTime, 1000);
 </script>
 </html>

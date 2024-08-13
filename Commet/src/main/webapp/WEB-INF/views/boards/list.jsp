@@ -1,134 +1,31 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.Calendar" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>게시판 목록</title>
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-	rel="stylesheet">
-<style>
-/* 스타일 코드 */
-body {
-	font-family: 'Noto Sans KR', sans-serif;
-	background-color: #f4f4f4;
-	margin: 0;
-	padding: 0;
-}
-/* 컨테이너 스타일 */
-.container {
-	width: 90%;
-	margin: auto;
-	overflow: hidden;
-}
-/* 헤더 스타일 */
-header {
-	background: #e0f7fa;
-	color: #000;
-	padding: 20px 0;
-	border-bottom: 1px solid #ddd;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-/* 사용자 정보 스타일 */
-.user-info {
-	display: flex;
-	align-items: center;
-	margin-left: 20px;
-}
-
-.user-info p {
-	margin: 0;
-	padding: 0;
-}
-
-h1 {
-	margin: 0;
-	padding: 0;
-	font-size: 24px;
-}
-/* 로그아웃 링크 스타일 */
-.logout a {
-	color: #00796b;
-	text-decoration: none;
-	font-size: 16px;
-	margin-right: 20px;
-}
-/* 네비게이션 스타일 */
-nav {
-	margin-top: 20px;
-	background: #333;
-	color: #fff;
-}
-
-nav ul {
-	padding: 0;
-	list-style: none;
-	display: flex;
-	justify-content: space-around;
-}
-
-nav ul li {
-	display: inline;
-	margin: 0;
-}
-
-nav ul li a {
-	color: #fff;
-	text-decoration: none;
-	padding: 15px 20px;
-	display: inline-block;
-}
-
-nav ul li a:hover, .active {
-	background: #77a1d3;
-}
-/* 메인 섹션 스타일 */
-main {
-	display: flex;
-	margin-top: 20px;
-}
-/* 사이드바 메뉴 스타일 */
-aside {
-	width: 25%;
-	padding: 20px;
-	background: #fafafa;
-	border-right: 1px solid #ddd;
-}
-
-aside .menu {
-	padding: 0;
-	list-style: none;
-}
-
-aside .menu li {
-	margin-bottom: 10px;
-}
-
-aside .menu li a {
-	color: #00796b;
-	text-decoration: none;
-	display: block;
-	padding: 10px;
-	background: #f9f9f9;
-	border-radius: 5px;
-}
-
-aside .menu li a.active, aside .menu li a:hover {
-	background: #77a1d3;
-	color: #fff;
-	text-decoration: underline;
-}
-
-aside .footer-text {
-	margin-top: 20px;
-	color: #777;
-	font-size: 14px;
-}
-/* 메인 콘텐츠 내부 스타일 */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management Portal</title>
+        <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .prev-month, .next-month {
+            color: #ccc;
+        }
+        /* 메인 콘텐츠 내부 스타일 */
 .main-content {
 	width: 75%;
 	padding: 20px;
@@ -216,32 +113,48 @@ table th {
 </style>
 </head>
 <body>
-	<div class="container">
-		<!-- 페이지의 컨테이너 역할을 하는 요소 -->
-		<header>
-			<!-- 페이지의 헤더 영역 -->
-			<h1>${user.empno}</h1>
-			<a href="/logout" class="logout">로그아웃</a>
-		</header>
-		<main>
-			<!-- 페이지의 주요 콘텐츠 영역 -->
-			<aside>
-				<!-- 사이드바 영역 -->
-				<ul class="menu">
-					<li><a href="#">통합업무</a></li>
-					<li><a href="/boards" class="active">게시판</a></li>
-					<li><a href="#">익명게시판</a></li>
-					<li><a href="/approval">전자결재</a></li>
-					<li><a href="#">직원관리</a></li>
-					<li><a href="#">팀장전자결재</a></li>
-					<li><a href="#">캘린더</a></li>
-					<li><a href="#">권한관리</a></li>
-				</ul>
-				<p class="footer-text">현재시간 : 2024/07/29 수요일 09:15</p>
-				<p class="footer-text">코멧업무포털</p>
-			</aside>
-			<section class="main-content">
-				<!-- 메인 콘텐츠 영역 -->
+     <div class="container">
+        <header>
+            <div class="user-info">
+                <img src="profile.jpg" alt="User Profile">
+                <div>
+                    <p>이름: 김자바</p>
+                    <p>직책: ${user.position }</p>
+                    <p>사번: ${user.empno }</p>
+                    <p>김자바 님 환영합니다.</p>
+                </div>
+            </div>
+            <h1>코멧 업무포털</h1>
+            <div class="header-right">
+                <button id="start">업무시작</button>
+                <button id="end">업무종료</button>
+                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">0d:00/</c:if></p>
+                <p id="endTime">00:00</p>
+                <nav>
+                    <a href="/main">Home</a>
+                    <a href="/cleander">연봉계산기</a>
+                    <a href="#">개인정보수정</a>
+                    <a href="/logout">로그아웃</a>
+                </nav>
+            </div>
+        </header>
+        <main>
+            <aside>
+                <ul class="menu">
+                    <li><a href="/customerList">통합업무</a></li>
+                     <li><a href="/attendance/managementList">근태현황</a>
+                    <li><a href="/boards" class="active">게시판</a></li>
+                    <li><a href="/approval"/${user.empno}">전자결재</a></li>
+                    <li><a href="/approval/status">결재승인</a></li>
+                    <li><a href="/bullboard">익명게시판</a></li>
+                    <li><a href="/emp_manage">직원관리</a></li>
+                    <li><a href="#">관찰관리</a></li>
+                </ul>
+                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
+                <p class="footer-text">코멧업무포털</p>
+            </aside>
+            <section class="main-content">
+                <!-- 메인 콘텐츠 영역 -->
 				<div class="search-form">
 					<!-- 검색 폼을 포함하는 요소 -->
 					<!-- 제목, 작성자, 날짜로 검색할 수 있는 입력 필드와 검색 버튼이 포함 -->
@@ -252,7 +165,15 @@ table th {
 						<button type="submit">검색</button>
 					</form>
 				</div>
-				<table>
+				<table style="width:113.65%;">
+				<colgroup>
+			<col style="width:10%;" />
+			<col />
+			<col style="width:12%;" />
+			<col style="width:12%;" />
+			<col style="width:12%;" />
+			<col style="width:12%;" />
+		</colgroup>
 					<!-- 게시판 목록을 표시하는 테이블 -->
 					<thead>
 						<!-- thead 영역 (번호 제목 작성자 작성일 조회수가 포함) -->
@@ -302,9 +223,34 @@ table th {
 					<button onclick="location.href='/boards/write'">글쓰기</button>
 					<button onclick="location.href='/boards/write'">공지글작성</button>
 				</div>
-			</section>
-		</main>
-	</div>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            </section>
+        </main>
+    </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"> 
+empno = ${user.empno};
+datea= ${user.att.startTime}
+$('#start').click(function(){
+	deptno = ${user.deptno};
+	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
+		if (data){			
+			$('#startTime').text(data+'/');						
+		 }else{
+			alert('이미 출근버튼을 누르셨습니다.')
+			alert(date)
+		} 
+	})
+})
+$('#end').click(function(){
+	$.getJSON('/endTime',{'empno':empno},function(data){
+		$('#endTime').text(data)
+	})
+})
+ function selectDate(date) {
+	$.getJSON('/vacation',{'date':date},function(data){
+		$('#vlist').append(datea)
+	})
+}
+</script>
 </html>

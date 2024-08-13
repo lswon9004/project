@@ -1,113 +1,31 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.Calendar" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>게시글 상세보기</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-<style>
-/* 스타일 코드 */
-body { /* body 태그의 스타일 설정 */
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-} 
-.container { /* 중앙 정렬과 레이아웃을 위한 스타일 지정 */
-    width: 90%;
-    margin: auto;
-    overflow: hidden;
-}
-header {/* 헤더 영역의 스타일 설정 */
-    background: #e0f7fa;
-    color: #000;
-    padding: 20px 0;
-    border-bottom: 1px; solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.user-info { /* 사용자 정보 영역 스타일 설정 */
-    display: flex;
-    align-items: center;
-    margin-left: 20px;
-}
-.user-info p {
-    margin: 0;
-    padding: 0;
-}
-h1 {
-    margin: 0;
-    padding: 0;
-    font-size: 24px;
-}
-.logout a { /* 로그아웃 스타일 설정 */
-    color: #00796b;
-    text-decoration: none;
-    font-size: 16px;
-    margin-right: 20px;
-}
-nav { /* 내비게이션 바의 스타일 설정 */
-    margin-top: 20px;
-    background: #333;
-    color: #fff;
-}
-nav ul { /* 내비게이션 목록 레이아웃 설정 */
-    padding: 0;
-    list-style: none;
-    display: flex;
-    justify-content: space-around;
-}
-nav ul li {
-    display: inline;
-    margin: 0;
-}
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    padding: 15px 20px;
-    display: inline-block;
-}
-nav ul li a:hover, .active {
-    background: #77a1d3;
-}
-main { /* 메인 콘텐츠와 사이드바의 레이아웃 설정 */
-    display: flex;
-    margin-top: 20px;
-}
-aside { /* 사이드바의 스타일 설정 */
-    width: 25%;
-    padding: 20px;
-    background: #fafafa;
-    border-right: 1px solid #ddd;
-}
-aside .menu { /* 사이드바 메뉴와 관련된 스타일 설정 */
-    padding: 0;
-    list-style: none;
-}
-aside .menu li {
-    margin-bottom: 10px;
-}
-aside .menu li a {
-    color: #00796b;
-    text-decoration: none;
-    display: block;
-    padding: 10px;
-    background: #f9f9f9;
-    border-radius: 5px;
-}
-aside .menu li a:hover {
-    background: #77a1d3;
-    color: #fff;
-}
-aside .footer-text { /* 사이드바 하단의 텍스트 스타일 설정 */
-    margin-top: 20px;
-    color: #777;
-    font-size: 14px;
-}
-.main-content { /* 메인 콘텐츠 영역 스타일 설정 */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management Portal</title>
+        <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .prev-month, .next-month {
+            color: #ccc;
+        }
+        .main-content { /* 메인 콘텐츠 영역 스타일 설정 */
     width: 75%;
     padding: 20px;
     background: #fff;
@@ -265,34 +183,49 @@ footer { /* 푸터 스타일 설정 */
 </style>
 </head>
 <body>
-<div class="container"> <!-- 전체 컨테이너로 사용을 위해 지정 -->
-    <header> <!-- 페이지 상단의 헤더 영역 지정 -->
-        <div class="user-info">
-            <div class="profile-info">
-                <div class="name">Java Park</div>
-                <div class="rank">Lv.5</div>
-                <div>Java Park님 환영합니다.</div>
+     <div class="container">
+        <header>
+            <div class="user-info">
+                <img src="profile.jpg" alt="User Profile">
+                <div>
+                    <p>이름: 김자바</p>
+                    <p>직책: ${user.position }</p>
+                    <p>사번: ${user.empno }</p>
+                    <p>김자바 님 환영합니다.</p>
+                </div>
             </div>
-        </div>
-        <a href="/logout" class="logout">로그아웃</a>
-    </header>
-    <main> <!-- 주요 콘첸츠 영역 지정 -->
-        <aside> <!-- 사이드바 메뉴 지정 -->
-            <ul class="menu">
-                <li><a href="#">통합업무</a></li>
-                <li><a href="/boards">게시판</a></li>
-                <li><a href="#">익명게시판</a></li>
-                <li><a href="/approval">전자결재</a></li>
-                <li><a href="#">직원관리</a></li>
-                <li><a href="#">팀장전자결재</a></li>
-                <li><a href="#">캘린더</a></li>
-                <li><a href="#">권한관리</a></li>
-            </ul>
-            <p class="footer-text">현재시간 : 2024/07/29 수요일 09:15</p>
-            <p class="footer-text">코멧업무포털</p>
-        </aside> <!-- 사이드바 메뉴 끝 -->
-        <section class="main-content"> <!-- 메인 콘첸츠 정의 -->
-            <div class="board-title">게시판</div> <!-- 게시판 제목 지정 -->
+            <h1>코멧 업무포털</h1>
+            <div class="header-right">
+                <button id="start">업무시작</button>
+                <button id="end">업무종료</button>
+                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">0d:00/</c:if></p>
+                <p id="endTime">00:00</p>
+                <nav>
+                    <a href="/main">Home</a>
+                    <a href="/cleander">연봉계산기</a>
+                    <a href="#">개인정보수정</a>
+                    <a href="/logout">로그아웃</a>
+                </nav>
+            </div>
+        </header>
+        <main>
+            <aside>
+                <ul class="menu">
+                    <li><a href="/customerList">통합업무</a></li>
+                     <li><a href="/attendance/managementList">근태현황</a>
+                    <li><a href="/boards">게시판</a></li>
+                    <li><a href="/approval/${user.empno}">전자결재</a></li>
+                    <li><a href="/approval/status">결재승인</a></li>
+                    <li><a href="/bullboard">익명게시판</a></li>
+                    <li><a href="/emp_manage">직원관리</a></li>
+                    <li><a href="#">관찰관리</a></li>
+                </ul>
+                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
+                <p class="footer-text">코멧업무포털</p>
+            </aside>
+            <section class="main-content">
+                <!-- 메인 콘텐츠 영역 -->
+	<div class="board-title">게시판</div> <!-- 게시판 제목 지정 -->
             <div class="board-detail"> <!-- 게시글 상세 내용 표시 -->
             <div class="section-inline-section"> 
             <div class="right">
@@ -362,60 +295,79 @@ footer { /* 푸터 스타일 설정 */
                     </form>
                 </c:if>
             </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2022 Brand, Inc. Privacy · Terms · Sitemap</p>
-        <p>USD</p>
-    </footer>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() { // 문서가 준비되면 아래의 이벤트 리스너를 활성화
-        $('.comment-update-form').on('submit', function(e) {
-            e.preventDefault(); // 기본 폼 제출 동작을 막음
-            const form = $(this); // 제출된 폼 요소 참조
-            const cno = form.find('input[name="cno"]').val(); // 폼에서 댓글 번호(cno)를 가져옴
-            const text = form.find('input[name="text"]').val(); // 폼에서 댓글 내용을 가져옴
-
-            $.ajax({ // AJAX 요청을 통해 댓글을 서버에 업데이트
-                type: 'POST', // POST 방식으로 요청
-                url: '/comments/update', // 이 경로로 요청
-                data: { cno: cno, text: text }, // 댓글 번호와 수정된 내용을 서버에 전달
-                success: function(response) { // 요청이 성공하면 아래의 수행문 실행
-                    form.find('input[name="text"]').val(''); // 입력 필드를 초기화
-                    form.closest('.comment').find('p').text(text); // 댓글 내용을 업데이트
-                },
-                error: function(error) { // 요청이 실패하면 오류를 콘솔에 출력
-                    console.log(error); 
-                }
-            });
-        });
-
-        $('#likeForm button').on('click', function(e) { // 추천 버튼이 클릭될 때 실행할 코드를 정의
-            e.preventDefault(); // 기본 버튼 클릭 동작을 막음
-            const button = $(this); // 클릭된 버튼 요소를 참조
-            const form = button.closest('form'); // 버튼이 속한 폼 요소 참조
-            const empno = form.find('input[name="empno"]').val(); // 폼에서 직원 번호를 가져옴
-            const no = form.find('input[name="no"]').val(); // 폼에서 게시글 번호를 가져옴
-            const url = form.attr('action'); // 폼의 액션 URL을 사져옴
-
-            $.ajax({ // AJAX 요청을 통해 추천 상태를 서버에 전송
-                type: 'POST', // POST 방식으로 요청
-                url: url, // 폼의 액션 URL로 요청
-                data: { empno: empno, no: no }, // 직원 번호와 게시글 번호를 서버에 전달
-                success: function(response) { // 요청이 성공하면 아래의 수행문 실행
-                    $('#likeCount').text(response.likeCount); // 추천수를 업데이트된 값으로 변경
-                    form.attr('action', response.newUrl); // 폼의 액션 URL을 새로운 URL로 변경
-                    // 버튼 텍스트를 업데이트
-                    button.find('.heart-icon').text(response.action === "unlike" ? '💔' : '❤');
-                },
-                error: function(error) { // 요청 실패시 오류를 콘솔에 출력
-                    console.log(error);
-                }
-            });
-        });
-    });
-</script>
+            </section>
+        </main>
+    </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript"> 
+empno = ${user.empno};
+datea= ${user.att.startTime}
+$('#start').click(function(){
+	deptno = ${user.deptno};
+	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
+		if (data){			
+			$('#startTime').text(data+'/');						
+		 }else{
+			alert('이미 출근버튼을 누르셨습니다.')
+			alert(date)
+		} 
+	})
+})
+$('#end').click(function(){
+	$.getJSON('/endTime',{'empno':empno},function(data){
+		$('#endTime').text(data)
+	})
+})
+ function selectDate(date) {
+	$.getJSON('/vacation',{'date':date},function(data){
+		$('#vlist').append(datea)
+	})
+}
+$(document).ready(function() { // 문서가 준비되면 아래의 이벤트 리스너를 활성화
+$('.comment-update-form').on('submit', function(e) {
+    e.preventDefault(); // 기본 폼 제출 동작을 막음
+    const form = $(this); // 제출된 폼 요소 참조
+    const cno = form.find('input[name="cno"]').val(); // 폼에서 댓글 번호(cno)를 가져옴
+    const text = form.find('input[name="text"]').val(); // 폼에서 댓글 내용을 가져옴
+
+    $.ajax({ // AJAX 요청을 통해 댓글을 서버에 업데이트
+        type: 'POST', // POST 방식으로 요청
+        url: '/comments/update', // 이 경로로 요청
+        data: { cno: cno, text: text }, // 댓글 번호와 수정된 내용을 서버에 전달
+        success: function(response) { // 요청이 성공하면 아래의 수행문 실행
+            form.find('input[name="text"]').val(''); // 입력 필드를 초기화
+            form.closest('.comment').find('p').text(text); // 댓글 내용을 업데이트
+        },
+        error: function(error) { // 요청이 실패하면 오류를 콘솔에 출력
+            console.log(error); 
+        }
+    });
+});
+
+$('#likeForm button').on('click', function(e) { // 추천 버튼이 클릭될 때 실행할 코드를 정의
+    e.preventDefault(); // 기본 버튼 클릭 동작을 막음
+    const button = $(this); // 클릭된 버튼 요소를 참조
+    const form = button.closest('form'); // 버튼이 속한 폼 요소 참조
+    const empno = form.find('input[name="empno"]').val(); // 폼에서 직원 번호를 가져옴
+    const no = form.find('input[name="no"]').val(); // 폼에서 게시글 번호를 가져옴
+    const url = form.attr('action'); // 폼의 액션 URL을 사져옴
+
+    $.ajax({ // AJAX 요청을 통해 추천 상태를 서버에 전송
+        type: 'POST', // POST 방식으로 요청
+        url: url, // 폼의 액션 URL로 요청
+        data: { empno: empno, no: no }, // 직원 번호와 게시글 번호를 서버에 전달
+        success: function(response) { // 요청이 성공하면 아래의 수행문 실행
+            $('#likeCount').text(response.likeCount); // 추천수를 업데이트된 값으로 변경
+            form.attr('action', response.newUrl); // 폼의 액션 URL을 새로운 URL로 변경
+            // 버튼 텍스트를 업데이트
+            button.find('.heart-icon').text(response.action === "unlike" ? '💔' : '❤');
+        },
+        error: function(error) { // 요청 실패시 오류를 콘솔에 출력
+            console.log(error);
+        }
+    });
+});
+});
+</script>
 </html>

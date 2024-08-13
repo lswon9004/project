@@ -27,7 +27,7 @@ public class CustomerInfoController {
 
 	@Autowired
 	private CustomerInfoService Service;
-
+	
 	@GetMapping("/customerForm") // 새로운 CustomerInfoDTO 객체를 모델에 추가하여 고객 정보 입력 폼을 표시
 	public String showForm(Model model) {
 		model.addAttribute("customerInfo", new CustomerInfoDTO()); // 새로운DTO 객체를 모델이 추가
@@ -180,7 +180,7 @@ public class CustomerInfoController {
 		    model.addAttribute("status", status);
 		    model.addAttribute("pageSize", pageSize);
 		    
-		return "customer/filtercustomerList";
+		return "customer/customerList";
 	}
 
 }

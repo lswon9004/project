@@ -105,5 +105,17 @@ public class EmpController {
 	@GetMapping("/loginform")
 	public void getMethodName() {
 	}
+	@GetMapping("/emailCheck")
+	@ResponseBody
+	public String getMethodName(@RequestParam("email") String email,@RequestParam("empno")String empno) {
+		int no =0;
+		if(empno != null) {
+		no = Integer.parseInt(empno);
+		}
+		boolean emailCheck = service.emailCheck(no, email);
+		
+		Gson gson = new Gson();
+		return gson.toJson(emailCheck);
+	}
 	
 }

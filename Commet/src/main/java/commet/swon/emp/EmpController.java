@@ -50,7 +50,7 @@ public class EmpController {
 				result = "/findpw";
 			} else {
 				if (dto.password.equals(password)) {
-					service.loginCount(0);
+					service.loginCount(0,dto.getEmpno());
 					dto.setRight(noCheck(dto.getPosition()));
 					m.addAttribute("user", dto);
 					if (noCheck(dto.position) < 3) {
@@ -60,7 +60,7 @@ public class EmpController {
 					}
 				} else {
 					result = "/";
-					service.loginCount(dto.loginCount + 1);
+					service.loginCount(dto.getLoginCount() + 1,no);
 				}
 			}
 		}
@@ -98,8 +98,9 @@ public class EmpController {
 	}
 	
 	@PostMapping("/findpw")
-	public String postMethodName() {
-		service.loginCount(0);		
+	public String postMethodName(@RequestParam("empno")int empno) {
+		service.loginCount(0,empno);
+		service.updatepw(empno);
 		return "redirect:/loginform";
 	}
 	@GetMapping("/loginform")

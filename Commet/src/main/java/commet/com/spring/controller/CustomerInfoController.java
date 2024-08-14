@@ -3,6 +3,9 @@ package commet.com.spring.controller;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -33,6 +36,7 @@ public class CustomerInfoController {
 		model.addAttribute("customerInfo", new CustomerInfoDTO()); // 새로운DTO 객체를 모델이 추가
 		return "customer/customerForm";
 	}
+	
 
 	@PostMapping("/saveCustomer") // 입력된 고객 정보를 저장하고, 고객 목록 페이지로 리다이렉트
 	public String saveCustomer(@ModelAttribute("customerInfo") CustomerInfoDTO customerInfo) {
@@ -67,51 +71,67 @@ public class CustomerInfoController {
 
 	@GetMapping("/downloadExcel") // 엑셀 다운로드
 	public void downloadExcel(HttpServletResponse response) throws IOException {
-		List<CustomerInfoDTO> customerList = Service.getAllCustomers();
+	    List<CustomerInfoDTO> customerList = Service.getAllCustomers();
 
-		Workbook workbook = new XSSFWorkbook();
-		Sheet sheet = workbook.createSheet("Customers");
+	    Workbook workbook = new XSSFWorkbook();
+	    Sheet sheet = workbook.createSheet("Customers");
 
-		// 헤더행
-		Row headerRow = sheet.createRow(0);
-		headerRow.createCell(0).setCellValue("고객번호");
-		headerRow.createCell(1).setCellValue("고객명");
-		headerRow.createCell(2).setCellValue("이메일");
-		headerRow.createCell(3).setCellValue("주소");
-		headerRow.createCell(4).setCellValue("생년월일");
-		headerRow.createCell(5).setCellValue("연락처");
-		headerRow.createCell(6).setCellValue("진행상태");
-		headerRow.createCell(7).setCellValue("접수일자");
+	    // 헤더행
+	    Row headerRow = sheet.createRow(0);
+	    headerRow.createCell(0).setCellValue("고객번호");
+	    headerRow.createCell(1).setCellValue("고객명");
+	    headerRow.createCell(2).setCellValue("이메일");
+	    headerRow.createCell(3).setCellValue("주소");
+	    headerRow.createCell(4).setCellValue("생년월일");
+	    headerRow.createCell(5).setCellValue("연락처");
+	    headerRow.createCell(6).setCellValue("진행상태");
+	    headerRow.createCell(7).setCellValue("접수일자");
 
-		// 데이터행
-		int rowNum = 1;
-		for (CustomerInfoDTO customer : customerList) {
-			Row row = sheet.createRow(rowNum++);
-			row.createCell(0).setCellValue(customer.getCustomerID());
-			row.createCell(1).setCellValue(customer.getCustomerName());
-			row.createCell(2).setCellValue(customer.getEmail());
-			row.createCell(3).setCellValue(customer.getAddress());
-			row.createCell(4).setCellValue(customer.getDateOfBirth().toString());
-			row.createCell(5).setCellValue(customer.getContact());
-			String progress = ""; // DB에 enum 으로 값이 영어로 저장돼 있어서 한글로 바꿔주는 메서드를 만듬
-			if (customer.getStatus().equals("Received")) {
-				progress = "접수완료";
-			} else if (customer.getStatus().equals("Consulted")) {
-				progress = "상담완료";
-			} else {
-				progress = "민원인";
-			}
-			row.createCell(6).setCellValue(progress);
-			row.createCell(7).setCellValue(customer.getRegistrationDate().toString());
-		}
+	    // 날짜 형식 지정 (yyyy/MM/dd HH:mm:ss)
+	    CellStyle dateTimeCellStyle = workbook.createCellStyle();
+	    CreationHelper createHelper = workbook.getCreationHelper();
+	    dateTimeCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy/MM/dd HH:mm:ss"));
 
-		// 콘텐츠 유형과 첨부 파일 헤더를 설정
-		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-		response.setHeader("Content-Disposition", "attachment; filename=customers.xlsx");
+	    // 데이터행
+	    int rowNum = 1;
+	    for (CustomerInfoDTO customer : customerList) {
+	        Row row = sheet.createRow(rowNum++);
+	        row.createCell(0).setCellValue(customer.getCustomerID());
+	        row.createCell(1).setCellValue(customer.getCustomerName());
+	        row.createCell(2).setCellValue(customer.getEmail());
+	        row.createCell(3).setCellValue(customer.getAddress());
 
-		// 출력 스트림에 통합 문서 쓰기
-		workbook.write(response.getOutputStream());
-		workbook.close();
+	        // 생년월일 셀에 날짜 형식 적용
+	        Cell dateOfBirthCell = row.createCell(4);
+	        dateOfBirthCell.setCellValue(customer.getDateOfBirth());
+	        dateOfBirthCell.setCellStyle(dateTimeCellStyle);
+
+	        row.createCell(5).setCellValue(customer.getContact());
+
+	        // 진행 상태를 한글로 변환
+	        String progress = "";
+	        if (customer.getStatus().equals("Received")) {
+	            progress = "접수완료";
+	        } else if (customer.getStatus().equals("Consulted")) {
+	            progress = "상담완료";
+	        } else {
+	            progress = "민원인";
+	        }
+	        row.createCell(6).setCellValue(progress);
+
+	        // 접수일자 셀에 날짜 형식 적용
+	        Cell registrationDateCell = row.createCell(7);
+	        registrationDateCell.setCellValue(customer.getRegistrationDate());
+	        registrationDateCell.setCellStyle(dateTimeCellStyle);
+	    }
+
+	    // 콘텐츠 유형과 첨부 파일 헤더를 설정
+	    response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+	    response.setHeader("Content-Disposition", "attachment; filename=customers.xlsx");
+
+	    // 출력 스트림에 통합 문서 쓰기
+	    workbook.write(response.getOutputStream());
+	    workbook.close();
 	}
 
 	@RequestMapping("/customerList") // 페이지 페이징처리 현재는 사용안되고 있음 searchCustomers 메서드에서 페이징 처리 되게 구현

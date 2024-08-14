@@ -193,7 +193,7 @@ button {
    			color: #fff; /* 버튼 텍스트 색상 설정 */
     		border: none; /* 버튼 경계선 제거 */
     		cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
-    		border-radius: 4px; /* 버튼의 모서리를 둥글게 설정 */
+    		border-radius: 3px; /* 버튼의 모서리를 둥글게 설정 */
 		}
 		
 		
@@ -273,7 +273,7 @@ button {
             <div>
                 <button type="button" class="button" onclick="location.href='/info'">등록</button>
                 <button type="button" class="button" onclick="location.href='/downloadExcel'">엑셀다운로드</button>
-                <button type="submit" class="button">삭제</button>
+                <button type="submit" class="button" >삭제</button>
             </div>
         </div>
         <table>
@@ -333,32 +333,32 @@ button {
 </body>
 
 
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript"> 
-empno = ${user.empno};
-datea= ${user.att.startTime}
-$('#start').click(function(){
-	deptno = ${user.deptno};
-	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
-		if (data){			
-			$('#startTime').text(data+'/');						
-		 }else{
-			alert('이미 출근버튼을 누르셨습니다.')
-			alert(date)
-		} 
+ 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript"> 
+		empno = ${user.empno};
+		datea= ${user.att.startTime}
+		$('#start').click(function(){
+			deptno = ${user.deptno};
+		$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
+			if (data){			
+				$('#startTime').text(data+'/');						
+		 	}else{
+				alert('이미 출근버튼을 누르셨습니다.')
+				alert(date)
+			} 
+		})
 	})
-})
-$('#end').click(function(){
-	$.getJSON('/endTime',{'empno':empno},function(data){
+		$('#end').click(function(){
+		$.getJSON('/endTime',{'empno':empno},function(data){
 		$('#endTime').text(data)
+		})
 	})
-})
- function selectDate(date) {
-	$.getJSON('/vacation',{'date':date},function(data){
+ 	function selectDate(date) {
+		$.getJSON('/vacation',{'date':date},function(data){
 		$('#vlist').append(datea)
-	})
-}
-</script>
+		})
+	}
+	</script>
 
  <!-- jQuery를 사용하여 “전체 선택” 체크박스를 클릭하면 모든 체크박스를 선택하거나 선택 해제할 수 있도록 스크립트를 추가했습니다. -->
     <script type="text/javascript">
@@ -369,6 +369,19 @@ $('#end').click(function(){
         });
     </script>
     
+    <!-- 삭제 버튼에 대한 클릭 이벤트를 처리하는 스크립트 추가 -->
+	<script type="text/javascript">
+    	$(document).ready(function(){	
+        	$("button[type=submit]").click(function(event){
+            	// 고객 ID 체크박스가 하나도 선택되지 않았으면 아무 동작도 하지 않음
+            if ($("input[name='customerIds']:checked").length === 0) {
+                event.preventDefault(); // 기본 동작(폼 제출) 취소
+                alert('삭제할 항목을 선택하세요.');
+            	}
+        	});
+    	});
+	</script>
+
     <!-- 고객명을 입력 했을때 새로 팝업이 열리는 스크립트 추가 -->
     <script type="text/javascript">
     	function openPopup(customerID) {

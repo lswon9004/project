@@ -75,7 +75,7 @@ button:hover {
      <!-- 게시글 내용 표시 -->
      <form action="/content/${board.no}" method="post"> 
       <div class="details-section">
-        <h2><input type="text" name="title" value="${board.title}" readonly /></h2>
+        <p><input type="text" name="title" value="${board.title}" readonly /></p>
         <p><strong>작성자</strong><input type="text" name="author" value="${board.iid}" readonly /></p>
         <p><strong>작성일</strong><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></p>
         <p><strong>조회수</strong><input type="text" name="readCount" value="${board.readCount +1}" readonly /></p>

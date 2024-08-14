@@ -6,6 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
+    min-height: 100vh;
 }
 
 /* 전체 레이아웃 및 정렬 */
@@ -13,7 +14,6 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    width: 100%;
 }
 
 header {

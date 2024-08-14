@@ -251,7 +251,7 @@
                 }
                 url += 'empno=' + searchInput;
             } else if (searchType === 'ename') {
-            	 if (isText(searchInput) || searchInput === '') { //  아니거나 빈 값인 경우 예외 처리
+            	 if (searchInput || searchInput === '') { // 텍스트가 아니거나 빈 값인 경우 예외 처리
                      alert('정확한 사원이름을 입력하세요.');
                      return;
                  }

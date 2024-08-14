@@ -1,173 +1,196 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>신규 사원등록</title>
+    <title>회원정보등록</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
         }
 
-        .modal {
-            display: block;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal img {
-            display: block;
-            margin: auto;
-        }
-        .modal-content {
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #888;
-            border-radius: 8px;
-            width: 80%;
+        .container {
             max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
+            padding: 20px;
+            position: relative;
         }
 
         h2 {
-            font-size: 24px;
+            text-align: center;
             color: #333;
-            margin: 0 0 20px 0;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
 
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
+        label {
+            margin: 5px 0;
+            color: #555;
         }
 
         input[type="text"],
         input[type="email"],
+        input[type="date"],
+        select,
         textarea {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        input[readonly],
-        textarea[readonly] {
-            background-color: #f4f4f4;
-            color: #666;
+        .photo-container {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
         }
 
-        textarea {
-            resize: none;
-            height : 200px;
+        .photo-container img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
         }
 
-        .buttons {
-            text-align: right;
+        .button-container {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
             margin-top: 20px;
         }
 
-        .buttons button {
+        button {
             padding: 10px 20px;
-            margin-left: 5px;
             border: none;
             background-color: #00bfff;
             color: #fff;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 4px;
         }
-        
-        .buttons button:last-child {
+
+        button:hover {
             background-color: #ccc;
         }
+
+        .message {
+            grid-column: 1 / -1;
+            color: #ff0000;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .authority-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .authority-container select {
+            margin-left: 10px;
+            flex-grow: 1;
+        }
+
     </style>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    var roadAddr = data.roadAddress;
+                    var jibunAddr = data.jibunAddress;
+                    document.getElementById('address').value = roadAddr || jibunAddr;
+                }
+            }).open();
+        }
+    </script>
 </head>
 <body>
-	<form action="insert" method="post" id="newEmp" class="modal">
-		<table border="1">
-			<tr>
-				<td>사원이름</td><td><input name="ename" /></td>
-				<td>사원번호</td><td><input name="empno" /></td>
-			</tr>
-			<tr>
-				<td>부서번호</td>
-				<td>
-                    <select name="deptno">
-                        <option value="200">sdff</option>
-                        <option value="100">qwer</option>
-                        <option value="300">asdf</option>
-                    </select>
-                </td>
-				<td>담당업무</td><td><input name="jop" /></td>
-				<td>직급</td>
-				<td>
-                    <select name="position">
-                        <option value="대리">대리</option>
-                        <option value="팀장">팀장</option>
-                        <option value="관리자">관리자</option>
-                    </select>
-                </td>
-			</tr>
-			<tr>
-				<td>연락처</td><td><input name="phone" /></td>
-			</tr>
-			<tr>
-				<td>이메일</td><td><input name="email" /></td>
-				<td>주소</td><td><input name="address" /></td>
-			</tr>
-			<tr>
-				<td>상세주소</td><td><input name="detailAddr" /></td>
-				<td>생년월일</td><td><input name="birthday" /></td>
-			</tr>
-			<tr>
-				<td>입사일</td><td><input name="hiredate" /></td>
-				<td>연봉</td><td><input name="sal" /></td>
-			</tr>
-			<tr>
-				<td>메모:</td><td colspan="5"><textarea id="memo" name="memo"></textarea></td>
-			</tr> 
-		</table>
-		<div class="buttons">
-                <button type="submit">등록</button>
-               <button type="button" onclick="location.href='${pageContext.request.contextPath}/emp_manage'">닫기</button>
-               
+
+    <div class="container">
+        <h2>직원등록</h2>
+        <div class="photo-container">
+            <img src="default-profile.png" alt="Profile Picture">
+        </div>
+        <form action="saveinsert" method="post" modelAttribute="InserEmpDto">
+            <label for="ename">사원이름:</label>
+            <input type="text" id="ename" name="ename" required>
+
+            <label for="empno">사원번호:</label>
+            <input type="empno" id="empno" name="empno" required>
+
+            <label for="deptno">부서번호:</label>
+            <input type="text" id="deptno" name="deptno" required>
+
+            <label for="jop">담당업무:</label>
+            <input type="text" id="jop" name="jop" required>
+
+            <label for="position">직급:</label>
+            <select id="position" name="position" required>
+                <option value="관리자">관리자</option>
+                <option value="대리">대리</option>
+                <option value="팀장">팀장</option>
+                <option value="사원">사원</option>
+            </select>
+
+            <label for="authority">권한부여:</label>
+            <div class="authority-container">
+                <input type="text" id="authority" name="authority" value="사원" readonly>
+                <select id="authority-select" name="authority-select">
+                    <option value="팀장">팀장</option>
+                    <option value="관리자">관리자</option>
+                </select>
             </div>
-	</form>
+
+            <label for="phone">연락처:</label>
+            <input type="text" id="phone" name="phone" required>
+
+            <label for="email">이메일:</label>
+            <input type="text" id="email" name="email" required>
+
+            <label for="address">주소:</label>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="zipcode" name="zipcode" placeholder="우편번호" readonly style="width: 20%;">
+                <button type="button" onclick="execDaumPostcode()">주소 검색</button>
+            </div>
+            <input type="text" id="address" name="address" required>
+
+            <label for="birthday">생년월일:</label>
+            <input type="date" id="birthday" name="birthday" required>
+
+            <label for="hiredate">입사일:</label>
+            <input type="date" id="hiredate" name="hiredate">
+
+            <label for="sal">연봉:</label>
+            <input type="text" id="sal" name="sal">
+
+            <label for="memo">메모:</label>
+            <textarea id="memo" name="memo"></textarea>
+
+            <div class="button-container">
+                <button type="submit">등록</button>
+                <button type="button" onclick="location.href='${pageContext.request.contextPath}/empList'">닫기</button>
+                <button type="button">계정잠금/해제</button>
+            </div>
+        </form>
+
+        <c:if test="${not empty message}">
+            <p class="message">${message}</p>
+        </c:if>
+    </div>
+
 </body>
 </html>

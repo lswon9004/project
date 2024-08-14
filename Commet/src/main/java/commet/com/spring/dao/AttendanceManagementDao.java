@@ -29,6 +29,7 @@ public interface AttendanceManagementDao {
 		        + "check_out = now(), "
 		        + "worktype = case "
 		        + "when time(check_in) > '09:21:00' and time(now()) < '18:19:00' then '지각/조퇴' "
+		        + "when time(check_in) > '09:21:00' and time(now()) > '18:19:00' then '지각/정상퇴근' "
 		        + "when time(now()) < '18:19:00' then '조퇴' "
 		        + "else '정상퇴근' "
 		        + "end "

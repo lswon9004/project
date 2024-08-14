@@ -12,7 +12,7 @@ public interface Empdao {
 	EmpDto login(int empno);
 	@Select("select authority from position where position = #{position}")
 	int getRight(String position);
-	@Update("update emp set loginCount  = #{loginCount}")
+	@Update("update emp set loginCount = #{loginCount}")
 	int loginCount(int loginCount);
 	@Select("select loginCount from emp where empno = #{empno}")
 	int getLoginCount(int empno);

@@ -180,7 +180,7 @@ public class CustomerInfoController {
 		    model.addAttribute("status", status);
 		    model.addAttribute("pageSize", pageSize);
 		    
-		return "customer/customerList";
+		return "customer/filtercustomerList";
 	}
 
 }

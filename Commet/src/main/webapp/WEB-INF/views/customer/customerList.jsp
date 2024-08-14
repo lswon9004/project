@@ -182,6 +182,19 @@
     		border: 1px solid #ccc; /* 입력 필드에 경계선 추가 */
     		border-radius: 4px; /* 입력 필드의 모서리를 둥글게 설정 */
 		}
+		
+		/* 진행상태 스타일 */
+		.button{
+		 margin: 5px; /* 버튼 주위에 여백 추가 */
+    		padding: 10px 20px; /* 버튼 내부에 여백 추가 */
+    		background-color: #00bfff; /* 버튼 배경색 설정 */
+   			color: #fff; /* 버튼 텍스트 색상 설정 */
+    		border: none; /* 버튼 경계선 제거 */
+    		cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
+    		border-radius: 4px; /* 버튼의 모서리를 둥글게 설정 */
+		}
+		
+		
     	</style>
 </head>
 <body>
@@ -220,9 +233,11 @@
                     <li><a href="/bullboard">익명게시판</a></li>
                     <li><a href="/emp_manage">직원관리</a></li>
                 </ul>
-                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
+                <p class="footer-text">현재시간 : <span id="current-time"></span></p>
                 <p class="footer-text">코멧업무포털</p>
             </aside>
+            
+            <!--   여기서부터 가운데 메인 -->
             
       <section class="main-content">
     		<h2>고객정보</h2>
@@ -232,7 +247,8 @@
                 <input type="text" name="customerName" placeholder="고객명">
                 <input type="text" name="contact" placeholder="연락처">
                 <button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/searchCustomers?customerName=' + $('[name=customerName]').val() + '&contact=' + $('[name=contact]').val()">검색</button>
-            <div class="dropdown">
+            	
+            <%-- 	<div class="dropdown">
                     <button type="button" class="button">진행상태</button>
                     <div class="dropdown-content">
                         <a href="${pageContext.request.contextPath}/searchCustomers">전체</a>
@@ -240,7 +256,17 @@
                         <a href="${pageContext.request.contextPath}/filterByStatus?status=Consulted">상담완료</a>
                         <a href="${pageContext.request.contextPath}/filterByStatus?status=Complaint">민원인</a>
                     </div>
-                </div>
+                </div> --%>
+            
+        <!-- 변경된 부분: dropdown 대신 select 사용 -->
+        <select id="statusSelect" class="button" onchange="filterByStatus(this.value)">
+            <option value="">진행상태 선택</option>
+            <option value="전체">전체</option>
+            <option value="Received">접수완료</option>
+            <option value="Consulted">상담완료</option>
+            <option value="Complaint">민원인</option>
+        </select>
+        
             </div>
             <div>
                 <button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/info'">등록</button>
@@ -280,6 +306,7 @@
                         <td><fmt:formatDate value="${customer.registrationDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                     </tr>
                 </c:forEach>
+                
             </tbody>
         </table>
     </form>
@@ -346,4 +373,39 @@ $('#end').click(function(){
         window.open('${pageContext.request.contextPath}/customerDetail/' + customerID, 'CustomerDetail', 'width=1000,height=1000,scrollbars=yes,resizable=yes');
     	}
 	</script>
+	
+	<!-- 진행상태 별 선택한 값에 따라 필터링 동작 구현 -->
+	<script type="text/javascript">
+    function filterByStatus(status) {
+        if (status === "전체") {
+            location.href = '${pageContext.request.contextPath}/searchCustomers';
+        } else if (status) {
+            location.href = '${pageContext.request.contextPath}/filterByStatus?status=' + status;
+        }
+    }
+</script>
+
+<!--현재시간 -->
+<script>
+    function updateTime() {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            weekday: 'long', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit'
+        };
+        const currentTimeString = now.toLocaleDateString('ko-KR', options);
+        document.getElementById('current-time').innerText = currentTimeString;
+    }
+
+    // 처음 페이지 로드 시 시간을 표시
+    updateTime();
+
+    // 매 초마다 시간을 업데이트
+    setInterval(updateTime, 1000);
+</script>
 </html>

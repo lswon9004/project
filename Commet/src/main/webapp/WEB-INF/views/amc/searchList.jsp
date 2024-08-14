@@ -203,11 +203,12 @@
                 <p class="footer-text">코멧업무포털</p>
             </aside>
             
+            
+          <!--   여기서부터 가운데 메인 -->
+          
             <section class="main-content">
              <div class="container">
-             
         	<h1>${user.empno}님의 근태현황 입니다.</h1>
-        	
 			<div class="form-container">
         	<form action="/attendance/search" method="get">
             <label for="startDate">출근일자:</label>

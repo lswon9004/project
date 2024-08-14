@@ -1,8 +1,122 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>회원정보등록</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: relative;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        label {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        select,
+        textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .photo-container {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .photo-container img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .button-container {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #00bfff;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #ccc;
+        }
+
+        .message {
+            grid-column: 1 / -1;
+            color: #ff0000;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .authority-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .authority-container select {
+            margin-left: 10px;
+            flex-grow: 1;
+        }
+
+    </style>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    var roadAddr = data.roadAddress;
+                    var jibunAddr = data.jibunAddress;
+                    document.getElementById('address').value = roadAddr || jibunAddr;
+                }
+            }).open();
+        }
+    </script>
     <title>직원 정보 입력</title>
      <style>
         /* 전체 페이지의 폰트와 배경색, 레이아웃 중앙 정렬 */
@@ -137,6 +251,7 @@ label {
 <body>
 
     <div class="container">
+
         <h2>직원 정보 등록</h2>
         <div class="header">
             <!-- 사진 업로드 폼 -->

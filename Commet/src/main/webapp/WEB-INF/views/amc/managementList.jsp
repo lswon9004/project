@@ -41,11 +41,11 @@
 		}
 
 		/* 제목 스타일 */
-		h1 {
+		h2 {
     		text-align: center; /* 제목을 중앙 정렬 */
     		color: #333; /* 제목 색상을 진한 회색으로 설정 */
-    		margin-top: 20px; /* 상단에 20px의 여백을 추가 */
-    		margin-bottom: 30px; /* 하단에 20px의 여백을 추가 */
+    		margin-top: 2px; /* 상단에 20px의 여백을 추가 */
+    		margin-bottom: 4px; /* 하단에 20px의 여백을 추가 */
     		
 		}
 		
@@ -78,15 +78,17 @@
 		}
 
 		/* 버튼 스타일 */
-		button {
-            margin: 5px; /* 버튼 주위에 여백 추가 */
-    		padding: 10px 20px; /* 버튼 내부에 여백 추가 */
-    		background-color: #00bfff; /* 버튼 배경색 설정 */
-   			color: #fff; /* 버튼 텍스트 색상 설정 */
-    		border: none; /* 버튼 경계선 제거 */
-    		cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
-    		border-radius: 4px; /* 버튼의 모서리를 둥글게 설정 */
-        }
+button {
+    margin: 5px;
+    padding: 9px 18px;
+    background-color: #00bfff; /* 버튼 배경색 */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 13px; /* 버튼 글씨 크기 */
+    font-weight: bold;
+}
         
        
 
@@ -192,7 +194,7 @@
             <aside>
                 <ul class="menu">
                     <li><a href="/customerList">통합업무</a></li>
-                     <li><a href="/attendance/managementList">근태현황</a>
+                     <li><a href="/attendance/managementList" class="active">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <li><a href="/approval/status">결재승인</a></li>
@@ -206,7 +208,7 @@
             <section class="main-content">
              <div class="container">
              
-        	<h1>${user.empno}님의 근태현황 입니다.</h1>
+        	<h2>${user.empno}님의 근태현황 입니다.</h2>
         	
 			<div class="form-container">
         	<form action="/attendance/search" method="get">

@@ -150,47 +150,7 @@
             
     </style>
 
-    <!-- Daum 주소 검색 API 스크립트 추가 -->
-    <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
-    <script>
-    function enableEdit() {
-        const inputs = document.querySelectorAll('input, textarea, select');
-        inputs.forEach(input => {
-            input.removeAttribute('readonly');
-            if (input.tagName.toLowerCase() === 'select') {
-                input.removeAttribute('disabled');
-            }
-        });
-
-        document.getElementById('addressSearchBtn').style.display = 'inline-block';
-        document.getElementById('submitButton').style.display = 'inline-block'; // 등록 버튼 보이기
-    }
-
-    function cancelEdit() {
-        const inputs = document.querySelectorAll('input, textarea, select');
-        inputs.forEach(input => {
-            input.setAttribute('readonly', true);
-            if (input.tagName.toLowerCase() === 'select') {
-                input.setAttribute('disabled', true);
-            }
-        });
-
-        document.getElementById('addressSearchBtn').style.display = 'none';
-        document.getElementById('submitButton').style.display = 'none'; // 등록 버튼 숨기기
-        location.href='${pageContext.request.contextPath}/customerList';
-    }
-
-    function execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                var roadAddr = data.roadAddress; 
-                var jibunAddr = data.jibunAddress; 
-
-                document.getElementById('address').value = roadAddr || jibunAddr;
-            }
-        }).open();
-    }
-    </script>
+   
   
 </head>
 <body>
@@ -253,5 +213,50 @@
         </form>
     </div>
 </div>
+
+
+ <!-- Daum 주소 검색 API 스크립트 추가 -->
+    <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+    <script>
+    function enableEdit() {
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.removeAttribute('readonly');
+            if (input.tagName.toLowerCase() === 'select') {
+                input.removeAttribute('disabled');
+            }
+        });
+
+        document.getElementById('addressSearchBtn').style.display = 'inline-block';
+        document.getElementById('submitButton').style.display = 'inline-block'; // 등록 버튼 보이기
+    }
+
+    function cancelEdit() {
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.setAttribute('readonly', true);
+            if (input.tagName.toLowerCase() === 'select') {
+                input.setAttribute('disabled', true);
+            }
+        });
+
+        document.getElementById('addressSearchBtn').style.display = 'none';
+        document.getElementById('submitButton').style.display = 'none'; // 등록 버튼 숨기기
+        location.href='${pageContext.request.contextPath}/customerList';
+    }
+
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var roadAddr = data.roadAddress; 
+                var jibunAddr = data.jibunAddress; 
+
+                document.getElementById('address').value = roadAddr || jibunAddr;
+            }
+        }).open();
+    }
+    </script>
+    
+    
 </body>
 </html>

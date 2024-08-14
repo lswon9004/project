@@ -143,7 +143,7 @@ label {
             <form action="/employee/uploadPhoto" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="photo"></label>
-                    <input type="file" name="imgPath" id="inputPhoto" accept="image/*">
+                    <input type="file" name="imgPath" id="imgPath" accept="image/*">
                 </div>
                 <div class="button-container">
                     <input type="submit" value="업로드">

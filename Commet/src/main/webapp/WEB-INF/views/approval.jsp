@@ -21,15 +21,47 @@
         th {
             background-color: #f2f2f2;
         }
-        .form-container {
-            margin-bottom: 20px;
-        }
-        .form-container input {
-            margin-right: 10px;
-        }
-        .form-container button {
-            margin-right: 10px;
-        }
+       .form-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-container form {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.form-container form select, 
+.form-container form input,
+.form-container form button {
+    margin-right: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+button[type="submit"] {
+    background: #00bfff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-container button:last-child {
+    margin-left: auto;
+    background: #00bfff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
         .paging{text-align:center;margin:15px 0;}
 		.paging strong{display:inline-block;width:25px;height:25px;line-height:24px;marging-right:5px;border:1px solid #ccc;color:#666;text-align:cetner;}
 		.paging .page{display:inline-block;width:25px;height:25px;line-height:24px;margin-right:5px;background:#49be5a;color:#fff;text-align:center;}
@@ -65,7 +97,7 @@
         <main>
             <aside>
                 <ul class="menu">
-                    <li><a href="#">통합업무</a></li>
+                    <li><a href="/customerList">통합업무</a></li>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval" class="active">전자결재</a></li>
                     <li><a href="/approval/status">결재승인</a></li>
@@ -79,33 +111,24 @@
             <section class="main-content">
                 <div class="status-overview">
                     <div class="form-container">
-        <form action="/approval/search">
-        <label for="approval_no">결제번호:</label>
+    <form action="/approval/search" style="flex: 1; display: flex; align-items: center;">
+        <label for="approval_no">결재번호:</label>
         <input type="text" id="approval_no" name="approval_no">
         <label for="approval_title">결재 제목:</label>
         <input type="text" id="approval_title" name="approval_title">
         <label for="startDate">작성일:</label>
-        <input type="date" id="startDate" name="startDate">~
+        <input type="date" id="startDate" name="startDate"> ~
         <input type="date" id="endDate" name="endDate">
-        <button>조회</button>
         <select name="approval_status1">
-        	<option>
-        		요청
-        	</option>
-        	<option>
-        		승인
-        	</option>
-        	<option>
-        		대기
-        	</option>
-        	<option>
-        		반려
-        	</option>
+            <option>요청</option>
+            <option>승인</option>
+            <option>대기</option>
+            <option>반려</option>
         </select>
-        </form>
-            <button onclick="location.href='/approvalWrite'">등록</button>
-        
-    </div>
+        <button type="submit" style="margin-left: 0px;">조회</button>
+    </form>
+    <button onclick="location.href='/approvalWrite'" style="margin-left: auto;">등록</button>
+</div>
     <table>
     	<colgroup>
 			<col style="width:10%;" />

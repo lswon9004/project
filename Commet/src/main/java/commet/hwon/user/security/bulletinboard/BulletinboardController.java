@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 
 import commet.hwon.user.security.Reply.ReplyDto;
 import commet.hwon.user.security.Reply.ReplyService;
@@ -127,11 +129,28 @@ public class BulletinboardController {
         return "/bullboard/update";
     }
     
+    @GetMapping("/pwCheck/{no}")
+    @ResponseBody
+    public String pwCheck(@PathVariable("no") int no,@RequestParam("pw")String pw, Model model) {
+        BulletinboardDto board = boardService.getBoard(no);
+        String result =null;
+        Gson gson = new Gson();
+        if(board.getPassword().equals(pw)) {
+        	result = "/update/"+no;
+        }else {
+        	result = "/";
+        }
+        
+        return gson.toJson(result);
+    }
+    
     // 게시글을 업데이트 메서드
     @PostMapping("/bullboard/update")
-    public String updateBoard(@ModelAttribute("board") BulletinboardDto boardDto) {
-        boardService.updateBoard(boardDto);
-        return "redirect:/bullboard";
+    public String updateBoard(BulletinboardDto boardDto) {
+    	System.out.println("ada");
+           boardService.update(boardDto);
+    	   return "redirect:/content/" + boardDto.getNo();
+      
     }
     
     // 게시글을 삭제

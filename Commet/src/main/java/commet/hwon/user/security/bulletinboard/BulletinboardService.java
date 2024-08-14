@@ -32,8 +32,9 @@ public class BulletinboardService {
     }
     
     //게시글을 업데이트하는 메서드
-    public void updateBoard(BulletinboardDto boardDto, MultipartFile file) {
-        boardDao.update(boardDto);
+    public int update(BulletinboardDto boardDto) {
+        
+        return boardDao.update(boardDto);
     }
     
     //게시글을 삭제하는 메서드

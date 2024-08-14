@@ -248,7 +248,7 @@ button {
             <div class="search-form">
                 <input type="text" name="customerName" placeholder="고객명">
                 <input type="text" name="contact" placeholder="연락처">
-                <button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/searchCustomers?customerName=' + $('[name=customerName]').val() + '&contact=' + $('[name=contact]').val()">검색</button>
+                <button type="button" class="button" onclick="location.href='/searchCustomers?customerName=' + $('[name=customerName]').val() + '&contact=' + $('[name=contact]').val()">검색</button>
             	
             <%-- 	<div class="dropdown">
                     <button type="button" class="button">진행상태</button>
@@ -271,8 +271,8 @@ button {
         
             </div>
             <div>
-                <button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/info'">등록</button>
-                <button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/downloadExcel'">엑셀다운로드</button>
+                <button type="button" class="button" onclick="location.href='/info'">등록</button>
+                <button type="button" class="button" onclick="location.href='/downloadExcel'">엑셀다운로드</button>
                 <button type="submit" class="button">삭제</button>
             </div>
         </div>

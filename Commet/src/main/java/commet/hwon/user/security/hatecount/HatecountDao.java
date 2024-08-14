@@ -29,6 +29,6 @@ public interface HatecountDao {
 	 @Select("select count(*) from hatecount where `table` = 'Bulletin_Board' and board_no = #{no} and count = 1")
 	 int hateCount(int no);
 	 
-	 @Select("select count(*) as count,no from hatecount where count = 1 and `table` = 'Bulletin_Board'  group by no")
+	 @Select("select count(*) as count, no from hatecount where count = 1 and `table` = 'Bulletin_Board'  group by no")
 	 List<Map<String, Integer>> hateCountList();
 }

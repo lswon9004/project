@@ -7,82 +7,79 @@
 <head>
 <title>익명게시판 글목록</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 50px auto;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
+    .container {
+        max-width: 1200px;
+        margin: 50px auto;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
 
-        h2 {
-            text-align: center;
-            color: #333;
-        }
+    h2, th, td {
+        text-align: center;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    h2, button {
+        color: #333;
+    }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
 
-        th {
-            background-color: #f4f4f4;
-        }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+    }
 
-        input[type="text"] {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            width: 100%;
-            box-sizing: border-box;
-        }
+    th {
+        background-color: #f4f4f4;
+    }
 
-        .search-container {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
+    input[type="text"] {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-        .search-container input[type="text"] {
-            margin-right: 10px;
-        }
+    .search-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
 
-        .button-container {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
-        }
+    .button-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
 
-        button {
-            padding: 10px 20px;
-            border: none;
-            background-color: #00bfff;
-            color: #fff;
-            cursor: pointer;
-            border-radius: 4px;
-        }
+    button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #00bfff;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 4px;
+    }
 
-        button:hover {
-            background-color: #005f99;
-        }
-    </style>
- 
+    button:hover {
+        background-color: #005f99;
+    }
+</style>
 </head>
 <body>
         <div class="container">
@@ -122,7 +119,8 @@
                         <td>${board.iid}</td>
                         <td><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></td>
                         <td>${board.readCount}</td>
-                        <td><c:forEach var="likeCount" items="${likeCountList}">
+                        <td>
+                        <c:forEach var="likeCount" items="${likeCountList}">
                         		<c:if test="${likeCount.no==board.no}">
                         			<c:if test="${likeCount.count!=null}">
                         				${likeCount.count }
@@ -131,8 +129,10 @@
                         				0
                         			</c:if>
                         		</c:if>
-                        	</c:forEach> </td>
-                        <td><c:forEach var="hateCount" items="${hateCountList}">
+                        	</c:forEach> 
+                        	</td>
+                        <td>
+                        <c:forEach var="hateCount" items="${hateCountList}">
                         		<c:if test="${hateCount.no==board.no}">
                         			<c:if test="${hateCount.count!=null}">
                         				${hateCount.count }
@@ -141,7 +141,8 @@
                         				0
                         			</c:if>
                         		</c:if>
-                        	</c:forEach></td> 
+                        	</c:forEach>
+                       </td> 
                     </tr>
                 </c:forEach>
                </c:if>

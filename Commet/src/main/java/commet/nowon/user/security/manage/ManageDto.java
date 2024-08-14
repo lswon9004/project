@@ -15,7 +15,7 @@ public class ManageDto {
 	String position;   //관리자,대리,팀장
 	String phone;		//전화번호
 	String email;           //이메일      
-	String address;                //주소    
+	String address;                   //주소    
 	String detailAddr;               //상세주소
 	@DateTimeFormat(pattern ="yyyy-MM-dd")
 	Date birthday;                //생일

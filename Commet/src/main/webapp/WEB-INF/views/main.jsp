@@ -59,6 +59,7 @@
                 <nav>
                     <a href="/main">Home</a>
                     <a href="#">개인정보수정</a>
+                    <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
             </div>
@@ -71,7 +72,6 @@
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                    <li><a href="/bullboard">익명게시판</a></li>
                 </ul>
                  <p class="footer-text">현재시간 : <span id="current-time"></span></p>
                 <p class="footer-text">코멧업무포털</p>

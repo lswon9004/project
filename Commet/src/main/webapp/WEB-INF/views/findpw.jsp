@@ -108,7 +108,7 @@
             <input type="email" name="email" id="email" placeholder="이메일">
             <input type="button" id="btn" value="email확인" onclick="emailCheck()"><br>
             <button id="btn1">비밀번호 초기화</button>
-        </form>
+        </form> 
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript">

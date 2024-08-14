@@ -119,7 +119,7 @@
         							결재 제목
         						</td>
         						<td style="margin: 0 0;padding: 0 0;"> 
-        							<input type="text" style="width: 100%;" placeholder="제목을 입력하세요" name="approval_title">
+        							<input type="text" style="width: 100%;" placeholder="제목을 입력하세요" name="approval_title" required="required">
         						</td>
         						<td>
         							담당자

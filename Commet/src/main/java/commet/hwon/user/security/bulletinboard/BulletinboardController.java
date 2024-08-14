@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import commet.hwon.user.security.Reply.ReplyDao;
+
 import commet.hwon.user.security.Reply.ReplyDto;
 import commet.hwon.user.security.Reply.ReplyService;
 import commet.hwon.user.security.hatecount.HatecountService;
@@ -79,10 +79,11 @@ public class BulletinboardController {
     	//게시글 목록 가져오기
     	List<BulletinboardDto> boards = boardService.getAllBoards(startRow, perPage);
     	model.addAttribute("boardList", boards);
-    	 List<Map<String, Integer>> likCountList = likeService.likeCountList();
+    	 List<Map<String, Integer>> likeCountList = likeService.likeCountList();
     	 List<Map<String, Integer>> hateCountList = hateService.hateCountList();
-    	model.addAttribute("likeCountList", likCountList);
+    	model.addAttribute("likeCountList", likeCountList);
     	model.addAttribute("hateCountList", hateCountList);
+    	
     	//페이지 네비게이션 시작 및 끝 번호 계산
     	int begin = (page - 1) / pageNum * pageNum + 1;
     	int end = Math.min(begin + pageNum - 1, totalPages);

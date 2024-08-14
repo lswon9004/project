@@ -16,7 +16,7 @@ import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface ManageDao {
-    @Insert("insert into emp(ename, empno, deptno, jop, position, annual, phone, email, address, detailAddr, birthday, hiredate, sal, memo) values(#{ename}, #{empno}, #{deptno}, #{jop}, #{position}, #{annual}, #{phone}, #{email}, #{address}, #{detailAddr}, #{birthday}, #{hiredate}, #{sal}, #{memo})")
+    @Insert("insert into emp(ename, empno, deptno, jop, position, imgPath, phone, email, address, detailAddr, birthday, hiredate, sal, memo) values(#{ename}, #{empno}, #{deptno}, #{jop}, #{position}, #{imgPath}, #{phone}, #{email}, #{address}, #{detailAddr}, #{birthday}, #{hiredate}, #{sal}, #{memo})")
     int insertEmp(ManageDto dto); // DB에 사원 정보 저장 메서드
 
     @Select("select count(*) from emp")
@@ -43,8 +43,22 @@ public interface ManageDao {
     })
     List<ManageDto> getEmpsByIds(int[] empnos); // 고객 정보 조회
 
-    @Select("SELECT e.*, d.deptname FROM emp e LEFT JOIN dept d ON e.deptno = d.deptno WHERE 1=1 AND (e.empno = #{empno} OR #{empno} = 0) AND (e.ename LIKE CONCAT('%', #{ename}, '%') OR #{ename} = '') ORDER BY e.empno DESC")
+   @Select({
+	   "<script>",
+	   "select * from emp natural join dept",
+	   "<where>",
+	   "<if test=\"empno != null and empno != 0\">",
+	   "empno = #{empno}",
+	   "</if>",
+	   "<if test=\"ename != null and empno != ''\">",
+	   "<if test=\"empno != null and empno != 0\">AND</if>",
+	   "ename LIKE CONCAT('%', #{ename}, '%')",
+	   "</if>",
+	   "</where>",
+	   "</script>"
+   })
     List<ManageDto> searchEmps(@Param("empno") Integer empno, @Param("ename") String ename);
+    
 
     @Delete("<script>" + 
             "delete from emp where empno in " +

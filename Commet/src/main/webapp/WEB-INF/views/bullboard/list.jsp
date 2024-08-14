@@ -90,7 +90,6 @@
         <div class="search-container">
         <form action="/search" method="get">
             <input type="text" name="title" placeholder="제목" size=10>
-            <input type="text" name="content" placeholder="내용" size=10>
             <button type="submit">검색</button>
         </form>
         </div>
@@ -122,9 +121,27 @@
                         <td><a href="/content/${board.no}">${board.title}</a></td>
                         <td>${board.iid}</td>
                         <td><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></td>
-                        <td>${board.readCount +1}</td>
-                        <td>${board.likecount.count}</td><!-- 좋아요수  -->
-                        <td>${board.hatecount.count}</td> <!-- 싫어요 수 -->
+                        <td>${board.readCount}</td>
+                        <td><c:forEach var="likeCount" items="${likeCountList}">
+                        		<c:if test="${likeCount.no==board.no}">
+                        			<c:if test="${likeCount.count!=null}">
+                        				${likeCount.count }
+                        			</c:if>
+                        			<c:if test="${likeCount.count==null}">
+                        				0
+                        			</c:if>
+                        		</c:if>
+                        	</c:forEach> </td>
+                        <td><c:forEach var="hateCount" items="${hateCountList}">
+                        		<c:if test="${hateCount.no==board.no}">
+                        			<c:if test="${hateCount.count!=null}">
+                        				${hateCount.count }
+                        			</c:if>
+                        			<c:if test="${hateCount.count==null}">
+                        				0
+                        			</c:if>
+                        		</c:if>
+                        	</c:forEach></td> 
                     </tr>
                 </c:forEach>
                </c:if>

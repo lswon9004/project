@@ -26,4 +26,13 @@ public class EmpService {
 	public List<Integer> getNoList(int deotno){
 		return dao.getEmpnolist(deotno);
 	}
+	public boolean emailCheck(int empno,String email) {
+		String dtoEmail = dao.emailCheck(empno);
+		if (dtoEmail.equals(email)) {
+			return true;
+		}
+		
+		
+		return false;
+	}
 }

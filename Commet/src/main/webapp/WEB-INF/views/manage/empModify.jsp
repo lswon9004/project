@@ -142,109 +142,28 @@
             background-color: #ccc;
         }
         
-        /* 사진 미리보기 컨테이너 */
-		.photo-preview {
-    		text-align: center; /* 사진 미리보기를 가운데 정렬 */
-    		margin-top: 1px; /* 상단에 20px의 여백 추가 */
-		}
-
-		.photo-preview img {
-    		width: 180px; /* 미리보기 이미지의 너비 설정 */
-    		height: 180px; /* 미리보기 이미지의 높이 설정 */
-    		border-radius: 50%; /* 이미지를 동그랗게 보이도록 설정 */
-    		object-fit: cover; /* 이미지가 컨테이너를 꽉 채우도록 조정 */
-    	}
-        
+        /* 숨겨진 등록 버튼 */
+        #submitButton {
+            display: none;
     </style>
-    
-</head>
-<body>
-
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="location.href='${pageContext.request.contextPath}/emp_manage'">&times;</span>
-        <h2>신입 사원정보 입력</h2>
-        <div class="header">
-            <!-- 사진 업로드 폼 -->
-            <form action="/employee/uploadPhoto" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="photo"></label>
-                    <input type="file" name="imgPath" id="imgPath" accept="image/*">
-                </div>
-                <div class="button-container">
-                    <input type="submit" value="업로드">
-                </div>
-            </form>
-
-            <!-- 사진 미리보기 -->
-            <div class="photo-preview">
-                <c:if test="${not empty photoPath}">
-                    <img id="previewImage" src="${photoPath}" alt="">
-                </c:if>
-            </div>
-        </div>
-
-         <form action="/saveinsert" method="post" modelAttribute="InserEmpDto">
-            <table>
-            <tr>
-                <td>사원 이름:</td><td><input type="text" name="ename" required></td>
-                <td>사원 번호:</td><td><input type="text" name="empno" required></td>
-            </tr>
-            <tr>
-				<td>부서:</td> <!-- db에서 dept 부서와 번호 저장 안해두면 작동안할수있음-->
-				<td>	
-					<select name="deptno" required> 
-						<option value="" disabled selected>선택하세요</option>
-        				<option value="100">qwer</option>
-        				<option value="200">sdff</option>
-        				<option value="300">asdf</option>
-					</select>
-				</td>
-				<td>직급:</td>
-				<td>
-				<select name="position" required>
-					<option value="" disabled selected>선택하세요</option>
-        			<option value="대리" >대리</option>
-        			<option value="팀장" >팀장</option>
-        			<option value="관리자" >관리자</option>
-				</select>
-				</td>
-            </tr>
-            <tr>
-				<td>연락처:</td><td><input type="text" name="phone" required></td>
-				<td>이메일:</td><td><input type="text" name="email" required></td>
-            </tr>
-            <tr>
- 				<td>주소:</td><td><input type="text" id="address" name="address" required>
-                <button type="button" onclick="execDaumPostcode()">주소 검색</button></td> 				
-  				<td>상세주소:</td><td><input type="text" name="detailAddr" ></td>
-            </tr>
-            <tr>
-	    		<td>생년월일:</td><td><input type="date" name="birthday" required></td>
-    			<td>입사일:</td><td><input type="date" name="hiredate" required></td>
-            </tr>
-             <tr>
-	    		<td>급여:</td><td><input type="text" name="sal" required></td>
-            </tr>
-            <tr>
-            	<td>메모:</td>
-                <td colspan="5">
-                    <textarea name="memo"></textarea>
-                </td>
-            </tr> 
-            </table>
-            <div class="buttons">
-                <button type="submit">등록</button>
-                <button type="button" onclick="location.href='/emp_manage'">닫기</button>
-               
-            </div>
-        </form>
-    </div>
-</div>
-
     <!-- Daum 주소 검색 API 스크립트 추가 -->
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>    
+    <!-- 글수정시 수정버튼을 눌렀을때만 수정 가능 하게 하는 기능인데 -->
     <script>
+    function enableEdit() {
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.removeAttribute('readonly');
+            if (input.tagName.toLowerCase() === 'select') {
+                input.removeAttribute('disabled');
+            }
+        });
+
+        document.getElementById('addressSearchBtn').style.display = 'inline-block';
+        document.getElementById('submitButton').style.display = 'inline-block'; // 등록 버튼 보이기
+        document.getElementById('modify').style.display = 'none'; // 수정 버튼 숨기기
+    }
+    
     function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -256,5 +175,74 @@
         }).open();
     }
     </script>
+    
+</head>
+<body>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="location.href='/emp_manage'">&times;</span>
+        <h2>사원정보</h2>
+        <form action="/empInfo" method="post" >
+            <input type="hidden" name="_method" value="put">
+            
+            <img src="/images/profile.png" alt="Profile Image" width="100">
+            <table>
+            <tr>
+                <td>사원 이름:</td><td><input type="text" name="ename" value="${empInfo.ename}" required readonly></td>
+                <td>사원 번호:</td><td><input type="text" name="empno" value="${empInfo.empno}" readonly></td>
+                <td>랭크:</td><td>${empInfo.authority}</td>
+            </tr>
+            <tr>
+				<td>부서:</td> <!-- db에서 dept 부서와 번호 저장 안해두면 작동안할수있음-->
+				<td>	
+					<select id="selected" name="deptno" readonly> 
+        				<option value="100" ${empInfo.deptno == '100' ? 'selected' : ''}>qwer</option>
+        				<option value="200" ${empInfo.deptno == '200' ? 'selected' : ''}>sdff</option>
+        				<option value="300" ${empInfo.deptno == '300' ? 'selected' : ''}>asdf</option>
+					</select>
+				</td>
+				<td>담당업무:</td><td><input type="text" name="jop" value="${empInfo.jop}" readonly></td>
+				<td>직급:</td>
+				<td>
+				<select name="position" readonly>
+        			<option value="대리" ${empInfo.position == '대리' ? 'selected' : ''}>대리</option>
+        			<option value="팀장" ${empInfo.position == '팀장' ? 'selected' : ''}>팀장</option>
+        			<option value="관리자" ${empInfo.position == '관리자' ? 'selected' : ''}>관리자</option>
+				</select>
+				</td>
+            </tr>
+            <tr>
+				<td>연락처:</td><td><input type="text" name="phone" value="${empInfo.phone}" readonly></td>
+				<td>이메일:</td><td><input type="text" name="email" value="${empInfo.email}" readonly></td>
+            </tr>
+            <tr>
+ 				<td>주소:</td><td><input type="text" id="address" name="address" value="${empInfo.address}" readonly></td>
+				<td><button type="button" id="addressSearchBtn" onclick="execDaumPostcode()" style="display: none;">주소 검색</button></td> 				
+  				<td>상세주소:</td><td><input type="text" name="detailAddr" value="${empInfo.detailAddr}" readonly></td>
+            </tr>
+            <tr>
+	    		<td>생년월일:</td><td><input type="text" name="birthday" value="<fmt:formatDate value='${empInfo.birthday}' pattern='yyyy-MM-dd' />"  readonly></td>
+    			<td>입사일:</td><td><input type="text" name="hiredate" value="<fmt:formatDate value='${empInfo.hiredate}' pattern='yyyy-MM-dd' />"  readonly></td>
+            </tr>
+             <tr>
+	    		<td>급여:</td><td><input type="text" name="sal" value="${empInfo.sal}" readonly></td>
+            </tr>
+            <tr>
+            	<td>메모:</td>
+                <td colspan="5">
+                    <textarea name="memo" readonly>${empInfo.memo}</textarea>
+                </td>
+            </tr> 
+            </table>
+            <div class="buttons">
+                <button type="button" onclick="enableEdit()" id="modify">수정</button>
+                <button type="submit" id="submitButton">등록</button>
+                <button type="button" onclick="location.href='/emp_manage'">닫기</button>
+               
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>

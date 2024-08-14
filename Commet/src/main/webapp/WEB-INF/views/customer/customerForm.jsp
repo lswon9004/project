@@ -150,17 +150,15 @@
             
     </style>
 
-   
-  
 </head>
 <body>
 
 <div id="myModal" class="modal">
     <div class="modal-content">
-        <%-- <span class="close" onclick="location.href='${pageContext.request.contextPath}/customerList'">&times;</span> 클릭 했을때 리스트로이동--%>
         <span class="close" onclick="window.close()">&times;</span>
         <h2>세부정보</h2>
-        <form action="${pageContext.request.contextPath}/customerForm" method="post">
+        <form action="${pageContext.request.contextPath}/customerForm" method="post" onsubmit="closeWindowAfterSubmit(event);">
+			<!-- 수정완료 후 폼을 체출한 후 창을 닫기 위해 onsubmit 이벤트 처리 -->
             <input type="hidden" name="_method" value="put">
             <input type="hidden" name="customerID" value="${customerInfo.customerID}">
             <table>
@@ -206,7 +204,7 @@
             </table>
             <div class="buttons">
                 <button type="button" onclick="enableEdit()">수정</button>
-                <button type="submit" id="submitButton">등록</button>
+                <button type="submit" id="submitButton"   >수정완료</button>
                 <button type="button" onclick="window.close()">닫기</button>
                 
             </div>
@@ -218,19 +216,22 @@
  <!-- Daum 주소 검색 API 스크립트 추가 -->
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
     <script>
-    function enableEdit() {
-        const inputs = document.querySelectorAll('input, textarea, select');
+    function enableEdit() {  // 수정 버튼을 눌렀을 때 호출되는 함수
+        const inputs = document.querySelectorAll('input, textarea, select');// 모든 input, textarea, select 요소를 선택
+     	// 선택된 요소들의 읽기 전용 속성을 제거하여 편집 가능하게 만듦
         inputs.forEach(input => {
-            input.removeAttribute('readonly');
+            input.removeAttribute('readonly'); // readonly 속성 제거
             if (input.tagName.toLowerCase() === 'select') {
-                input.removeAttribute('disabled');
+                input.removeAttribute('disabled'); // select 태그의 disabled 속성 제거
             }
         });
-
-        document.getElementById('addressSearchBtn').style.display = 'inline-block';
+     	
+        document.getElementById('addressSearchBtn').style.display = 'inline-block'; // 주소 검색 버튼을 보이게 함
         document.getElementById('submitButton').style.display = 'inline-block'; // 등록 버튼 보이기
+        document.querySelector('.buttons button[onclick="enableEdit()"]').style.display = 'none';// 수정 버튼 숨기기
     }
-
+    
+ 	// 수정 모드를 취소하고 원래 상태로 되돌리는 함수
     function cancelEdit() {
         const inputs = document.querySelectorAll('input, textarea, select');
         inputs.forEach(input => {
@@ -240,22 +241,60 @@
             }
         });
 
-        document.getElementById('addressSearchBtn').style.display = 'none';
+        document.getElementById('addressSearchBtn').style.display = 'none';   // 주소 검색 버튼을 숨김
         document.getElementById('submitButton').style.display = 'none'; // 등록 버튼 숨기기
-        location.href='${pageContext.request.contextPath}/customerList';
+        location.href='/customerList';  // customerList 페이지로 이동
     }
-
+ 	
+  
+ 	
+ 	// Daum 주소 검색 API를 실행하는 함수
     function execDaumPostcode() {
         new daum.Postcode({
-            oncomplete: function(data) {
-                var roadAddr = data.roadAddress; 
-                var jibunAddr = data.jibunAddress; 
-
+            oncomplete: function(data) { // 주소 검색이 완료되었을 때 호출되는 콜백 함수
+                var roadAddr = data.roadAddress; // 도로명 주소
+                var jibunAddr = data.jibunAddress; // 지번 주소
+					
+             	// 도로명 주소가 있으면 roadAddr을, 없으면 지번 주소를 입력 필드에 설정
                 document.getElementById('address').value = roadAddr || jibunAddr;
             }
-        }).open();
+        }).open();// 주소 검색 팝업 열기
     }
     </script>
+    
+    
+    <script> // 수정완료 후 저장 > 닫기 구현을 위해 Ajax활용
+    	function closeWindowAfterSubmit(event) {
+        event.preventDefault(); // 기본 폼 제출을 막음
+
+        const form = event.target;
+
+        // 폼 데이터를 Ajax로 제출
+        const xhr = new XMLHttpRequest();
+        xhr.open(form.method, form.action, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+               /*  window.close(); */ // 요청이 성공적으로 처리된 후 창을 닫음
+               no=${customerInfo.customerID}; // 수정완료 후 다시 이전 화면으로
+               location.href='/customerDetail/'+no; // 수정완료 후 다시 이전 화면으로 //이 방법보다 더 쉬운 방법 있을거 같음 나중에 확인
+            } else {
+                alert("수정 중 오류가 발생했습니다. 다시 시도해 주세요.");
+            }
+        };
+
+        // 폼 데이터를 직렬화하여 전송
+        const formData = new FormData(form);
+        const urlEncodedData = new URLSearchParams(formData).toString();
+        xhr.send(urlEncodedData);
+    }
+    
+    	//1.	폼이 제출되면: onsubmit 이벤트가 발생하여 closeWindowAfterSubmit 함수가 호출됩니다.
+    	//2.	기본 제출 동작을 막고: Ajax를 사용해 비동기적으로 데이터를 서버에 전송합니다.
+    	//3.	서버 응답을 받고: 응답이 성공적이면 창을 닫고, 오류가 발생하면 경고 메시지를 표시합니다.
+	</script>
+
     
     
 </body>

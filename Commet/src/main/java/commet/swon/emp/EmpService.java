@@ -17,8 +17,8 @@ public class EmpService {
 	public int getRight(String position) {
 		return dao.getRight(position);
 	}
-	public int loginCount(int count) {
-		return dao.loginCount(count);
+	public int loginCount(int count,int empno) {
+		return dao.loginCount(count,empno); 
 	}
 	public int getCount(int empno) {
 		return dao.getLoginCount(empno);
@@ -34,5 +34,8 @@ public class EmpService {
 		
 		
 		return false;
+	}
+	public int updatepw(int empno) {
+		return dao.updatepw(empno);
 	}
 }

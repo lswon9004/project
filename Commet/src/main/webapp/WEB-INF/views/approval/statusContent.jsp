@@ -77,7 +77,7 @@
                     <li><a href="#">통합업무</a></li>
                     <li><a href="#">게시판</a></li>
                     <li><a href="/approval">전자결재</a></li>
-                    <li><a href="/approval/status">결재승인</a></li>
+                    <li><a href="#">결재승인</a></li>
                     <li><a href="#">캘린더</a></li>
                     <li><a href="#">직원관리</a></li>
                     <li><a href="#">관찰관리</a></li>
@@ -89,7 +89,6 @@
                 <div class="status-overview">
                     <div class="form-container">
         				<h1 style="text-align: center;">결재 신청</h1>
-        				<form method="post" action="/approval/update/${dto.approval_no}" name="approvalDto">
         				<table>
         				<colgroup>
 			<col style="width:25%;" />
@@ -105,12 +104,12 @@
         					</tr>
         					<tr>
         					<td>서류 종류</td>
-        						<td style="margin: 0 0;padding: 0 0;"><select name="approval_type" style="width: 100%;">
-        							<option value="1">연차/휴가신청</option>
-        							<option value="2">출장신청</option>
-        							<option value="3">문서결재</option>
-        							<option value="4">비품신청</option>
-        						</select></td>
+        						<td style="margin: 0 0;padding: 0 0;"><c:choose>
+									<c:when test="${dto.approval_type ==1 }">연차/휴가신청</c:when>
+									<c:when test="${dto.approval_type ==2 }">출장신청</c:when>
+									<c:when test="${dto.approval_type ==3 }">문서결재</c:when>
+									<c:when test="${dto.approval_type ==4 }">비품신청</c:when>
+								</c:choose></td>
         						<td>사원 번호</td>
         						<td>${dto.empno }</td>
         					</tr>
@@ -129,24 +128,36 @@
         						</td>
         					</tr>
         				</table>
-        				<textarea id="editor" style="width: 100%; height: 200px;" name="approval_content">${dto.approval_content }</textarea>
-        				<input type="submit" value="등록"> <input type="button" value="목록" onclick="location.href='/approval/${user.empno}'">
+        				<textarea style="width: 100%; height: 200px;" readonly="readonly">${dto.approval_content }</textarea>
+        				<form method="get" action="/approval/statusForm/${dto.approval_no}">
+        				<table>
+        				<colgroup>
+			<col style="width:25%;" />
+			<col style="width:75%;" />
+		</colgroup>
+        					<tr>
+        						<td>결재 처리</td>
+        						<td>
+        							<label for="1">승인</label> : 
+        							<label for="2">반려 </label>: 
+        						</td>
+        					</tr>
+        					<tr>
+        						<td>결재 의견</td>
+        						<td style="margin: 0 0;padding: 0 0;">
+        							<textarea  style="width: 100%; font-size: 20px;" rows="5" name="approval_comm" readonly="readonly"></textarea>
+        						</td>
+        					</tr>
+        				</table>
+        				<button>결재</button>
+        				<input type="button"  onclick="window.location.href='/approval/status'" value="취소" />
         				</form>
-        				
    					 </div>
    
                 </div>
             </section>
         </main>
     </div>
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
-    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
     
-    <script>
-    ClassicEditor.create( document.querySelector( '#editor' ), {
-        language: "ko"
-      } );
-    </script>
 </body>
 </html>

@@ -258,7 +258,7 @@ label {
             <form action="/employee/uploadPhoto" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="photo"></label>
-                    <input type="file" name="imgPath" id="inputPhoto" accept="image/*">
+                    <input type="file" name="imgPath" id="imgPath" accept="image/*">
                 </div>
                 <div class="button-container">
                     <input type="submit" value="업로드">
@@ -365,7 +365,7 @@ label {
         }
 
         // 파일 선택 시 미리보기 기능 연결
-        document.getElementById('inputPhoto').addEventListener('change', (e) => {
+        document.getElementById('imgPath').addEventListener('change', (e) => {
             readImage(e.target);
         });
     </script>

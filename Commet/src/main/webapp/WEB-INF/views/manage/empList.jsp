@@ -29,9 +29,12 @@
             font-family: Arial, sans-serif;
         }
         h2 {
-            text-align: center;
-            margin: 20px 0;
-        }
+    		text-align: center; /* 제목을 중앙 정렬 */
+    		color: #333; /* 제목 색상을 진한 회색으로 설정 */
+    		margin-top: 2px; /* 상단에 20px의 여백을 추가 */
+    		margin-bottom: 4px; /* 하단에 20px의 여백을 추가 */
+    		
+		}
         table {
             width: 100%;
             border-collapse: collapse;
@@ -170,6 +173,7 @@
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
                     <li><a href="/bullboard">익명게시판</a></li>
+					<c:if test="${user.right>=3 }"> <li><a href="/approval/status" class="active">직원관리</a></li></c:if>
                 </ul>
                 <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
                 <p class="footer-text">코멧업무포털</p>

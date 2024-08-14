@@ -25,6 +25,16 @@
         .prev-month, .next-month {
             color: #ccc;
         }
+        body {
+    	font-family: Arial, sans-serif;
+		}
+		h2 {
+            text-align: center; /* 제목을 중앙 정렬 */
+    		color: #333; /* 제목 색상을 진한 회색으로 설정 */
+    		margin-top: 2px; /* 상단에 px의 여백을 추가 */
+    		margin-bottom: 14px; /* 하단에 px의 여백을 추가 */
+    		
+		}
         /* 메인 콘텐츠 내부 스타일 */
 .main-content {
 	width: 75%;
@@ -132,7 +142,6 @@ table th {
                 <p id="endTime">00:00</p>
                 <nav>
                     <a href="/main">Home</a>
-                    <a href="/cleander">연봉계산기</a>
                     <a href="#">개인정보수정</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -154,6 +163,7 @@ table th {
                 <p class="footer-text">코멧업무포털</p>
             </aside>
             <section class="main-content">
+            		<h2>게시판</h2>
                 <!-- 메인 콘텐츠 영역 -->
 				<div class="search-form">
 					<!-- 검색 폼을 포함하는 요소 -->

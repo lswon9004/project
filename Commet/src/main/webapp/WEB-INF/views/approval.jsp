@@ -88,7 +88,6 @@ button[type="submit"] {
                 <p id="endTime">00:00</p>
                 <nav>
                     <a href="#">Home</a>
-                    <a href="/cleander">연봉계산기</a>
                     <a href="#">개인정보수정</a>
                     <a href="/logout">로그아웃</a>
                 </nav>

@@ -98,31 +98,34 @@ button {
         
         /* 버튼 호버 시 스타일링 */
         .button:hover {
-            background-color: #0056b3; /* 마우스를 올렸을 때 버튼의 배경색 변경 */
+            background-color: #00bfff; /* 마우스를 올렸을 때 버튼의 배경색 변경 */
         }
         
         /* 드롭다운 메뉴 스타일링 */
         .dropdown {
             display: inline-block; /* 드롭다운을 인라인 블록으로 설정 */
             position: relative; /* 드롭다운 메뉴의 위치를 부모 요소에 상대적으로 설정 */
+            font-weight: bold;
         }
         
         /* 드롭다운 내용 스타일링 */
 		.dropdown-content {
     		display: none; /* 드롭다운 내용을 기본적으로 숨김 */
    		 	position: absolute; /* 드롭다운 내용을 절대 위치로 설정 */
-    		background-color: #f9f9f9; /* 드롭다운 배경색 설정 */
+    		background-color: #00bfff; /* 드롭다운 배경색 설정 */
     		min-width: 160px; /* 드롭다운 최소 너비 설정 */
     		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* 드롭다운 그림자 효과 */
     		z-index: 1; /* 드롭다운이 다른 요소들 위에 나타나도록 설정 */
+    		font-weight: bold;
 		}
 
 		/* 드롭다운 항목 스타일링 */
 		.dropdown-content a {
-    		color: black; /* 드롭다운 항목의 텍스트 색상 설정 */
+    		background-color: #00bfff;
     		padding: 12px 16px; /* 드롭다운 항목 내부 여백 설정 */
-    		text-decoration: none; /* 드롭다운 항목의 밑줄 제거 */
     		display: block; /* 드롭다운 항목을 블록 요소로 설정 */
+    		font-weight: bold;
+    		
 		}
 
 		/* 드롭다운 항목 호버 시 스타일링 */
@@ -187,13 +190,14 @@ button {
 		
 		/* 진행상태 스타일 */
 		.button{
-		 margin: 5px; /* 버튼 주위에 여백 추가 */
-    		padding: 10px 20px; /* 버튼 내부에 여백 추가 */
+		 margin: 2px; /* 버튼 주위에 여백 추가 */
+    		padding: 9px 18px; /* 버튼 내부에 여백 추가 */
     		background-color: #00bfff; /* 버튼 배경색 설정 */
    			color: #fff; /* 버튼 텍스트 색상 설정 */
     		border: none; /* 버튼 경계선 제거 */
     		cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
-    		border-radius: 4px; /* 버튼의 모서리를 둥글게 설정 */
+    		border-radius: 20px; /* 버튼의 모서리를 둥글게 설정 */
+    		font-weight: bold;
 		}
 		
 		
@@ -220,6 +224,7 @@ button {
                 <nav>
                     <a href="/main">Home</a>
                     <a href="#">개인정보수정</a>
+                    <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
             </div>
@@ -231,12 +236,9 @@ button {
                      <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
-                    <li><a href="/approval/status">결재승인</a></li>
-                    <li><a href="/bullboard">익명게시판</a></li>
-                    <li><a href="/emp_manage">직원관리</a></li>
+                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
+                    <c:if test="${user.right>=3 }"> <li><a href="/approval/status">직원관리</a></li></c:if>
                 </ul>
-                <p class="footer-text">현재시간 : <span id="current-time"></span></p>
-                <p class="footer-text">코멧업무포털</p>
             </aside>
             
             <!--   여기서부터 가운데 메인 -->
@@ -331,6 +333,9 @@ button {
         </main>
     </div>
 </body>
+<footer>
+<p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
+</footer>
 
 
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

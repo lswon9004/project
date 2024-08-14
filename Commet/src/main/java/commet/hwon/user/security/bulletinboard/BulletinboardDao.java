@@ -29,9 +29,12 @@ public interface BulletinboardDao {
     @Select("SELECT * FROM BULLETIN_BOARD WHERE no = #{no}")
     BulletinboardDto getBoard(int no);
     
+    //게시글의 비밀버호를 가져오는 메서드
+    //String getPassword(int no);
+   
     //데이터베이스에 게시글을 업데이트하는 메서드
     @Update("UPDATE BULLETIN_BOARD SET title = #{title}, content = #{content}  WHERE no = #{no}")
-    void update(BulletinboardDto boardDto);
+    int update(BulletinboardDto boardDto);
     
     //게시글의 조회수를 증가하는 메서드
     @Update("UPDATE BULLETIN_BOARD SET readCount = readCount + 1 WHERE no = #{no}")

@@ -136,7 +136,7 @@
 					<c:forEach items="${alist}" var="alist">
 						<tr>
 							<td>${alist.approval_no }</td>
-							<td><a href="/approval/statusForm/${alist.approval_no }">${alist.approval_title }</a></td>
+							<td><a href="/approval/statusContent/${alist.approval_no }">${alist.approval_title }</a></td>
 							<td><c:choose>
 									<c:when test="${alist.approval_type ==1 }">연차/휴가신청</c:when>
 									<c:when test="${alist.approval_type ==2 }">출장신청</c:when>

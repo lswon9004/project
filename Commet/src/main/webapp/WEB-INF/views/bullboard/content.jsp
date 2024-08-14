@@ -6,67 +6,30 @@
 <head>
 <title>익명게시판 글내용</title>
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-}
-
-container {
-    max-width: 800px;
-    margin: 50px auto;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.container {
+    width: 80%;
+    margin: auto;
+    background-color: #f8f9fa;
     padding: 20px;
+    border-radius: 5px;
 }
 
-h2 {
-    text-align: center;
-    color: #333;
-}
 .details-section {
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin-top: 20px;
-    background-color: #f7f7f7;
-    border-radius: 4px;
-}
-
-.details-section p {
-    margin: 5px 0;
+    margin-bottom: 20px;
 }
 
 .textarea-content {
-    width: 100%;
-    height: 200px;
+    margin-bottom: 20px;
+    background-color: #e9ecef;
     padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    margin-top: 20px;
-    box-sizing: border-box;
+    border-radius: 5px;
 }
 
-
-button-box {
-    text-align: center;
-    margin-top: 30px;
+.button-box {
+    text-align: right;
 }
+</style>
 
-button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #00bfff;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-button:hover {
-    background-color: #005f99;
-}
 </style>
 
 </head>
@@ -74,15 +37,16 @@ button:hover {
     <div class="container">
      <!-- 게시글 내용 표시 -->
      <form action="/content/${board.no}" method="post"> 
+      
       <div class="details-section">
-        <p><input type="text" name="title" value="${board.title}" readonly /></p>
-        <p><strong>작성자</strong><input type="text" name="author" value="${board.iid}" readonly /></p>
-        <p><strong>작성일</strong><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></p>
-        <p><strong>조회수</strong><input type="text" name="readCount" value="${board.readCount +1}" readonly /></p>
+      <h1>${board.title}</h1>
+       <p><strong>작성자: </strong>${board.iid}</p>
+       <p><strong>작성일: </strong><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></p>
+       <p><strong>조회수: </strong>${board.readCount +1}</p>
+        </div>
+         <div class="textarea-content">
+         <p>${board.content}</p>
          </div>
-        
-        <textarea name="content" class="textarea-content" readonly>${board.content}</textarea>
-        
         <!-- 좋아요 버튼 -->
         <input type="button" id="like-button" data-board-no="${board.no}" value="👍" />
          <span id="like-count">${likeCount}</span>
@@ -94,8 +58,11 @@ button:hover {
         
         <div class="button-box">
            <button onclick="location.href='/bullboard'">목록으로</button>
-           <button onclick="location.href='/update/${board.no}'">수정</button>
-        </div>  
+           <button onclick="update()">수정</button>
+           <input id="pw" type="password">
+        </div>
+       
+        
         <form action="/delete/${board.no}" method="post">
           <label for="password-input">Password:</label>
            <input type="password" id="password-input1" name="password" />
@@ -107,11 +74,12 @@ button:hover {
     <c:forEach var="reply" items="${replies}">
      <form action="/reply/delete" method="post">
     	<input type="hidden" name="cno" value="${reply.cno }">
-    	    	<input type="hidden" name="no" value="${board.no }">
+    	<input type="hidden" name="no" value="${board.no }">
     	
-        <div class="reply">           
+        <div class="reply">
+           <p>${reply.id}</p>           
             <p>${reply.content}</p>
-               <label for="password-input">Password:</label>
+             <label for="password-input">Password:</label>
             <input type="password" id="password-input-${reply.id}" name="password"> 
             <button class="delete-reply" data-reply-id="${reply.id}">댓글 삭제</button>
         </div>
@@ -137,7 +105,7 @@ button:hover {
     <!-- 제출 버튼 -->
     <input type="submit" id="submit-reply" value="Submit reply" />
   </form>
-</div>
+</div>  
           
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -178,7 +146,18 @@ $(document).ready(function() {
         
         });
     });
+
 });
+function update(){
+	pw = $('#pw').val()
+	$.getJSON("/pwCheck/"+boardNo,{'pw':pw},function(data){
+		if(data!="/"){
+			location.href=data
+		}else{
+			alert('비밀번호 틀림')
+		}
+	})
+}
 </script>
 </body>
 </html>

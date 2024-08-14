@@ -170,6 +170,12 @@ public class ApprovalController {
 		m.addAttribute("dto", dto);
 		return "/approval/statusForm";
 	}
+	@GetMapping("/approval/statusContent/{no}")
+	public String statusContent(@PathVariable("no")int no, Model m) {
+		ApprovalDto dto = aService.oneApproval(no);
+		m.addAttribute("dto", dto);
+		return "/approval/statusContent";
+	}
 	@PostMapping("/approval/statusForm/{no}")
 	public String updateStatus(@PathVariable("no")int no,@RequestParam("approval_status1")String approval_status1,
 							   @RequestParam("approval_comm")String approval_comm) {

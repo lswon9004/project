@@ -48,6 +48,13 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 //		service.insertEmp(dto);
 //		return "redirect:/emp_manage"; 
 //	}
+	@GetMapping("/empModify")
+	public String showModify(@RequestParam("no")int no, Model model) {
+		ManageDto empInfo = service.getempByID(no); //ID에 해당하는 고객 정보를 조회
+    	model.addAttribute("empInfo", empInfo);
+		return "manage/empModify";
+	}
+	
 	
 	@GetMapping("/empInfo") // 사원 정보 수정확인
 	public String showForm() {
@@ -94,6 +101,7 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
     
     @PutMapping("/empInfo")//정보수정
     public String updateEmp(@ModelAttribute("empInfo") ManageDto dto) {
+    	System.out.println(dto);
     	service.updateEmp(dto);
         return "redirect:/emp_manage";
     }

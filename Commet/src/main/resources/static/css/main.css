@@ -81,7 +81,7 @@ footer {
     color: #fff;
     border: none;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 30px;
     font-size: 12px; /* 버튼 글씨 크기 */
     font-weight: bold;
 }

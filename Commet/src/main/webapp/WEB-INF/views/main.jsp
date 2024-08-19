@@ -42,12 +42,12 @@
      <div class="container">
         <header>
             <div class="user-info">
-                <img src="profile.jpg" alt="User Profile">
+                <img src="/upload/${user.imgPath}" alt="User Profile">
                 <div>
-                    <p>이름: 김자바</p>
+                    <p>이름: ${user.ename }</p>
                     <p>직책: ${user.position }</p>
                     <p>사번: ${user.empno }</p>
-                    <p>김자바 님 환영합니다.</p>
+                    <p>${user.ename }님 환영합니다.</p>
                 </div>
             </div>
             <h1>코멧 업무포털</h1>

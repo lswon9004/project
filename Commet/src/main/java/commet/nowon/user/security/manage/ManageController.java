@@ -198,7 +198,9 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 	        if (newFile != null) {
 	            model.addAttribute("photoPath", "/upload/" + newFileName);
 				String filePath = request.getServletContext().getRealPath("empImg"); 
-				System.out.println(filePath);
+				ManageDto dto = new ManageDto();
+				dto.setImgPath(newFileName);
+				model.addAttribute("InserEmpDto", dto);
 				File file = new File(filePath);
 	        }
 

@@ -6,79 +6,117 @@
 <html>
 <head>
 <title>익명게시판 글목록</title>
-    <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f9f9f9;
-        margin: 0;
-        padding: 0;
-    }
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-image: url('background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@media (max-width: 600px) {
     .container {
-        max-width: 1200px;
-        margin: 50px auto;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-    }
-
-    h2, th, td {
-        text-align: center;
-    }
-
-    h2, button {
-        color: #333;
-    }
-
-    table {
         width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    th, td {
-        border: 1px solid #ddd;
         padding: 10px;
     }
+}
 
-    th {
-        background-color: #f4f4f4;
-    }
+.container {
+    animation: fadeIn 2s ease-in-out;
+}
+.container {
+    max-width: 1200px;
+    margin: 50px auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
 
-    input[type="text"] {
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        width: 100%;
-        box-sizing: border-box;
-    }
+h2 {
+    color: #333;
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
 
-    .search-container {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
-    }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
 
-    .button-container {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 20px;
-    }
+th, td {
+    border: 1px solid  #000000;
+    padding: 10px;
+    text-align: center;
+}
 
-    button {
-        padding: 10px 20px;
-        border: none;
-        background-color: #00bfff;
-        color: #fff;
-        cursor: pointer;
-        border-radius: 4px;
-    }
+th {
+    background-color: #E0FFFF;
+}
 
-    button:hover {
-        background-color: #005f99;
-    }
+input[type="text"] {
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 60%;
+    box-sizing: border-box;
+}
+
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    width: 60%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #00bfff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #005f99;
+}
+
+#page {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#page a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #333;
+}
+
+#page a:hover {
+    color: #007BFF;
+}
+
 </style>
 </head>
 <body>
@@ -133,7 +171,7 @@
                         	</td>
                         <td>
                         <c:forEach var="hateCount" items="${hateCountList}">
-                        		<c:if test="${hateCount.no==board.no}">
+                        		<c:if test="${hateCount.board_no==board.no}">
                         			<c:if test="${hateCount.count!=null}">
                         				${hateCount.count }
                         			</c:if>
@@ -148,10 +186,10 @@
                </c:if>
             </tbody>
         </table>
-        
         <div class="button-container">
             <button onclick="location.href='/write'">글쓰기</button>
         </div>
+        
         <!-- 페이지 네비게이션 -->
         <div id="page">
 				<c:if test="${begin > pageNum }">

@@ -135,15 +135,13 @@ $(document).ready(function() {
     // 좋아요 버튼 클릭 이벤트
     $('#like-button').click(function() {
     	$.getJSON("/bullboard/like",{'no':boardNo,'empno':empno},function(data){
-    	      alert(data)         
+    		$('#like-count').text(data);    
     })});
 
     // 싫어요 버튼 클릭 이벤트
     $('#hate-button').click(function() {
     	$.getJSON("/bullboard/hate",{'no':boardNo,'empno':empno},function(data){
-  	      alert(data)     
-
-        
+    	      $('#hate-count').text(data);       
         });
     });
 

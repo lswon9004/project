@@ -1,213 +1,53 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.Calendar" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>게시판 목록</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-<style>
-/* 각 HTML 요소에 대한 스타일 코드 */
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
-.container {
-    width: 90%;
-    margin: auto;
-    overflow: hidden;
-}
-header {
-    background: #e0f7fa;
-    color: #000;
-    padding: 20px 0;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.user-info {
-    display: flex;
-    align-items: center;
-    margin-left: 20px;
-}
-.user-info p {
-    margin: 0;
-    padding: 0;
-}
-h1 {
-    margin: 0;
-    padding: 0;
-    font-size: 24px;
-}
-.logout a {
-    color: #00796b;
-    text-decoration: none;
-    font-size: 16px;
-    margin-right: 20px;
-}
-nav {
-    margin-top: 20px;
-    background: #333;
-    color: #fff;
-}
-nav ul {
-    padding: 0;
-    list-style: none;
-    display: flex;
-    justify-content: space-around;
-}
-nav ul li {
-    display: inline;
-    margin: 0;
-}
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    padding: 15px 20px;
-    display: inline-block;
-}
-nav ul li a:hover, .active {
-    background: #77a1d3;
-}
-main {
-    display: flex;
-    margin-top: 20px;
-}
-aside {
-    width: 25%;
-    padding: 20px;
-    background: #fafafa;
-    border-right: 1px solid #ddd;
-}
-aside .menu {
-    padding: 0;
-    list-style: none;
-}
-aside .menu li {
-    margin-bottom: 10px;
-}
-aside .menu li a {
-    color: #00796b;
-    text-decoration: none;
-    display: block;
-    padding: 10px;
-    background: #f9f9f9;
-    border-radius: 5px;
-}
-aside .menu li a.active, aside .menu li a:hover {
-    background: #77a1d3;
-    color: #fff;
-    text-decoration: underline;
-}
-aside .footer-text {
-    margin-top: 20px;
-    color: #777;
-    font-size: 14px;
-}
-.main-content {
-    width: 75%;
-    padding: 20px;
-    background: #fff;
-}
-.actions {
-    text-align: right;
-    margin-bottom: 20px;
-}
-.actions button {
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    background: #e0f7fa; /* view.jsp의 글쓰기 버튼 색 */
-    color: #000;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Noto Sans KR', sans-serif; /* th 태그와 동일한 글씨체 */
-    font-weight: bold; /* th 태그와 동일한 글씨 굵기 */
-}
-.search-form {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    background: #f9f9f9;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-.search-form input, .search-form button {
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-.search-form input[type="date"] {
-    padding: 9px;
-}
-.search-form button {
-    background: #333;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
-table th {
-    background: #e0f7fa; /* view.jsp의 테이블 헤더 색 */
-    color: #000;
-    font-family: 'Noto Sans KR', sans-serif; /* th 태그와 동일한 글씨체 */
-    font-weight: bold; /* th 태그와 동일한 글씨 굵기 */
-}
-.pagination {
-    text-align: center;
-    margin-bottom: 20px;
-}
-.pagination button {
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    background: #77a1d3;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management Portal</title>
+        <link rel="stylesheet" type="text/css" href="/css/main.css" />
 </head>
 <body>
-<!-- 페이지의 컨테이너를 정의하고  사용자의 번호를 표시하고, 로그아웃 링크를 추가 -->
-<div class="container">
-    <header> 
-        <h1>${user.empno}</h1>
-        <a href="/logout" class="logout">로그아웃</a>
-    </header>
-    <!-- 사이드바를 정의하고 다양한 메뉴 항목을 추가. 현재 시간을 표시하는 텍스트 추가 -->
-    <main>
-        <aside>
-            <ul class="menu">
-                <li><a href="#">통합업무</a></li>
-                <li><a href="/boards" class="active">게시판</a></li>
-                <li><a href="#">익명게시판</a></li>
-                <li><a href="/approval">전자결재</a></li>
-                <li><a href="#">직원관리</a></li>
-                <li><a href="#">팀장전자결재</a></li>
-                <li><a href="#">캘린더</a></li>
-                <li><a href="#">권한관리</a></li>
-            </ul>
-            <p class="footer-text">현재시간 : 2024/07/29 수요일 09:15</p>
-            <p class="footer-text">코멧업무포털</p>
-        </aside> <!-- 사이드바 영역 끝 -->
-        <!-- 제목 작성자 날짜로 검색할 수 있는 입력 필드와 검색 버튼을 포함하는 검색 폼을 정의 -->
-        <section class="main-content">
+     <div class="container">
+        <header>
+            <div class="user-info">
+                <img src="profile.jpg" alt="User Profile">
+                <div>
+                    <p>이름: 김자바</p>
+                    <p>직책: ${user.position }</p>
+                    <p>사번: ${user.empno }</p>
+                    <p>김자바 님 환영합니다.</p>
+                </div>
+            </div>
+            <h1>코멧 업무포털</h1>
+            <div class="header-right">
+                <button id="start">업무시작</button>
+                <button id="end">업무종료</button>
+                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">00:00/</c:if></p>
+                <p id="endTime">00:00</p>
+                <nav>
+                    <a href="/main">Home</a>
+                    <a href="#">개인정보수정</a>
+                    <a href="/bullboard">익명게시판</a>
+                    <a href="/logout">로그아웃</a>
+                </nav>
+            </div>
+        </header>
+        <main>
+            <aside>
+                <ul class="menu">
+                    <li><a href="/customerList">통합업무</a></li>
+                     <li><a href="/attendance/managementList">근태현황</a>
+                    <li><a href="/boards" class="active">게시판</a></li>
+                    <li><a href="/approval/${user.empno}">전자결재</a></li>
+                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
+                </ul>
+            </aside>
+		<section class="main-content">
+		<h2>게시판</h2>
             <div class="search-form">
                 <form action="/boards/search" method="get">
                     <input type="text" name="title" placeholder="제목으로 검색">
@@ -215,6 +55,9 @@ table th {
                     <input type="date" name="date">
                     <button type="submit">검색</button>
                 </form>
+                <div>
+                <button onclick="location.href='/boards/write'">글쓰기</button>
+					</div>
             </div>
             <!-- 게시판 목록 테이블 영역 -->
             <table>
@@ -241,7 +84,7 @@ table th {
                 </tbody> 
             </table> <!-- 게시판 목록 테이블 영역 끝 -->
             <!-- 페이징을 위한 요소 -->
-            <div class="paging">
+            <div class="pagination">
             <!-- c:if와 c:forEach 태그를 사용하여 페이지 번호를 표시하고, 이전 및 다음 버튼을 제공 -->
 		<div id="page">
 				<c:if test="${begin > pageNum }">
@@ -255,13 +98,61 @@ table th {
 				</c:if>
 			</div>
 		</div>
-            <div class="actions"> <!-- 글쓰기 버튼을 포함하는 요소 -->
-                <button onclick="location.href='/boards/write'">글쓰기</button>
-                <button onclick="location.href='/boards/write'">공지글작성</button>
-            </div>
-        </section>
-    </main>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            </section>
+        </main>
+    </div>
 </body>
+<footer>
+<p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
+</footer>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"> 
+empno = ${user.empno};
+datea= ${user.att.startTime}
+$('#start').click(function(){
+   deptno = ${user.deptno};
+   $.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
+      if (data){         
+         $('#startTime').text(data+'/');
+         console.log(data)
+       }else{
+         alert('이미 출근버튼을 누르셨습니다.')
+      } 
+   })
+})
+$('#end').click(function(){
+   $.getJSON('/endTime',{'empno':empno},function(data){
+      $('#endTime').text(data)
+   })
+})
+ function selectDate(date) {
+   $.getJSON('/vacation',{'date':date},function(data){
+      $('#vlist').append(datea)
+   })
+}
+</script>
+
+<!--현재시간 -->
+<script>
+    function updateTime() {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            weekday: 'long', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit'
+        };
+        const currentTimeString = now.toLocaleDateString('ko-KR', options);
+        document.getElementById('current-time').innerText = currentTimeString;
+    }
+
+    // 처음 페이지 로드 시 시간을 표시
+    updateTime();
+
+    // 매 초마다 시간을 업데이트
+    setInterval(updateTime, 1000);
+</script>
 </html>

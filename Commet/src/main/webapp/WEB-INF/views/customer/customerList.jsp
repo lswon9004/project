@@ -246,7 +246,7 @@
       <section class="main-content">
     		<h2>고객정보</h2>
     	<form action="${pageContext.request.contextPath}/deleteCustomer" method="post">
-        <div class="search-form">
+        <div class="button-container">
             <div class="search-form">
                 			<input type="text" name="customerName" placeholder="고객명" id="customerName">
                             <input type="text" name="contact" placeholder="연락처" id="contact">
@@ -254,12 +254,12 @@
                             <button type="button" class="button" id="searchButton">검색</button>
             
         <!-- 변경된 부분: dropdown 대신 select 사용 -->
-        <select id="statusSelect" class="cbutton" onchange="filterByStatus(this.value)">
-            <option class="dropdown" value="">진행상태 선택</option>
-            <option class="dropdown" value="전체">전체</option>
-            <option class="dropdown" value="Received">접수완료</option>
-            <option class="dropdown" value="Consulted">상담완료</option>
-            <option class="dropdown" value="Complaint">민원인</option>
+        <select id="statusSelect" class="button" onchange="filterByStatus(this.value)">
+            <option value="">진행상태 선택</option>
+            <option value="전체">전체</option>
+            <option value="Received">접수완료</option>
+            <option value="Consulted">상담완료</option>
+            <option value="Complaint">민원인</option>
         </select>
         
             </div>
@@ -270,22 +270,8 @@
             </div>
         </div>
         <table>
-    <thead>
-        <tr>
-            <th><input type="checkbox" id="selectAll"></th>
-            <th>고객번호</th>
-            <th>고객명</th>
-            <th>생년월일</th>
-            <th>연락처</th>
-            <th>진행상태</th>
-            <th>접수일자</th>
-        </tr>
-    </thead>
-    <tbody>
-        <c:choose>
-            <c:when test="${empty blist}">
+            <thead>
                 <tr>
-                    <td colspan="7" class="tac">저장된 고객 정보가 없습니다.</td>
                     <th><input type="checkbox" id="selectAll"></th>
                     <th>접수번호</th>
                     <th>고객명</th>
@@ -295,14 +281,13 @@
                     <th>접수일자</th>
                     <th>접수사번</th>
                 </tr>
-            </c:when>
-            <c:otherwise>
+            </thead>
+            <tbody>
                 <c:forEach var="customer" items="${blist}">
                     <tr>
                         <td><input type="checkbox" name="customerIds" value="${customer.customerID}"></td>
                         <td>${customer.customerID}</td>
-                        <td><a href="javascript:void(0);" onclick="openPopup(${customer.customerID})">${customer.customerName}</a></td>
-
+                         <td><a href="javascript:void(0);" onclick="openPopup(${customer.customerID})">${customer.customerName}</a></td><!-- 클릭했을떄 새로운 윈도우 -->
                         <td>${customer.dateOfBirth}</td>
                         <td>${customer.contact}</td>
                         <td>
@@ -317,10 +302,9 @@
                            <td>${customer.empno}</td>
                     </tr>
                 </c:forEach>
-            </c:otherwise>
-        </c:choose>
-    </tbody>
-</table>
+                
+            </tbody>
+        </table>
     </form>
     
    <div class="pagination">

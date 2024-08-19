@@ -98,31 +98,34 @@ button {
         
         /* 버튼 호버 시 스타일링 */
         .button:hover {
-            background-color: #0056b3; /* 마우스를 올렸을 때 버튼의 배경색 변경 */
+            background-color: #00bfff; /* 마우스를 올렸을 때 버튼의 배경색 변경 */
         }
         
         /* 드롭다운 메뉴 스타일링 */
         .dropdown {
             display: inline-block; /* 드롭다운을 인라인 블록으로 설정 */
             position: relative; /* 드롭다운 메뉴의 위치를 부모 요소에 상대적으로 설정 */
+            font-weight: bold;
         }
         
         /* 드롭다운 내용 스타일링 */
 		.dropdown-content {
     		display: none; /* 드롭다운 내용을 기본적으로 숨김 */
    		 	position: absolute; /* 드롭다운 내용을 절대 위치로 설정 */
-    		background-color: #f9f9f9; /* 드롭다운 배경색 설정 */
+    		background-color: #00bfff; /* 드롭다운 배경색 설정 */
     		min-width: 160px; /* 드롭다운 최소 너비 설정 */
     		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* 드롭다운 그림자 효과 */
     		z-index: 1; /* 드롭다운이 다른 요소들 위에 나타나도록 설정 */
+    		font-weight: bold;
 		}
 
 		/* 드롭다운 항목 스타일링 */
 		.dropdown-content a {
-    		color: black; /* 드롭다운 항목의 텍스트 색상 설정 */
+    		background-color: #00bfff;
     		padding: 12px 16px; /* 드롭다운 항목 내부 여백 설정 */
-    		text-decoration: none; /* 드롭다운 항목의 밑줄 제거 */
     		display: block; /* 드롭다운 항목을 블록 요소로 설정 */
+    		font-weight: bold;
+    		
 		}
 
 		/* 드롭다운 항목 호버 시 스타일링 */
@@ -187,13 +190,15 @@ button {
 		
 		/* 진행상태 스타일 */
 		.button{
-		 margin: 5px; /* 버튼 주위에 여백 추가 */
-    		padding: 10px 20px; /* 버튼 내부에 여백 추가 */
+		 margin: 2px; /* 버튼 주위에 여백 추가 */
+    		padding: 9px 18px; /* 버튼 내부에 여백 추가 */
     		background-color: #00bfff; /* 버튼 배경색 설정 */
    			color: #fff; /* 버튼 텍스트 색상 설정 */
     		border: none; /* 버튼 경계선 제거 */
     		cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
-    		border-radius: 3px; /* 버튼의 모서리를 둥글게 설정 */
+    		border-radius: 5px; /* 버튼의 모서리를 둥글게 설정 */
+    		font-weight: bold;
+
 		}
 		
 		
@@ -220,6 +225,7 @@ button {
                 <nav>
                     <a href="/main">Home</a>
                     <a href="#">개인정보수정</a>
+                    <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
             </div>
@@ -231,42 +237,29 @@ button {
                      <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
-                    <li><a href="/approval/status">결재승인</a></li>
-                    <li><a href="/bullboard">익명게시판</a></li>
-                    <li><a href="/emp_manage">직원관리</a></li>
+                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
+                    <c:if test="${user.right>=3 }"> <li><a href="/approval/status">직원관리</a></li></c:if>
                 </ul>
-                <p class="footer-text">현재시간 : <span id="current-time"></span></p>
-                <p class="footer-text">코멧업무포털</p>
             </aside>
             
-            <!--   여기서부터 가운데 메인 -->
-            
+      <!-- 여기서부터 가운데 메인 -->
       <section class="main-content">
     		<h2>고객정보</h2>
     	<form action="${pageContext.request.contextPath}/deleteCustomer" method="post">
-        <div class="button-container">
+        <div class="search-form">
             <div class="search-form">
-                <input type="text" name="customerName" placeholder="고객명">
-                <input type="text" name="contact" placeholder="연락처">
-                <button type="button" class="button" onclick="location.href='/searchCustomers?customerName=' + $('[name=customerName]').val() + '&contact=' + $('[name=contact]').val()">검색</button>
-            	
-            <%-- 	<div class="dropdown">
-                    <button type="button" class="button">진행상태</button>
-                    <div class="dropdown-content">
-                        <a href="${pageContext.request.contextPath}/searchCustomers">전체</a>
-                        <a href="${pageContext.request.contextPath}/filterByStatus?status=Received">접수완료</a>
-                        <a href="${pageContext.request.contextPath}/filterByStatus?status=Consulted">상담완료</a>
-                        <a href="${pageContext.request.contextPath}/filterByStatus?status=Complaint">민원인</a>
-                    </div>
-                </div> --%>
+                			<input type="text" name="customerName" placeholder="고객명" id="customerName">
+                            <input type="text" name="contact" placeholder="연락처" id="contact">
+                            <input type="text" name="empno" placeholder="접수사번" id="empno">
+                            <button type="button" class="button" id="searchButton">검색</button>
             
         <!-- 변경된 부분: dropdown 대신 select 사용 -->
-        <select id="statusSelect" class="button" onchange="filterByStatus(this.value)">
-            <option value="">진행상태 선택</option>
-            <option value="전체">전체</option>
-            <option value="Received">접수완료</option>
-            <option value="Consulted">상담완료</option>
-            <option value="Complaint">민원인</option>
+        <select id="statusSelect" class="cbutton" onchange="filterByStatus(this.value)">
+            <option class="dropdown" value="">진행상태 선택</option>
+            <option class="dropdown" value="전체">전체</option>
+            <option class="dropdown" value="Received">접수완료</option>
+            <option class="dropdown" value="Consulted">상담완료</option>
+            <option class="dropdown" value="Complaint">민원인</option>
         </select>
         
             </div>
@@ -277,24 +270,39 @@ button {
             </div>
         </div>
         <table>
-            <thead>
+    <thead>
+        <tr>
+            <th><input type="checkbox" id="selectAll"></th>
+            <th>고객번호</th>
+            <th>고객명</th>
+            <th>생년월일</th>
+            <th>연락처</th>
+            <th>진행상태</th>
+            <th>접수일자</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:choose>
+            <c:when test="${empty blist}">
                 <tr>
+                    <td colspan="7" class="tac">저장된 고객 정보가 없습니다.</td>
                     <th><input type="checkbox" id="selectAll"></th>
-                    <th>고객번호</th>
+                    <th>접수번호</th>
                     <th>고객명</th>
                     <th>생년월일</th>
                     <th>연락처</th>
                     <th>진행상태</th>
                     <th>접수일자</th>
+                    <th>접수사번</th>
                 </tr>
-            </thead>
-            <tbody>
+            </c:when>
+            <c:otherwise>
                 <c:forEach var="customer" items="${blist}">
                     <tr>
                         <td><input type="checkbox" name="customerIds" value="${customer.customerID}"></td>
                         <td>${customer.customerID}</td>
-                        <%-- <td><a href="${pageContext.request.contextPath}/customerDetail/${customer.customerID}">${customer.customerName}</a></td> 클릭 했을때 기존--%>
-                         <td><a href="javascript:void(0);" onclick="openPopup(${customer.customerID})">${customer.customerName}</a></td><!-- 클릭했을떄 새로운 윈도우 -->
+                        <td><a href="javascript:void(0);" onclick="openPopup(${customer.customerID})">${customer.customerName}</a></td>
+
                         <td>${customer.dateOfBirth}</td>
                         <td>${customer.contact}</td>
                         <td>
@@ -306,11 +314,13 @@ button {
                             </c:choose>
                         </td>
                         <td><fmt:formatDate value="${customer.registrationDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                           <td>${customer.empno}</td>
                     </tr>
                 </c:forEach>
-                
-            </tbody>
-        </table>
+            </c:otherwise>
+        </c:choose>
+    </tbody>
+</table>
     </form>
     
    <div class="pagination">
@@ -331,8 +341,11 @@ button {
         </main>
     </div>
 </body>
+<footer>
+<p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
+</footer>
 
-
+	<!--메인화면에서 출근 버튼을 눌렀을때 발생 되는 스크립트문-->
  	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript"> 
 		empno = ${user.empno};
@@ -360,12 +373,29 @@ button {
 	}
 	</script>
 
- <!-- jQuery를 사용하여 “전체 선택” 체크박스를 클릭하면 모든 체크박스를 선택하거나 선택 해제할 수 있도록 스크립트를 추가했습니다. -->
+ <!-- jQuery를 사용하여 “전체 선택” 체크박스를 클릭하면 모든 체크박스를 선택하거나 선택 해제할 수 있도록 스크립트를 추가 및 검색 기능 -->
     <script type="text/javascript">
         $(document).ready(function(){
             $("#selectAll").click(function(){
                 $("input[type=checkbox]").prop('checked', this.checked);
             });
+            
+        	 // 엔터 키를 눌렀을 때 검색이 되도록 추가된 부분
+            $('#customerName, #contact , #empno').keypress(function(event) {
+                if (event.which === 13) { // 엔터 키의 키 코드는 13입니다.
+                    $('#searchButton').click(); // 검색 버튼을 클릭합니다.
+                }
+            });
+
+            // 검색 버튼 클릭 이벤트
+            $('#searchButton').click(function() {
+                const customerName = $('[name=customerName]').val();
+                const contact = $('[name=contact]').val();
+                const empno = $('[name=empno]').val();
+                location.href = '/searchCustomers?customerName=' + customerName + '&contact=' + contact + '&empno=' + empno;
+            });
+            
+            
         });
     </script>
     
@@ -376,7 +406,9 @@ button {
             	// 고객 ID 체크박스가 하나도 선택되지 않았으면 아무 동작도 하지 않음
             if ($("input[name='customerIds']:checked").length === 0) {
                 event.preventDefault(); // 기본 동작(폼 제출) 취소
-                alert('삭제할 항목을 선택하세요.');
+                
+         /*alert('삭제할 항목을 선택하세요.');  알러트 창이 검색 할때도 나타나서 주석처리함*/
+         
             	}
         	});
     	});

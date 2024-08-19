@@ -14,8 +14,8 @@ import commet.com.spring.dto.CustomerInfoDTO;
 
 @Mapper
 public interface CustomerInfoDAO {
-	@Insert("insert into CustomerInfo (CustomerName, Email, Address, DateOfBirth, Contact, Status, RegistrationDate, Memo) "
-			+ "values (#{customerName}, #{email}, #{address}, #{dateOfBirth}, #{contact}, #{status}, now(), #{memo})")
+	@Insert("insert into CustomerInfo (CustomerName, Email, Address, DateOfBirth, Contact, Status, RegistrationDate, Memo ,Empno) "
+			+ "values (#{customerName}, #{email}, #{address}, #{dateOfBirth}, #{contact}, #{status}, now(), #{memo} ,#{empno})")
 	void saveCustomerInfo(CustomerInfoDTO customerInfo); //고객정보추가
 
 	@Select("select * from CustomerInfo order by CustomerID desc")
@@ -50,12 +50,14 @@ public interface CustomerInfoDAO {
 	        "WHERE 1=1 " +
 	        "<if test='customerName != null'>AND customerName LIKE CONCAT('%', #{customerName}, '%')</if> " +
 	        "<if test='contact != null'>AND contact LIKE CONCAT('%', #{contact}, '%')</if> " +
+	        "<if test='empno != null'>AND Empno LIKE CONCAT('%', #{empno}, '%')</if> " +
 	        "ORDER BY CustomerID DESC " +
 	        "LIMIT #{start}, #{pageSize}" +
 	        "</script>")
 	List<CustomerInfoDTO> searchCustomersWithPaging( // 고객명과 연락처 검색
 	        @Param("customerName") String customerName,
 	        @Param("contact") String contact,
+	        @Param("empno") Integer empno,
 	        @Param("start") int start,
 	        @Param("pageSize") int pageSize);
 	
@@ -65,10 +67,12 @@ public interface CustomerInfoDAO {
 	        "WHERE 1=1 " +
 	        "<if test='customerName != null'>AND customerName LIKE CONCAT('%', #{customerName}, '%')</if> " +
 	        "<if test='contact != null'>AND contact LIKE CONCAT('%', #{contact}, '%')</if>" +
+	        "<if test='empno != null'>AND Empno LIKE CONCAT('%', #{empno}, '%')</if>" +
 	        "</script>")
 	int countSearchCustomers( // 검색된 갯수 카운팅
 	        @Param("customerName") String customerName,
-	        @Param("contact") String contact);
+	        @Param("contact") String contact,
+			@Param("empno") Integer empno);
 	
 	@Select("SELECT * FROM CustomerInfo WHERE Status = #{status} ORDER BY CustomerID DESC LIMIT #{start}, #{pageSize}")
 	List<CustomerInfoDTO> getCustomersByStatusWithPaging( //진행상태에 따른 검색

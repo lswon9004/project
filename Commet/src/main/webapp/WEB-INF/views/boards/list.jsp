@@ -9,111 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Management Portal</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .prev-month, .next-month {
-            color: #ccc;
-        }
-        /* 메인 콘텐츠 내부 스타일 */
-.main-content {
-	width: 75%;
-	padding: 20px;
-	background: #fff;
-}
-
-.actions {
-	text-align: right;
-	margin-bottom: 20px;
-}
-/* 버튼 스타일 */
-.actions button {
-	padding: 10px 20px;
-	margin: 5px;
-	border: none;
-	background: #00bfff; /* view.jsp의 글쓰기 버튼 색 */
-	color: #fff;
-	border-radius: 5px;
-	cursor: pointer;
-	font-family: 'Noto Sans KR', sans-serif; /* th 태그와 동일한 글씨체 */
-	font-weight: bold; /* th 태그와 동일한 글씨 굵기 */
-}
-/* 검색 폼 스타일 */
-.search-form {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 20px;
-	background: #f9f9f9;
-	padding: 10px;
-	border: 1px solid #ddd;
-	border-radius: 5px;
-}
-
-.search-form input, .search-form button {
-	padding: 10px;
-	margin-right: 10px;
-	border: 1px solid #ddd;
-	border-radius: 5px;
-}
-
-.search-form input[type="date"] {
-	padding: 9px;
-}
-
-.search-form button {
-	background: #333;
-	color: #fff;
-	border: none;
-	cursor: pointer;
-}
-/* 테이블 스타일 */
-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-bottom: 20px;
-}
-
-table th, table td {
-	border: 1px solid #ddd;
-	padding: 10px;
-	text-align: center;
-}
-
-table th {
-	background: #e0f7fa; /* view.jsp의 테이블 헤더 색 */
-	color: #000;
-	font-family: 'Noto Sans KR', sans-serif; /* th 태그와 동일한 글씨체 */
-	font-weight: bold; /* th 태그와 동일한 글씨 굵기 */
-}
-/* 페이지네이션 스타일 */
-.pagination {
-	text-align: center;
-	margin-bottom: 20px;
-}
-
-.pagination button {
-	padding: 10px 20px;
-	margin: 5px;
-	border: none;
-	background: #77a1d3;
-	color: #fff;
-	border-radius: 5px;
-	cursor: pointer;
-}
-</style>
 </head>
 <body>
-     <div class="container">
+       <div class="container">
         <header>
             <div class="user-info">
                 <img src="profile.jpg" alt="User Profile">
@@ -132,8 +30,8 @@ table th {
                 <p id="endTime">00:00</p>
                 <nav>
                     <a href="/main">Home</a>
-                    <a href="/cleander">연봉계산기</a>
                     <a href="#">개인정보수정</a>
+                    <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
             </div>
@@ -145,15 +43,12 @@ table th {
                      <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards" class="active">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
-                    <li><a href="/approval/status">결재승인</a></li>
-                    <li><a href="/bullboard">익명게시판</a></li>
-                    <li><a href="/emp_manage">직원관리</a></li>
-                    <li><a href="#">관찰관리</a></li>
-                </ul>
-                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
-                <p class="footer-text">코멧업무포털</p>
+                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
+                    <c:if test="${user.right>=3 }"> <li><a href="/approval/status">직원관리</a></li></c:if>
+                </ul>              
             </aside>
             <section class="main-content">
+            		<h2>게시판</h2>
                 <!-- 메인 콘텐츠 영역 -->
 				<div class="search-form">
 					<!-- 검색 폼을 포함하는 요소 -->
@@ -164,6 +59,9 @@ table th {
 							type="date" name="date">
 						<button type="submit">검색</button>
 					</form>
+					<div>
+					<button onclick="location.href='/boards/write'">글쓰기</button>
+					</div>
 				</div>
 				<table style="width:113.65%;">
 				<colgroup>
@@ -202,7 +100,7 @@ table th {
 					<!-- tbody 영역 끝 -->
 				</table>
 				<!-- 테이블 영역 끝 -->
-				<div class="paging">
+				<div class="pagination">
 					<!-- 페이징을 위한 요소 -->
 					<div id="page">
 						<!-- c:if와 c:forEach 태그를 사용하여
@@ -218,15 +116,13 @@ table th {
 						</c:if>
 					</div>
 				</div>
-				<div class="actions">
-					<!-- 글쓰기 버튼을 포함하는 요소 -->
-					<button onclick="location.href='/boards/write'">글쓰기</button>
-					<button onclick="location.href='/boards/write'">공지글작성</button>
-				</div>
             </section>
         </main>
     </div>
 </body>
+<footer>
+<p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
+</footer>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
@@ -252,5 +148,27 @@ $('#end').click(function(){
 		$('#vlist').append(datea)
 	})
 }
+</script>
+    <script>
+    function updateTime() {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            weekday: 'long', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit'
+        };
+        const currentTimeString = now.toLocaleDateString('ko-KR', options);
+        document.getElementById('current-time').innerText = currentTimeString;
+    }
+
+    // 처음 페이지 로드 시 시간을 표시
+    updateTime();
+
+    // 매 초마다 시간을 업데이트
+    setInterval(updateTime, 1000);
 </script>
 </html>

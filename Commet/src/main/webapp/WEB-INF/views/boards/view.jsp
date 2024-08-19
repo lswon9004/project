@@ -10,26 +10,6 @@
     <title>Task Management Portal</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .prev-month, .next-month {
-            color: #ccc;
-        }
-        .main-content { /* 메인 콘텐츠 영역 스타일 설정 */
-    width: 75%;
-    padding: 20px;
-    background: #fff;
-}
 .board-title { /* 게시글 제목의 스타일 정의 */
     font-size: 24px;
     font-weight: bold;
@@ -39,7 +19,6 @@
 }
 .board-detail { /* 게시글 상세 내용의 스타일 설정 */
     margin-bottom: 20px;
-    padding: 20px;
     border-radius: 5px;
     background: #f9f9f9;
 }
@@ -78,10 +57,10 @@
 .section-inline-section>.right>div{
     padding:0 10px;
 }
+
 .like-dislike { /* 추천 버튼과 관련된 스타일 설정 */
     display: flex;
     align-items: center;
-    margin-top: 20px;
 }
 .like-dislike form { /* 추천 버튼 폼의 레이아웃 설정 */
     display: flex;
@@ -98,7 +77,7 @@
     border-radius: 5px;
 }
 .comment-section { /* 댓글 섹션의 스타일 설정 */
-    margin-top: 20px;
+    margin-top: -15px;
 }
 .comment-section .section-title {
     font-size: 18px;
@@ -107,9 +86,7 @@
 }
 .comment { /* 개별 댓글의 스타일 정의 */
     border-top: 1px solid #ddd;
-    padding-top: 10px;
-    margin-top: 10px;
-    font-size: 14px; /* 댓글 크기 줄이기 */
+    padding-top: 5px;
 }
 .comment p {
     margin: 0;
@@ -131,59 +108,34 @@
     cursor: pointer;
     font-size: 12px;
 }
-.comment-form { /* 댓글 입력 폼의 스타일 설정 */
+.comment-form {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     margin-top: 20px;
 }
 .comment-form textarea {
-    width: 100%;
-    height: 40px; /* 댓글 입력 창 높이 줄이기 */
-    padding: 5px; /* 댓글 입력 창 패딩 줄이기 */
+    width: 100%; /* 댓글 입력란이 차지할 너비 비율을 설정 */
+    height: 30px;
+    padding: 6px;
     border: 1px solid #ddd;
-    border-radius: 5px;
     resize: none;
-}
-.comment-form .comment-button-container { /* 댓글 버튼 컨테이너의 스타일 설정 */
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 5px; /* 댓글 버튼 컨테이너 여백 줄이기 */
+    flex-grow: 1; /* 댓글 입력란이 남은 공간을 채우도록 설정 */
+    margin-right: 10px;
 }
 .comment-form button {
-    padding: 5px 10px; /* 댓글 버튼 크기 줄이기 */
+    padding: 5px 10px;
     border: none;
     background: #333;
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
     font-size: 12px;
-}
-.actions { /* 게시글 상세보기 하단의 액션 버튼 */
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-.actions button, .actions form button {
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    background: #e0f7fa; /* view.jsp의 글쓰기 버튼 색 */
-    color: #000;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Noto Sans KR', sans-serif; /* 글씨체 설정 */
-    font-weight: bold; /* 테이블 헤더와 동일한 글씨체 설정 */
-}
-footer { /* 푸터 스타일 설정 */
-    margin-top: 20px;
-    text-align: center;
-    color: #777;
-    font-size: 14px;
+    height: 25px; /* 줄바꿈 방지 */
 }
 </style>
 </head>
 <body>
-     <div class="container">
+            <div class="container">
         <header>
             <div class="user-info">
                 <img src="profile.jpg" alt="User Profile">
@@ -202,8 +154,8 @@ footer { /* 푸터 스타일 설정 */
                 <p id="endTime">00:00</p>
                 <nav>
                     <a href="/main">Home</a>
-                    <a href="/cleander">연봉계산기</a>
                     <a href="#">개인정보수정</a>
+                    <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
             </div>
@@ -213,15 +165,11 @@ footer { /* 푸터 스타일 설정 */
                 <ul class="menu">
                     <li><a href="/customerList">통합업무</a></li>
                      <li><a href="/attendance/managementList">근태현황</a>
-                    <li><a href="/boards">게시판</a></li>
+                    <li><a href="/boards" class="active">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
-                    <li><a href="/approval/status">결재승인</a></li>
-                    <li><a href="/bullboard">익명게시판</a></li>
-                    <li><a href="/emp_manage">직원관리</a></li>
-                    <li><a href="#">관찰관리</a></li>
-                </ul>
-                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
-                <p class="footer-text">코멧업무포털</p>
+                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
+                    <c:if test="${user.right>=3 }"> <li><a href="/approval/status">직원관리</a></li></c:if>
+                </ul>              
             </aside>
             <section class="main-content">
                 <!-- 메인 콘텐츠 영역 -->
@@ -241,7 +189,7 @@ footer { /* 푸터 스타일 설정 */
                 <!-- 작성자와 작성일자를 인라인으로 표시 -->
                 
                 <div class="section-title">내용</div>
-                    <textarea class="section-content" readonly="readonly" style="width: 1180px; height: 300px; resize: none;">${board.content}</textarea>
+                    <textarea class="section-content" readonly="readonly" style="width: 1700px; height: 250px; resize: none;">${board.content}</textarea>
                 
                 <div class="like-dislike"> <!-- 추천 버튼 지정 -->
                     <form id="likeForm" action="${hasLiked ? '/boards/unlike' : '/boards/like'}" method="post">
@@ -275,16 +223,16 @@ footer { /* 푸터 스타일 설정 */
                         </c:if>
                     </div>
                 </c:forEach>
-                <div class="comment-form"> <!-- 새로운 댓글을 작성하는 폼 -->
-                    <form action="/comments/add" method="post">
-                        <input type="hidden" name="empno" value="${user.empno}">
-                        <input type="hidden" name="no" value="${board.no}">
-                        <textarea name="text" placeholder="댓글을 입력하세요" required></textarea>
-                        <div class="comment-button-container">
-                            <button type="submit">작성</button>
-                        </div>
-                    </form>
-                </div>
+                <div class="comment-form">
+    <form action="/comments/add" method="post">
+        <input type="hidden" name="empno" value="${user.empno}">
+        <input type="hidden" name="no" value="${board.no}">
+        <textarea name="text" placeholder="댓글을 입력하세요" required></textarea>
+         <div class="comment-button-container">
+            <button type="submit">작성</button>
+        </div>
+		</form>
+			</div>
             </div>
             <div class="actions"> <!-- 페이지 하단의 액션 버튼을 지정 -->
                 <button onclick="location.href='/boards'">목록</button>
@@ -299,6 +247,9 @@ footer { /* 푸터 스타일 설정 */
         </main>
     </div>
 </body>
+<footer>
+<p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
+</footer>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
@@ -369,5 +320,27 @@ $('#likeForm button').on('click', function(e) { // 추천 버튼이 클릭될 �
     });
 });
 });
+</script>
+    <script>
+    function updateTime() {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            weekday: 'long', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit'
+        };
+        const currentTimeString = now.toLocaleDateString('ko-KR', options);
+        document.getElementById('current-time').innerText = currentTimeString;
+    }
+
+    // 처음 페이지 로드 시 시간을 표시
+    updateTime();
+
+    // 매 초마다 시간을 업데이트
+    setInterval(updateTime, 1000);
 </script>
 </html>

@@ -162,7 +162,7 @@
             </tr>
             <tr>
 				<td>부서:</td><td>${empInfo.deptno}</td>
-				<td>담당업무:</td><td>${empInfo.jop}"</td>
+				<td>담당업무:</td><td>${empInfo.jop}</td>
 				<td>직급:</td><td>${empInfo.position}</td>
             </tr>
             <tr>

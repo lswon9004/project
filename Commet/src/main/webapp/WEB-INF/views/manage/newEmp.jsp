@@ -162,7 +162,7 @@
 
 <div id="myModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="location.href='${pageContext.request.contextPath}/emp_manage'">&times;</span>
+        <span class="close" onclick="location.href='/emp_manage'">&times;</span>
         <h2>신입 사원정보 입력</h2>
         <div class="header">
             <!-- 사진 업로드 폼 -->

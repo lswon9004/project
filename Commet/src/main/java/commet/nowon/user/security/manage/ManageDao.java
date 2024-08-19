@@ -23,7 +23,7 @@ public interface ManageDao {
     int count(); // 전체 글 갯수
 
     @Select("select e.*, d.deptname from emp e left join dept d on e.deptno = d.deptno order by e.empno desc limit #{start}, #{count}")
-    List<ManageDto> testmanagemain(Map<String,Object> m); // 글 목록 리스트 최신 글이 먼저 보이게 order by empno desc 걸어둠
+    List<ManageDto> managemain(Map<String,Object> m); // 글 목록 리스트 최신 글이 먼저 보이게 order by empno desc 걸어둠
 
     @Select("select e.*, d.deptname, p.authority from emp e left join dept d on e.deptno = d.deptno left join position p on e.position = p.position where e.empno = #{id}")
     ManageDto getempByID(int id); // 사원 번호

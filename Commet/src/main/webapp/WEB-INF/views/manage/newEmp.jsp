@@ -178,13 +178,14 @@
 
             <!-- 사진 미리보기 -->
             <div class="photo-preview">
-                <c:if test="${not empty photoPath}">
-                    <img id="previewImage" src="${photoPath}" alt="">
+                <c:if test="${not empty InserEmpDto.imgPath}">
+                    <img id="previewImage" src="/upload/${InserEmpDto.imgPath}" alt="">
                 </c:if>
             </div>
         </div>
 
          <form action="/saveinsert" method="post" modelAttribute="InserEmpDto">
+            <input type="hidden" name="imgPath" value="${InserEmpDto.imgPath}"> 
             <table>
             <tr>
                 <td>사원 이름:</td><td><input type="text" name="ename" required></td>

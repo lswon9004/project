@@ -20,16 +20,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import commet.com.spring.dto.CustomerInfoDTO;
+import commet.com.spring.dto.EmpDto;
 import commet.com.spring.service.CustomerInfoService;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
+@SessionAttributes("user")
 public class CustomerInfoController {
+	
 
 	@Autowired
 	private CustomerInfoService Service;
+	
+	
+	@ModelAttribute("user") // @SessionAttributes 로그인정보 받아 오는 메서드
+    public EmpDto getDto() {
+       return new EmpDto();
+    }
+	
+	
 	
 	@GetMapping("/customerForm") // 새로운 CustomerInfoDTO 객체를 모델에 추가하여 고객 정보 입력 폼을 표시
 	public String showForm(Model model) {
@@ -72,7 +84,6 @@ public class CustomerInfoController {
 	@GetMapping("/downloadExcel") // 엑셀 다운로드
 	public void downloadExcel(HttpServletResponse response) throws IOException {
 	    List<CustomerInfoDTO> customerList = Service.getAllCustomers();
-
 	    Workbook workbook = new XSSFWorkbook();
 	    Sheet sheet = workbook.createSheet("Customers");
 
@@ -86,6 +97,7 @@ public class CustomerInfoController {
 	    headerRow.createCell(5).setCellValue("연락처");
 	    headerRow.createCell(6).setCellValue("진행상태");
 	    headerRow.createCell(7).setCellValue("접수일자");
+	    headerRow.createCell(8).setCellValue("접수사번");
 
 	    // 날짜 형식 지정 (yyyy/MM/dd HH:mm:ss)
 	    CellStyle dateTimeCellStyle = workbook.createCellStyle();
@@ -123,6 +135,9 @@ public class CustomerInfoController {
 	        Cell registrationDateCell = row.createCell(7);
 	        registrationDateCell.setCellValue(customer.getRegistrationDate());
 	        registrationDateCell.setCellStyle(dateTimeCellStyle);
+	        
+	        row.createCell(8).setCellValue(customer.getEmpno());
+	        
 	    }
 
 	    // 콘텐츠 유형과 첨부 파일 헤더를 설정
@@ -166,12 +181,13 @@ public class CustomerInfoController {
 	@GetMapping("/searchCustomers") // 고객명 / 연락처 입력하면 검색하는 메서드 페이징처리
 	public String searchCustomers(@RequestParam(value = "customerName", required = false) String customerName,
 	        										@RequestParam(value = "contact", required = false) String contact,
+	        										@RequestParam(value = "empno", required = false) Integer empno,
 	        											@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 	        												@RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,Model model) {
 	    
 		int start = (page - 1) * pageSize;
-		List<CustomerInfoDTO> searchResults = Service.searchCustomersWithPaging(customerName, contact, page, pageSize);
-		int totalCustomers = Service.countSearchCustomers(customerName, contact);
+		List<CustomerInfoDTO> searchResults = Service.searchCustomersWithPaging(customerName, contact, empno,page, pageSize);
+		int totalCustomers = Service.countSearchCustomers(customerName, contact ,empno);
 	    int totalPages = (int) Math.ceil((double) totalCustomers / pageSize);
 	    
 	    

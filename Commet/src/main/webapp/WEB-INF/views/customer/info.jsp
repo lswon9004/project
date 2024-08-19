@@ -65,8 +65,8 @@
         
 
         button {
-            padding: 10px 20px;
-            margin-top: 5px;
+            padding: 6px 8px;
+            margin-top: 4px;
             border: none;
             background-color: #00bfff;
             color: #fff;

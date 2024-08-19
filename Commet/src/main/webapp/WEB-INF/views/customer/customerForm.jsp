@@ -146,7 +146,9 @@
          /* 숨겨진 등록 버튼 */
         #submitButton {
             display: none;
-            
+        }
+        #address{
+        text-align: left;  }    
     </style>
 
 </head>
@@ -165,14 +167,14 @@
                 <tr>
                     <th style="width: 9%;">접수번호</th>
                     <th style="width: 17%;">연락처</th>
-                    <th style="width: 20%;">이메일</th>
+                    <th style="width: 17%;">이메일</th>
                     <th style="width: 10%;">이름</th> <!-- 칸 너비 줄임 -->
-                    <th style="width: 10%;">생년월일</th> <!-- 칸 너비 줄임 -->
+                    <th style="width: 13%;">생년월일</th> <!-- 칸 너비 줄임 -->
                     <th style="width: 20%;">진행상태</th> <!-- 칸 너비 늘림 -->
                 </tr>
                 
                 <tr>
-                    <td>${customerInfo.customerID}</td>
+                    <td style="background-color: #e0f7fa; font-weight: bold;">${customerInfo.customerID}</td>
                     <td><input type="text" name="contact" value="${customerInfo.contact}" readonly></td>
                     <td><input type="email" name="email" value="${customerInfo.email}" readonly></td>
                     <td><input type="text" name="customerName" value="${customerInfo.customerName}" readonly></td>
@@ -183,17 +185,16 @@
                             <option value="Consulted" ${customerInfo.status == 'Consulted' ? 'selected' : ''}>상담완료</option>
                             <option value="Complaint" ${customerInfo.status == 'Complaint' ? 'selected' : ''}>민원인</option>
                         </select>
-                    </td>
                 </tr>
-                
                 <tr>
                     <th>주소</th>
-                    <td colspan="5">
-                        <input type="text" id="address" name="address" value="${customerInfo.address}" readonly>
-                        <button type="button" id="addressSearchBtn" onclick="execDaumPostcode()" style="display: none;">주소 검색</button>
-                    </td>
+                    <td colspan="5" id="address">
+                    <input type="text" id="zipcode" name="zipcode" placeholder="우편번호" readonly style="width: 20%;">
+                     <button type="button" id="addressSearchBtn" onclick="execDaumPostcode()" style="display: none;">주소 검색</button>
+                    <input type="text" id="address" name="address" value="${customerInfo.address}" readonly>
+                   
+                       </td>
                 </tr>
-                
                 <tr>
                     <th>메모</th>
                     <td colspan="5">
@@ -257,6 +258,7 @@
 					
              	// 도로명 주소가 있으면 roadAddr을, 없으면 지번 주소를 입력 필드에 설정
                 document.getElementById('address').value = roadAddr || jibunAddr;
+                document.getElementById('zipcode').value = data.zonecode;
             }
         }).open();// 주소 검색 팝업 열기
     }
@@ -286,6 +288,9 @@
 
         // 폼 데이터를 직렬화하여 전송
         const formData = new FormData(form);
+        
+        formData.set('zipcode', document.getElementById('zipcode').value);
+        
         const urlEncodedData = new URLSearchParams(formData).toString();
         xhr.send(urlEncodedData);
     }
@@ -294,8 +299,5 @@
     	//2.	기본 제출 동작을 막고: Ajax를 사용해 비동기적으로 데이터를 서버에 전송합니다.
     	//3.	서버 응답을 받고: 응답이 성공적이면 창을 닫고, 오류가 발생하면 경고 메시지를 표시합니다.
 	</script>
-
-    
-    
 </body>
 </html>

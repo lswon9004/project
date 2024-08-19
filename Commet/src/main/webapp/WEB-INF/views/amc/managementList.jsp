@@ -119,7 +119,6 @@
                 <a href="managementList?p=${end+1}">[다음]</a>
             </c:if>
             <c:if test="${count == 0}">
-                아직 입력한 정보가 없습니다.
             </c:if>
         </div>
     </div>

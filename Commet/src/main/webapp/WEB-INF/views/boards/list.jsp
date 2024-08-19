@@ -29,8 +29,7 @@
                 <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">0d:00/</c:if></p>
                 <p id="endTime">00:00</p>
                 <nav>
-                    <a href="/main">Home</a>
-                    <a href="#">개인정보수정</a>
+                    <a class="active" href="/main">Home</a>
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -97,6 +96,11 @@
 							</tr>
 						</c:forEach>
 					</tbody>
+					 <c:if test="${count == 0}">
+					<tr>
+						<td colspan="5" class="tac">등록된 게시글이 없습니다.</td>
+					</tr>
+				</c:if>
 					<!-- tbody 영역 끝 -->
 				</table>
 				<!-- 테이블 영역 끝 -->

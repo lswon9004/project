@@ -9,6 +9,17 @@ html, body {
     height: 100%;
    overflow: hidden;
 }
+
+		/* 버튼 컨테이너 스타일링 */
+		.button-container {
+    		display: flex; /* 버튼들을 플렉스 박스로 배치 */
+    		justify-content: space-between; /* 버튼들 간의 공간을 균등하게 분배 */
+    		align-items: center; /* 버튼들을 세로로 중앙 정렬 */
+		}
+		
+		h1{
+		margin-left: 350px;
+		}
  /* 제목(h2) 스타일 */
         h2 {
             text-align: center; /* 제목을 중앙 정렬 */
@@ -22,7 +33,7 @@ html, body {
         /* 테이블 헤더 및 데이터 셀 스타일 */
         th, td {
             border: 1px solid #ddd; /* 셀 경계선에 색상 적용 */
-            padding: 8px; /* 셀 내부에 여백 추가 */
+            padding: 14px; /* 셀 내부에 여백 추가 */
             text-align: center; /* 텍스트를 중앙 정렬 */
         }
         
@@ -200,9 +211,10 @@ footer {
 }
 
 .header-right nav a {
-    margin: 0 10px;
+    margin: 0 5px;
     text-decoration: none;
     color: #00796b;
+    text-decoration: underline;
 }
 
 main {
@@ -242,7 +254,6 @@ aside {
     color: #fff;
     text-decoration: underline;
 }
-
 .footer-text {
     font-size: 14px;
     color: #777;

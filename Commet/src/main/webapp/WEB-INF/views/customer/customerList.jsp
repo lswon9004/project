@@ -196,7 +196,7 @@ button {
    			color: #fff; /* 버튼 텍스트 색상 설정 */
     		border: none; /* 버튼 경계선 제거 */
     		cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
-    		border-radius: 20px; /* 버튼의 모서리를 둥글게 설정 */
+    		border-radius: 5px; /* 버튼의 모서리를 둥글게 설정 */
     		font-weight: bold;
 
 		}
@@ -242,26 +242,16 @@ button {
                 </ul>
             </aside>
             
-            <!--   여기서부터 가운데 메인 -->
-            
+      <!-- 여기서부터 가운데 메인 -->
       <section class="main-content">
     		<h2>고객정보</h2>
     	<form action="${pageContext.request.contextPath}/deleteCustomer" method="post">
         <div class="button-container">
             <div class="search-form">
-                <input type="text" name="customerName" placeholder="고객명">
-                <input type="text" name="contact" placeholder="연락처">
-                <button type="button" class="button" onclick="location.href='/searchCustomers?customerName=' + $('[name=customerName]').val() + '&contact=' + $('[name=contact]').val()">검색</button>
-            	
-            <%-- 	<div class="dropdown">
-                    <button type="button" class="button">진행상태</button>
-                    <div class="dropdown-content">
-                        <a href="${pageContext.request.contextPath}/searchCustomers">전체</a>
-                        <a href="${pageContext.request.contextPath}/filterByStatus?status=Received">접수완료</a>
-                        <a href="${pageContext.request.contextPath}/filterByStatus?status=Consulted">상담완료</a>
-                        <a href="${pageContext.request.contextPath}/filterByStatus?status=Complaint">민원인</a>
-                    </div>
-                </div> --%>
+                			<input type="text" name="customerName" placeholder="고객명" id="customerName">
+                            <input type="text" name="contact" placeholder="연락처" id="contact">
+                            <input type="text" name="empno" placeholder="접수사번" id="empno">
+                            <button type="button" class="button" id="searchButton">검색</button>
             
         <!-- 변경된 부분: dropdown 대신 select 사용 -->
         <select id="statusSelect" class="button" onchange="filterByStatus(this.value)">
@@ -283,12 +273,13 @@ button {
             <thead>
                 <tr>
                     <th><input type="checkbox" id="selectAll"></th>
-                    <th>고객번호</th>
+                    <th>접수번호</th>
                     <th>고객명</th>
                     <th>생년월일</th>
                     <th>연락처</th>
                     <th>진행상태</th>
                     <th>접수일자</th>
+                    <th>접수사번</th>
                 </tr>
             </thead>
             <tbody>
@@ -296,7 +287,6 @@ button {
                     <tr>
                         <td><input type="checkbox" name="customerIds" value="${customer.customerID}"></td>
                         <td>${customer.customerID}</td>
-                        <%-- <td><a href="${pageContext.request.contextPath}/customerDetail/${customer.customerID}">${customer.customerName}</a></td> 클릭 했을때 기존--%>
                          <td><a href="javascript:void(0);" onclick="openPopup(${customer.customerID})">${customer.customerName}</a></td><!-- 클릭했을떄 새로운 윈도우 -->
                         <td>${customer.dateOfBirth}</td>
                         <td>${customer.contact}</td>
@@ -309,6 +299,7 @@ button {
                             </c:choose>
                         </td>
                         <td><fmt:formatDate value="${customer.registrationDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                           <td>${customer.empno}</td>
                     </tr>
                 </c:forEach>
                 
@@ -338,7 +329,7 @@ button {
 <p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
 </footer>
 
-
+	<!--메인화면에서 출근 버튼을 눌렀을때 발생 되는 스크립트문-->
  	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript"> 
 		empno = ${user.empno};
@@ -366,12 +357,29 @@ button {
 	}
 	</script>
 
- <!-- jQuery를 사용하여 “전체 선택” 체크박스를 클릭하면 모든 체크박스를 선택하거나 선택 해제할 수 있도록 스크립트를 추가했습니다. -->
+ <!-- jQuery를 사용하여 “전체 선택” 체크박스를 클릭하면 모든 체크박스를 선택하거나 선택 해제할 수 있도록 스크립트를 추가 및 검색 기능 -->
     <script type="text/javascript">
         $(document).ready(function(){
             $("#selectAll").click(function(){
                 $("input[type=checkbox]").prop('checked', this.checked);
             });
+            
+        	 // 엔터 키를 눌렀을 때 검색이 되도록 추가된 부분
+            $('#customerName, #contact , #empno').keypress(function(event) {
+                if (event.which === 13) { // 엔터 키의 키 코드는 13입니다.
+                    $('#searchButton').click(); // 검색 버튼을 클릭합니다.
+                }
+            });
+
+            // 검색 버튼 클릭 이벤트
+            $('#searchButton').click(function() {
+                const customerName = $('[name=customerName]').val();
+                const contact = $('[name=contact]').val();
+                const empno = $('[name=empno]').val();
+                location.href = '/searchCustomers?customerName=' + customerName + '&contact=' + contact + '&empno=' + empno;
+            });
+            
+            
         });
     </script>
     
@@ -382,7 +390,9 @@ button {
             	// 고객 ID 체크박스가 하나도 선택되지 않았으면 아무 동작도 하지 않음
             if ($("input[name='customerIds']:checked").length === 0) {
                 event.preventDefault(); // 기본 동작(폼 제출) 취소
-                alert('삭제할 항목을 선택하세요.');
+                
+         /*alert('삭제할 항목을 선택하세요.');  알러트 창이 검색 할때도 나타나서 주석처리함*/
+         
             	}
         	});
     	});

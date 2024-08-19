@@ -50,13 +50,13 @@ public class CustomerInfoService {
 			return dao.updateCustomer(dto);
 		}
 	   
-	    public List<CustomerInfoDTO> searchCustomersWithPaging(String customerName, String contact, int page, int pageSize) { //검색페이징
+	    public List<CustomerInfoDTO> searchCustomersWithPaging(String customerName, String contact, Integer empno , int page, int pageSize) { //검색페이징
 	        int start = (page - 1) * pageSize;
-	        return dao.searchCustomersWithPaging(customerName, contact, start, pageSize);
+	        return dao.searchCustomersWithPaging(customerName, contact, empno ,  start, pageSize);
 	    }
 	    
-	    public int countSearchCustomers(String customerName, String contact) { // 검색 글 갯수
-	        return dao.countSearchCustomers(customerName, contact);
+	    public int countSearchCustomers(String customerName, String contact , Integer empno) { // 검색 글 갯수
+	        return dao.countSearchCustomers(customerName, contact ,empno);
 	    }
 
 	    public int countCustomersByStatus(String status) { // 진행상태 글 갯수

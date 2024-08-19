@@ -19,7 +19,7 @@ body {
     margin: 50px auto;
     background-color: #fff;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
@@ -32,13 +32,37 @@ h2 {
 form {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    margin: 20px; /* 마진 조정 */
+    padding: 20px; /* 패딩 추가 */
+    border: 1px solid #ddd; /* 테두리 추가 */
+    background-color: #f9f9f9; /* 배경색 변경 */
 }
 
 label {
     margin-top: 10px;
     font-weight: bold;
+    width: 100%;
 }
+.label-title {
+    font-size: 1.2em; /* 제목 레이블의 크기를 조정 */
+    /* 기타 스타일 */
+}
+
+.label-iid {
+    font-size: 1.1em; /* 작성자 레이블의 크기를 조정 */
+    /* 기타 스타일 */
+}
+
+.label-content {
+    font-size: 1.3em; /* 내용 레이블의 크기를 조정 */
+    /* 기타 스타일 */
+}
+
+.label-password {
+    font-size: 1.1em; /* 비밀번호 레이블의 크기를 조정 */
+    
+}
+
 
 input[type="text"], input[type="password"], textarea {
     padding: 10px;
@@ -71,19 +95,21 @@ button:hover {
     <div class="container">
         <h2>익명 게시판 글쓰기</h2>
         <form action="/save" method="post" enctype="multipart/form-data">
-            <label>제목</label>
+            <label class="label-title">제목</label>
             <input type="text" name="title" value="${board.title}" required>
             <!-- 임시 작성자 기능 -->
-            <label>작성자</label>
+            <label class="label-iid">작성자</label>
             <input type="text" name="iid" required>
-            <label>내용</label>
+            <label class="label-content">내용</label>
              <!-- 스마트에디터 적용 -->
             <textarea name="content" rows="10" required>${board.content}</textarea>
-            <label>비밀번호</label>
+            <label class="label-password">비밀번호</label>
             <input type="password" name="password" required>
             <!-- 저장 및 닫기 버튼 기능 -->
+              <div style="display: flex-end;">
             <button type="submit">저장</button> 
             <button type="button" onclick="location.href='close'">닫기</button>
+            </div>
         </form>
     </div>     
 </body>

@@ -6,30 +6,98 @@
 <head>
 <title>익명게시판 글내용</title>
 <style>
-.container {
-    width: 80%;
-    margin: auto;
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 5px;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
 }
 
+.container {
+    max-width: 90%;
+    margin: 50px auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
 .details-section {
-    margin-bottom: 20px;
+    width: 90%;
+    height: auto;
+    /* 기타 스타일 */
 }
 
 .textarea-content {
-    margin-bottom: 20px;
-    background-color: #e9ecef;
-    padding: 10px;
-    border-radius: 5px;
+   background-color: #ffffff; /* 배경색 설정 */
+    border: 1px solid #ddd; /* 테두리 설정 */
+    border-radius: 4px; /* 테두리 둥글게 설정 */
+    padding: 10px; /* 내부 패딩 설정 */
+    margin-bottom: 20px; /* 아래쪽 마진 설정 */
 }
+
 
 .button-box {
-    text-align: right;
+    width: 50%;
+    height: auto;
+    /* 기타 스타일 */
 }
-</style>
 
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 90%;
+    height: auto;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input[type="text"], input[type="password"], textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #00bfff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 20px;
+    align-self: flex-end;
+}
+
+button:hover {
+    background-color: #005f99;
+}  
+input[type="text"], input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 80%; /* 너비를 80%로 설정 */
+    height: 40px; /* 높이를 40px로 설정 */
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+input[type="button"] {
+    width: 50px; /* 버튼의 너비를 100px로 설정 */
+    height: 25px; /* 버튼의 높이를 50px로 설정 */
+    /* 기타 스타일 */
+}
 </style>
 
 </head>

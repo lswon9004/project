@@ -39,7 +39,7 @@ h2 {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    width: 100%;
+    width: 60%;
     box-sizing: border-box;
     margin-right: 10px;
 }
@@ -51,13 +51,13 @@ table {
 }
 
 th, td {
-    border: 1px solid #ddd;
+    border: 1px solid  #000000;
     padding: 10px;
     text-align: center;
 }
 
 th {
-    background-color: #f4f4f4;
+    background-color: #E0FFFF;
 }
 
 .button-container {

@@ -1,7 +1,5 @@
 package commet.com.spring.dto;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,6 +19,7 @@ public class CustomerInfoDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date registrationDate;
     private String memo;
+    private Integer empno;
     
     
     

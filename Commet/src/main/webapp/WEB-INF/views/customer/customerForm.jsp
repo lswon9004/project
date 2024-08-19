@@ -22,14 +22,14 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.4);
+            background-color: rgba(0,0,0,0.4); /* 배경색 */
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .modal-content {
-            background-color: #fff;
+            background-color: #fff; /* 세부정보 포함 배경색 */
             padding: 20px;
             border: 1px solid #888;
             border-radius: 8px;
@@ -73,8 +73,7 @@
         }
 
         th {
-            background-color: #f2f2f2;
-            
+            background-color: #e0f7fa; /* 고객번호 연락처 등 항목 백그라운드 색상 */
         }
         
         button, #addressSearchBtn { /* 주소검색 CSS */
@@ -159,11 +158,12 @@
         <h2>세부정보</h2>
         <form action="${pageContext.request.contextPath}/customerForm" method="post" onsubmit="closeWindowAfterSubmit(event);">
 			<!-- 수정완료 후 폼을 체출한 후 창을 닫기 위해 onsubmit 이벤트 처리 -->
+			
             <input type="hidden" name="_method" value="put">
             <input type="hidden" name="customerID" value="${customerInfo.customerID}">
             <table>
                 <tr>
-                    <th style="width: 9%;">고객번호</th>
+                    <th style="width: 9%;">접수번호</th>
                     <th style="width: 17%;">연락처</th>
                     <th style="width: 20%;">이메일</th>
                     <th style="width: 10%;">이름</th> <!-- 칸 너비 줄임 -->

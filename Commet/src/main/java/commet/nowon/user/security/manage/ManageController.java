@@ -1,5 +1,6 @@
 package commet.nowon.user.security.manage;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
@@ -31,8 +33,16 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ManageController {// 컨트롤러에서 사용안하는 중 나중에 사용할까 해서남겨둠
 	
 	
-	@Autowired ManageService service;
-	  
+	@Autowired 
+	ManageService service;
+	
+//	@Autowired
+//	EmpService eservice; //empservice에 있는 getRight 사용하기 위해 
+//	public int noCheck(String position) { // 직급의 권한레벨 확인
+//	return eservice.getRight(position);
+//}	
+	
+	
 	@ModelAttribute("user")
 	public ManageDto getDto() {
 		return new ManageDto();
@@ -48,21 +58,22 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 //		service.insertEmp(dto);
 //		return "redirect:/emp_manage"; 
 //	}
-	@GetMapping("/empModify")
+	
+	@GetMapping("/empModify") // empinfo 에서 들고온 사원정보를 수정 화면에 보여줌
 	public String showModify(@RequestParam("no")int no, Model model) {
-		ManageDto empInfo = service.getempByID(no); //ID에 해당하는 고객 정보를 조회
+		ManageDto empInfo = service.getempByID(no); 
     	model.addAttribute("empInfo", empInfo);
-		return "manage/empModify";
+    	return "manage/empModify";
 	}
 	
 	
-	@GetMapping("/empInfo") // 사원 정보 수정확인
+	@GetMapping("/empInfo") // 사원 정보 확인
 	public String showForm() {
 	    return "manage/empInfo";
 	}
 
-    @RequestMapping("/emp_manage")
-    public String customerList(@RequestParam(name = "p", defaultValue = "1") int page, Model m) {
+    @RequestMapping("/emp_manage") // 직원관리 메인화면
+    public String empList(@RequestParam(name = "p", defaultValue = "1") int page, Model m) {
         // 글이 있는지 체크
         int count = service.count();
         if (count > 0) {
@@ -70,7 +81,7 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
         int perPage = 10; // 한 페이지에 보일 글의 갯수
         int startRow = (page - 1) * perPage;
 
-        List<ManageDto> list = service.testmanagemain(startRow);
+        List<ManageDto> list = service.managemain(startRow);
        
             m.addAttribute("elist", list);
 
@@ -92,7 +103,7 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
         return "manage/empList";
     }
 
-    @GetMapping("/empDetail/{id}")//특정 고객의 상세 정보를 조회하여 모델에 추가하고, 고객 정보 입력 폼을표시합니다.
+    @GetMapping("/empDetail/{id}")//특정 고객의 상세 정보를 조회하여 empinfo에서 꺼내올수있게함
     public String showEmpDetail(@PathVariable("id") int id, Model model) { //고객아이디 저장할모델 m
     	ManageDto empInfo = service.getempByID(id); //ID에 해당하는 고객 정보를 조회
     	model.addAttribute("empInfo", empInfo); // 조회된 고객을 모델에 저장
@@ -101,7 +112,6 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
     
     @PutMapping("/empInfo")//정보수정
     public String updateEmp(@ModelAttribute("empInfo") ManageDto dto) {
-    	System.out.println(dto);
     	service.updateEmp(dto);
         return "redirect:/emp_manage";
     }
@@ -173,7 +183,7 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 		
 		// 이미지 업로드 처리
 	    @PostMapping("/employee/uploadPhoto") //박선욱 작성
-	    public String uploadPhoto(@RequestParam("imgPath") MultipartFile photo, Model model) {
+	    public String uploadPhoto(@RequestParam("imgPath") MultipartFile photo, Model model, HttpServletRequest request) {
 	        String newFileName = makeFileName(photo.getOriginalFilename());
 	        File newFile = null;
 
@@ -187,6 +197,9 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 
 	        if (newFile != null) {
 	            model.addAttribute("photoPath", "/upload/" + newFileName);
+				String filePath = request.getServletContext().getRealPath("empImg"); 
+				System.out.println(filePath);
+				File file = new File(filePath);
 	        }
 
 	        return "manage/newEmp"; // 업로드 후 다시 newEmp2 페이지로 이동

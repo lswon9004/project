@@ -26,12 +26,12 @@ public class ManageService {
 		return dao.count();
 	}
     
-    public List<ManageDto>testmanagemain(int start){
+    public List<ManageDto>managemain(int start){
 		
 		Map<String, Object> m = new HashMap<String, Object>();
 		m.put("start", start);
 		m.put("count", 10);
-		return dao.testmanagemain(m);
+		return dao.managemain(m);
     }
    
     public ManageDto getempByID(int id) {

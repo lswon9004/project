@@ -84,17 +84,17 @@
         }
         
        /* 버튼 스타일 */
-button {
-    margin: 5px;
-    padding: 9px 18px;
-    background-color: #00bfff; /* 버튼 배경색 */
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 13px; /* 버튼 글씨 크기 */
-    font-weight: bold;
-}
+		button {
+    		margin: 5px;
+    		padding: 9px 18px;
+    		background-color: #00bfff; /* 버튼 배경색 */
+    		color: #fff;
+    		border: none;
+    		cursor: pointer;
+    		border-radius: 4px;
+    		font-size: 13px; /* 버튼 글씨 크기 */
+    		font-weight: bold;
+		}
         
         /* 버튼 호버 시 스타일링 */
         .button:hover {
@@ -241,7 +241,7 @@ button {
                     <c:if test="${user.right>=3 }"> <li><a href="/approval/status">직원관리</a></li></c:if>
                 </ul>
             </aside>
-            
+                 
       <!-- 여기서부터 가운데 메인 -->
       <section class="main-content">
     		<h2>고객정보</h2>

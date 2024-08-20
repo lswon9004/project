@@ -57,7 +57,7 @@
             <aside>
                 <ul class="menu">
                     <li><a href="/customerList">통합업무</a></li>
-                     <li><a href="/attendance/managementList">근태현황</a>
+                    <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <li><a href="/approval/status">결재승인</a></li>

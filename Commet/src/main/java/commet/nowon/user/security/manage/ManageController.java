@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import commet.com.spring.dto.EmpDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -44,8 +45,8 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 	
 	
 	@ModelAttribute("user")
-	public ManageDto getDto() {
-		return new ManageDto();
+	public EmpDto getDto() {
+		return new EmpDto();
 	}
 	  
 //	@GetMapping("/insert") // get 방식으로 /insert 받으면 사원정보입력창으로 이동 
@@ -122,7 +123,7 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 		  return "redirect:/emp_manage";
 	  }
 	  
-	  @GetMapping("/searchEmps")//고객명 / 연락처 입력하면 검색하는 메서드 
+	  @GetMapping("/searchEmps")//사원이름 / 사원번호 입력하면 검색하는 메서드 
 	  public String searchEmps(@RequestParam(value = "empno", defaultValue = "0") Integer empno,
 			  						@RequestParam(value = "ename", required = false) String ename, Model model) {
 		  System.out.println(empno);

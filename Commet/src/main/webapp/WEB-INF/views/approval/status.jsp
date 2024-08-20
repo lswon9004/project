@@ -70,7 +70,7 @@
                     <li><a href="/approval/status" class="active">결재승인</a></li>
                     <li><a href="#">캘린더</a></li>
                     <li><a href="/emp_manage">직원관리</a></li>
-                    <li><a href="#">관찰관리</a></li>
+                    
                 </ul>
                 <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
                 <p class="footer-text">코멧업무포털</p>

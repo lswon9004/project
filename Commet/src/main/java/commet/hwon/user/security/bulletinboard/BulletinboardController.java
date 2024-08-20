@@ -39,28 +39,29 @@ public class BulletinboardController {
 	@Autowired
 	private HatecountService hateService;
 	
-    // 게시글 작성 폼
+	
+    //사용자가 새로운 게시글을 작성할 수 있는 폼을 보여줌
     @GetMapping("/write")
     public String writeForm(Model model) {
         model.addAttribute("board", new BulletinboardDto());
         return "/bullboard/write";
     }
     
-    // 게시글 저장
+    //새 게시글을 데이터베이스에 저장함
    @PostMapping("/save")
    public String saveBoard(@ModelAttribute("board") BulletinboardDto boardDto, 
-           @RequestParam(name = "file",required = false) MultipartFile file) {
-            boardService.saveBoard(boardDto);
-            return "redirect:/bullboard";
+      @RequestParam(name = "file",required = false) MultipartFile file) {
+      boardService.saveBoard(boardDto);
+      return "redirect:/bullboard";
    }
    
-   // 글쓰기 닫기
+   //글쓰기 폼을 닫고 게시글 목록 페이지로 리디렉션함
    @GetMapping("/close")
    public String closeWrite() {
        return "redirect:/bullboard";
    }
  
-    // 게시글 목록
+    // 게시글 목록을 보여줌
     @GetMapping("/bullboard")
     public String board(@RequestParam(name="p", defaultValue = "1") int page, Model model) {
     	int count = boardService.count(); //전체 게시글 수

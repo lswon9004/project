@@ -14,54 +14,48 @@ public class BulletinboardService {
 	@Autowired
     private BulletinboardDao boardDao;
 	
-
-	//게시글을 저장하는 메서드
+	//새 게시글을 DB에 저장함 
 	 public void saveBoard(BulletinboardDto boardDto) {
-		 	
-	        boardDao.save(boardDto.getTitle(),boardDto.getContent(),boardDto.getIid(),boardDto.getPassword());
-	    }
+	    boardDao.save(boardDto.getTitle(),boardDto.getContent(),boardDto.getIid(),boardDto.getPassword());
+	}
 	 
-    //모든 게시글을 조회하는 메서드
+    //모든 게시글을 조회, start와 perpage 페이지네이션
     public List<BulletinboardDto> getAllBoards(int start, int perPage) {
         return boardDao.findAll(start,10);
     }
     
-    //게시글 상세보기 메서드
+    //특정 번호(no)의 게시글을 조회
     public BulletinboardDto getBoard(int no) {
         return boardDao.getBoard(no);
     }
     
-    //게시글을 업데이트하는 메서드
+    //특정 게시글을 업데이트
     public int update(BulletinboardDto boardDto) {
-        
         return boardDao.update(boardDto);
     }
     
-    //게시글을 삭제하는 메서드
+    //특정 번호(no)와 비밀번호를 가진 게시글을 삭제
 	public int deleteBoard(int no, String password) {
-		 // 먼저 참조된 데이터 삭제
-       
-        return boardDao.deleteboard(no, password);  // 게시글 삭제 메서드
-		
+        return boardDao.deleteboard(no, password); 	
 	}
-   //조회수를 올리는 메서드
+	
+   //특정 번호(no)의 게시글의 조회수를 증가
 	public void increaseReadCount(int no) {
-		boardDao.increaseReadCount(no);
-		
-		
+		boardDao.increaseReadCount(no);		
 	}
-     //게시글 수정완료하는 메서드     
+	
+     //게시글을 수정하고 수정이 완료되었음을 알림     
 	public void updateBoard(BulletinboardDto boardDto) {
 		System.out.println(boardDto.getIid());;
-		boardDao.update(boardDto);
-		
+		boardDao.update(boardDto);	
 	}
-   //페이지 처리하는 메서드	
+	
+   //게시글의 총 수를 반환	
    public int count() {
 	   return boardDao.count();
    }
    
-   //게시글을 검색하는 메서드
+   //제목과 내용으로 게시글을 검색하고, 검색 결과를 페이지네이션처리
    public List<BulletinboardDto> searchBoard(String title, String content, int start) {
        title = "%"+title+"%";
        content = "%"+content+"%";

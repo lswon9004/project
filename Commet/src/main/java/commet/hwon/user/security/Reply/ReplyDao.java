@@ -16,16 +16,19 @@ import commet.user.security.comment.CommentDto;
 @Mapper
 public interface ReplyDao {
 	
+	//새로운 댓글을 데이터베이스 삽입
 	@Insert("INSERT INTO reply (id, password, board_no, content)VALUES (#{id}, #{password}, #{board_no}, #{content})")
 	int insertReply(ReplyDto replyDto);
 	
+	//특정 댓글의 내용을 업데이트
 	@Update("UPDATE reply SET content = #{content} WHERE cno = #{cno}")
 	int updateReply(ReplyDto replyDto);
-	    
-		@Select("SELECT * FROM reply WHERE board_no = #{board_no}")
-	   List<ReplyDto> selectReplies(@Param("board_no") int board_no);
+	
+	//특정 게시글(board_no)에 속한 모든 댓글 조회
+    @Select("SELECT * FROM reply WHERE board_no = #{board_no}")
+	List<ReplyDto> selectReplies(@Param("board_no") int board_no);
 		
-	    
-		@Delete("DELETE FROM reply WHERE cno = #{cno}")
-	   int deleteReply(@Param("cno") int cno);
+	//특정 댓글을 삭제    
+	@Delete("DELETE FROM reply WHERE cno = #{cno}")
+	int deleteReply(@Param("cno") int cno);
 }

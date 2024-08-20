@@ -9,7 +9,7 @@
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background-color: #87CEFA; 
     margin: 0;
     padding: 0;
 }
@@ -35,7 +35,7 @@ form {
     margin: 20px; /* 마진 조정 */
     padding: 20px; /* 패딩 추가 */
     border: 1px solid #ddd; /* 테두리 추가 */
-    background-color: #f9f9f9; /* 배경색 변경 */
+   background-color: #87CEFA;  /* 배경색 변경 */
 }
 
 label {
@@ -93,7 +93,7 @@ button:hover {
 </head>
 <body>
     <div class="container">
-        <h2>익명 게시판 글쓰기</h2>
+        <h2>익명게시글 작성</h2>
         <form action="/save" method="post" enctype="multipart/form-data">
             <label class="label-title">제목</label>
             <input type="text" name="title" value="${board.title}" required>

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.Calendar" %>
+<!-- CSS는 Main 으로 이동 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +40,7 @@
         <main>
             <aside>
                 <ul class="menu">
-                    <li><a href="/customerList" class="active">통합업무</a></li>
+                    <li><a href="/searchCustomers" class="active">통합업무</a></li>
                      <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
@@ -60,6 +61,7 @@
                             <button type="button" class="button" id="searchButton">검색</button>
             
         <!-- 변경된 부분: dropdown 대신 select 사용 -->
+        
         <select id="statusSelect" class="cbutton" onchange="filterByStatus(this.value)">
             <option class="dropdown" value="전체">전체</option>
             <option class="dropdown" value="Received">접수완료</option>
@@ -187,8 +189,6 @@
                 const empno = $('[name=empno]').val();
                 location.href = '/searchCustomers?customerName=' + customerName + '&contact=' + contact + '&empno=' + empno;
             });
-            
-            
         });
     </script>
     
@@ -199,9 +199,7 @@
             	// 고객 ID 체크박스가 하나도 선택되지 않았으면 아무 동작도 하지 않음
             if ($("input[name='customerIds']:checked").length === 0) {
                 event.preventDefault(); // 기본 동작(폼 제출) 취소
-                
-         /*alert('삭제할 항목을 선택하세요.');  알러트 창이 검색 할때도 나타나서 주석처리함*/
-         
+        		 /*alert('삭제할 항목을 선택하세요.');  알러트 창이 검색 할때도 나타나서 주석처리함*/
             	}
         	});
     	});
@@ -216,17 +214,17 @@
 	
 	<!-- 진행상태 별 선택한 값에 따라 필터링 동작 구현 -->
 	<script type="text/javascript">
-    function filterByStatus(status) {
-        if (status === "전체") {
-            location.href = '${pageContext.request.contextPath}/searchCustomers';
-        } else if (status) {
-            location.href = '${pageContext.request.contextPath}/filterByStatus?status=' + status;
-        }
-    }
-</script>
+	function filterByStatus(status) {
+	    if (status === "전체") {
+	        location.href = '${pageContext.request.contextPath}/searchCustomers';
+	    } else if (status) {
+	        location.href = '${pageContext.request.contextPath}/filterByStatus?status=' + status;
+	    }
+	}
+	</script>
 
-<!--현재시간 -->
-<script>
+	<!--현재시간 -->
+	<script>
     function updateTime() {
         const now = new Date();
         const options = { 
@@ -247,5 +245,5 @@
 
     // 매 초마다 시간을 업데이트
     setInterval(updateTime, 1000);
-</script>
-</html>
+	</script>
+	</html>

@@ -13,23 +13,6 @@ body {
     margin: 0;
     padding: 0;
 }
-body {
-    background-image: url('background.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-@media (max-width: 600px) {
-    .container {
-        width: 100%;
-        padding: 10px;
-    }
-}
 
 .container {
     animation: fadeIn 2s ease-in-out;

@@ -7,20 +7,23 @@
 <title>익명게시판 글내용</title>
 <style>
 body {
-    font-family: Arial, sans-serif;
+     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
+    width: 90%;
+    margin: 20px; /* 마진을 20px로 조정 */
+    padding: 20px; /* 패딩을 20px로 조정 */
+    overflow-x: hidden; /* 가로 스크롤을 없애는 코드 */
+    
 }
 
 .container {
-    max-width: 90%;
+    max-width: 95%;
     margin: 50px auto;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 10px;
 }
 .details-section {
     width: 90%;
@@ -29,18 +32,21 @@ body {
 }
 
 .textarea-content {
-   background-color: #ffffff; /* 배경색 설정 */
-    border: 1px solid #ddd; /* 테두리 설정 */
-    border-radius: 4px; /* 테두리 둥글게 설정 */
-    padding: 10px; /* 내부 패딩 설정 */
-    margin-bottom: 20px; /* 아래쪽 마진 설정 */
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
 }
 
-
-.button-box {
-    width: 50%;
-    height: auto;
-    /* 기타 스타일 */
+.textarea-content p {
+    margin: 50px;
+    padding: 10;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
 }
 
 h2 {
@@ -69,35 +75,94 @@ input[type="text"], input[type="password"], textarea {
     box-sizing: border-box;
     margin-top: 5px;
 }
-
-button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #00bfff;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-top: 20px;
-    align-self: flex-end;
+.button-box {
+    display: flex;
+    flex-direction: left;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin: 30px;
 }
 
-button:hover {
-    background-color: #005f99;
-}  
+.button-box button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-box button:hover {
+    background-color: #0056b3;
+}
+
+.button-box #pw {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button[type="submit"] {
+    width:70px; 
+    height: 30px; 
+    margin: 10px;
+    background-color: #4CAF50;
+     color: white; 
+}
+
+
+
 input[type="text"], input[type="password"] {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    width: 80%; /* 너비를 80%로 설정 */
-    height: 40px; /* 높이를 40px로 설정 */
+    width: 100px; 
+    height: 30px; 
     box-sizing: border-box;
     margin-top: 5px;
 }
 input[type="button"] {
-    width: 50px; /* 버튼의 너비를 100px로 설정 */
-    height: 25px; /* 버튼의 높이를 50px로 설정 */
-    /* 기타 스타일 */
+    width: 50px; 
+    height: 25px; 
+    margin-right: 10px;
+    background-color: blue;
+   
 }
+#like-button{
+    display: inline-block;
+    text-align: center;
+    background-color: blue;
+}
+#like-count{
+   display: inline-block;
+    text-align: center;
+}
+#hate-button{
+    display: inline-block;
+    text-align: center;
+    background-color: red;
+}
+ #hate-count{
+    display: inline-block;
+    text-align: center;
+ }
+ 
+#submit-reply {
+    width: 90px; 
+    height: 30px; 
+    margin: 10px;
+    color: white; 
+    background-color: #4CAF50; 
+}
+.delete-reply {
+    background-color: #ff0000; /* 버튼의 배경색을 빨간색으로 설정 */
+    color: white; /* 버튼의 글씨 색상을 흰색으로 설정 */
+}
+
+ 
 </style>
 
 </head>
@@ -112,31 +177,33 @@ input[type="button"] {
        <p><strong>작성일: </strong><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></p>
        <p><strong>조회수: </strong>${board.readCount +1}</p>
         </div>
+        
          <div class="textarea-content">
          <p>${board.content}</p>
          </div>
-        <!-- 좋아요 버튼 -->
-        <input type="button" id="like-button" data-board-no="${board.no}" value="👍" />
+       
+       <div style="display: flex; justify-content: center; align-items: center;">
+        <input type="button" id="like-button" data-board-no="${board.no}" value="👍" /><!-- 좋아요 버튼 -->
          <span id="like-count">${likeCount}</span>
-
-       <!-- 싫어요 버튼 -->
-        <input type="button" id="hate-button" data-board-no="${board.no}" value="👎" />
+        </div>
+       <div style="display: flex;  justify-content: center; align-items: center;">
+        <input type="button" id="hate-button" data-board-no="${board.no}" value="👎" /><!-- 싫어요 버튼 -->
         <span id="hate-count">${hateCount}</span>
+        </div>
        </form>
         
         <div class="button-box">
-           <button onclick="location.href='/bullboard'">목록으로</button>
+           <button onclick="location.href='/bullboard'">목록</button>
            <button onclick="update()">수정</button>
            <input id="pw" type="password">
         </div>
        
         
         <form action="/delete/${board.no}" method="post">
-          <label for="password-input">Password:</label>
+          <label for="password-input">Password</label>
            <input type="password" id="password-input1" name="password" />
-         
-         <button type="submit">삭제</button>
-     </form>
+          <button type="submit">글삭제</button>
+        </form>
     
      <!-- 댓글 목록 -->
     <c:forEach var="reply" items="${replies}">
@@ -147,31 +214,37 @@ input[type="button"] {
         <div class="reply">
            <p>${reply.id}</p>           
             <p>${reply.content}</p>
-             <label for="password-input">Password:</label>
+             <label for="password-input">Password</label>
             <input type="password" id="password-input-${reply.id}" name="password"> 
             <button class="delete-reply" data-reply-id="${reply.id}">댓글 삭제</button>
         </div>
-         </form>
-            </c:forEach>
+       </form>
+    </c:forEach>
     
      <!-- 댓글 등록 폼 -->
      <form id="reply-form" action="/content/insert" method="post">
     <!-- id 입력 -->
-    <label for="id-input">ID:</label>
+     <div style="display: flex; align-items: center;">
+    <label for="id-input">작성자 </label>
     <input type="text" id="id-input" name="id" />
+    </div>
    
     <input type="hidden" name="board_no" value="${board.no}"/>
    
     <!-- password 입력 -->
-    <label for="password-input">Password:</label>
+    <div style="display: flex; align-items: center;">
+    <label for="password-input">암호 </label>
     <input type="password" id="password-input2" name="password" />
-   
+    </div>
+    
     <!-- content 입력 -->
-    <label for="content-input">Comment:</label>
+    <div style="display: flex; align-items: center;">
+    <label for="content-input">댓글 </label>
     <input type="text" id="content-input" name="content" />
-
+     </div>
+    
     <!-- 제출 버튼 -->
-    <input type="submit" id="submit-reply" value="Submit reply" />
+    <input type="submit" id="submit-reply" value="댓글 등록" />
   </form>
 </div>  
           

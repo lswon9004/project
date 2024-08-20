@@ -67,7 +67,7 @@
         <main>
             <aside>
                 <ul class="menu">
-                    <li><a href="/customerList">통합업무</a></li>
+                    <li><a href="/searchCustomers">통합업무</a></li>
                      <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
@@ -217,7 +217,7 @@ $('#end').click(function(){
 })
  function selectDate(date) {
    $.getJSON('/vacation',{'date':date},function(data){
-      $('#vlist').append(datea)
+      $('#vlist').text(data)
    })
 }
 </script>

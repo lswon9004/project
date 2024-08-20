@@ -56,24 +56,22 @@ input[type="text"], textarea {
 </style>
 </head>
 <body>
-<%-- 수정할 게시글의 데이터를 불러오는 부분 --%>
-<form action="/bullboard/update" method="post">
-	<input type="hidden" name="no" value="${board.no}" />
-    <label for="iid">작성자</label>
-    <input type="text" name="iid" value="${board.iid}" />
-    <div>
-        <label for="title">제목</label>
-        <input type="text" name="title" value="${board.title}" />
+
+<form action="/bullboard/update" method="post"><!-- 폼데이터가 url로 post를 요청 -->
+ <input type="hidden" name="no" value="${board.no}" /><!-- 게시글 번호를 숨겨진 필드로 전송 -->
+  <label for="iid">작성자</label>
+  <input type="text" name="iid" value="${board.iid}" />
+  <div>
+   <label for="title">제목</label>
+   <input type="text" name="title" value="${board.title}" />
+   </div>
+   <div>
+    <label for="content">내용</label>
+    <textarea name="content">${board.content}</textarea>
     </div>
-    <div>
-        <label for="content">내용</label>
-        <textarea name="content">${board.content}</textarea>
+    <div class="button-box">
+     <button type="submit">수정완료</button>
     </div>
-     
-     <!-- 수정 완료버튼 -->
-         <div class="button-box">
-         <button type="submit">수정완료</button>
-         </div>
 </form>
 </body>
 </html>

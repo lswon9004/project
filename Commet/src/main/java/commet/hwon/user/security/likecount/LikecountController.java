@@ -13,22 +13,23 @@ import com.google.gson.Gson;
 public class LikecountController {
 	
 	 @Autowired
-	    private LikecountService likeService;
+	 private LikecountService likeService;
 	 
+	 //특정 게시글에 대한 사용자의 좋아요를 추가, 취소
 	 @GetMapping("/bullboard/like")
 	 @ResponseBody
-		public String increaseLikeCount(@RequestParam("no")String no,@RequestParam("empno")int empno) {
+	public String increaseLikeCount(@RequestParam("no")String no,@RequestParam("empno")int empno) {
 		 
-		 	int no1 = Integer.parseInt(no);
-			Gson gson = new Gson();
+        int no1 = Integer.parseInt(no);
+		Gson gson = new Gson();
 			
-			return gson.toJson(likeService.increaseLikeCount(no1,empno));
-		}
+		return gson.toJson(likeService.increaseLikeCount(no1,empno));
+	}
 
-		@GetMapping("/like/{no}")
-		public int getLike(@PathVariable("no") int no) {
-			// Assuming that the 'likecount' table is used to store the likes
+	 //특정 게시글의 좋아요 수를 조회하는 메서드
+	@GetMapping("/like/{no}")
+	public int getLike(@PathVariable("no") int no) {
 			return 1;
-		}
+   }
 
 }

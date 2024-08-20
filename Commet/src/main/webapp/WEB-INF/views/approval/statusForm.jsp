@@ -129,7 +129,13 @@
         					</tr>
         				</table>
         				<textarea style="width: 100%; height: 200px;" readonly="readonly">${dto.approval_content }</textarea>
-        				<form method="post" action="/approval/statusForm/${dto.approval_no}">
+        				<form method="post" action="/approval/statusForm">
+        				<c:if test="${dto.approval_type ==1 }">
+        				<input type="date" name="date">
+        				</c:if>
+        				<input type="hidden" name="empno" value="${dto.empno }">
+        				<input type="hidden" name="approval_no" value="${dto.approval_no }">
+        				<input type="hidden" name="approval_type" value="${dto.approval_type }">
         				<table>
         				<colgroup>
 			<col style="width:25%;" />

@@ -158,7 +158,10 @@
                 <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">00:00/</c:if></p>
                 <p id="endTime">00:00</p>
                 <nav>
-                    <a href="/main">Home</a>
+                    
+                    <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
+                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->
+                    
                     <a href="#">개인정보수정</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -172,8 +175,7 @@
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                    <li><a href="/bullboard">익명게시판</a></li>
-					<c:if test="${user.right>=3 }"> <li><a href="/approval/status" class="active">직원관리</a></li></c:if>
+					<c:if test="${user.right>=3 }"> <li><a href="/emp_manage" class="active">직원관리</a></li></c:if>
                 </ul>
                 <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
                 <p class="footer-text">코멧업무포털</p>
@@ -255,8 +257,9 @@
                 }
                 url += 'empno=' + searchInput;
             } else if (searchType === 'ename') {
-            	 if (searchInput || searchInput === '') { // 텍스트가 아니거나 빈 값인 경우 예외 처리
-                     alert('정확한 사원이름을 입력하세요.');
+            	 if (searchInput === '') { //빈 값인 경우 예외 처리
+					System.out.print(ename);
+            		 alert('정확한 사원이름을 입력하세요.');
                      return;
                  }
                 url += 'ename=' + encodeURIComponent(searchInput);

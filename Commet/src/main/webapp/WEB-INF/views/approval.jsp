@@ -9,24 +9,6 @@
     <title>Task Management Portal</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
   <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-       .form-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
 
 .form-container form {
     display: flex;
@@ -88,7 +70,7 @@ button[type="submit"] {
                 <p id="endTime">00:00</p>
                 <nav>
                     <a href="#">Home</a>
-                    <a href="#">개인정보수정</a>
+                    <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
             </div>
@@ -97,16 +79,15 @@ button[type="submit"] {
             <aside>
                 <ul class="menu">
                     <li><a href="/customerList">통합업무</a></li>
-                    <li><a href="/attendance/managementList">근태현황</a>
-                    <li><a href="/boards">게시판</a></li>
-                    <li><a href="/approval/${user.empno}">전자결재</a></li>
-                    <li><a href="/approval/status">결재승인</a></li>
-                    <li><a href="/emp_manage">직원관리</a></li>
-                </ul>
-                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
-                <p class="footer-text">코멧업무포털</p>
+                     <li><a href="/attendance/managementList">근태현황</a></li>
+                    <li><a href="/boards" >게시판</a></li>
+                    <li><a href="/approval/${user.empno}" class="active">전자결재</a></li>
+                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
+                    <c:if test="${user.right>=3 }"> <li><a href="/emp_manage">직원관리</a></li></c:if>
+                </ul>      
             </aside>
             <section class="main-content">
+            <h2>전자결재</h2>
                 <div class="status-overview">
                     <div class="form-container">
     <form action="/approval/search" style="flex: 1; display: flex; align-items: center;">
@@ -190,4 +171,30 @@ button[type="submit"] {
         </main>
     </div>
 </body>
+<footer>
+<p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
+</footer>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+ <script>
+    function updateTime() {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            weekday: 'long', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit'
+        };
+        const currentTimeString = now.toLocaleDateString('ko-KR', options);
+        document.getElementById('current-time').innerText = currentTimeString;
+    }
+
+    // 처음 페이지 로드 시 시간을 표시
+    updateTime();
+
+    // 매 초마다 시간을 업데이트
+    setInterval(updateTime, 1000);
+</script>
 </html>

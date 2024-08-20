@@ -97,12 +97,11 @@ button[type="submit"] {
             <aside>
                 <ul class="menu">
                     <li><a href="/customerList">통합업무</a></li>
+                    <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
-                    <li><a href="/approval" class="active">전자결재</a></li>
+                    <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <li><a href="/approval/status">결재승인</a></li>
-                    <li><a href="#">캘린더</a></li>
-                    <li><a href="#">직원관리</a></li>
-                    <li><a href="#">관찰관리</a></li>
+                    <li><a href="/emp_manage">직원관리</a></li>
                 </ul>
                 <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
                 <p class="footer-text">코멧업무포털</p>

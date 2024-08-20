@@ -7,7 +7,7 @@
 html, body {
     font-family: Arial, sans-serif;
     height: 100%;
-   overflow: hidden;
+   /* overflow: hidden; */
 }
 
 		/* 버튼 컨테이너 스타일링 */

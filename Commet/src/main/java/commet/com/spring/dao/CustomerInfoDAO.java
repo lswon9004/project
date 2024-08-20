@@ -41,7 +41,7 @@ public interface CustomerInfoDAO {
 	
 	
 		
-	@Update("update CustomerInfo set contact=#{contact}, email=#{email}, address=#{address}, memo=#{memo},status=#{status} " +
+	@Update("update CustomerInfo set contact=#{contact}, email=#{email},zipcode=#{zipcode} ,address=#{address}, memo=#{memo},status=#{status} " +
             "where customerID=#{customerID}")
     int updateCustomer(CustomerInfoDTO dto); // 고객정보 수정
 	

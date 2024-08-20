@@ -39,10 +39,10 @@ public class CustomerInfoService {
 			return dao.count();
 		}
 	    
-	    public List<CustomerInfoDTO>customerList(int start){ //전체글 페이징
+	    public List<CustomerInfoDTO>customerList(int start ,int count){ //전체글 페이징
 			Map<String, Object> m = new HashMap<String, Object>();
 			m.put("start", start);
-			m.put("count", 10);
+			m.put("count", 8);
 			return dao.customerList(m);
 		}
 		

@@ -153,15 +153,14 @@ public class CustomerInfoController {
 	public String customerList(@RequestParam(name = "p", defaultValue = "1") int page, Model m) {
 		int count = Service.count();
 			if (count > 0) {
-			int perPage = 10;
+			int perPage = 5;
 			int startRow = (page - 1) * perPage;
 
-			List<CustomerInfoDTO> list = Service.customerList(startRow);
+			List<CustomerInfoDTO> list = Service.customerList(startRow,count);
 			m.addAttribute("blist", list);
 
 			int pageNum = 5;
 			int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0);
-
 			int begin = (page - 1) / pageNum * pageNum + 1;
 			int end = begin + pageNum - 1;
 			if (end > totalPages) {
@@ -172,7 +171,7 @@ public class CustomerInfoController {
 			m.addAttribute("pageNum", pageNum);
 			m.addAttribute("totalPages", totalPages);
 		}
-		m.addAttribute("count", count);
+			m.addAttribute("count", count);
 
 		return "customer/customerList";
 	}
@@ -183,7 +182,7 @@ public class CustomerInfoController {
 	        										@RequestParam(value = "contact", required = false) String contact,
 	        										@RequestParam(value = "empno", required = false) Integer empno,
 	        											@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-	        												@RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,Model model) {
+	        												@RequestParam(value = "pageSize", required = false, defaultValue = "8") int pageSize,Model model) {
 	    
 		int start = (page - 1) * pageSize;
 		List<CustomerInfoDTO> searchResults = Service.searchCustomersWithPaging(customerName, contact, empno,page, pageSize);
@@ -202,7 +201,7 @@ public class CustomerInfoController {
 	@GetMapping("/filterByStatus") // 특정 상태에 해당하는 고객 정보를 조회하여 모델에 추가하고, 고객 목록 페이지를 표시 페이징
 	public String filterByStatus( @RequestParam(value = "status", required = false) String status,
 											@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-											@RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,Model model) {
+											@RequestParam(value = "pageSize", required = false, defaultValue = "8") int pageSize,Model model) {
 		 	
 			int start = (page - 1) * pageSize;
 		 	int totalCustomers = Service.countCustomersByStatus(status);

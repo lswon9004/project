@@ -5,49 +5,48 @@
 }
 
 html, body {
-	font-family: Arial, sans-serif;
-	height: 100%;
-	/* overflow: hidden; */
+    font-family: Arial, sans-serif;
+    height: 100%;
+   overflow: hidden;
 }
 
-/* 버튼 컨테이너 스타일링 */
-.button-container {
-	display: flex; /* 버튼들을 플렉스 박스로 배치 */
-	justify-content: space-between; /* 버튼들 간의 공간을 균등하게 분배 */
-	align-items: center; /* 버튼들을 세로로 중앙 정렬 */
-}
-
-h1 {
-	margin-left: 350px;
-}
-/* 제목(h2) 스타일 */
-h2 {
-	text-align: center; /* 제목을 중앙 정렬 */
-}
-
-table {
-	width: 100%; /* 테이블의 너비를 전체 화면에 맞춤 */
-	border-collapse: collapse; /* 인접한 테이블 셀 간의 경계를 합침 */
-}
-
-/* 테이블 헤더 및 데이터 셀 스타일 */
-th, td {
-	border: 1px solid #ddd; /* 셀 경계선에 색상 적용 */
-	padding: 14px; /* 셀 내부에 여백 추가 */
-	text-align: center; /* 텍스트를 중앙 정렬 */
-}
-
-/* 테이블 헤더 스타일 */
-th {
-	background-color: #f2f2f2; /* 헤더 배경색 설정 */
-}
-
-/* 이전 달과 다음 달의 날짜 스타일 (달력) */
-.prev-month, .next-month {
-	color: #ccc; /* 이전/다음 달 날짜를 흐리게 표시 */
-}
-
-table th {
+		/* 버튼 컨테이너 스타일링 */
+		.button-container {
+    		display: flex; /* 버튼들을 플렉스 박스로 배치 */
+    		justify-content: space-between; /* 버튼들 간의 공간을 균등하게 분배 */
+    		align-items: center; /* 버튼들을 세로로 중앙 정렬 */
+		}
+		
+		h1{
+		margin-left: 350px;
+		}
+ /* 제목(h2) 스타일 */
+        h2 {
+            text-align: center; /* 제목을 중앙 정렬 */
+        }
+        
+         table {
+            width: 100%; /* 테이블의 너비를 전체 화면에 맞춤 */
+            border-collapse: collapse; /* 인접한 테이블 셀 간의 경계를 합침 */
+        }
+        
+        /* 테이블 헤더 및 데이터 셀 스타일 */
+        th, td {
+            border: 1px solid #ddd; /* 셀 경계선에 색상 적용 */
+            padding: 14px; /* 셀 내부에 여백 추가 */
+            text-align: center; /* 텍스트를 중앙 정렬 */
+        }
+        
+        /* 테이블 헤더 스타일 */
+        th {
+            background-color: #f2f2f2; /* 헤더 배경색 설정 */
+			}
+        
+        /* 이전 달과 다음 달의 날짜 스타일 (달력) */
+        .prev-month, .next-month {
+            color: #ccc; /* 이전/다음 달 날짜를 흐리게 표시 */
+        }
+        table th {
 	background: #e0f7fa; /* view.jsp의 테이블 헤더 색 */
 	color: #000;
 	font-family: 'Noto Sans KR', sans-serif; /* th 태그와 동일한 글씨체 */

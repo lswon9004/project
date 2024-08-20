@@ -14,8 +14,8 @@ import commet.com.spring.dto.CustomerInfoDTO;
 
 @Mapper
 public interface CustomerInfoDAO {
-	@Insert("insert into CustomerInfo (CustomerName, Email, Address, DateOfBirth, Contact, Status, RegistrationDate, Memo ,Empno) "
-			+ "values (#{customerName}, #{email}, #{address}, #{dateOfBirth}, #{contact}, #{status}, now(), #{memo} ,#{empno})")
+	@Insert("insert into CustomerInfo (CustomerName, Email, Zipcode, Address, DateOfBirth, Contact, Status, RegistrationDate, Memo ,Empno) "
+			+ "values (#{customerName}, #{email}, #{zipcode}, #{address}, #{dateOfBirth}, #{contact}, #{status}, now(), #{memo} ,#{empno})")
 	void saveCustomerInfo(CustomerInfoDTO customerInfo); //고객정보추가
 
 	@Select("select * from CustomerInfo order by CustomerID desc")

@@ -3,15 +3,21 @@ package commet.swon.approval;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import commet.attendance.AttendanceDao;
+import commet.swon.emp.Empdao;
 
 @Service
 public class ApprovalService {
 	@Autowired
 	ApprovalDao dao;
-	
+	@Autowired
+	AttendanceDao Adao;
+	@Autowired
+	Empdao EDao;
 	public int Acount(int empno) {
 		return dao.Acount(empno);
 	}
@@ -66,7 +72,12 @@ public class ApprovalService {
 		}
 		return dao.statusSearchList(approval_title, startDate, endDate, empno, approval_status1, approver1_empno, start);
 	}
-	public int updateStatus(String approval_status1, String approval_comm,int no) {
+	@Transactional
+	public int updateStatus(String approval_status1, String approval_comm,int no,int approval_type,Date date,int empno) {
+		if(approval_type==1) {
+			int deptno = EDao.getDeptno(empno);
+			Adao.insertdata(empno, deptno, date);
+		}
 		return dao.updateStatus(approval_status1, approval_comm, no);
 	}
 }

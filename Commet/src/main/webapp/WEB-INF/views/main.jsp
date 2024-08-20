@@ -217,7 +217,8 @@ $('#end').click(function(){
 })
  function selectDate(date) {
    $.getJSON('/vacation',{'date':date},function(data){
-      $('#vlist').text(data)
+	  $('#vlist').text("휴가자")
+      $('#vlist').append("<br>"+data)
    })
 }
 </script>

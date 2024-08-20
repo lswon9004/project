@@ -176,10 +176,13 @@ public class ApprovalController {
 		m.addAttribute("dto", dto);
 		return "/approval/statusContent";
 	}
-	@PostMapping("/approval/statusForm/{no}")
-	public String updateStatus(@PathVariable("no")int no,@RequestParam("approval_status1")String approval_status1,
-							   @RequestParam("approval_comm")String approval_comm) {
-		aService.updateStatus(approval_status1, approval_comm, no);  
+	@PostMapping("/approval/statusForm")
+	public String updateStatus(ApprovalDto dto,
+							   @DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(name = "date",required = false)Date date
+							   ) {
+		
+		System.out.println(date);
+		aService.updateStatus(dto.getApproval_status1(), dto.getApproval_comm(), dto.getApproval_no(),dto.getApproval_type(),date,dto.getEmpno());  
 		return "redirect:/approval/status";
 	}
 }

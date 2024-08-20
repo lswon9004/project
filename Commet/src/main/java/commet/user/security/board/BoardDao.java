@@ -40,21 +40,21 @@ public interface BoardDao {
     @Select("<script>" +
             "SELECT count(*) FROM board WHERE 1=1" +
             "<if test='title != null and title != \"\"'> AND title LIKE CONCAT('%', #{title}, '%')</if>" +
-            "<if test='author != null and author != \"\"'> AND empno = #{author}</if>" +
+            "<if test='empno != null and empno != \"\"'> AND empno LIKE CONCAT('%', #{empno}, '%')</if>" +
             "<if test='date != null and date != \"\"'> AND DATE(regdate) = #{date}</if>" +
             " ORDER BY no DESC" +
             "</script>")
-    int searchBoardsCount(@Param("title") String title, @Param("author") String author, @Param("date") String date);
+    int searchBoardsCount(@Param("title") String title, @Param("empno") String author, @Param("date") String date);
     
     // 검색 조건에 맞는 게시물을 조회하는 메서드
     @Select("<script>" +
             "SELECT * FROM board WHERE 1=1" +
             "<if test='title != null and title != \"\"'> AND title LIKE CONCAT('%', #{title}, '%')</if>" +
-            "<if test='author != null and author != \"\"'> AND empno = #{author}</if>" +
+            "<if test='empno != null and empno != \"\"'> AND empno LIKE CONCAT('%', #{empno}, '%')</if>" +
             "<if test='date != null and date != \"\"'> AND DATE(regdate) = #{date}</if>" +
             " ORDER BY no DESC limit #{startRow}, 10" +
             "</script>")
     
-    List<BoardDto> searchBoards(@Param("title") String title, @Param("author") String author, @Param("date") String date,@Param("startRow")int startRow);
+    List<BoardDto> searchBoards(@Param("title") String title, @Param("empno") String author, @Param("date") String date,@Param("startRow")int startRow);
 }	// 제목, 작성자, 날짜를 기준으로 검색 조건에 맞는 게시물을 조회
 	// return -> 검색된 게시물 목록 리스트

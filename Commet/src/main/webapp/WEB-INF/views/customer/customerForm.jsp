@@ -189,7 +189,7 @@
                 <tr>
                     <th>주소</th>
                     <td colspan="5" id="address">
-                    <input type="text" id="zipcode" name="zipcode" placeholder="우편번호" readonly style="width: 20%;">
+                    <input type="text" id="zipcode" name="zipcode" placeholder="우편번호" value="${customerInfo.zipcode}" readonly style="width: 20%;">
                      <button type="button" id="addressSearchBtn" onclick="execDaumPostcode()" style="display: none;">주소 검색</button>
                     <input type="text" id="address" name="address" value="${customerInfo.address}" readonly>
                    
@@ -217,6 +217,22 @@
  <!-- Daum 주소 검색 API 스크립트 추가 -->
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
     <script>
+    
+ 	// Daum 주소 검색 API를 실행하는 함수
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) { // 주소 검색이 완료되었을 때 호출되는 콜백 함수
+                var roadAddr = data.roadAddress; // 도로명 주소
+                var jibunAddr = data.jibunAddress; // 지번 주소
+					
+             	// 도로명 주소가 있으면 roadAddr을, 없으면 지번 주소를 입력 필드에 설정
+                document.getElementById('address').value = roadAddr || jibunAddr;
+                document.getElementById('zipcode').value = data.zonecode;
+            }
+        }).open();// 주소 검색 팝업 열기
+    }
+ 
+ 
     function enableEdit() {  // 수정 버튼을 눌렀을 때 호출되는 함수
         const inputs = document.querySelectorAll('input, textarea, select');// 모든 input, textarea, select 요소를 선택
      	// 선택된 요소들의 읽기 전용 속성을 제거하여 편집 가능하게 만듦
@@ -247,21 +263,6 @@
         location.href='/customerList';  // customerList 페이지로 이동
     }
  	
-  
- 	
- 	// Daum 주소 검색 API를 실행하는 함수
-    function execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) { // 주소 검색이 완료되었을 때 호출되는 콜백 함수
-                var roadAddr = data.roadAddress; // 도로명 주소
-                var jibunAddr = data.jibunAddress; // 지번 주소
-					
-             	// 도로명 주소가 있으면 roadAddr을, 없으면 지번 주소를 입력 필드에 설정
-                document.getElementById('address').value = roadAddr || jibunAddr;
-                document.getElementById('zipcode').value = data.zonecode;
-            }
-        }).open();// 주소 검색 팝업 열기
-    }
     </script>
     
     
@@ -278,7 +279,6 @@
         
         xhr.onload = function() {
             if (xhr.status === 200) {
-               /*  window.close(); */ // 요청이 성공적으로 처리된 후 창을 닫음
                no=${customerInfo.customerID}; // 수정완료 후 다시 이전 화면으로
                location.href='/customerDetail/'+no; // 수정완료 후 다시 이전 화면으로 //이 방법보다 더 쉬운 방법 있을거 같음 나중에 확인
             } else {

@@ -47,7 +47,7 @@ public class AttendanceManagementController {
     												@RequestParam(name = "p", defaultValue = "1") int page, Model model) {
     		int count = service.count2();
     		if (count > 0) {
-    		int perPage = 10;
+    		int perPage = 5;
         	int startRow = (page - 1) * perPage;
 
             List<AttendanceManagementDto> attendanceList = service.managementList(startRow, dto.getEmpno());

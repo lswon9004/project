@@ -20,6 +20,7 @@ public class CustomerInfoDTO {
     private Date registrationDate;
     private String memo;
     private Integer empno;
+    private String zipcode;
     
     
     

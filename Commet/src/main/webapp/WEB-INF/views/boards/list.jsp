@@ -30,7 +30,7 @@
                 <p id="endTime">00:00</p>
                 <nav>
                     <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    <a href="#">개인정보수정</a>
+                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -41,14 +41,15 @@
                 <ul class="menu">
                     <li><a href="/searchCustomers">통합업무</a></li>
                      <li><a href="/attendance/managementList">근태현황</a>
-                    <li><a href="/boards">게시판</a></li>
+                    <li><a href="/boards" class="active">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage" class="active">직원관리</a></li></c:if>
+                    <c:if test="${user.right>=3 }"> <li><a href="/emp_manage" class="active">직원관리</a></li></c:if>
                 </ul>
             </aside>
             <section class="main-content">
             		<h2>게시판</h2>
+            		<div class="header-line"></div>
                 <!-- 메인 콘텐츠 영역 -->
 				<div class="search-form">
 					<!-- 검색 폼을 포함하는 요소 -->
@@ -63,18 +64,8 @@
 					<button onclick="location.href='/boards/write'">글쓰기</button>
 					</div>
 				</div>
-				<table style="width:113.65%;">
-				<colgroup>
-			<col style="width:10%;" />
-			<col />
-			<col style="width:12%;" />
-			<col style="width:12%;" />
-			<col style="width:12%;" />
-			<col style="width:12%;" />
-		</colgroup>
-					<!-- 게시판 목록을 표시하는 테이블 -->
+				<table>
 					<thead>
-						<!-- thead 영역 (번호 제목 작성자 작성일 조회수가 포함) -->
 						<tr>
 							<th>번호</th>
 							<th>제목</th>

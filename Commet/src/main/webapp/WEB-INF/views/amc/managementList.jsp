@@ -30,7 +30,7 @@
                 <p id="endTime">00:00</p>
                 <nav>
                     <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    <a href="#">개인정보수정</a>
+                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 --> 
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -40,11 +40,11 @@
             <aside>
                 <ul class="menu">
                     <li><a href="/searchCustomers">통합업무</a></li>
-                     <li><a href="/attendance/managementList">근태현황</a>
+                     <li><a href="/attendance/managementList" class="active">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage" class="active">직원관리</a></li></c:if>
+                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage">직원관리</a></li></c:if>
                 </ul>
             </aside>
             <!-- 여기서부터 메인 -->

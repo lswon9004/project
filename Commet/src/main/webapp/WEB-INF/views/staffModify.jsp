@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>사원 정보 수정</title>
+    <title>개인정보 수정</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -181,36 +181,23 @@
 
 <div id="myModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="location.href='/emp_manage'">&times;</span>
-        <h2>사원정보</h2>
+        <span class="close" onclick="location.href='/main'">&times;</span><!--/main 받아오는 컨트롤러가 없음 만들어야함-->
+        <h2>개인정보 수정</h2>
         <form action="/empInfo" method="post" >
             <input type="hidden" name="_method" value="put">
             
-            <img src="/upload/${empInfo.imgPath}" alt="Profile Image" width="100">
+            <img src="/upload/${empInfo.imgPath}" alt="Profile Image" width="100"><!--로그인한 아이디 정보 가저와야함 메인화면 사진 나오는거랑 비슷하게 하면될듯 -->
             <table>
             <tr>
-                <td>사원 이름:</td><td><input type="text" name="ename" value="${empInfo.ename}" required readonly></td>
-                <td>사원 번호:</td><td><input type="text" name="empno" value="${empInfo.empno}" readonly></td>
+                <td>사원 이름:</td><td>${empInfo.ename}</td>
+                <td>사원 번호:</td><td>${empInfo.empno}</td>
                 <td>랭크:</td><td>${empInfo.authority}</td>
             </tr>
-            <tr>
-				<td>부서:</td> <!-- db에서 dept 부서와 번호 저장 안해두면 작동안할수있음-->
-				<td>	
-					<select id="selected" name="deptno" readonly> 
-        				<option value="100" ${empInfo.deptno == '100' ? 'selected' : ''}>qwer</option>
-        				<option value="200" ${empInfo.deptno == '200' ? 'selected' : ''}>sdff</option>
-        				<option value="300" ${empInfo.deptno == '300' ? 'selected' : ''}>asdf</option>
-					</select>
-				</td>
-				<td>담당업무:</td><td><input type="text" name="jop" value="${empInfo.jop}" readonly></td>
-				<td>직급:</td>
-				<td>
-				<select name="position" readonly>
-        			<option value="대리" ${empInfo.position == '대리' ? 'selected' : ''}>대리</option>
-        			<option value="팀장" ${empInfo.position == '팀장' ? 'selected' : ''}>팀장</option>
-        			<option value="관리자" ${empInfo.position == '관리자' ? 'selected' : ''}>관리자</option>
-				</select>
-				</td>
+            <tr> 
+				<td>부서:</td><td>${empInfo.deptno}</td>
+				<td>담당업무:</td><td>${empInfo.jop}</td>
+				<td>직급:</td><td>${empInfo.position}</td>
+
             </tr>
             <tr>
 				<td>연락처:</td><td><input type="text" name="phone" value="${empInfo.phone}" readonly></td>
@@ -223,24 +210,17 @@
   				<td>상세주소:</td><td><input type="text" name="detailAddr" value="${empInfo.detailAddr}" readonly></td>
             </tr>
             <tr>
-	    		<td>생년월일:</td><td><input type="text" name="birthday" value="<fmt:formatDate value='${empInfo.birthday}' pattern='yyyy-MM-dd' />"  readonly></td>
-    			<td>입사일:</td><td><input type="text" name="hiredate" value="<fmt:formatDate value='${empInfo.hiredate}' pattern='yyyy-MM-dd' />"  readonly></td>
+	    		<td>생년월일:</td><td><fmt:formatDate value='${empInfo.birthday}' pattern='yyyy-MM-dd' /></td>
+    			<td>입사일:</td><td><fmt:formatDate value='${empInfo.hiredate}' pattern='yyyy-MM-dd' /></td>
             </tr>
-             <tr>
-	    		<td>급여:</td><td><input type="text" name="sal" value="${empInfo.sal}" readonly></td>
-            </tr>
-            <tr>
-            	<td>메모:</td>
-                <td colspan="5">
-                    <textarea name="memo" readonly>${empInfo.memo}</textarea>
-                </td>
-            </tr> 
+			<tr>
+				<td>비밀번호:</td><td><input type="text" name="password"></td>
+			</tr>
             </table>
             <div class="buttons">
                 <button type="button" onclick="enableEdit()" id="modify">수정</button>
                 <button type="submit" id="submitButton">등록</button>
-                <button type="button" onclick="location.href='/emp_manage'">닫기</button>
-               
+                <button type="button" onclick="location.href='/main'">닫기</button><!--/main 받아오는 컨트롤러가 없음 만들어야함-->
             </div>
         </form>
     </div>

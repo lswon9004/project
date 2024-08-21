@@ -9,7 +9,7 @@
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background-color: #ADD8E6; 
     margin: 0;
     padding: 0;
 }
@@ -38,10 +38,11 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    
 }
 
 th, td {
-    border: 1px solid  #000000;
+    border: 1px solid rgba(0, 0, 0, 0.5);
     padding: 10px;
     text-align: center;
 }

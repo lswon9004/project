@@ -3,40 +3,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.Calendar" %>
 <!DOCTYPE html>
+<!-- CSS는 Main 으로 이동 -->
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Management Portal</title>
+    <title>메인화면</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
-    <style>
-    
-     button {
-            margin: 5px; /* 버튼 주위에 여백 추가 */
-    		padding: 10px 20px; /* 버튼 내부에 여백 추가 */
-    		background-color: #00bfff; /* 버튼 배경색 설정 */
-   			color: #fff; /* 버튼 텍스트 색상 설정 */
-    		border: none; /* 버튼 경계선 제거 */
-    		cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
-    		border-radius: 4px; /* 버튼의 모서리를 둥글게 설정 */
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .prev-month, .next-month {
-            color: #ccc;
-        }
-    </style>
 </head>
 <body>
      <div class="container">
@@ -58,7 +31,8 @@
                 <p id="endTime">00:00</p>
                 <nav>
 					<c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    <a href="#">개인정보수정</a>
+                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    
+                    <a href="#">개인정보수정</a>
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -72,10 +46,11 @@
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
+                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage" class="active">직원관리</a></li></c:if>
                 </ul>
-                 <p class="footer-text">현재시간 : <span id="current-time"></span></p>
-                <p class="footer-text">코멧업무포털</p>
             </aside>
+            
+            <!-- 여기서부터 가운데 메인 -->
             <section class="main-content">
                 <div class="status-overview">
                     <h2>나의 출근 현황</h2>
@@ -184,16 +159,17 @@
                 out.println("</tr>");
             }
             %>
-        </tbody>
-    </table>
-                <div class="chart">
-                    <h2>출근 현황</h2>
-                    <!-- Chart will be added here -->
-                </div>
-            </section>
+        			</tbody>
+    			</table>
+            </section><!-- 가운데 메인 끝나는 곳 -->
         </main>
     </div>
 </body>
+<footer>
+<p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
+</footer>
+
+<!--메인화면에서 출근 버튼을 눌렀을때 발생 되는 스크립트문-->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};

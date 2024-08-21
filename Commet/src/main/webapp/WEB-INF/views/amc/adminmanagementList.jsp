@@ -51,7 +51,7 @@
             <section class="main-content">
              <div class="container">
              
-        	<h2>${user.empno}님의 근태현황 입니다.</h2>
+        	<h2>근태현황</h2>
         	
 			<div class="form-container">
         	<form action="/attendance/search" method="get">

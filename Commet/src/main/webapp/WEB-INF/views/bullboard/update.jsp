@@ -5,10 +5,21 @@
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background-color: #ADD8E6; 
     margin: 0;
     padding: 0;
 }
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
 
 form {
     max-width: 600px;
@@ -49,6 +60,7 @@ input[type="text"], textarea {
     border-radius: 4px;
 }
 
+
 .button-box button:hover {
     background-color: #005f99;
 }
@@ -56,8 +68,8 @@ input[type="text"], textarea {
 </style>
 </head>
 <body>
-
-<form action="/bullboard/update" method="post"><!-- 폼데이터가 url로 post를 요청 -->
+<div class="container">
+ <form action="/bullboard/update" method="post" style="background-color: #F0F0F0;"><!-- 폼데이터가 url로 post를 요청 -->
  <input type="hidden" name="no" value="${board.no}" /><!-- 게시글 번호를 숨겨진 필드로 전송 -->
   <label for="iid">작성자</label>
   <input type="text" name="iid" value="${board.iid}" />
@@ -72,6 +84,7 @@ input[type="text"], textarea {
     <div class="button-box">
      <button type="submit">수정완료</button>
     </div>
-</form>
+ </form>
+</div>
 </body>
 </html>

@@ -6,211 +6,214 @@
 <head>
 <title>익명게시판 글내용</title>
 <style>
+
 body {
-     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    background-color: #ADD8E6;
     width: 90%;
-    margin: 20px; /* 마진을 20px로 조정 */
-    padding: 20px; /* 패딩을 20px로 조정 */
-    overflow-x: hidden; /* 가로 스크롤을 없애는 코드 */
-    
+    margin: 20px;
+    padding: 20px;
+    overflow-x: hidden;
 }
 
 .container {
-    max-width: 95%;
-    margin: 50px auto;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-}
-.details-section {
-    width: 90%;
-    height: auto;
-    /* 기타 스타일 */
+    background-color: white; /* 하얀 바탕색 */
+    border: 1px solid rgba(0, 0, 0, 0.5); /* 흐린 실선 테두리 */
+    border-radius: 10px; /* 둥근 테두리 */
+    padding: 20px; /* 내부 패딩 */
+    margin: 10px auto; /* 외부 마진 */
+    width: 80%; /* 너비 */
+    height: auto; /* 높이 */
 }
 
-.textarea-content {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: 10px;
+#detailcontent {
+    border: 1px solid rgba(0, 0, 0, 0.5); /* 테두리 추가 */
 }
 
-.textarea-content p {
-    margin: 50px;
-    padding: 10;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
+.details-section, .content-display {
+   
+    margin-bottom: 10px; /* 각 섹션 사이에 마진 추가 */
+    background-color:white;
+    position: auto; /* 위치를 상대적으로 설정 */
+    font-size: 20px;
+    
 }
 
-h2 {
+.content-display {
+    top: -1px; /* 위치를 위로 1px 이동 */
+}
+
+h1 {
+    font-family: 'Courier New', monospace; /* 폰트 변경 */
     text-align: center;
-    color: #333;
+    color: blue;
+    background-color: yellow;
+    font-size: 30px;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-    width: 90%;
-    height: auto;
+p {
+    color: #333; /* 텍스트 색상 변경 */
+    padding: 10px; /* 패딩 추가 */
+    text-align: left; /* 텍스트 정렬 변경 */
+    display: inline-block; /* p 태그를 나란히 정렬 */
 }
 
-label {
-    margin-top: 10px;
-    font-weight: bold;
+#like-button {
+    background-color: lightblue; /* 좋아요 버튼의 색상을 연한 파랑으로 설정 */
+    border-radius: 5px; /* 테두리를 둥글게 설정 */
+    border: none;
+    margin: 5px;
+    padding: 10px 20px; /* 버튼 크기를 크게 설정 */
 }
 
-input[type="text"], input[type="password"], textarea {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+#hate-button {
+    background-color: lightcoral; /* 싫어요 버튼의 색상을 연한 빨강으로 설정 */
+    border-radius: 5px; /* 테두리를 둥글게 설정 */
+    border: none;
+    margin: 5px;
+    padding: 10px 20px; /* 버튼 크기를 크게 설정 */
+}
+
+#input1, #input2 {
+    /* 원하는 스타일을 여기에 추가하세요. 예를 들어: */
     width: 100%;
-    box-sizing: border-box;
-    margin-top: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
 }
+
+.reply {
+    /* 원하는 스타일을 여기에 추가하세요. 예를 들어: */
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f2f2f2;
+    
+}
+
+.delete-reply {
+    margin-left: 10px; /* 요소들 사이의 간격을 10px로 설정 */
+    padding: 10px 20px;
+    border: none;
+    background-color: #00bfff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#reply-form {
+    display: flex;
+    justify-content: flex-end; /* 요소를 중앙으로 정렬 */
+}
+
+#id-input, #password-input2, #content-input {
+     display: flex;
+    justify-content: flex-end; /* 요소를 오른쪽으로 정렬 */
+   
+}
+
+#submit-reply {
+    padding: 10px 20px;
+    border: none;
+    background-color: #00bfff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 5px;
+
+}
+
+#content-del, #password-input1 {
+    display: flex;
+    justify-content: flex-end; /* 요소를 오른쪽으로 정렬 */
+    margin: 5px;
+     
+}
+
+.condel {
+   margin-left: 10px; /* 요소들 사이의 간격을 10px로 설정 */
+    padding: 10px 20px;
+    border: none;
+    background-color: #00bfff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+
+}
+
+
+
 .button-box {
     display: flex;
-    flex-direction: left;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-    margin: 30px;
+    justify-content: center; /* 요소를 가운데로 정렬 */
 }
 
 .button-box button {
     padding: 10px 20px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
     border: none;
-    border-radius: 4px;
+    background-color: #00bfff;
+    color: #fff;
     cursor: pointer;
-}
-
-.button-box button:hover {
-    background-color: #0056b3;
-}
-
-.button-box #pw {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-button[type="submit"] {
-    width:70px; 
-    height: 30px; 
-    margin: 10px;
-    background-color: #4CAF50;
-     color: white; 
+#pw {
+    display: flex; /* 블록 요소로 설정 */
+    margin-bottom: 10px; /* 아래쪽 마진 추가 */
+    justify-content: center; 
 }
 
+.button-box2 {
+    display: flex;
+    justify-content: flex-end; /* 요소를 오른쪽으로 정렬 */
+}
 
+.button-box2 input {
+  margin:5px;
 
-input[type="text"], input[type="password"] {
-    padding: 10px;
-    border: 1px solid #ddd;
+}
+
+.button-box2 button {
+    margin-left: 10px; /* 요소들 사이의 간격을 10px로 설정 */
+    padding: 10px 20px;
+    border: none;
+    background-color: #00bfff;
+    color: #fff;
+    cursor: pointer;
     border-radius: 4px;
-    width: 100px; 
-    height: 30px; 
-    box-sizing: border-box;
-    margin-top: 5px;
 }
-input[type="button"] {
-    width: 50px; 
-    height: 25px; 
-    margin-right: 10px;
-    background-color: blue;
-   
-}
-#like-button{
-    display: inline-block;
-    text-align: center;
-    background-color: blue;
-}
-#like-count{
-   display: inline-block;
-    text-align: center;
-}
-#hate-button{
-    display: inline-block;
-    text-align: center;
-    background-color: red;
-}
- #hate-count{
-    display: inline-block;
-    text-align: center;
- }
- 
-#submit-reply {
-    width: 90px; 
-    height: 30px; 
-    margin: 10px;
-    color: white; 
-    background-color: #4CAF50; 
-}
-.delete-reply {
-    background-color: #ff0000; /* 버튼의 배경색을 빨간색으로 설정 */
-    color: white; /* 버튼의 글씨 색상을 흰색으로 설정 */
-}
-
- 
 </style>
-
 </head>
 <body>
     <div class="container">
      <!-- 게시글 내용 표시 -->
-     <form action="/content/${board.no}" method="post"> 
+     <form action="/content/${board.no}" method="post" id="detailcontent"> 
       
       <div class="details-section">
       <h1>${board.title}</h1>
-       <p><strong>작성자: </strong>${board.iid}</p>
-       <p><strong>작성일: </strong><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></p>
-       <p><strong>조회수: </strong>${board.readCount +1}</p>
-        </div>
-        
-         <div class="textarea-content">
+       <p><strong>작성자 </strong>${board.iid}</p>
+       <p><strong>작성일 </strong><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></p>
+       <p><strong>조회수 </strong>${board.readCount +1}</p>
+       </div>
+        <hr>
+         <div class="content-display">
          <p>${board.content}</p>
          </div>
        
-       <div style="display: flex; justify-content: center; align-items: center;">
+       <br>
+       <div style="display: flex; justify-content: center; align-items: center; gap:5px;">
         <input type="button" id="like-button" data-board-no="${board.no}" value="👍" /><!-- 좋아요 버튼 -->
          <span id="like-count">${likeCount}</span>
-        </div>
-       <div style="display: flex;  justify-content: center; align-items: center;">
         <input type="button" id="hate-button" data-board-no="${board.no}" value="👎" /><!-- 싫어요 버튼 -->
         <span id="hate-count">${hateCount}</span>
         </div>
        </form>
-        
-        <div class="button-box">
-           <button onclick="location.href='/bullboard'">목록</button>
-           <button onclick="update()">수정</button>
-           <input id="pw" type="password">
-        </div>
-       
-        
-        <form action="/delete/${board.no}" method="post">
-          <label for="password-input">Password</label>
-           <input type="password" id="password-input1" name="password" />
-          <button type="submit">글삭제</button>
-        </form>
-    
+       <br>
+     
      <!-- 댓글 목록 -->
     <c:forEach var="reply" items="${replies}">
      <form action="/reply/delete" method="post">
-    	<input type="hidden" name="cno" value="${reply.cno }">
-    	<input type="hidden" name="no" value="${board.no }">
-    	
+    	<input id="input1" type="hidden" name="cno" value="${reply.cno }">
+    	<input id="input2" type="hidden" name="no" value="${board.no }">
         <div class="reply">
            <p>${reply.id}</p>           
             <p>${reply.content}</p>
@@ -220,8 +223,9 @@ input[type="button"] {
         </div>
        </form>
     </c:forEach>
+    <br>
     
-     <!-- 댓글 등록 폼 -->
+    <!-- 댓글 등록 폼 -->
      <form id="reply-form" action="/content/insert" method="post">
     <!-- id 입력 -->
      <div style="display: flex; align-items: center;">
@@ -236,16 +240,34 @@ input[type="button"] {
     <label for="password-input">암호 </label>
     <input type="password" id="password-input2" name="password" />
     </div>
-    
-    <!-- content 입력 -->
+     <!-- content 입력 -->
     <div style="display: flex; align-items: center;">
     <label for="content-input">댓글 </label>
     <input type="text" id="content-input" name="content" />
      </div>
-    
-    <!-- 제출 버튼 -->
+     <!-- 제출 버튼 -->
     <input type="submit" id="submit-reply" value="댓글 등록" />
-  </form>
+    </form>
+   <br>
+        
+    <form id="content-del" action="/delete/${board.no}" method="post">
+      <label for="password-input"></label>
+       <input type="password" id="password-input1" name="password" />
+       <button class="condel" type="submit">글삭제</button>
+     </form>
+        <br>
+     
+      <div class="button-box2">
+
+      <input id="pw" type="password"/>
+      <button onclick="update()">수정</button>
+      </div>  
+      <hr>
+    
+    <div class="button-box">
+      <button onclick="location.href='/bullboard'">목록</button>
+    </div>
+  
 </div>  
           
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

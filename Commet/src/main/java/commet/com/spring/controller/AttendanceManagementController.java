@@ -36,13 +36,43 @@ public class AttendanceManagementController {
     @Autowired
     private AttendanceManagementService service;
     
-    
-    @ModelAttribute("user") // @SessionAttributes 로그인정보 받아 오는 메서드
+    // @SessionAttributes 로그인정보 받아 오는 메서드
+    @ModelAttribute("user") 
     public EmpDto getDto() {
        return new EmpDto();
     }
     
-    @GetMapping("/managementList") // 페이징처리
+    //관리자근태현황 페이징
+    @GetMapping("/adminManagementList")
+    public String getAllAttendance(@ModelAttribute("user")EmpDto dto,
+    											@RequestParam(name = "p", defaultValue = "1") int page,Model m) {
+    	int acount = service.acount(dto.getDeptno());
+		if (acount > 0) {
+			int perPage = 5;
+			int startRow = (page - 1) * perPage;
+    	
+    	 List<AttendanceManagementDto> allAttendance = service.getAllAttendance(startRow, dto.getDeptno()); // 페이징 처리된 모든 사원의 근태 현황
+         m.addAttribute("allAttendance", allAttendance);
+
+             int pageNum = 5;
+             int totalPages = acount / perPage + (acount % perPage > 0 ? 1 : 0);
+             int begin = (page - 1) / pageNum * pageNum + 1;
+             int end = begin + pageNum - 1;
+             if (end > totalPages) {
+                 end = totalPages;
+             }
+             m.addAttribute("begin", begin);
+             m.addAttribute("end", end);
+             m.addAttribute("pageNum", pageNum);
+             m.addAttribute("totalPages", totalPages);
+             m.addAttribute("start", startRow + 1);
+    	}
+			m.addAttribute("count", acount);
+			return "amc/adminmanagementList";
+    	}
+    
+    // 일반 근태현황 페이징처리
+    @GetMapping("/managementList") 
     public String getManagementList(@ModelAttribute("user") EmpDto dto,
     												@RequestParam(name = "p", defaultValue = "1") int page, Model model) {
     		int count = service.count2();
@@ -52,6 +82,7 @@ public class AttendanceManagementController {
 
             List<AttendanceManagementDto> attendanceList = service.managementList(startRow, dto.getEmpno());
             model.addAttribute("attendanceList", attendanceList);
+            model.addAttribute("start", startRow+1);
 
             int pageNum = 5;
             int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0);
@@ -71,70 +102,76 @@ public class AttendanceManagementController {
     		return "amc/managementList";
     }
     
-    @GetMapping("/checkInStatus") // 출근 일자가 입력 돼 있으면 출근 버튼 못누름
+    // 출근 일자가 입력 돼 있으면 출근 버튼 못누름
+    @GetMapping("/checkInStatus") 
     public boolean checkInStatus(@ModelAttribute("user") EmpDto user) {
     		return service.hasCheckedInToday(user.getEmpno());
     }
-
-    @PostMapping("/checkIn")//출근
+    
+    //출근
+    @PostMapping("/checkIn")
     public String checkIn(@ModelAttribute("user") EmpDto user) {
-    	 if (!service.hasCheckedInToday(user.getEmpno())) {          //출근 버튼을 한번 눌렀을때 추가로 못누름
-    		service.checkIn(user.getEmpno(), user.getDeptno());
-    	 }
+    		    int employeeAttendanceNo = service.generateNextAttendanceNo(user.getEmpno()); // 사원별로 출근번호를 생성합니다.
+    		    service.checkIn(user.getEmpno(), user.getDeptno(), employeeAttendanceNo);// 출근 기록을 DB에 저장합니다.
     		return "redirect:/attendance/managementList";
     }
-
-    @PostMapping("/checkOut") // 퇴근시간입력
+    
+    // 퇴근
+    @PostMapping("/checkOut") 
     public String checkOut(@ModelAttribute("user") EmpDto user) {
     		service.checkOut(user.getEmpno());
     		return "redirect:/attendance/managementList";
     }
     
-    @PostMapping("/markAbsent")//결근
+    //결근
+    @PostMapping("/markAbsent")
     public String markAbsent(@ModelAttribute("user") EmpDto user) {
         	service.markAbsent(user.getEmpno());
         	return "redirect:/attendance/managementList";
     }
+    
+    // 날짜검색페이징
+    @GetMapping("/search")
+    public String search(
+        @RequestParam(name = "empno", required = false) Integer empno,
+        @RequestParam(name = "deptno", required = false) Integer deptno,
+        @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "startDate", required = false) Date startDate,
+        @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "endDate", required = false) Date endDate,
+        @RequestParam(name = "p", defaultValue = "1") int page, 
+        Model model) {
 
-    @GetMapping("/search") // 날짜검색
-    public String search(@DateTimeFormat(pattern = "yyyy-MM-dd")
-    							 @RequestParam(name ="startDate",required = false) Date startDate,
-    							  @DateTimeFormat(pattern = "yyyy-MM-dd")
-    							  @RequestParam(name="endDate",required = false) Date endDate,
-            					  @ModelAttribute("user") EmpDto user,
-            					  @RequestParam(name = "p", defaultValue = "1") int page, Model model) {
-    	
-    		int count = service.aSCount(user.getEmpno(), startDate, endDate);
-    		if(count>0) {
-    		int perPage = 10;
+        int count = service.aSCount(empno, deptno, startDate, endDate);
+        if (count > 0) {
+            int perPage = 10;
             int startRow = (page - 1) * perPage;
-            List<AttendanceManagementDto> filteredAttendanceList = service.getAttendanceByDateRange(user.getEmpno(), startDate, endDate,startRow);
+            List<AttendanceManagementDto> filteredAttendanceList = service.getAttendanceByDateRange(empno, deptno, startDate, endDate, startRow);
+
             int pageNum = 5;
             int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0);
             int begin = (page - 1) / pageNum * pageNum + 1;
             int end1 = begin + pageNum - 1;
-            if (end1> totalPages) {
+            if (end1 > totalPages) {
                 end1 = totalPages;
-        }
-        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
-        
-        model.addAttribute("startDate", sdf.format(startDate));
-        model.addAttribute("endDate", sdf.format(endDate));
-        model.addAttribute("begin", begin);
+            }
 
-        model.addAttribute("end", end1);
-        model.addAttribute("pageNum", pageNum);
-        model.addAttribute("totalPages", totalPages);
-        model.addAttribute("attendanceList", filteredAttendanceList);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            model.addAttribute("startDate", sdf.format(startDate));
+            model.addAttribute("endDate", sdf.format(endDate));
+            model.addAttribute("begin", begin);
+            model.addAttribute("end", end1);
+            model.addAttribute("pageNum", pageNum);
+            model.addAttribute("totalPages", totalPages);
+            model.addAttribute("attendanceList", filteredAttendanceList);
         }
-        model.addAttribute("count", count); //모델에 검색결과 추가 이 기능 추가로 검색 기능 해결 요소의 개수를 반환 즉 검색된 출근기록 반환
+        model.addAttribute("empno", empno);
+        model.addAttribute("deptno", deptno);
+        model.addAttribute("count", count);
         return "amc/searchList";
-        
-    }//search
+    }
 
 
-    
-    @GetMapping("/downloadExcel2") // 엑셀 다운로드
+    // 엑셀 다운로드
+    @GetMapping("/downloadExcel2") 
 	public void downloadExcel(HttpServletResponse response) throws IOException {
 		List<AttendanceManagementDto> attendanceList = service.getAllManagement();
 

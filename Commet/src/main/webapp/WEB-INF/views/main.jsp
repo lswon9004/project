@@ -43,6 +43,7 @@
                 <ul class="menu">
                     <li><a href="/searchCustomers">통합업무</a></li>
                      <li><a href="/attendance/managementList">근태현황</a>
+                     <c:if test="${user.right>=2 }"> <li><a href="/attendance/adminManagementList">전체사원근태현황</a></li></c:if>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
@@ -94,7 +95,7 @@
                 </div>
                     
                     <%
-                 // 날짜 값을 받아서 Calendar 객체 설정
+                	 // 날짜 값을 받아서 Calendar 객체 설정
                     String dateString = request.getParameter("date");
                     Calendar cal = Calendar.getInstance();
                     if (dateString != null && !dateString.isEmpty()) {
@@ -173,7 +174,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
-datea= ${user.att.startTime}
+datea = ${user.att.startTime}
 date = <%= year %> +'-'+('0'+ <%= month + 1 %>).slice(-2)
 $('#start').click(function(){
    deptno = ${user.deptno};

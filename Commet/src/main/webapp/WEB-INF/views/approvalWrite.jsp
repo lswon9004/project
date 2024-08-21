@@ -9,64 +9,69 @@
     <title>Task Management Portal</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
   <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .form-container {
-            margin-bottom: 20px;
-        }
-        .form-container input {
-            margin-right: 10px;
-        }
-        .form-container button {
-            margin-right: 10px;
-        }
-         .ck.ck-editor{
+       .form-container form {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
 
-        width: 100%;
-        }
-        .ck-editor__editable {
-            min-height: 200px;
-        }
-        select {
-    font-size: 18px;
+.form-container form select, 
+.form-container form input,
+.form-container form button {
+    margin-right: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
 }
-        input {
-    font-size: 18px;
+
+button[type="submit"] {
+    background: #00bfff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
+
+.form-container button:last-child {
+    margin-left: auto;
+    background: #00bfff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+        .paging{text-align:center;margin:15px 0;}
+		.paging strong{display:inline-block;width:25px;height:25px;line-height:24px;marging-right:5px;border:1px solid #ccc;color:#666;text-align:cetner;}
+		.paging .page{display:inline-block;width:25px;height:25px;line-height:24px;margin-right:5px;background:#49be5a;color:#fff;text-align:center;}
+       
     </style>   
 </head>
 <body>
-     <div class="container">
+      <div class="container">
         <header>
             <div class="user-info">
-                <img src="" alt="User Profile">
+               <img src="/upload/${user.imgPath}" alt="User Profile">
                 <div>
-                    <p>이름: 김자바</p>
+                    <p>이름: ${user.ename }</p>
                     <p>직책: ${user.position }</p>
                     <p>사번: ${user.empno }</p>
-                    <p>김자바 님 환영합니다.</p>
+                    <p>${user.ename }님 환영합니다.</p>
                 </div>
             </div>
             <h1>코멧 업무포털</h1>
             <div class="header-right">
                 <button id="start">업무시작</button>
                 <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">00:00/</c:if></p>
+                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">0d:00/</c:if></p>
                 <p id="endTime">00:00</p>
                 <nav>
-                    <a href="/main">Home</a>
-                    <a href="/cleander">연봉계산기</a>
+                    <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
+                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    
                     <a href="#">개인정보수정</a>
+                    <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
             </div>
@@ -74,21 +79,20 @@
         <main>
             <aside>
                 <ul class="menu">
-                    <li><a href="#">통합업무</a></li>
-                    <li><a href="#">게시판</a></li>
-                    <li><a href="/approval">전자결재</a></li>
-                    <li><a href="#">결재승인</a></li>
-                    <li><a href="#">캘린더</a></li>
-                    <li><a href="#">직원관리</a></li>
-                    <li><a href="#">관찰관리</a></li>
+                    <li><a href="/searchCustomers">통합업무</a></li>
+                     <li><a href="/attendance/managementList">근태현황</a>
+                    <li><a href="/boards">게시판</a></li>
+                    <li><a href="/approval/${user.empno}">전자결재</a></li>
+                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
+                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage" class="active">직원관리</a></li></c:if>
                 </ul>
-                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
-                <p class="footer-text">코멧업무포털</p>
             </aside>
+            
+            
             <section class="main-content">
                 <div class="status-overview">
                     <div class="form-container">
-        				<h1 style="text-align: center;">결재 신청</h1>
+        				<h1 >결재 신청</h1>
         				<form method="post" action="/approval/insert" name="approvalDto">
         				<table>
         				<colgroup>
@@ -152,4 +156,31 @@
       } );
     </script>
 </body>
+<footer>
+<p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
+</footer>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+ <script>
+    function updateTime() {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            weekday: 'long', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit'
+        };
+        const currentTimeString = now.toLocaleDateString('ko-KR', options);
+        document.getElementById('current-time').innerText = currentTimeString;
+    }
+
+    // 처음 페이지 로드 시 시간을 표시
+    updateTime();
+
+    // 매 초마다 시간을 업데이트
+    setInterval(updateTime, 1000);
+</script>
+
 </html>

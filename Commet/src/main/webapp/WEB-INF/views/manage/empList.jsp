@@ -140,15 +140,15 @@
     </style>
 </head>
 <body>
-     <div class="container">
+    <div class="container">
         <header>
             <div class="user-info">
-                <img src="profile.jpg" alt="User Profile">
+               <img src="/upload/${user.imgPath}" alt="User Profile">
                 <div>
-                    <p>이름: 김자바</p>
+                    <p>이름: ${user.ename }</p>
                     <p>직책: ${user.position }</p>
                     <p>사번: ${user.empno }</p>
-                    <p>김자바 님 환영합니다.</p>
+                    <p>${user.ename }님 환영합니다.</p>
                 </div>
             </div>
             <h1>코멧 업무포털</h1>
@@ -162,7 +162,7 @@
                     <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
                     <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->
                     
-                    <a href="#">개인정보수정</a>
+                    <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
             </div>
@@ -216,7 +216,7 @@
                 <c:forEach var="emp" items="${elist}">
                     <tr>
                         <td><input type="checkbox" name="empnos" value="${emp.empno}"></td>
-                        <td><a href="${pageContext.request.contextPath}/empDetail/${emp.empno}">${emp.ename}</a></td>
+                        <td><a href="/empDetail/${emp.empno}">${emp.ename}</a></td>
 						<td>${emp.empno}</td>
                         <td>${emp.deptname}</td> <!-- dept에서 가저오는거 안해놔서 안가저옴 -->
                         <td>${emp.deptno}</td> 
@@ -230,17 +230,14 @@
     </form>
     
    <div class="pagination">
-        <c:if test="${begin > pageNum}">
-            <a href="customerList2?p=${begin-1}">[이전]</a>
+        <c:if test="${begin > 1}">
+            <a href="searchEmps?p=${begin-1}">[이전]</a>
         </c:if>
-        <c:forEach begin="${begin}" end="${end}" var="i">
-            <a href="customerList2?p=${i}">${i}</a>
+        <c:forEach begin="1" end="${totalPages}" var="i">
+            <a href="searchEmps?p=${i}">${i}</a>
         </c:forEach>
         <c:if test="${end < totalPages}">
-            <a href="customerList2?p=${end+1}">[다음]</a>
-        </c:if>
-        <c:if test="${count == 0}">
-            아직 입력한 정보가 없습니다.
+            <a href="searchEmps?p=${end+1}">[다음]</a>
         </c:if>
     </div>
 

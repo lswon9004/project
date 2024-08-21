@@ -30,7 +30,7 @@
                 <p id="endTime">00:00</p>
                 <nav>
                     <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 --> 
+                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -51,25 +51,29 @@
             <section class="main-content">
              <div class="container">
              
-        	<h2>${user.empno}님의 근태현황 입니다.</h2>
+        	<h2>전체사원근태현황</h2>
         	
 			<div class="form-container">
         	<form action="/attendance/search" method="get">
-            <label for="startDate">출근일자:</label>
-            <input type="date" id="startDate" name="startDate"required>
-            <label for="endDate">~</label>
-            <input type="date" id="endDate" name="endDate" required>
-            <button type="submit">검색</button>
-            <button type="button" onclick="location.href='/attendance/managementList?p=1'">초기화</button>
-        	</form>
+    		<label for="empno">사원번호:</label>
+    		<input type="text" id="empno" name="empno">
+    
+    		<label for="deptno">부서번호:</label>
+    		<input type="text" id="deptno" name="deptno">
+
+    		<label for="startDate">출근일자:</label>
+    		<input type="date" id="startDate" name="startDate">
+    
+    		<label for="endDate">~</label>
+    		<input type="date" id="endDate" name="endDate">
+
+    		<button type="submit">검색</button>
+    		
+    		 <button type="button" onclick="location.href='/attendance/managementList?p=1'">초기화</button>
+			</form>
         
         	<div class="button-group">
-            <form action="/attendance/checkIn" method="post" >
-                <button type="submit">출근</button>
-            </form>
-            <form action="/attendance/checkOut" method="post" >
-                <button type="submit">퇴근</button>
-            </form>
+         
             <button type="button" onclick="location.href='/attendance/downloadExcel2'">엑셀다운로드</button>
        		</div>
         </div>
@@ -77,7 +81,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>출근일수</th>
+                	<th>번호</th>
+                    <th>사원번호</th>
                     <th>출근일자</th>
                     <th>출근시간</th>
                     <th>퇴근시간</th>
@@ -89,13 +94,16 @@
             <tbody>
                 <c:if test="${count == 0}">
                     <tr>
-                        <td colspan="7" class="tac">저장된 근태현황이 없습니다.</td>
+                        <td colspan="8" class="tac">저장된 근태현황이 없습니다.</td>
                     </tr>
                 </c:if>
                 <c:if test="${count > 0}">
-                    <c:forEach var="attendance" items="${attendanceList}">
+                    <c:forEach var="attendance" items="${allAttendance}">
                         <tr>
-                            <td>${attendance.employee_attendance_no}</td> <!-- 사원별 출근번호 -->
+                        <td><c:out value="${start}"/>
+									<c:set var="start" value="${start+1}" /></td>
+                        	<td>${attendance.empno}</td>
+                            
                             <td><fmt:formatDate value="${attendance.date}" pattern="yyyy-MM-dd"/></td>
                             <td><fmt:formatDate value="${attendance.check_in}" pattern="HH:mm:ss"/></td>
                             <td><fmt:formatDate value="${attendance.check_out}" pattern="HH:mm:ss"/></td>
@@ -109,20 +117,19 @@
             </tbody>
         </table>
 
-      <div class="pagination">
-            <c:if test="${begin > pageNum}">
-                <a href="managementList?p=${begin-1}">[이전]</a>
-            </c:if>
-            <c:forEach begin="${begin}" end="${end}" var="i">
-                <a href="managementList?p=${i}" class="${i == page ? 'active' : ''}" >${i}</a>
-            </c:forEach>
-            <c:if test="${end < totalPages}">
-                <a href="managementList?p=${end+1}">[다음]</a>
-            </c:if>
-            <c:if test="${count == 0}">
-            </c:if>
-        </div>
-    </div>
+     	<div class="pagination">
+    		<c:if test="${begin > 1}">
+        	<a href="adminManagementList?p=${begin-1}">[이전]</a>
+    		</c:if>
+    		<c:forEach begin="${begin}" end="${end}" var="i">
+        	<a href="adminManagementList?p=${i}" class="${i == page ? 'active' : ''}">${i}</a>
+    		</c:forEach>
+    		<c:if test="${end < totalPages}">
+        	<a href="adminManagementList?p=${end+1}">[다음]</a>
+    		</c:if>
+    		<c:if test="${count == 0}">
+    		</c:if>
+		</div>
 
             </section>
         </main>
@@ -135,6 +142,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
+datea= ${user.att.startTime}
 
 $('#start').click(function(){
 	deptno = ${user.deptno};

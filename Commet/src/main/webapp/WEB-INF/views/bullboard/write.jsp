@@ -9,7 +9,7 @@
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #87CEFA; 
+    background-color: #ADD8E6; 
     margin: 0;
     padding: 0;
 }
@@ -35,8 +35,9 @@ form {
     margin: 20px; /* 마진 조정 */
     padding: 20px; /* 패딩 추가 */
     border: 1px solid #ddd; /* 테두리 추가 */
-   background-color: #87CEFA;  /* 배경색 변경 */
+    background-color: #F0F0F0;  /* 배경색 변경 */
 }
+
 
 label {
     margin-top: 10px;
@@ -45,24 +46,30 @@ label {
 }
 .label-title {
     font-size: 1.2em; /* 제목 레이블의 크기를 조정 */
+    width: 200px; /* 너비 설정 */
+    height: 30px; /* 높이 설정 */
     /* 기타 스타일 */
 }
 
 .label-iid {
     font-size: 1.1em; /* 작성자 레이블의 크기를 조정 */
+    width: 200px; /* 너비 설정 */
+    height: 30px; /* 높이 설정 */
     /* 기타 스타일 */
 }
 
 .label-content {
     font-size: 1.3em; /* 내용 레이블의 크기를 조정 */
+    width: 200px; /* 너비 설정 */
+    height: 30px; /* 높이 설정 */
     /* 기타 스타일 */
 }
 
 .label-password {
     font-size: 1.1em; /* 비밀번호 레이블의 크기를 조정 */
-    
+    width: 200px; /* 너비 설정 */
+    height: 30px; /* 높이 설정 */
 }
-
 
 input[type="text"], input[type="password"], textarea {
     padding: 10px;
@@ -88,8 +95,6 @@ button:hover {
     background-color: #005f99;
 }  
 </style>
-   <!-- 스마트에디터 라이브러리 추가 -->
-    <script type="text/javascript" src="/smarteditor2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 </head>
 <body>
     <div class="container">

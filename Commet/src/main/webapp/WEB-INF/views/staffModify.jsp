@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>사원 정보</title>
+    <title>개인정보 수정</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -142,53 +142,85 @@
             background-color: #ccc;
         }
         
-    </style>  
+        /* 숨겨진 등록 버튼 */
+        #submitButton {
+            display: none;
+    </style>
+    <!-- Daum 주소 검색 API 스크립트 추가 -->
+    <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>    
+    <!-- 글수정시 수정버튼을 눌렀을때만 수정 가능 하게 하는 기능인데 -->
+    <script>
+    function enableEdit() {
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.removeAttribute('readonly');
+            if (input.tagName.toLowerCase() === 'select') {
+                input.removeAttribute('disabled');
+            }
+        });
+
+        document.getElementById('addressSearchBtn').style.display = 'inline-block';
+        document.getElementById('submitButton').style.display = 'inline-block'; // 등록 버튼 보이기
+        document.getElementById('modify').style.display = 'none'; // 수정 버튼 숨기기
+    }
+    
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var roadAddr = data.roadAddress; 
+                var jibunAddr = data.jibunAddress; 
+
+                document.getElementById('address').value = roadAddr || jibunAddr;
+            }
+        }).open();
+    }
+    </script>
     
 </head>
 <body>
 
 <div id="myModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="location.href='/emp_manage'">&times;</span>
-        <h2>사원정보</h2>
-        <form action="/empModify" method="get" >
-        	<input type="hidden" name="no" value="${empInfo.empno }">
-            <img src="/upload/${empInfo.imgPath}" alt="Profile Image" width="100">
+        <span class="close" onclick="location.href='/main'">&times;</span><!--/main 받아오는 컨트롤러가 없음 만들어야함-->
+        <h2>개인정보 수정</h2>
+        <form action="/empInfo" method="post" >
+            <input type="hidden" name="_method" value="put">
+            
+            <img src="/upload/${user.imgPath}" alt="Profile Image" width="100"><!--로그인한 아이디 정보 가저와야함 메인화면 사진 나오는거랑 비슷하게 하면될듯 -->
             <table>
             <tr>
-                <td>사원 이름:</td><td>${empInfo.ename}</td>
-                <td>사원 번호:</td><td>${empInfo.empno}</td>
-                <td>랭크:</td><td>${empInfo.authority}</td>
+                <td>사원 이름:</td><td>${user.ename}</td>
+                <td>사원 번호:</td><td>${user.empno}</td>
+                <td>랭크:</td><td>${user.right}</td>
+            </tr>
+            <tr> 
+				<td>부서:</td><td>${user.deptno}</td>
+				<td>담당업무:</td><td>${user.jop}</td>
+				<td>직급:</td><td>${user.position}</td>
+
             </tr>
             <tr>
-				<td>부서:</td><td>${empInfo.deptname}</td>
-				<td>담당업무:</td><td>${empInfo.jop}</td>
-				<td>직급:</td><td>${empInfo.position}</td>
+				<td>연락처:</td><td><input type="text" name="phone" value="${user.email}" readonly></td>
+				<td>이메일:</td><td><input type="text" name="email" value="${user.email}" readonly></td>
             </tr>
             <tr>
-				<td>연락처:</td><td>${empInfo.phone}</td>
-				<td>이메일:</td><td>${empInfo.email}</td>
+ 				<td>주소:</td><td><input type="text" id="address" name="address" value="${user.address}" readonly>
+ 				<button type="button" id="addressSearchBtn" onclick="execDaumPostcode()" style="display: none;">주소 검색</button>
+ 				</td>				
+  				<td>상세주소:</td><td><input type="text" name="detailAddr" value="${user.detailAddr}" readonly></td>
             </tr>
             <tr>
- 				<td>주소:</td><td>${empInfo.address}</td>		
-  				<td>상세주소:</td><td>${empInfo.detailAddr}</td>
+	    		<td>생년월일:</td><td><fmt:formatDate value='${user.birthday}' pattern='yyyy-MM-dd' /></td>
+    			<td>입사일:</td><td><fmt:formatDate value='${user.hiredate}' pattern='yyyy-MM-dd' /></td>
             </tr>
-            <tr>
-	    		<td>생년월일:</td><td><fmt:formatDate value='${empInfo.birthday}' pattern='yyyy-MM-dd' /></td>
-    			<td>입사일:</td><td><fmt:formatDate value='${empInfo.hiredate}' pattern='yyyy-MM-dd' /></td>
-            </tr>
-             <tr>
-	    		<td>급여:</td><td>${empInfo.sal}</td>
-            </tr>
-            <tr>
-            	<td>메모:</td>
-                <td colspan="5">${empInfo.memo}</td>
-            </tr> 
+			<tr>
+				<td>비밀번호:</td><td><input type="text" name="password"></td>
+			</tr>
             </table>
             <div class="buttons">
-                <button type="submit">수정</button>
-                <button type="button" onclick="location.href='/emp_manage'">닫기</button>
-               
+                <button type="button" onclick="enableEdit()" id="modify">수정</button>
+                <button type="submit" id="submitButton">등록</button>
+                <button type="button" onclick="location.href='/main'">닫기</button><!--/main 받아오는 컨트롤러가 없음 만들어야함-->
             </div>
         </form>
     </div>

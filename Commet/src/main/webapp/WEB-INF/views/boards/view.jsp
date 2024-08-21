@@ -9,141 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Management Portal</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
-    <style>
-.board-title { /* 게시글 제목의 스타일 정의 */
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
-}
-.board-detail { /* 게시글 상세 내용의 스타일 설정 */
-    margin-bottom: 20px;
-    border-radius: 5px;
-    background: #f9f9f9;
-}
-.board-detail .section { /* 내부의 섹션 스타일 정의 */
-    margin-bottom: 20px;
-}
-.board-detail .section-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.board-detail .section-content {
-    padding: 10px;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-.board-detail .inline-section { /* 인라인 레이아웃 설정 */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.board-detail .inline-section .section-content {
-    margin-right: 20px; /* 공백 추가 */
-}
-.board-detail .right { /* 오른쪽 정렬 설정 */
-    margin-left: auto;
-}
-.section-inline-section{
-    margin-bottom: 0;
-    float: right;
-}
-.section-inline-section>.right{
-    display: flex;
-}
-.section-inline-section>.right>div{
-    padding:0 10px;
-}
-
-.like-dislike { /* 추천 버튼과 관련된 스타일 설정 */
-    display: flex;
-    align-items: center;
-}
-.like-dislike form { /* 추천 버튼 폼의 레이아웃 설정 */
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-}
-.like-dislike button { /* 추천 버튼의 스타일 설정 */
-    padding: 5px 10px;
-    border: none;
-    background: #ff6347;
-    color: #fff;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-}
-.comment-section { /* 댓글 섹션의 스타일 설정 */
-    margin-top: -15px;
-}
-.comment-section .section-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.comment { /* 개별 댓글의 스타일 정의 */
-    border-top: 1px solid #ddd;
-    padding-top: 5px;
-}
-.comment p {
-    margin: 0;
-    color: #333;
-}
-.comment .meta {
-    font-size: 12px; /* 댓글 메타 정보 크기 줄이기 */
-    color: #777;
-}
-.comment-actions { /* 댓글 액션 버튼의 스타일 설정 */
-    margin-top: 5px; /* 댓글 액션 여백 줄이기 */
-}
-.comment-actions button {
-    padding: 3px 5px; /* 댓글 액션 버튼 크기 줄이기 */
-    border: none;
-    background: #333;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 12px;
-}
-.comment-form {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-}
-.comment-form textarea {
-    width: 100%; /* 댓글 입력란이 차지할 너비 비율을 설정 */
-    height: 30px;
-    padding: 6px;
-    border: 1px solid #ddd;
-    resize: none;
-    flex-grow: 1; /* 댓글 입력란이 남은 공간을 채우도록 설정 */
-    margin-right: 10px;
-}
-.comment-form button {
-    padding: 5px 10px;
-    border: none;
-    background: #333;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 12px;
-    height: 25px; /* 줄바꿈 방지 */
-}
-</style>
 </head>
 <body>
-            <div class="container">
+           <div class="container">
         <header>
             <div class="user-info">
-                <img src="profile.jpg" alt="User Profile">
+               <img src="/upload/${user.imgPath}" alt="User Profile">
                 <div>
-                    <p>이름: 김자바</p>
+                    <p>이름: ${user.ename }</p>
                     <p>직책: ${user.position }</p>
                     <p>사번: ${user.empno }</p>
-                    <p>김자바 님 환영합니다.</p>
+                    <p>${user.ename }님 환영합니다.</p>
                 </div>
             </div>
             <h1>코멧 업무포털</h1>
@@ -153,8 +29,8 @@
                 <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">0d:00/</c:if></p>
                 <p id="endTime">00:00</p>
                 <nav>
-                    <a href="/main">Home</a>
-                    <a href="#">개인정보수정</a>
+                    <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
+                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -163,17 +39,18 @@
         <main>
             <aside>
                 <ul class="menu">
-                    <li><a href="/customerList">통합업무</a></li>
+                    <li><a href="/searchCustomers">통합업무</a></li>
                      <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards" class="active">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                    <c:if test="${user.right>=3 }"> <li><a href="/approval/status">직원관리</a></li></c:if>
-                </ul>              
+                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage" class="active">직원관리</a></li></c:if>
+                </ul>
             </aside>
-            <section class="main-content">
+            <section class="board-main-content">
                 <!-- 메인 콘텐츠 영역 -->
-	<div class="board-title">게시판</div> <!-- 게시판 제목 지정 -->
+              <div class="board-viewtitle">게시글</div>
+	<div class="board-title"></div> <!-- 게시판 제목 지정 -->
             <div class="board-detail"> <!-- 게시글 상세 내용 표시 -->
             <div class="section-inline-section"> 
             <div class="right">
@@ -185,12 +62,12 @@
                 <div class="section"> <!-- section 클래스는 게시글의 각 섹션 정의 -->
                     <div class="section-title">제목</div>
                     <div class="section-content">${board.title}</div>
-                </div>
+                
                 <!-- 작성자와 작성일자를 인라인으로 표시 -->
                 
                 <div class="section-title">내용</div>
-                    <textarea class="section-content" readonly="readonly" style="width: 1700px; height: 250px; resize: none;">${board.content}</textarea>
-                
+                    <div class="section-content" style="height: 250px;">${board.content}</div>
+                </div>
                 <div class="like-dislike"> <!-- 추천 버튼 지정 -->
                     <form id="likeForm" action="${hasLiked ? '/boards/unlike' : '/boards/like'}" method="post">
                         <input type="hidden" name="empno" value="${user.empno}">

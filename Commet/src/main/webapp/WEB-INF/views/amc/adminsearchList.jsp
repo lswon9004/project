@@ -30,7 +30,7 @@
                 <p id="endTime">00:00</p>
                 <nav>
                     <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 --> 
+                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    <a href="#">개인정보수정</a>
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -40,36 +40,39 @@
             <aside>
                 <ul class="menu">
                     <li><a href="/searchCustomers">통합업무</a></li>
-                     <li><a href="/attendance/managementList" class="active">근태현황</a>
+                     <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage">직원관리</a></li></c:if>
+                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage" class="active">직원관리</a></li></c:if>
                 </ul>
             </aside>
-            <!-- 여기서부터 메인 -->
+          <!--   여기서부터 가운데 메인 -->
+          
             <section class="main-content">
              <div class="container">
-             
         	<h2>${user.empno}님의 근태현황 입니다.</h2>
-        	
 			<div class="form-container">
         	<form action="/attendance/search" method="get">
-            <label for="startDate">출근일자:</label>
-            <input type="date" id="startDate" name="startDate"required>
-            <label for="endDate">~</label>
-            <input type="date" id="endDate" name="endDate" required>
-            <button type="submit">검색</button>
+    		<label for="empno">사원번호:</label>
+    		<input type="text" id="empno" name="empno">
+    
+    		<label for="deptno">부서번호:</label>
+    		<input type="text" id="deptno" name="deptno">
+
+    		<label for="startDate">출근일자:</label>
+    		<input type="date" id="startDate" name="startDate">
+    
+    		<label for="endDate">~</label>
+    		<input type="date" id="endDate" name="endDate">
+
+    		<button type="submit">검색</button>
+			
             <button type="button" onclick="location.href='/attendance/managementList?p=1'">초기화</button>
         	</form>
         
         	<div class="button-group">
-            <form action="/attendance/checkIn" method="post" >
-                <button type="submit">출근</button>
-            </form>
-            <form action="/attendance/checkOut" method="post" >
-                <button type="submit">퇴근</button>
-            </form>
+           
             <button type="button" onclick="location.href='/attendance/downloadExcel2'">엑셀다운로드</button>
        		</div>
         </div>
@@ -77,7 +80,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>출근일수</th>
+                   <th>번호</th>
+                    <th>사원번호</th>
                     <th>출근일자</th>
                     <th>출근시간</th>
                     <th>퇴근시간</th>
@@ -89,13 +93,15 @@
             <tbody>
                 <c:if test="${count == 0}">
                     <tr>
-                        <td colspan="7" class="tac">저장된 근태현황이 없습니다.</td>
+                        <td colspan="8" class="tac">저장된 근태현황이 없습니다.</td>
                     </tr>
                 </c:if>
                 <c:if test="${count > 0}">
                     <c:forEach var="attendance" items="${attendanceList}">
                         <tr>
-                            <td>${attendance.employee_attendance_no}</td> <!-- 사원별 출근번호 -->
+                         <td><c:out value="${start}"/>
+									<c:set var="start" value="${start+1}" /></td>
+                            <td>${attendance.employee_attendance_no}</td>
                             <td><fmt:formatDate value="${attendance.date}" pattern="yyyy-MM-dd"/></td>
                             <td><fmt:formatDate value="${attendance.check_in}" pattern="HH:mm:ss"/></td>
                             <td><fmt:formatDate value="${attendance.check_out}" pattern="HH:mm:ss"/></td>
@@ -110,19 +116,20 @@
         </table>
 
       <div class="pagination">
-            <c:if test="${begin > pageNum}">
-                <a href="managementList?p=${begin-1}">[이전]</a>
-            </c:if>
-            <c:forEach begin="${begin}" end="${end}" var="i">
-                <a href="managementList?p=${i}" class="${i == page ? 'active' : ''}" >${i}</a>
-            </c:forEach>
-            <c:if test="${end < totalPages}">
-                <a href="managementList?p=${end+1}">[다음]</a>
-            </c:if>
-            <c:if test="${count == 0}">
-            </c:if>
-        </div>
+    <c:if test="${begin > pageNum}">
+        <a href="search?empno=${empno}&deptno=${deptno}&startDate=${startDate}&endDate=${endDate}&p=${begin-1}">[이전]</a>
+    </c:if>
+    <c:forEach begin="${begin}" end="${end}" var="i">
+        <a href="search?empno=${empno}&deptno=${deptno}&startDate=${startDate}&endDate=${endDate}&p=${i}" class="${i == page ? 'active' : ''}">${i}</a>
+    </c:forEach>
+    <c:if test="${end < totalPages}">
+        <a href="search?empno=${empno}&deptno=${deptno}&startDate=${startDate}&endDate=${endDate}&p=${end+1}">[다음]</a>
+    </c:if>
+    <c:if test="${count == 0}">
+    </c:if>
+</div>
     </div>
+
 
             </section>
         </main>
@@ -131,10 +138,10 @@
 <footer>
 <p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
 </footer>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
+datea= ${user.att.startTime}
 
 $('#start').click(function(){
 	deptno = ${user.deptno};
@@ -178,7 +185,7 @@ $('#end').click(function(){
             });
         });
     </script>
-    <script>
+     <script>
     function updateTime() {
         const now = new Date();
         const options = { 

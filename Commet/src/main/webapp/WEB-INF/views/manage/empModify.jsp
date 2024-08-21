@@ -1,10 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>사원 정보</title>
+    <title>사원 정보 수정</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -186,7 +187,7 @@
         <form action="/empInfo" method="post" >
             <input type="hidden" name="_method" value="put">
             
-            <img src="/images/profile.png" alt="Profile Image" width="100">
+            <img src="/upload/${empInfo.imgPath}" alt="Profile Image" width="100">
             <table>
             <tr>
                 <td>사원 이름:</td><td><input type="text" name="ename" value="${empInfo.ename}" required readonly></td>
@@ -217,12 +218,13 @@
 				<td>이메일:</td><td><input type="text" name="email" value="${empInfo.email}" readonly></td>
             </tr>
             <tr>
- 				<td>주소:</td><td><input type="text" id="address" name="address" value="${empInfo.address}" readonly></td>
-				<td><button type="button" id="addressSearchBtn" onclick="execDaumPostcode()" style="display: none;">주소 검색</button></td> 				
+ 				<td>주소:</td><td><input type="text" id="address" name="address" value="${empInfo.address}" readonly>
+ 				<button type="button" id="addressSearchBtn" onclick="execDaumPostcode()" style="display: none;">주소 검색</button>
+ 				</td>				
   				<td>상세주소:</td><td><input type="text" name="detailAddr" value="${empInfo.detailAddr}" readonly></td>
             </tr>
             <tr>
-	    		<td>생년월일:</td><td><input type="text" name="birthday" value="<fmt:formatDate value='${empInfo.birthday}' pattern='yyyy-MM-dd' />"  readonly></td>
+	    		<td>생년월일:</td><td><input type="text" name="birthday" value="<fmt:formatDate value='${empInfo.hiredate}' pattern='yyyy-MM-dd' />"  readonly></td>
     			<td>입사일:</td><td><input type="text" name="hiredate" value="<fmt:formatDate value='${empInfo.hiredate}' pattern='yyyy-MM-dd' />"  readonly></td>
             </tr>
              <tr>

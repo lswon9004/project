@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -174,7 +175,7 @@
                 <div class="button-container">
                     <input type="submit" value="업로드">
                 </div>
-            </form>
+            </form>   
 
             <!-- 사진 미리보기 -->
             <div class="photo-preview">
@@ -196,18 +197,18 @@
 				<td>	
 					<select name="deptno" required> 
 						<option value="" disabled selected>선택하세요</option>
-        				<option value="100">qwer</option>
-        				<option value="200">sdff</option>
-        				<option value="300">asdf</option>
+        				<c:forEach var="dept" items="${deptList}">
+        				 	<option value="${dept.deptno}">${dept.deptname}</option>
+    					</c:forEach>
 					</select>
 				</td>
 				<td>직급:</td>
 				<td>
 				<select name="position" required>
 					<option value="" disabled selected>선택하세요</option>
-        			<option value="대리" >대리</option>
-        			<option value="팀장" >팀장</option>
-        			<option value="관리자" >관리자</option>
+        				<c:forEach var="position" items="${positionList}">
+        				 	<option value="${position.position}">${position.position}</option>
+    					</c:forEach>
 				</select>
 				</td>
             </tr>

@@ -22,5 +22,6 @@ public class AttendanceManagementDto {
     private int late; // 지각
     private int absence; // 결근
     private String worktype; // 출근현황
+    private int employee_attendance_no; // 출근번호
   
 }

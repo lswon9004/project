@@ -94,7 +94,7 @@
                 <c:if test="${count > 0}">
                     <c:forEach var="attendance" items="${attendanceList}">
                         <tr>
-                            <td>${attendance.attendance_no}</td>
+                            <td>${attendance.employee_attendance_no}</td>
                             <td><fmt:formatDate value="${attendance.date}" pattern="yyyy-MM-dd"/></td>
                             <td><fmt:formatDate value="${attendance.check_in}" pattern="HH:mm:ss"/></td>
                             <td><fmt:formatDate value="${attendance.check_out}" pattern="HH:mm:ss"/></td>

@@ -78,9 +78,9 @@ public class AttendanceManagementController {
 
     @PostMapping("/checkIn")//출근
     public String checkIn(@ModelAttribute("user") EmpDto user) {
-    	// if (!service.hasCheckedInToday(user.getEmpno())) {          //출근 버튼을 한번 눌렀을때 추가로 못누름
+    	 if (!service.hasCheckedInToday(user.getEmpno())) {          //출근 버튼을 한번 눌렀을때 추가로 못누름
     		service.checkIn(user.getEmpno(), user.getDeptno());
-    	// }
+    	 }
     		return "redirect:/attendance/managementList";
     }
 

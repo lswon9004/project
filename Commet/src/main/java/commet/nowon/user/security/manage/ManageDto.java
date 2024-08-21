@@ -27,4 +27,5 @@ public class ManageDto {
 	String imgPath;	//사진경로
 	String deptname;  //부서이름
 	int authority; // 권한(랭크) 저장한공간
+	String password; //비밀번호
 }

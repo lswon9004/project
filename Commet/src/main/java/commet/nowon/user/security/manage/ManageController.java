@@ -43,6 +43,12 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 //	return eservice.getRight(position);
 //}	
 	
+	@GetMapping("/staffModify")
+	public String staffModify(@RequestParam("no")int no, Model model) {
+		ManageDto empInfo = service.getempByID(no); 
+    	model.addAttribute("empInfo", empInfo);
+		return "/staffModify";
+	}
 	
 	@ModelAttribute("user")
 	public EmpDto getDto() {

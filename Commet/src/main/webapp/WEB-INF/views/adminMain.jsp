@@ -7,36 +7,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Management Portal</title>
+    <title>관리자메인화면</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .prev-month, .next-month {
-            color: #ccc;
-        }
-    </style>
+    
 </head>
 <body>
-     <div class="container">
+      <div class="container">
         <header>
             <div class="user-info">
-                <img src="profile.jpg" alt="User Profile">
+               <img src="/upload/${user.imgPath}" alt="User Profile">
                 <div>
-                    <p>이름: 김자바</p>
+                    <p>이름: ${user.ename }</p>
                     <p>직책: ${user.position }</p>
                     <p>사번: ${user.empno }</p>
-                    <p>김자바 님 환영합니다.</p>
+                    <p>${user.ename }님 환영합니다.</p>
                 </div>
             </div>
             <h1>코멧 관리자 업무포털</h1>
@@ -46,7 +30,7 @@
                 <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">00:00/</c:if></p>
                 <p id="endTime">00:00</p>
                 <nav>
-                    <a href="/main">Home</a>
+                    <a href="/adminMain">Home</a>
                     <a href="#">개인정보수정</a>
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
@@ -57,14 +41,13 @@
             <aside>
                 <ul class="menu">
                     <li><a href="/customerList">통합업무</a></li>
-                    <li><a href="/attendance/managementList">근태현황</a>
+                   <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <li><a href="/approval/status">결재승인</a></li>
                     <li><a href="/emp_manage">직원관리</a></li>
                 </ul>
-                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
-                <p class="footer-text">코멧업무포털</p>
+     
             </aside>
             <section class="main-content">
                 <div class="status-overview">
@@ -177,14 +160,16 @@
             %>
         </tbody>
     </table>
-                <div class="chart">
-                    <h2>출근 현황</h2>
-                    <!-- Chart will be added here -->
-                </div>
+                
             </section>
         </main>
     </div>
 </body>
+
+<footer>
+<p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
+</footer>
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
@@ -211,5 +196,31 @@ $('#end').click(function(){
 		$('#vlist').append(datea)
 	})
 }
+
+
 </script>
+
+<!--현재시간 -->
+	<script>
+    function updateTime() {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            weekday: 'long', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit'
+        };
+        const currentTimeString = now.toLocaleDateString('ko-KR', options);
+        document.getElementById('current-time').innerText = currentTimeString;
+    }
+
+    // 처음 페이지 로드 시 시간을 표시
+    updateTime();
+
+    // 매 초마다 시간을 업데이트
+    setInterval(updateTime, 1000);
+	</script>
 </html>

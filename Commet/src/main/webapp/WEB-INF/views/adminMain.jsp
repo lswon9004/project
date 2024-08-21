@@ -31,7 +31,7 @@
                 <p id="endTime">00:00</p>
                 <nav>
                     <a href="/adminMain">Home</a>
-                    <a href="#">개인정보수정</a>
+                    <a href="/staffModify">개인정보수정</a>
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>

@@ -186,32 +186,32 @@
         <form action="/empInfo" method="post" >
             <input type="hidden" name="_method" value="put">
             
-            <img src="/upload/${empInfo.imgPath}" alt="Profile Image" width="100"><!--로그인한 아이디 정보 가저와야함 메인화면 사진 나오는거랑 비슷하게 하면될듯 -->
+            <img src="/upload/${user.imgPath}" alt="Profile Image" width="100"><!--로그인한 아이디 정보 가저와야함 메인화면 사진 나오는거랑 비슷하게 하면될듯 -->
             <table>
             <tr>
-                <td>사원 이름:</td><td>${empInfo.ename}</td>
-                <td>사원 번호:</td><td>${empInfo.empno}</td>
-                <td>랭크:</td><td>${empInfo.authority}</td>
+                <td>사원 이름:</td><td>${user.ename}</td>
+                <td>사원 번호:</td><td>${user.empno}</td>
+                <td>랭크:</td><td>${user.right}</td>
             </tr>
             <tr> 
-				<td>부서:</td><td>${empInfo.deptno}</td>
-				<td>담당업무:</td><td>${empInfo.jop}</td>
-				<td>직급:</td><td>${empInfo.position}</td>
+				<td>부서:</td><td>${user.deptno}</td>
+				<td>담당업무:</td><td>${user.jop}</td>
+				<td>직급:</td><td>${user.position}</td>
 
             </tr>
             <tr>
-				<td>연락처:</td><td><input type="text" name="phone" value="${empInfo.phone}" readonly></td>
-				<td>이메일:</td><td><input type="text" name="email" value="${empInfo.email}" readonly></td>
+				<td>연락처:</td><td><input type="text" name="phone" value="${user.email}" readonly></td>
+				<td>이메일:</td><td><input type="text" name="email" value="${user.email}" readonly></td>
             </tr>
             <tr>
- 				<td>주소:</td><td><input type="text" id="address" name="address" value="${empInfo.address}" readonly>
+ 				<td>주소:</td><td><input type="text" id="address" name="address" value="${user.address}" readonly>
  				<button type="button" id="addressSearchBtn" onclick="execDaumPostcode()" style="display: none;">주소 검색</button>
  				</td>				
-  				<td>상세주소:</td><td><input type="text" name="detailAddr" value="${empInfo.detailAddr}" readonly></td>
+  				<td>상세주소:</td><td><input type="text" name="detailAddr" value="${user.detailAddr}" readonly></td>
             </tr>
             <tr>
-	    		<td>생년월일:</td><td><fmt:formatDate value='${empInfo.birthday}' pattern='yyyy-MM-dd' /></td>
-    			<td>입사일:</td><td><fmt:formatDate value='${empInfo.hiredate}' pattern='yyyy-MM-dd' /></td>
+	    		<td>생년월일:</td><td><fmt:formatDate value='${user.birthday}' pattern='yyyy-MM-dd' /></td>
+    			<td>입사일:</td><td><fmt:formatDate value='${user.hiredate}' pattern='yyyy-MM-dd' /></td>
             </tr>
 			<tr>
 				<td>비밀번호:</td><td><input type="text" name="password"></td>

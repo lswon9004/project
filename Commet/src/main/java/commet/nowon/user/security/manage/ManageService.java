@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import commet.swon.emp.EmpDto;
+
 
 
 
@@ -53,5 +55,10 @@ public class ManageService {
     public void deleteEmps(int[] emps) {
     	dao.deleteEmps(emps);
     }
-    
+    public List<ManageDto> searchDept(){
+    	return dao.searchDept();
+    }
+    public List<ManageDto> searchPosition(){
+    	return dao.searchPosition();
+    }
 }

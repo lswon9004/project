@@ -174,7 +174,7 @@
                 <div class="button-container">
                     <input type="submit" value="업로드">
                 </div>
-            </form>
+            </form>   
 
             <!-- 사진 미리보기 -->
             <div class="photo-preview">

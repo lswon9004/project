@@ -10,12 +10,21 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import commet.com.spring.dto.EmpDto;
+
 
 
 
 
 @Mapper
 public interface ManageDao {
+
+	@Select("select * from dept")//부서 검색
+	List<ManageDto> searchDept();
+	
+	@Select("select * from position")// 직급검색
+	List<ManageDto> searchPosition();
+	
     @Insert("insert into emp(ename, empno, deptno, jop, position, imgPath, phone, email, address, detailAddr, birthday, hiredate, sal, memo) values(#{ename}, #{empno}, #{deptno}, #{jop}, #{position}, #{imgPath}, #{phone}, #{email}, #{address}, #{detailAddr}, #{birthday}, #{hiredate}, #{sal}, #{memo})")
     int insertEmp(ManageDto dto); // DB에 사원 정보 저장 메서드
 
@@ -27,7 +36,7 @@ public interface ManageDao {
 
     @Select("select e.*, d.deptname, p.authority from emp e left join dept d on e.deptno = d.deptno left join position p on e.position = p.position where e.empno = #{id}")
     ManageDto getempByID(int id); // 사원 번호
-
+    
     @Update("update emp set deptno=#{deptno}, ename=#{ename}, jop=#{jop}, position=#{position}, phone=#{phone}, email=#{email}, address=#{address}, detailAddr=#{detailAddr}, memo=#{memo}, sal=#{sal}, imgPath=#{imgPath} where empno=#{empno}")
     int updateEmp(ManageDto dto); // 사원 정보 수정 / 부서이름이 deptno를 dept 에서 join해서 이름을 가져와서 수정 버튼 누를시 있는 데이터를 통제로 보냄 그래서 안넣어둠
 

@@ -31,7 +31,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @SessionAttributes("user")
-public class ManageController {// 컨트롤러에서 사용안하는 중 나중에 사용할까 해서남겨둠
+public class ManageController {
 	
 	
 	@Autowired 
@@ -42,13 +42,6 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 //	public int noCheck(String position) { // 직급의 권한레벨 확인
 //	return eservice.getRight(position);
 //}	
-	
-	@GetMapping("/staffModify")
-	public String staffModify(@RequestParam("no")int no, Model model) {
-		ManageDto empInfo = service.getempByID(no); 
-    	model.addAttribute("empInfo", empInfo);
-		return "/staffModify";
-	}
 	
 	@ModelAttribute("user")
 	public EmpDto getDto() {
@@ -66,35 +59,19 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 //		return "redirect:/emp_manage"; 
 //	}
 	
-	@GetMapping("/empModify") // empinfo 에서 들고온 사원정보를 수정 화면에 보여줌
-	public String showModify(@RequestParam("no")int no, Model model) {
-		ManageDto empInfo = service.getempByID(no); 
-    	model.addAttribute("empInfo", empInfo);
-    	return "manage/empModify";
-	}
-	
-	
-	@GetMapping("/empInfo") // 사원 정보 확인
-	public String showForm() {
-	    return "manage/empInfo";
-	}
-
     @RequestMapping("/emp_manage") // 직원관리 메인화면
     public String empList(@RequestParam(name = "p", defaultValue = "1") int page, Model m) {
         // 글이 있는지 체크
         int count = service.count();
         if (count > 0) {
-        	
         int perPage = 10; // 한 페이지에 보일 글의 갯수
         int startRow = (page - 1) * perPage;
 
         List<ManageDto> list = service.managemain(startRow);
-       
-            m.addAttribute("elist", list);
+        	m.addAttribute("elist", list);
 
             int pageNum = 5; // 보여질 페이지 번호 수
             int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0); // 전체 페이지 수
-
             int begin = (page - 1) / pageNum * pageNum + 1;
             int end = begin + pageNum - 1;
             if (end > totalPages) {
@@ -110,8 +87,26 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
         return "manage/empList";
     }
 
-    @GetMapping("/empDetail/{id}")//특정 고객의 상세 정보를 조회하여 empinfo에서 꺼내올수있게함
-    public String showEmpDetail(@PathVariable("id") int id, Model model) { //고객아이디 저장할모델 m
+	@GetMapping("/staffModify") //개인정보 화면 가기
+	public String staffModify() {
+		return "staffModify";
+	}
+    
+	@GetMapping("/empModify") // empinfo 에서 들고온 사원정보를 수정 화면에 보여줌
+	public String showModify(@RequestParam("no")int no, Model model) {
+		ManageDto empInfo = service.getempByID(no); 
+    	model.addAttribute("empInfo", empInfo);
+    	return "manage/empModify";
+	}
+	
+	
+	@GetMapping("/empInfo") // 사원 정보 확인
+	public String showForm() {
+	    return "manage/empInfo";
+	}
+    
+    @GetMapping("/empDetail/{id}")//특정 사원의 상세 정보를 조회하여 empinfo에서 꺼내올수있게함
+    public String showEmpDetail(@PathVariable("id") int id, Model model) { //아이디 저장할모델 m
     	ManageDto empInfo = service.getempByID(id); //ID에 해당하는 고객 정보를 조회
     	model.addAttribute("empInfo", empInfo); // 조회된 고객을 모델에 저장
     	return "manage/empInfo";
@@ -132,9 +127,10 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 	  @GetMapping("/searchEmps")//사원이름 / 사원번호 입력하면 검색하는 메서드 
 	  public String searchEmps(@RequestParam(value = "empno", defaultValue = "0") Integer empno,
 			  						@RequestParam(value = "ename", required = false) String ename, Model model) {
-		  System.out.println(empno);
 	  List<ManageDto> searchResults = service.searchEmps(empno, ename);
+	  System.out.println(searchResults);
 	  model.addAttribute("elist", searchResults);
+	  System.out.println(searchResults);
 	  return "manage/empList";
 	  }
 
@@ -184,6 +180,10 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 		
 		@GetMapping("/insert") // 새로운 ManageDto 객체를 모델에 추가하여 정보 페이지를 표시 박선욱 작성
 		public String showInfoPage(Model model) {
+		    List<ManageDto> deptList = service.searchDept();
+		    List<ManageDto> positionList = service.searchPosition();
+		    model.addAttribute("positionList", positionList);
+		    model.addAttribute("deptList", deptList);
 			model.addAttribute("InserEmpDto", new ManageDto());
 			return "manage/newEmp";
 		}
@@ -211,7 +211,7 @@ public class ManageController {// 컨트롤러에서 사용안하는 중 나중�
 				File file = new File(filePath);
 	        }
 
-	        return "manage/newEmp"; // 업로드 후 다시 newEmp2 페이지로 이동
+	        return "manage/newEmp"; // 업로드 후 다시 newEmp 페이지로 이동
 	    }
 
 	    // 파일명 생성 메서드

@@ -216,7 +216,7 @@
                 <c:forEach var="emp" items="${elist}">
                     <tr>
                         <td><input type="checkbox" name="empnos" value="${emp.empno}"></td>
-                        <td><a href="${pageContext.request.contextPath}/empDetail/${emp.empno}">${emp.ename}</a></td>
+                        <td><a href="/empDetail/${emp.empno}">${emp.ename}</a></td>
 						<td>${emp.empno}</td>
                         <td>${emp.deptname}</td> <!-- dept에서 가저오는거 안해놔서 안가저옴 -->
                         <td>${emp.deptno}</td> 
@@ -230,17 +230,14 @@
     </form>
     
    <div class="pagination">
-        <c:if test="${begin > pageNum}">
-            <a href="customerList2?p=${begin-1}">[이전]</a>
+        <c:if test="${begin > 1}">
+            <a href="searchEmps?p=${begin-1}">[이전]</a>
         </c:if>
-        <c:forEach begin="${begin}" end="${end}" var="i">
-            <a href="customerList2?p=${i}">${i}</a>
+        <c:forEach begin="1" end="${totalPages}" var="i">
+            <a href="searchEmps?p=${i}">${i}</a>
         </c:forEach>
         <c:if test="${end < totalPages}">
-            <a href="customerList2?p=${end+1}">[다음]</a>
-        </c:if>
-        <c:if test="${count == 0}">
-            아직 입력한 정보가 없습니다.
+            <a href="searchEmps?p=${end+1}">[다음]</a>
         </c:if>
     </div>
 

@@ -69,7 +69,7 @@ button[type="submit"] {
                 <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">00:00/</c:if></p>
                 <p id="endTime">00:00</p>
                 <nav>
-                    <a href="#">Home</a>
+                    <a class="active" href="/main">Home</a>
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>

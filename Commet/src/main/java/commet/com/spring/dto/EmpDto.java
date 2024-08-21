@@ -25,6 +25,6 @@ public class EmpDto {
 	Date birthday;
 	String memo;
 	public int loginCount;
-	
+	String phone;
 	
 }

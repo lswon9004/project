@@ -39,86 +39,7 @@
     </style>
 </head>
 <body>
-     <div class="container">
-        <header>
-            <div class="user-info">
-                <img src="/upload/${user.imgPath}" alt="User Profile">
-                <div>
-                    <p>이름: ${user.ename }</p>
-                    <p>직책: ${user.position }</p>
-                    <p>사번: ${user.empno }</p>
-                    <p>${user.ename }님 환영합니다.</p>
-                </div>
-            </div>
-            <h1>코멧 업무포털</h1>
-            <div class="header-right">
-                <button id="start">업무시작</button>
-                <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">00:00/</c:if></p>
-                <p id="endTime">00:00</p>
-                <nav>
-					<c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    <a href="#">개인정보수정</a>
-                    <a href="/bullboard">익명게시판</a>
-                    <a href="/logout">로그아웃</a>
-                </nav>
-            </div>
-        </header>
-        <main>
-            <aside>
-                <ul class="menu">
-                    <li><a href="/searchCustomers">통합업무</a></li>
-                     <li><a href="/attendance/managementList">근태현황</a>
-                    <li><a href="/boards">게시판</a></li>
-                    <li><a href="/approval/${user.empno}">전자결재</a></li>
-                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                </ul>
-                 <p class="footer-text">현재시간 : <span id="current-time"></span></p>
-                <p class="footer-text">코멧업무포털</p>
-            </aside>
-            <section class="main-content">
-                <div class="status-overview">
-                    <h2>나의 출근 현황</h2>
-                    <table>
-                        <tr>
-                            <th>구분</th>
-                            <th>기준</th>
-                            <th>사용</th>
-                            <th>잔여</th>
-                        </tr>
-                        <tr>
-                            <td>연차x12</td>
-                            <td>11일</td>
-                            <td>2일</td>
-                            <td>5일</td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <th>구분</th>
-                            <th>출근</th>
-                            <th>지각</th>
-                            <th>결근</th>
-                        </tr>
-                        <tr>
-                            <td>출근x31</td>
-                            <td>11일</td>
-                            <td>2일</td>
-                            <td>0일</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="notes">
-                    <div class="note">
-                        <p>12:20 부장님과 점심</p>
-                        <p>14:50 미팅</p>
-                    </div>
-                    <div class="note">
-                        <p id="vlist">Add note</p>
-                    </div>
-                </div>
-                    
-                    <%
+<%
                  // 날짜 값을 받아서 Calendar 객체 설정
                     String dateString = request.getParameter("date");
                     Calendar cal = Calendar.getInstance();
@@ -145,6 +66,98 @@
                     Calendar nextCal = (Calendar) cal.clone();
                     nextCal.add(Calendar.MONTH, 1);
                     %>
+     <div class="container">
+        <header>
+            <div class="user-info">
+                <img src="/upload/${user.imgPath}" alt="User Profile">
+                <div>
+                    <p>이름: ${user.ename }</p>
+                    <p>직책: ${user.position }</p>
+                    <p>사번: ${user.empno }</p>
+                    <p>${user.ename }님 환영합니다.</p>
+                </div>
+            </div>
+            <h1>코멧 업무포털</h1>
+            <div class="header-right">
+                <button id="start">업무시작</button>
+                <button id="end">업무종료</button>
+                <p id="startTime"><c:if test="${user.check_in !=null}"><fmt:formatDate value="${user.check_in}" pattern="HH:mm" />/</c:if><c:if test="${user.check_in==null}">00:00/</c:if></p>
+                <p id="endTime"><c:if test="${user.check_out !=null}"><fmt:formatDate value="${user.check_out}" pattern="HH:mm" />/</c:if><c:if test="${user.check_out==null}">00:00/</c:if></p>
+                <nav>
+					<c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
+                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    <a href="#">개인정보수정</a>
+                    <a href="/bullboard">익명게시판</a>
+                    <a href="/logout">로그아웃</a>
+                </nav>
+            </div>
+        </header>
+        <main>
+            <aside>
+                <ul class="menu">
+                    <li><a href="/searchCustomers">통합업무</a></li>
+                     <li><a href="/attendance/managementList">근태현황</a>
+                    <li><a href="/boards">게시판</a></li>
+                    <li><a href="/approval/${user.empno}">전자결재</a></li>
+                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
+                </ul>
+                 <p class="footer-text">현재시간 : <span id="current-time"></span></p>
+                <p class="footer-text">코멧업무포털</p>
+            </aside>
+            <section class="main-content">
+                <div class="status-overview">
+                    <h2>나의 출근 현황</h2>
+                    <table>
+                    <colgroup>
+			<col style="width:25%;" />
+			<col style="width:25%;" />
+			<col style="width:25%;" />
+			<col style="width:25%;" />
+		</colgroup>
+                        <tr>
+                            <th>구분</th>
+                            <th>병가</th>
+                            <th>사용</th>
+                            <th>잔여</th>
+                        </tr>
+                        <tr>
+                            <td>연차x${user.annual }</td>
+                            <td><c:if test="${sickCount!=0 }">${sickCount }일</c:if><c:if test="${sickCount==0 }">0일</c:if> </td>
+                            <td><c:if test="${leaveCount!=0 }">${leaveCount }일</c:if><c:if test="${leaveCount==0 }">0일</c:if></td>
+                            <td>${user.annual - leaveCount }일</td>
+                        </tr>
+                    </table>
+                    <table>
+                    <colgroup>
+			<col style="width:25%;" />
+			<col style="width:25%;" />
+			<col style="width:25%;" />
+			<col style="width:25%;" />
+		</colgroup>
+                        <tr>
+                            <th>구분</th>
+                            <th>출근</th>
+                            <th>지각</th>
+                            <th>결근</th>
+                        </tr>
+                        <tr>
+                            <td><%=lastDay %></td>
+                            <td>${count }일</td>
+                            <td>${Tcount }일</td>
+                            <td>${abcount }일</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="notes">
+                    <div class="note">
+                        <p>12:20 부장님과 점심</p>
+                        <p>14:50 미팅</p>
+                    </div>
+                    <div class="note">
+                        <p id="vlist">Add note</p>
+                    </div>
+                </div>
+                    
+                    
                     <h2><%= year %>년 <%= month + 1 %>월 달력</h2>
                     <form >
                        <input type="date" name="date"><button>확인</button>
@@ -197,7 +210,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
-datea= ${user.att.startTime}
 date = <%= year %> +'-'+('0'+ <%= month + 1 %>).slice(-2)
 $('#start').click(function(){
    deptno = ${user.deptno};

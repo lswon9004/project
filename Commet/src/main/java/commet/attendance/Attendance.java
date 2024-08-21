@@ -20,4 +20,5 @@ public class Attendance {
 	boolean vacation;
 	boolean late;
 	boolean absence;
+    private String worktype; // 출근현황
 }

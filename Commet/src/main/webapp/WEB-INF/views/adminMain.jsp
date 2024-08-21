@@ -28,6 +28,34 @@
     </style>
 </head>
 <body>
+<%
+                 // 날짜 값을 받아서 Calendar 객체 설정
+                    String dateString = request.getParameter("date");
+                    Calendar cal = Calendar.getInstance();
+                    if (dateString != null && !dateString.isEmpty()) {
+                        String[] dateParts = dateString.split("-");
+                        int year = Integer.parseInt(dateParts[0]);
+                        int month = Integer.parseInt(dateParts[1]) - 1; // 월은 0부터 시작
+                        int day = Integer.parseInt(dateParts[2]);
+                        cal.set(year, month, day);
+                    }
+
+                    int year = cal.get(Calendar.YEAR);
+                    int month = cal.get(Calendar.MONTH);
+                    cal.set(year, month, 1);
+                    int startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+                    int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+                    // 이전 달의 마지막 날
+                    Calendar prevCal = (Calendar) cal.clone();
+                    prevCal.add(Calendar.MONTH, -1);
+                    int prevLastDay = prevCal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+                    // 다음 달의 첫 번째 날
+                    Calendar nextCal = (Calendar) cal.clone();
+                    nextCal.add(Calendar.MONTH, 1);
+
+    %>
      <div class="container">
         <header>
             <div class="user-info">
@@ -69,21 +97,33 @@
             <section class="main-content">
                 <div class="status-overview">
                     <h2>나의 출근 현황</h2>
-                    <table>
+                     <table>
+                    <colgroup>
+			<col style="width:25%;" />
+			<col style="width:25%;" />
+			<col style="width:25%;" />
+			<col style="width:25%;" />
+		</colgroup>
                         <tr>
                             <th>구분</th>
-                            <th>기준</th>
+                            <th>병가</th>
                             <th>사용</th>
                             <th>잔여</th>
                         </tr>
                         <tr>
-                            <td>연차x12</td>
-                            <td>11일</td>
-                            <td>2일</td>
-                            <td>5일</td>
+                            <td>연차x${user.annual }</td>
+                            <td><c:if test="${sickCount!=0 }">${sickCount }일</c:if><c:if test="${sickCount==0 }">0일</c:if> </td>
+                            <td><c:if test="${leaveCount!=0 }">${leaveCount }일</c:if><c:if test="${leaveCount==0 }">0일</c:if></td>
+                            <td>${user.annual - leaveCount }일</td>
                         </tr>
                     </table>
                     <table>
+                    <colgroup>
+			<col style="width:25%;" />
+			<col style="width:25%;" />
+			<col style="width:25%;" />
+			<col style="width:25%;" />
+		</colgroup>
                         <tr>
                             <th>구분</th>
                             <th>출근</th>
@@ -91,10 +131,10 @@
                             <th>결근</th>
                         </tr>
                         <tr>
-                            <td>출근x31</td>
-                            <td>11일</td>
-                            <td>2일</td>
-                            <td>0일</td>
+                            <td><%=lastDay %></td>
+                            <td>${count }일</td>
+                            <td>${Tcount }일</td>
+                            <td>${abcount }일</td>
                         </tr>
                     </table>
                 </div>
@@ -104,38 +144,11 @@
                         <p>14:50 미팅</p>
                     </div>
                     <div class="note">
-                        <p id="vlist">Add note${user.att.check_in }</p>
+                        <p id="vlist">Add note</p>
                     </div>
                 </div>
                     
-                    <%
-                 // 날짜 값을 받아서 Calendar 객체 설정
-                    String dateString = request.getParameter("date");
-                    Calendar cal = Calendar.getInstance();
-                    if (dateString != null && !dateString.isEmpty()) {
-                        String[] dateParts = dateString.split("-");
-                        int year = Integer.parseInt(dateParts[0]);
-                        int month = Integer.parseInt(dateParts[1]) - 1; // 월은 0부터 시작
-                        int day = Integer.parseInt(dateParts[2]);
-                        cal.set(year, month, day);
-                    }
-
-                    int year = cal.get(Calendar.YEAR);
-                    int month = cal.get(Calendar.MONTH);
-                    cal.set(year, month, 1);
-                    int startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-                    int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-                    // 이전 달의 마지막 날
-                    Calendar prevCal = (Calendar) cal.clone();
-                    prevCal.add(Calendar.MONTH, -1);
-                    int prevLastDay = prevCal.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-                    // 다음 달의 첫 번째 날
-                    Calendar nextCal = (Calendar) cal.clone();
-                    nextCal.add(Calendar.MONTH, 1);
-
-    %>
+                    
                     <h2><%= year %>년 <%= month + 1 %>월 달력</h2>
                     <form >
                     	<input type="date" name="date"><button>확인</button>
@@ -188,7 +201,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
-datea= ${user.att.startTime}
 date = <%= year %> +'-'+('0'+ <%= month + 1 %>).slice(-2)
 $('#start').click(function(){
 	deptno = ${user.deptno};
@@ -208,7 +220,7 @@ $('#end').click(function(){
 })
  function selectDate(date) {
 	$.getJSON('/vacation',{'date':date},function(data){
-		$('#vlist').append(datea)
+		$('#vlist').append(data)
 	})
 }
 </script>

@@ -69,8 +69,16 @@ public class EmpController {
 	}
 
 	@GetMapping("/main")
-	public String main(@ModelAttribute("user") EmpDto dto) {
+	public String main(@ModelAttribute("user") EmpDto dto,Model m) {
 		if(dto.empno != 0) {
+			int attCount = aservice.getAttCount(dto.getEmpno());
+			m.addAttribute("count", attCount);
+			int Tcount = aservice.tCount(dto.getEmpno());
+			m.addAttribute("Tcount", Tcount);
+			int sick_leaveCount = aservice.sick_leaveCount(dto.getEmpno());
+			int leaveCount = aservice.leaveCount(dto.getEmpno());
+			m.addAttribute("sickCount", sick_leaveCount);
+			m.addAttribute("leaveCount", leaveCount);
 			return "/main";
 		}else {
 			return "/loginform";
@@ -79,8 +87,18 @@ public class EmpController {
 	}
 
 	@GetMapping("/adminMain")
-	public String adminMain(@ModelAttribute("user") EmpDto dto) {
+	public String adminMain(@ModelAttribute("user") EmpDto dto,Model m) {
 		if(dto.empno != 0) {
+			int attCount = aservice.getAttCount(dto.getEmpno());
+			m.addAttribute("count", attCount);
+			int Tcount = aservice.tCount(dto.getEmpno());
+			m.addAttribute("Tcount", Tcount);
+			int sick_leaveCount = aservice.sick_leaveCount(dto.getEmpno());
+			int leaveCount = aservice.leaveCount(dto.getEmpno());
+			int abcount = aservice.abCount(dto.getEmpno());
+			m.addAttribute("abcount", abcount);
+			m.addAttribute("sickCount", sick_leaveCount);
+			m.addAttribute("leaveCount", leaveCount);
 			return "/adminMain";
 		}else {
 			return "/loginform";

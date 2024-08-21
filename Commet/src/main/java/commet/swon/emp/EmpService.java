@@ -28,7 +28,7 @@ public class EmpService {
 	}
 	public boolean emailCheck(int empno,String email) {
 		String dtoEmail = dao.emailCheck(empno);
-		if (dtoEmail.equals(email)) {
+		if (email.equals(dtoEmail)) {
 			return true;
 		}
 		

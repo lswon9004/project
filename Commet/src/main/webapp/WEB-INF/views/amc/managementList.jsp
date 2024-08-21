@@ -134,7 +134,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
-datea= ${user.att.startTime}
 
 $('#start').click(function(){
 	deptno = ${user.deptno};

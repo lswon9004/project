@@ -107,7 +107,11 @@
             <input id="empno" type="number" name="empno" required="required" placeholder="사번"><br>
             <input type="email" name="email" id="email" placeholder="이메일">
             <input type="button" id="btn" value="email확인" onclick="emailCheck()"><br>
+            <div id="dd" style="padding: 10px;">
+            </div>
             <button id="btn1">비밀번호 초기화</button>
+            <div id="dd1" style="padding: 10px;">
+            </div>
         </form> 
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -118,8 +122,9 @@
             email = $('#email').val();
               $.getJSON("/emailCheck",{'empno':empno,'email':email},function(data){
                   if(data){
-                      $('#btn1').before("<input type='text' id='checknumber' name='checknumber' placeholder='인증번호'> ");
-                      $('#btn1').before(" <input type='button' id='btn2' onclick='numberCheck()' value='인증번호 발급'><br>");
+                	  $('#dd').empty()
+                	  $('#dd').append(" <input type='text' id='checknumber' name='checknumber' placeholder='인증번호'> ");
+                      $('#dd').append(" <input type='button' id='btn2' onclick='numberCheck()' value='인증번호 발급'><br>");
                   }else{
                       alert("이메일주소가 잘못되었습니다.")
                   }
@@ -130,19 +135,24 @@
              $.getJSON("/send",{'email':email},function(data){
                  if(eval(data[1])){
                     num = data[0];
-                    $('#btn2').before("<input type='button' id='btn3' onclick='numberCheck2()' value='인증번호 확인'> ")
-                    alert("메일이 전송되었습니다. 인증번호를 입력하세요.")
-                    
+                    $('#dd').empty()
+                    $('#dd').append(" <input type='text' id='checknumber' name='checknumber' placeholder='인증번호'> ");
+                    $('#dd').append(" <input type='button' id='btn2' onclick='numberCheck()' value='인증번호 발급'> ");
+                    $('#dd').append("<input type='button' id='btn3' onclick='numberCheck2()' value='인증번호 확인'> ")
+                    $('#btn2').val('인증번호 재발급');
+                    alert("메일이 전송되었습니다. 인증번호를 입력하세요.");                   
                  }
         })
         }
         function numberCheck2(){
             checknumber = $('#checknumber').val()
             if(checknumber == num){
-                $('#btn1').after('<p class="message">인증성공</p>')
-                $('#btn1').after("<input type='hidden' id='ck' value='1'>")
+            	$('#dd1').empty()
+                $('#dd1').append('<p class="message">인증성공</p>')
+                $('#dd1').append("<input type='hidden' id='ck' value='1'>")
             }else{
-                $('#btn1').after('<p class="message">인증실패</p>')
+            	$('#dd1').empty()
+                $('#dd1').append('<p class="message">인증실패</p>')
             }
         }
         $('#findpw').submit(function(){

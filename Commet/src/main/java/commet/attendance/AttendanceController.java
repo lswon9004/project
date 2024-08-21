@@ -32,7 +32,7 @@ public class AttendanceController {
 	@GetMapping("/startTime")
 	@ResponseBody
 	public String startTime(@RequestParam("empno")int empno, @RequestParam("deptno")int deptno,
-							HttpServletRequest req) {
+							@ModelAttribute("user")EmpDto dto) {
 		Date startTime = service.startTime(empno);
 		String formattedDate = null;
 		if(startTime==null) {
@@ -40,14 +40,14 @@ public class AttendanceController {
 			startTime = service.startTime(empno);
 			formattedDate = sdf.format(startTime);
 		}
-		req.getSession().setAttribute("startTime", startTime);
+		dto.setCheck_in(startTime);
 		return gson.toJson(formattedDate);
 	}
 	@GetMapping("/endTime")
 	@ResponseBody
-	public String endTime(@RequestParam("empno")int empno,HttpServletRequest res) {
+	public String endTime(@RequestParam("empno")int empno,	@ModelAttribute("user")EmpDto dto) {
 		Date endtime = service.endTime(empno);
-		res.getSession().setAttribute("endTime", endtime);
+		dto.setCheck_out(endtime);
 		return gson.toJson(sdf.format(endtime));
 	}
 	@GetMapping("/vacation")

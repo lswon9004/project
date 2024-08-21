@@ -9,7 +9,10 @@ import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface Empdao {
-	@Select("select * from emp where empno = #{empno}")
+	@Select("SELECT e.* ,a.check_in as 'check_in',a.check_out as 'check_out' "
+			+ "FROM emp e "
+			+ "LEFT OUTER JOIN attendance_management a ON e.empno = a.empno AND (a.date = CURRENT_DATE()) "
+			+ "WHERE e.empno = #{empno}")
 	EmpDto login(int empno);
 	@Select("select authority from position where position = #{position}")
 	int getRight(String position);

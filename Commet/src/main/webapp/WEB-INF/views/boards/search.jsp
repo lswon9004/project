@@ -154,32 +154,23 @@
 	<p class="footer-text">코멧업무포털</p>
 </footer>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript">
-	empno = $
-	{
-		user.empno
-	};
-	datea = $
-	{
-		user.att.startTime
-	}
-	$('#start').click(function() {
-		deptno = $
-		{
-			user.deptno
-		}
-		;
-		$.getJSON("/startTime", {
-			'empno' : empno,
-			'deptno' : deptno
-		}, function(data) {
-			if (data) {
-				$('#startTime').text(data + '/');
-			} else {
-				alert('이미 출근버튼을 누르셨습니다.')
-				alert(date)
-			}
-		})
+<script type="text/javascript"> 
+empno = ${user.empno};
+$('#start').click(function(){
+	deptno = ${user.deptno};
+	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
+		if (data){			
+			$('#startTime').text(data+'/');						
+		 }else{
+			alert('이미 출근버튼을 누르셨습니다.')
+			alert(date)
+		} 
+	})
+})
+$('#end').click(function(){
+	$.getJSON('/endTime',{'empno':empno},function(data){
+		$('#endTime').text(data)
+
 	})
 	$('#end').click(function() {
 		$.getJSON('/endTime', {

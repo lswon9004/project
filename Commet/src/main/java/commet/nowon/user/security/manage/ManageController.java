@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import commet.com.spring.dto.EmpDto;
+import commet.swon.emp.EmpDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -60,14 +60,14 @@ public class ManageController {
 //	}
 	
     @RequestMapping("/emp_manage") // 직원관리 메인화면
-    public String empList(@RequestParam(name = "p", defaultValue = "1") int page, Model m) {
+    public String empList(@ModelAttribute("user")EmpDto dto, @RequestParam(name = "p", defaultValue = "1") int page, Model m) {
         // 글이 있는지 체크
         int count = service.count();
         if (count > 0) {
         int perPage = 10; // 한 페이지에 보일 글의 갯수
         int startRow = (page - 1) * perPage;
 
-        List<ManageDto> list = service.managemain(startRow);
+        List<ManageDto> list = service.managemain(startRow, dto.getEmpno());
         	m.addAttribute("elist", list);
 
             int pageNum = 5; // 보여질 페이지 번호 수

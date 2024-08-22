@@ -28,11 +28,12 @@ public class ManageService {
 		return dao.count();
 	}
     
-    public List<ManageDto>managemain(int start){
+    public List<ManageDto>managemain(int start, int empno){
 		
 		Map<String, Object> m = new HashMap<String, Object>();
 		m.put("start", start);
 		m.put("count", 10);
+		m.put("empno", empno);
 		return dao.managemain(m);
     }
    

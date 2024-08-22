@@ -20,6 +20,9 @@ public interface LikecountDao {
 	@Select("select count(*) from likecount where `table` = 'Bulletin_Board' and no = #{no} and empno = #{empno} and count = 1")
 	int likecountCheck(@Param("empno") int empno,@Param("no") int no);
 	
+	@Select("select count(*) from likecount where `table` = 'Bulletin_Board' and no = #{no} and empno = #{empno}")
+	int slcount(@Param("empno") int empno,@Param("no") int no);
+	
 	//특정 사용자의 특정 게시글에 대한 좋아요를 활성화
      @Update("UPDATE likecount SET count =  1 WHERE no = #{no} and `table` = 'Bulletin_Board' and empno = #{empno}")
      int increaseLikeCount(@Param("empno") int empno,@Param("no") int no);

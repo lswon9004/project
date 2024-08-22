@@ -23,10 +23,16 @@ public class HatecountService {
 	  public int increaseHateCount(int no, int empno) {
 		  int i = hateDao.hatecountCheck(empno, no);
 		  if(i>0) {
-			  return hateDao.decreasehateCount(empno, no);
+			   hateDao.decreasehateCount(empno, no);
 		  }else {
-			  return hateDao.inserthateCount(empno, no);
+			  if(hateDao.shcount(empno, no)>0) {
+				  hateDao.increasehateCount(empno, no);
+			  }else {
+			   hateDao.inserthateCount(empno, no);
+			  }
 		  }
+			  
+		  return hateDao.hateCount(no);
 	  }
 	  
 	 //모든 게시글에 대한 '싫어요' 수를 조회하여 리스트 반환 

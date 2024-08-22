@@ -41,8 +41,8 @@ public class ManageService {
         return dao.getempByID(id);
     }
     
-    public int updateEmp(ManageDto dto) {
-		return dao.updateEmp(dto);
+    public int updateEmp(ManageDto ModifyDto) {
+		return dao.updateEmp(ModifyDto);
 	}
     
     public List<ManageDto> getEmpsByIds(int[] empnos) {
@@ -62,4 +62,5 @@ public class ManageService {
     public List<ManageDto> searchPosition(){
     	return dao.searchPosition();
     }
+
 }

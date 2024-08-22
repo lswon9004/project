@@ -8,47 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Management Portal</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
-  <style>
-
-.form-container form {
-    display: flex;
-    flex: 1;
-    align-items: center;
-}
-
-.form-container form select, 
-.form-container form input,
-.form-container form button {
-    margin-right: 10px;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
-button[type="submit"] {
-    background: #00bfff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.form-container button:last-child {
-    margin-left: auto;
-    background: #00bfff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-        .paging{text-align:center;margin:15px 0;}
-		.paging strong{display:inline-block;width:25px;height:25px;line-height:24px;marging-right:5px;border:1px solid #ccc;color:#666;text-align:cetner;}
-		.paging .page{display:inline-block;width:25px;height:25px;line-height:24px;margin-right:5px;background:#49be5a;color:#fff;text-align:center;}
-       
-    </style>   
+        <style>
+   
+        </style>
 </head>
 <body>
     <div class="container">
@@ -71,7 +33,6 @@ button[type="submit"] {
                 <nav>
                     <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
                     <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    
-                    <a href="#">개인정보수정</a>
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -83,16 +44,17 @@ button[type="submit"] {
                     <li><a href="/searchCustomers">통합업무</a></li>
                      <li><a href="/attendance/managementList">근태현황</a>
                     <li><a href="/boards">게시판</a></li>
-                    <li><a href="/approval/${user.empno}">전자결재</a></li>
+                    <li><a href="/approval/${user.empno}" class="active">전자결재</a></li>
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage" class="active">직원관리</a></li></c:if>
+                    <c:if test="${user.right>=3 }"> <li><a href="/emp_manage">직원관리</a></li></c:if>
                 </ul>
             </aside>
             <section class="main-content">
             <h2>전자결재</h2>
+            <div class="header-line"></div>
                 <div class="status-overview">
                     <div class="form-container">
-    <form action="/approval/search" style="flex: 1; display: flex; align-items: center;">
+    <form action="/approval/search">
         <label for="approval_no">결재번호:</label>
         <input type="text" id="approval_no" name="approval_no">
         <label for="approval_title">결재 제목:</label>
@@ -101,24 +63,17 @@ button[type="submit"] {
         <input type="date" id="startDate" name="startDate"> ~
         <input type="date" id="endDate" name="endDate">
         <select name="approval_status1">
+        	<option>분류</option>
             <option>요청</option>
             <option>승인</option>
             <option>대기</option>
             <option>반려</option>
         </select>
-        <button type="submit" style="margin-left: 0px;">조회</button>
+        <button type="submit">조회</button>
     </form>
-    <button onclick="location.href='/approvalWrite'" style="margin-left: auto;">등록</button>
+    <button onclick="location.href='/approvalWrite'">등록</button>
 </div>
     <table>
-    	<colgroup>
-			<col style="width:10%;" />
-			<col />
-			<col style="width:12%;" />
-			<col style="width:12%;" />
-			<col style="width:12%;" />
-			<col style="width:12%;" />
-		</colgroup>
         <thead>
             <tr>
                 <th>결재번호</th>
@@ -156,7 +111,7 @@ button[type="submit"] {
         </tbody>
     </table>
                 </div>
-                <div class="paging">
+                <div class="pagination">
 		<div id="page">
 				<c:if test="${begin > pageNum }">
 					<a href="/approval/${user.empno}?p=${begin-1 }" class="page prv">&lt;</a>

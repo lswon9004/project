@@ -15,55 +15,66 @@ public class CustomerInfoService {
 	
 	 @Autowired
 	    private CustomerInfoDAO dao;
-
-	    public void saveCustomerInfo(CustomerInfoDTO customerInfo) { //고객등록
+	 	//고객등록
+	    public void saveCustomerInfo(CustomerInfoDTO customerInfo) { 
 	    	dao.saveCustomerInfo(customerInfo);
 	    }
-
-	    public List<CustomerInfoDTO> getAllCustomers() { //전체리스트
+	    
+	    //전체리스트
+	    public List<CustomerInfoDTO> getAllCustomers() {
 	        return dao.getAllCustomers();
 	    }
-
-	    public CustomerInfoDTO getCustomerById(int id) { //특정고객 상태 보여주는 
+	    
+	    //특정고객 상태 보여주는 
+	    public CustomerInfoDTO getCustomerById(int id) { 
 	        return dao.getCustomerById(id);
 	    }
-
-	    public void deleteCustomers(int[] ids) { //삭제
+	    
+	    //삭제
+	    public void deleteCustomers(int[] ids) { 
 	    	dao.deleteCustomers(ids);
 	    }
-	    public List<CustomerInfoDTO> getCustomersByStatus(String status) { //진행상태
+	    
+	    //진행상태
+	    public List<CustomerInfoDTO> getCustomersByStatus(String status) { 
 	        return dao.getCustomersByStatus(status);
 	    }
 	    
-	    public int count() { //글갯수
+	    //글갯수
+	    public int count() { 
 			return dao.count();
 		}
 	    
-	    public List<CustomerInfoDTO>customerList(int start ,int count){ //전체글 페이징
-			Map<String, Object> m = new HashMap<String, Object>();
-			m.put("start", start);
-			m.put("count", 8);
-			return dao.customerList(m);
+	    //전체글 페이징
+	    public List<CustomerInfoDTO>customerList(int page ,int pageSize){ 
+	    	int start = (page - 1) * pageSize;
+			
+			return dao.customerList(start , pageSize);
 		}
 		
-	    public int updateCustomer(CustomerInfoDTO dto) { // 고객 정보 수정
+	    // 고객 정보 수정
+	    public int updateCustomer(CustomerInfoDTO dto) {
 			return dao.updateCustomer(dto);
 		}
 	   
-	    public List<CustomerInfoDTO> searchCustomersWithPaging(String customerName, String contact, Integer empno , int page, int pageSize) { //검색페이징
+	    //검색페이징
+	    public List<CustomerInfoDTO> searchCustomersWithPaging(String customerName, String contact, Integer empno , int page, int pageSize) { 
 	        int start = (page - 1) * pageSize;
 	        return dao.searchCustomersWithPaging(customerName, contact, empno ,  start, pageSize);
 	    }
 	    
-	    public int countSearchCustomers(String customerName, String contact , Integer empno) { // 검색 글 갯수
+	    // 검색 글 갯수
+	    public int countSearchCustomers(String customerName, String contact , Integer empno) { 
 	        return dao.countSearchCustomers(customerName, contact ,empno);
 	    }
-
-	    public int countCustomersByStatus(String status) { // 진행상태 글 갯수
+	    
+	    // 진행상태 글 갯수
+	    public int countCustomersByStatus(String status) { 
 	        return dao.countCustomersByStatus(status);
 	    }
 	    
-	    public List<CustomerInfoDTO> getCustomersByStatusWithPaging(String status, int page, int pageSize) { //	진행 상태별 리스트
+	    // 진행 상태별 리스트
+	    public List<CustomerInfoDTO> getCustomersByStatusWithPaging(String status, int page, int pageSize) { 
 	        int start = (page - 1) * pageSize;
 	        return dao.getCustomersByStatusWithPaging(status, start, pageSize);
 	    }

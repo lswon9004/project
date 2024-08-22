@@ -19,7 +19,7 @@ public class LikecountController {
 	 @GetMapping("/bullboard/like")
 	 @ResponseBody
 	public String increaseLikeCount(@RequestParam("no")String no,@RequestParam("empno")int empno) {
-		 
+		 System.out.println(no);
         int no1 = Integer.parseInt(no);
 		Gson gson = new Gson();
 			

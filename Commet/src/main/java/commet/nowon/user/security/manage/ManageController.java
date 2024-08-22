@@ -112,9 +112,10 @@ public class ManageController {
     	return "manage/empInfo";
 	}
     
-    @PutMapping("/empInfo")//정보수정
-    public String updateEmp(@ModelAttribute("empInfo") ManageDto dto) {
-    	service.updateEmp(dto);
+    @PutMapping("/empModify")//정보수정
+    public String updateEmp(ManageDto ModifyDto) {
+    	service.updateEmp(ModifyDto);
+    	System.out.println(ModifyDto);
         return "redirect:/emp_manage";
     }
 	
@@ -172,7 +173,7 @@ public class ManageController {
 	  workbook.close(); 
 	  		
 	  }
-		@PostMapping("/saveinsert") //박선욱 작성
+		@PostMapping("/saveinsert") //박선욱 작성. db에 저장하는 서비스
 	    public String saveinsert(ManageDto InserEmpDto) {
 	        service.insertEmp(InserEmpDto);
 	        return "redirect:/emp_manage";
@@ -188,10 +189,10 @@ public class ManageController {
 			return "manage/newEmp";
 		}
 		
-		// 이미지 업로드 처리
+		// 신입사원 이미지 업로드 처리
 	    @PostMapping("/employee/uploadPhoto") //박선욱 작성
 	    public String uploadPhoto(@RequestParam("imgPath") MultipartFile photo, Model model, HttpServletRequest request) {
-	        String newFileName = makeFileName(photo.getOriginalFilename());
+	        String newFileName = makeFileName(photo.getOriginalFilename() );
 	        File newFile = null;
 
 	        try {
@@ -203,6 +204,10 @@ public class ManageController {
 	        }
 
 	        if (newFile != null) {
+			    List<ManageDto> deptList = service.searchDept();
+			    List<ManageDto> positionList = service.searchPosition();
+			    model.addAttribute("positionList", positionList);
+			    model.addAttribute("deptList", deptList);
 	            model.addAttribute("photoPath", "/upload/" + newFileName);
 				String filePath = request.getServletContext().getRealPath("empImg"); 
 				ManageDto dto = new ManageDto();
@@ -210,10 +215,39 @@ public class ManageController {
 				model.addAttribute("InserEmpDto", dto);
 				File file = new File(filePath);
 	        }
-
-	        return "manage/newEmp"; // 업로드 후 다시 newEmp 페이지로 이동
+	            return "manage/newEmp";
 	    }
 
+		// 사원정보수정 이미지 업로드 처리
+	    @PostMapping("/modify/uploadPhoto") //박선욱 작성
+	    public String modifyuploadPhoto(@RequestParam("imgPath1") MultipartFile photo, Model model,@RequestParam("no")int no, HttpServletRequest request) {
+	        String newFileName = makeFileName(photo.getOriginalFilename() );
+	        File newFile = null;
+			ManageDto empInfo = service.getempByID(no); 
+	        
+	        try {
+	            String path = ResourceUtils.getFile("classpath:static/upload/").toPath().toString();
+	            newFile = new File(path, newFileName);
+	            photo.transferTo(newFile);
+	        } catch (IOException | IllegalStateException e) {
+	            e.printStackTrace();
+	        }
+
+	        if (newFile != null) {
+			    List<ManageDto> deptList = service.searchDept();
+			    List<ManageDto> positionList = service.searchPosition();
+			    model.addAttribute("positionList", positionList);
+			    model.addAttribute("deptList", deptList);
+	            model.addAttribute("photoPath", "/upload/" + newFileName);
+				String filePath = request.getServletContext().getRealPath("empImg"); 
+				empInfo.setImgPath(newFileName);
+				System.out.println(newFileName);
+				model.addAttribute("empInfo", empInfo);
+				File file = new File(filePath);
+				System.out.println(filePath);
+	        }
+	            return "manage/empModify";
+	    }
 	    // 파일명 생성 메서드
 	    private String makeFileName(String origName) {
 	        long currentTime = System.currentTimeMillis();

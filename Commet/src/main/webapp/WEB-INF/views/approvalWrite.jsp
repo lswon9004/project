@@ -7,53 +7,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Management Portal</title>
-        <link rel="stylesheet" type="text/css" href="/css/main.css" />
-  <style>
-       .form-container form {
-    display: flex;
-    flex: 1;
-    align-items: center;
-}
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <style>
+        /* 스타일 추가 */
+        .approval-form-container {
+            max-width: 1000px;
+            margin-left: 270px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-.form-container form select, 
-.form-container form input,
-.form-container form button {
-    margin-right: 10px;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
+        .approval-form-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-left: 25px;
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-button[type="submit"] {
-    background: #00bfff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
+        .approval-form-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
 
-.form-container button:last-child {
-    margin-left: auto;
-    background: #00bfff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
+        .approval-form-container table th,
+        .approval-form-container table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
 
-        .paging{text-align:center;margin:15px 0;}
-		.paging strong{display:inline-block;width:25px;height:25px;line-height:24px;marging-right:5px;border:1px solid #ccc;color:#666;text-align:cetner;}
-		.paging .page{display:inline-block;width:25px;height:25px;line-height:24px;margin-right:5px;background:#49be5a;color:#fff;text-align:center;}
-       
-    </style>   
+        .approval-form-container table th {
+            background-color: #f9f9f9;
+            font-weight: bold;
+        }
+
+        .approval-form-container textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            resize: none;
+        }
+
+        .approval-form-container .form-actions {
+            text-align: right;
+        }
+
+        .approval-form-container .form-actions button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            background-color: #00bfff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .approval-form-container .form-actions button.cancel {
+            background-color: #ccc;
+        }
+
+        .approval-form-container select {
+            width: 100%;
+            padding: 4px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .approval-form-container .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-      <div class="container">
+    <div class="container">
         <header>
             <div class="user-info">
-               <img src="/upload/${user.imgPath}" alt="User Profile">
+                <img src="/upload/${user.imgPath}" alt="User Profile">
                 <div>
                     <p>이름: ${user.ename }</p>
                     <p>직책: ${user.position }</p>
@@ -65,12 +104,11 @@ button[type="submit"] {
             <div class="header-right">
                 <button id="start">업무시작</button>
                 <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">0d:00/</c:if></p>
+                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" /></c:if><c:if test="${startTime==null}">00:00</c:if></p>
                 <p id="endTime">00:00</p>
                 <nav>
-                    <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    
-                    <a href="#">개인정보수정</a>
+                    <c:if test="${user.right<3}"><a class="active" href="/main">Home</a></c:if>
+                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a></c:if>                    
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -80,107 +118,85 @@ button[type="submit"] {
             <aside>
                 <ul class="menu">
                     <li><a href="/searchCustomers">통합업무</a></li>
-                     <li><a href="/attendance/managementList">근태현황</a>
+                    <li><a href="/attendance/managementList">근태현황</a></li>
                     <li><a href="/boards">게시판</a></li>
-                    <li><a href="/approval/${user.empno}">전자결재</a></li>
+                    <li><a href="/approval/${user.empno}" class="active">전자결재</a></li>
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage" class="active">직원관리</a></li></c:if>
+                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage" >직원관리</a></li></c:if>
                 </ul>
             </aside>
-            
-            
             <section class="main-content">
-                <div class="status-overview">
-                    <div class="form-container">
-        				<h1 >결재 신청</h1>
-        				<form method="post" action="/approval/insert" name="approvalDto">
-        				<table>
-        				<colgroup>
-			<col style="width:25%;" />
-			<col style="width:25%;" />
-			<col style="width:25%;" />
-			<col style="width:25%;" />
-		</colgroup>
-        					<tr>
-        						<td>문서번호</td>
-        						<td>${approval_no}</td>
-        						<td>기안일자</td>
-        						<td><fmt:formatDate value="${startTime}" pattern="yyyy-MM-dd" /></td>
-        					</tr>
-        					<tr>
-        					<td>서류 종류</td>
-        						<td style="margin: 0 0;padding: 0 0;"><select name="approval_type" style="width: 100%;">
-        							<option value="1">연차/휴가신청</option>
-        							<option value="2">출장신청</option>
-        							<option value="3">문서결재</option>
-        							<option value="4">비품신청</option>
-        						</select></td>
-        						<td>사원 번호</td>
-        						<td>${user.empno }</td>
-        					</tr>
-        					<tr>
-        						<td>
-        							결재 제목
-        						</td>
-        						<td style="margin: 0 0;padding: 0 0;"> 
-        							<input type="text" style="width: 100%;" placeholder="제목을 입력하세요" name="approval_title" required="required">
-        						</td>
-        						<td>
-        							담당자
-        						</td>
-        						<td style="margin: 0 0;padding: 0 0;">
-        							<select name="approver1_empno" style="width: 100%;">
-        								<c:forEach items="${elist}" var="deptno">
-        									<option value="${deptno }">${deptno }</option>
-        								</c:forEach>
-        							</select>
-        						</td>
-        					</tr>
-        				</table>
-        				<textarea id="editor" style="width: 100%; height: 200px;" name="approval_content"></textarea>
-        				<input type="submit" value="등록">
-        				</form>
-   					 </div>
-   
+                <div class="approval-form-container">
+                    <h1>인장 신청</h1>
+                    <form method="post" action="/approval/insert" name="approvalDto">
+                        <table>
+                            <tr>
+                                <th>문서번호</th>
+                                <td>자동채번.</td>
+                                <th>기안일자</th>
+                                <td><fmt:formatDate value="${startTime}" pattern="yyyy-MM-dd" /></td>
+                            </tr>
+                            <tr>
+                                <th>서류 종류</th>
+                                <td>
+                                    <select name="approval_type">
+                                        <option value="1">연차/휴가신청</option>
+                                        <option value="2">출장신청</option>
+                                        <option value="3">문서결재</option>
+                                        <option value="4">비품신청</option>
+                                    </select>
+                                </td>
+                                <th>사원 번호</th>
+                                <td>${user.empno}</td>
+                            </tr>
+                            <tr>
+                                <th>결재 제목</th>
+                                <td>
+                                    <input type="text" placeholder="제목을 입력하세요" name="approval_title" required="required">
+                                </td>
+                                <th>담당자</th>
+                                <td>
+                                    <select name="approver1_empno">
+                                        <c:forEach items="${elist}" var="deptno">
+                                            <option value="${deptno}">${deptno}</option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="section-title">결재내용</div>
+                        <textarea class="approval_content" name="approval_content" placeholder="내용을 입력하세요." required></textarea>
+                        <div class="form-actions">
+                            <button type="submit">결재요청</button>
+                            <button type="button" class="cancel" onclick="window.location.href='/approval/status'">취소</button>
+                        </div>
+                    </form>
                 </div>
             </section>
         </main>
     </div>
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
-    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
-    
+    <footer>
+        <p class="footer-text">현재시간 : <span id="current-time"></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
-    ClassicEditor.create( document.querySelector( '#editor' ), {
-        language: "ko"
-      } );
+        function updateTime() {
+            const now = new Date();
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                weekday: 'long',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            const currentTimeString = now.toLocaleDateString('ko-KR', options);
+            document.getElementById('current-time').innerText = currentTimeString;
+        }
+
+        updateTime();
+        setInterval(updateTime, 1000);
     </script>
 </body>
-<footer>
-<p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
-</footer>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
- <script>
-    function updateTime() {
-        const now = new Date();
-        const options = { 
-            year: 'numeric', 
-            month: '2-digit', 
-            day: '2-digit', 
-            weekday: 'long', 
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit'
-        };
-        const currentTimeString = now.toLocaleDateString('ko-KR', options);
-        document.getElementById('current-time').innerText = currentTimeString;
-    }
-
-    // 처음 페이지 로드 시 시간을 표시
-    updateTime();
-
-    // 매 초마다 시간을 업데이트
-    setInterval(updateTime, 1000);
-</script>
-
 </html>

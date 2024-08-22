@@ -125,18 +125,18 @@
 					</table>
 				</div>
 				<div class="pagination">
-		<div id="page">
-				<c:if test="${begin > pageNum }">
-					<a href="/approval/status?p=${begin-1 }" class="page prv">&lt;</a>
-				</c:if>  
-				<c:forEach begin="${begin }" end="${end}" var="i">
-					<a href="/approval/status?p=${i}">${i}</a>
-				</c:forEach>
-				<c:if test="${end < totalPages }">
-					<a href="/approval/status?p=${end+1}" class="page next">&gt;</a>
-				</c:if>
-			</div>
-		</div>
+					<div id="page">
+						<c:if test="${begin > pageNum }">
+							<a href="/approval/status?p=${begin-1 }" class="page prv">&lt;</a>
+						</c:if>
+						<c:forEach begin="${begin }" end="${end}" var="i">
+							<a href="/approval/status?p=${i}">${i}</a>
+						</c:forEach>
+						<c:if test="${end < totalPages }">
+							<a href="/approval/status?p=${end+1}" class="page next">&gt;</a>
+						</c:if>
+					</div>
+				</div>
 			</section>
 		</main>
 	</div>

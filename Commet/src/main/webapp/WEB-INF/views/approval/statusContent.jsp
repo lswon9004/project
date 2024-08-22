@@ -164,19 +164,19 @@
         					<tr>
         						<td style="font-weight: bold">결재 처리</td>
         						<td>
-        							<label for="1">승인</label> :
-        							<label for="2">반려 </label> :
+        							<label for="1">승인</label><input type="radio" id="1" name="approval_status1" value="승인" disabled>
+        							<label for="2">반려 </label><input type="radio" id="2" name="approval_status1" value="반려" disabled>
         						</td>
         					</tr>
         					<tr>
         						<td style="font-weight: bold">결재 의견</td>
         						<td style="margin: 0 0;padding: 0 0;">
-        							<textarea  style="width: 100%; font-size: 20px; border: 0px solid #ddd" name="approval_comm"></textarea>
+        							<textarea style="width: 100%; font-size: 20px; border: 0; outline: aliceblue;" name="approval_comm" readonly="readonly"></textarea>
         						</td>
         					</tr>
         				</table>
         				<button>결재</button>
-        				<input class="button" type="button"  onclick="window.location.href='/approval/status'" value="취소" />
+        				<input class="button" type="button"  onclick="window.location.href='/approval/status'" value="목록" />
         				</form>
    					 </div>
             </section>

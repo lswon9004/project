@@ -23,6 +23,7 @@ public class EmpDto {
 	String imgPath;
 	Date birthday;
 	String memo;
+	String phone;
 	int loginCount;
 	Date check_in;
 	Date check_out;

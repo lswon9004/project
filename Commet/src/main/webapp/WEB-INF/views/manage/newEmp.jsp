@@ -174,6 +174,7 @@
                 </div>
                 <div class="button-container">
                     <input type="submit" value="업로드">
+                    <input type="hidden" name="redirectPage" value="newEmp">
                 </div>
             </form>   
 
@@ -190,7 +191,6 @@
             <table>
             <tr>
                 <td>사원 이름:</td><td><input type="text" name="ename" required></td>
-                <td>사원 번호:</td><td><input type="text" name="empno" required></td>
             </tr>
             <tr>
 				<td>부서:</td> <!-- db에서 dept 부서와 번호 저장 안해두면 작동안할수있음-->
@@ -258,5 +258,6 @@
         }).open();
     }
     </script>
+    
 </body>
 </html>

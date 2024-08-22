@@ -152,6 +152,7 @@
         <span class="close" onclick="location.href='/emp_manage'">&times;</span>
         <h2>사원정보</h2>
         <form action="/empModify" method="get" >
+        	
         	<input type="hidden" name="no" value="${empInfo.empno }">
             <img src="/upload/${empInfo.imgPath}" alt="Profile Image" width="100">
             <table>

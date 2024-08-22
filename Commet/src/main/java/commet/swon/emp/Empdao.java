@@ -28,4 +28,6 @@ public interface Empdao {
 	int updatepw(int empno);
 	@Select("select deptno from emp where empno = #{empno}")
 	int getDeptno(int empno);
+	@Select("select empno,annual from emp")
+	List<EmpDto> annualList();
 }

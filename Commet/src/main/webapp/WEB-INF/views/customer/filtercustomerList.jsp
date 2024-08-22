@@ -11,10 +11,10 @@
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
 </head>
 <body>
-     <div class="container">
+      <div class="container">
         <header>
             <div class="user-info">
-               <img src="/upload/${user.imgPath}" alt="User Profile">
+                <img src="/upload/${user.imgPath}" alt="User Profile">
                 <div>
                     <p>이름: ${user.ename }</p>
                     <p>직책: ${user.position }</p>
@@ -26,11 +26,12 @@
             <div class="header-right">
                 <button id="start">업무시작</button>
                 <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">0d:00/</c:if></p>
-                <p id="endTime">00:00</p>
+                <p id="startTime"><c:if test="${user.check_in !=null}"><fmt:formatDate value="${user.check_in}" pattern="HH:mm" />/</c:if><c:if test="${user.check_in==null}">00:00/</c:if></p>
+                <p id="endTime"><c:if test="${user.check_out !=null}"><fmt:formatDate value="${user.check_out}" pattern="HH:mm" />/</c:if><c:if test="${user.check_out==null}">00:00/</c:if></p>
                 <nav>
-                    <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    <a href="#">개인정보수정</a>
+					<c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
+                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    
+                    <a href="/staffModify">개인정보수정</a>
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -41,6 +42,7 @@
                 <ul class="menu">
                     <li><a href="/searchCustomers">통합업무</a></li>
                      <li><a href="/attendance/managementList">근태현황</a>
+                     <c:if test="${user.right>=2 }"> <li><a href="/attendance/adminManagementList">전체사원근태현황</a></li></c:if>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
@@ -51,11 +53,12 @@
       <!-- 여기서부터 가운데 메인 -->
       <section class="main-content">
     		<h2>고객정보</h2>
+    		<div class="header-line"></div>
     	<form action="${pageContext.request.contextPath}/deleteCustomer" method="post">
         <div class="button-container">
             <div class="search-form">
                 			<input type="text" name="customerName" placeholder="고객명" id="customerName">
-                            <input type="text" name="contact" placeholder="연락처" id="contact">
+                            <input type="text" name="contact" placeholder="연락처 (뒷번호4자리입력)" id="contact">
                             <input type="text" name="empno" placeholder="접수사번" id="empno">
                             <button type="button" class="button" id="searchButton">검색</button>
             
@@ -90,7 +93,7 @@
             <tbody>
              <c:if test="${count == 0}">
 					<tr>
-						<td colspan="8" class="tac">고객 정보가 없습니다.</td>
+						<td colspan="8" class="tac">데이터가 없습니다.</td>
 					</tr>
 				</c:if>
                 <c:forEach var="customer" items="${blist}">

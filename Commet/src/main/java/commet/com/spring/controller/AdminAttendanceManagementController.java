@@ -1,9 +1,8 @@
 package commet.com.spring.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -13,18 +12,20 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import commet.attendance.AttendanceService;
 import commet.com.spring.dto.AttendanceManagementDto;
 import commet.com.spring.service.AdminAttendanceManagementService;
 import commet.swon.emp.EmpDto;
+import commet.swon.emp.EmpService;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -34,7 +35,10 @@ public class AdminAttendanceManagementController {
 
     @Autowired
     private AdminAttendanceManagementService service;
-    
+    @Autowired
+	AttendanceService aservice;
+    @Autowired
+    EmpService eservice;
     // @SessionAttributes 로그인정보 받아 오는 메서드
     @ModelAttribute("user") 
     public EmpDto getDto() {
@@ -45,14 +49,14 @@ public class AdminAttendanceManagementController {
     @GetMapping("/adminManagementList")
     public String getAllAttendance(@ModelAttribute("user")EmpDto dto,
     											@RequestParam(name = "p", defaultValue = "1") int page,Model m) {
-    	int acount = service.acount(dto.getDeptno());
-		if (acount > 0) {
-			int perPage = 5;
+    		int acount = service.acount(dto.getDeptno());
+    		if (acount > 0) {
+			int perPage = 8;
 			int startRow = (page - 1) * perPage;
     	
     	 List<AttendanceManagementDto> allAttendance = service.getAllAttendance(startRow, dto.getDeptno()); // 페이징 처리된 모든 사원의 근태 현황
          m.addAttribute("allAttendance", allAttendance);
-
+         m.addAttribute("start", startRow+1);
              int pageNum = 5;
              int totalPages = acount / perPage + (acount % perPage > 0 ? 1 : 0);
              int begin = (page - 1) / pageNum * pageNum + 1;
@@ -60,19 +64,23 @@ public class AdminAttendanceManagementController {
              if (end > totalPages) {
                  end = totalPages;
              }
+             List<EmpDto> alist = eservice.alist(); //연차 . 잔여연차 받아 오는 부분
+             m.addAttribute("alist", alist);
+             List<Map<String, Integer>> leaveCount = service.leaveCount(dto.getEmpno());
+             m.addAttribute("leaveCountlist", leaveCount); //연차 . 잔여연차 받아 오는 부분
+
              m.addAttribute("begin", begin);
              m.addAttribute("end", end);
              m.addAttribute("pageNum", pageNum);
              m.addAttribute("totalPages", totalPages);
-             m.addAttribute("start", startRow + 1);
     	}
 			m.addAttribute("count", acount);
 			return "amc/adminmanagementList";
     	}
     
-    // 날짜검색페이징 관리자
+    // 관리자 검색페이징
     @GetMapping("/search")
-    public String search(
+    public String search(@ModelAttribute("user")EmpDto dto,
         @RequestParam(name = "empno", required = false) Integer empno,
         @RequestParam(name = "p", defaultValue = "1") int page, 
         Model model) {
@@ -90,7 +98,11 @@ public class AdminAttendanceManagementController {
             if (end1 > totalPages) {
                 end1 = totalPages;
             }
-
+            
+            List<EmpDto> alist = eservice.alist();//연차 . 잔여연차 받아 오는 부분
+            model.addAttribute("alist", alist);
+            List<Map<String, Integer>> leaveCount = service.leaveCount(dto.getEmpno());
+            model.addAttribute("leaveCountlist", leaveCount);//연차 . 잔여연차 받아 오는 부분
          
             model.addAttribute("begin", begin);
             model.addAttribute("end", end1);
@@ -103,7 +115,7 @@ public class AdminAttendanceManagementController {
         return "amc/adminsearchList";
     }
     
- // 엑셀 다운로드
+    // 엑셀 다운로드
     @GetMapping("/downloadExcel3") 
 	public void downloadExcel(HttpServletResponse response) throws IOException {
 		List<AttendanceManagementDto> attendanceList = service.getAllManagement2();
@@ -164,5 +176,14 @@ public class AdminAttendanceManagementController {
 		workbook.close();
 		
 	}
+    
+    //결근처리 empno 이름이 같아서 버튼을 클릭시 계속 정보가 변경됨 그래서 eno 로 변경
+    @PostMapping("/markAbsent2")
+    public String markAsAbsent(@RequestParam("eno") int no, @ModelAttribute("user") EmpDto user, Model model) {
+        String resultMessage = service.markAsAbsent2(no, user.getDeptno());
+        model.addAttribute("message", resultMessage);
+        return "redirect:/attendance/adminManagementList";
+    }
+    
     
 }//class

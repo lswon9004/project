@@ -1,5 +1,8 @@
 package commet.com.spring.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,8 +17,20 @@ import commet.com.spring.dto.AttendanceManagementDto;
 @Service
 public class AttendanceManagementService {
     
-	 	@Autowired
+	 	
+	 	
+	 	@Autowired//연차 . 잔여연차 받아 오는 부분
 	    private AttendanceManagementDao dao;
+	 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	    Calendar cal = Calendar.getInstance();
+	    int year = cal.get(Calendar.YEAR);
+	    int month = cal.get(Calendar.MONTH)+1;
+	    String startDateO = year+"-"+month+"-01";
+	    String endDateO = year+"-"+month+1+"-01";
+	    Date startDate =null;
+	    Date endDate = null;
+	 	
+	 	
 	 	
 	    //사원별로 출근일수 따로 따로 저장
 	 	public int generateNextAttendanceNo(int empno) {
@@ -67,8 +82,8 @@ public class AttendanceManagementService {
 	    }
 	    
 	    //페이징 카운팅
-	    public int count2() { 
-	    		return dao.count2();
+	    public int count2(int empno) { 
+	    		return dao.count2(empno);
 	    }
 	    
 	    //페이징 리스트
@@ -84,4 +99,16 @@ public class AttendanceManagementService {
 	    public int aSCount( int empno, Date startDate, Date endDate) {
 	    		return dao.getAttendanceCount(empno, startDate, endDate);
 	    }
+	    
+	    //연차 . 잔여연차 받아 오는 부분
+	    public List<Map<String, Integer>> leaveCount(int empno) {
+			try {
+				startDate = formatter.parse(startDateO);
+		        endDate = formatter.parse(endDateO);
+
+			} catch (ParseException e) {
+			
+			}
+			return dao.leaveCount(empno, startDate, endDate);
+		}
 }

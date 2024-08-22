@@ -26,5 +26,5 @@ public class EmpDto {
 	String phone;
 	int loginCount;
 	Date check_in;
-	Date check_out;
+	Date check_out;    
 }

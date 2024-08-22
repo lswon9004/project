@@ -42,10 +42,7 @@ public class EmpController {
 
 		Gson gson = new Gson();
 		String result = "";
-		System.out.println("dd");
-
 		EmpDto dto = service.login(no);
-		System.out.println("dd");
 		if (dto == null) {
 			result = "/";
 		} else {

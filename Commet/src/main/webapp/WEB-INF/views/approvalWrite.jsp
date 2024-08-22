@@ -93,7 +93,7 @@ button[type="submit"] {
                 <div class="status-overview">
                     <div class="form-container">
         				<h1 >결재 신청</h1>
-        				<form method="post" action="/approval/insert" name="approvalDto">
+        				<form method="post" action="/approval/insert" name="approvalDto" enctype="multipart/form-data">
         				<table>
         				<colgroup>
 			<col style="width:25%;" />
@@ -137,9 +137,12 @@ button[type="submit"] {
         						</td>
         					</tr>
         				</table>
+        				<input type="hidden" name="approval_no" value="${approval_no}">
+        				<input type="file" name="file">
         				<textarea id="editor" style="width: 100%; height: 200px;" name="approval_content"></textarea>
         				<input type="submit" value="등록">
         				</form>
+        				<button onclick="history.go(-1)">취소</button>
    					 </div>
    
                 </div>
@@ -152,8 +155,12 @@ button[type="submit"] {
     
     <script>
     ClassicEditor.create( document.querySelector( '#editor' ), {
-        language: "ko"
-      } );
+        language: "ko", ckfinder:{uploadUrl:'http://localhost:8083/img/upload'}
+      }).then(editer => {
+    	  window.editer = editer
+      }).catch(error => {
+    	  console.error(error)
+      });
     </script>
 </body>
 <footer>

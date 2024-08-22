@@ -156,13 +156,13 @@
                 <div class="paging">
 		<div id="page">
 				<c:if test="${begin > pageNum }">
-					<a href="/approval/${user.empno}?p=${begin-1 }" class="page prv">&lt;</a>
+					<a href="/approval/status?p=${begin-1 }" class="page prv">&lt;</a>
 				</c:if>  
 				<c:forEach begin="${begin }" end="${end}" var="i">
-					<a href="/approval/${user.empno}?p=${i}">${i}</a>
+					<a href="/approval/status?p=${i}">${i}</a>
 				</c:forEach>
 				<c:if test="${end < totalPages }">
-					<a href="/approval/${user.empno}?p=${end+1}" class="page next">&gt;</a>
+					<a href="/approval/status?p=${end+1}" class="page next">&gt;</a>
 				</c:if>
 			</div>
 		</div>

@@ -128,7 +128,7 @@
         						</td>
         					</tr>
         				</table>
-        				<textarea style="width: 100%; height: 100px;" readonly="readonly">${dto.approval_content }</textarea>
+        				<textarea id="editor" style="width: 100%; height: 100px;" readonly="readonly">${dto.approval_content }</textarea>
           				결재 의견<br>
           				<textarea style="width: 100%; height: 100px;" readonly="readonly">${dto.approval_comm }</textarea>						
         				<button onclick="location.href='/approval/update/${dto.approval_no}';">수정</button>
@@ -140,6 +140,22 @@
             </section>
         </main>
     </div>
+     <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
     
+    <script>
+    ClassicEditor.create(document.querySelector('#editor'), {
+        language: "ko",
+        ckfinder: { uploadUrl: 'http://localhost:8083/img/upload' }
+    }).then(editor => {
+        window.editor = editor;
+        editor.enableReadOnlyMode('#editor'); // 읽기 전용 모드 설정
+    }).catch(error => {
+        console.error(error);
+    });
+
+
+    </script>
 </body>
 </html>

@@ -110,10 +110,10 @@
             <div class="board-viewtitle">글쓰기</div>
             <div class="board-title"></div>
                 <div class="board-detail">
-                    <form action="/boards/write" method="post" style="padding: 20px;">
+                    <form action="/boards/write" method="post">
                         <div class="form-group">
                             <label for="empno">작성자 번호</label>
-                            <input type="text" id="empno" name="empno" required readonly="readonly" value="${user.empno}">
+                            <input type="text" id="empno" name="empno" required readonly="readonly" style="pointer-events: none;" value="${user.empno}">
                         </div>
                         <div class="form-group">
                             <label for="title">제목</label>
@@ -121,7 +121,7 @@
                         </div>
                         <div class="form-group">
                             <label for="content">내용</label>
-                            <textarea class="text" id="content" name="content" required></textarea>
+                            <textarea class="text" id="content" name="content" required style="resize: none;"></textarea>
                         </div>
                         <div class="actions">
                             <button type="submit">등록</button>

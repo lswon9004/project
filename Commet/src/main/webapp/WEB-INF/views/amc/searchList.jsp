@@ -53,7 +53,7 @@
              <div class="container">
         	<h2>${user.empno}님의 근태현황 입니다.</h2>
 			<div class="form-container">
-        	<form action="/attendance/search" method="get">
+        	<form action="/attendance/search2" method="get">
             <label for="startDate">출근일자:</label>
             <input type="date" id="startDate" name="startDate"required>
             <label for="endDate">~</label>
@@ -110,13 +110,13 @@
 
       <div class="pagination">
             <c:if test="${begin > pageNum}">
-                <a href="search?startDate=${startDate }&endDate=${endDate }&p=${begin-1}">[이전]</a>
+                <a href="search2?startDate=${startDate }&endDate=${endDate }&p=${begin-1}">[이전]</a>
             </c:if>
             <c:forEach begin="${begin}" end="${end}" var="i">
-                <a href="search?startDate=${startDate }&endDate=${endDate }&p=${i}" class="${i == page ? 'active' : ''}" >${i}</a>
+                <a href="search2?startDate=${startDate }&endDate=${endDate }&p=${i}" class="${i == page ? 'active' : ''}" >${i}</a>
             </c:forEach>
             <c:if test="${end < totalPages}">
-                <a href="search?startDate=${startDate }&endDate=${endDate }&p=${end+1}">[다음]</a>
+                <a href="search2?startDate=${startDate }&endDate=${endDate }&p=${end+1}">[다음]</a>
             </c:if>
             <c:if test="${count == 0}">
             </c:if>
@@ -134,7 +134,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
-datea= ${user.att.startTime}
 
 $('#start').click(function(){
 	deptno = ${user.deptno};

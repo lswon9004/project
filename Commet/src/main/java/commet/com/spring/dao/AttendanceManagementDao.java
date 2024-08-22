@@ -14,13 +14,7 @@ import commet.com.spring.dto.AttendanceManagementDto;
 
 @Mapper
 public interface AttendanceManagementDao {
-	//관리자가 볼 페이지 메서드 근태현황 전체출력 페이징처리
-	@Select("SELECT * FROM Attendance_Management WHERE deptno = #{deptno} ORDER BY employee_attendance_no DESC LIMIT #{start}, 8")
-	List<AttendanceManagementDto> getAllAttendance(@Param("start") int start, @Param("deptno") int deptno);
 	
-	//관리자 전체 페이지 출력될 카운팅
-	@Select("select count(*) from Attendance_Management  where deptno = #{deptno}")
-	int acount(int deptno); 
 	
 	// 목록 카운팅 글 목록이 없을때 글이 없다고 표시함
 	@Select("select count(*) from Attendance_Management where empno = #{empno}")
@@ -66,36 +60,20 @@ public interface AttendanceManagementDao {
 	@Select("select check_in from Attendance_Management where empno = #{empno} and date = current_date() ")
 	   Date startTime(int empno); 
    
-	// 조건에 맞는 검색 기능
-	@Select({
-	    "<script>",
-	    "SELECT * FROM Attendance_Management",
-	    "WHERE 1=1",
-	    "<if test='empno != null'>",
-	    "AND empno = #{empno}",
-	    "</if>",
-	    "<if test='deptno != null'>",
-	    "AND deptno = #{deptno}",
-	    "</if>",
-	    "<if test='startDate != null and endDate != null'>",
-	    "AND date BETWEEN #{startDate} AND #{endDate}",
-	    "</if>",
-	    "ORDER BY employee_attendance_no DESC",
-	    "LIMIT #{start}, 10",
-	    "</script>"
-	})
-	List<AttendanceManagementDto> getAttendanceByDateRange(
-	    @Param("empno") Integer empno,
-	    @Param("deptno") Integer deptno,
-	    @Param("startDate") Date startDate,
-	    @Param("endDate") Date endDate,
-	    @Param("start") int start
-	);
+	
+	//일반근태현황
+	@Select({"<script>select * FROM Attendance_Management",
+    	" <where>",
+    	"empno = #{empno}",
+    	" <if test=\"startDate != null and endDate != null \"> and date between #{startDate} and #{endDate}</if> </where> limit #{start},10</script> "}) 
+    List<AttendanceManagementDto> getAttendanceByDateRange2(@Param("empno") int empno, 
+    																							@Param("startDate") Date startDate, 
+    																							@Param("endDate") Date endDate,
+    																							@Param("start")int start);// 검색
    
     // 검색글 카운팅
     @Select("select count(*) from Attendance_Management where empno = #{empno} and date between #{startDate} and #{endDate} ") 
     int getAttendanceCount(@Param("empno") int empno, 
-    									@Param("deptno") int deptno, 
     									@Param("startDate") Date startDate, 
     									@Param("endDate") Date endDate);
 
@@ -107,7 +85,7 @@ public interface AttendanceManagementDao {
 	@Select("select count(*) from Attendance_Management")
 	int count2(); 
 	
-	// 고객정보조회 엑셀출력
+	// 엑셀출력
 	@Select("select * from Attendance_Management order by employee_attendance_no desc")
 	List<AttendanceManagementDto> getAllManagement(); 
 	

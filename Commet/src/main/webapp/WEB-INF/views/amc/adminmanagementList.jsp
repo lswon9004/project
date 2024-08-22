@@ -54,27 +54,19 @@
         	<h2>전체사원근태현황</h2>
         	
 			<div class="form-container">
+			
         	<form action="/attendance/search" method="get">
     		<label for="empno">사원번호:</label>
-    		<input type="text" id="empno" name="empno">
-    
-    		<label for="deptno">부서번호:</label>
-    		<input type="text" id="deptno" name="deptno">
-
-    		<label for="startDate">출근일자:</label>
-    		<input type="date" id="startDate" name="startDate">
-    
-    		<label for="endDate">~</label>
-    		<input type="date" id="endDate" name="endDate">
-
-    		<button type="submit">검색</button>
+    		<input type="text" id="empno" name="empno" required>
     		
-    		 <button type="button" onclick="location.href='/attendance/managementList?p=1'">초기화</button>
+    		<button type="submit">검색</button>
+
+    		 <button type="button" onclick="location.href='/attendance/adminManagementList?p=1'">초기화</button>
 			</form>
         
         	<div class="button-group">
          
-            <button type="button" onclick="location.href='/attendance/downloadExcel2'">엑셀다운로드</button>
+            <button type="button" onclick="location.href='/attendance/downloadExcel3'">엑셀다운로드</button>
        		</div>
         </div>
 
@@ -142,7 +134,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
-datea= ${user.att.startTime}
 
 $('#start').click(function(){
 	deptno = ${user.deptno};

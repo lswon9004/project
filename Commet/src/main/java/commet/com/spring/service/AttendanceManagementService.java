@@ -17,20 +17,6 @@ public class AttendanceManagementService {
 	 	@Autowired
 	    private AttendanceManagementDao dao;
 	 	
-	 	// 부서번호가 일치하는 모든 사원의 근태현황 가져오기
-	    public List<AttendanceManagementDto> getAllAttendance(int start ,int deptno) {
-	    	Map<String, Object> m = new HashMap<String, Object>();
-			m.put("start", start);
-			m.put("count", 8);
-			m.put("empno", deptno);
-	        return dao.getAllAttendance(start,deptno);
-	    }
-	    
-	    //관리자 근태현황카운팅
-	    public int acount(int deptno) {
-	    	 return dao.acount(deptno);
-	    }
-	 	
 	    //사원별로 출근일수 따로 따로 저장
 	 	public int generateNextAttendanceNo(int empno) {
 	 		int maxAttendanceNo = dao.getMaxEmployeeAttendanceNo(empno); // 사원별로 가장 큰 출근번호를 조회합니다.
@@ -40,14 +26,14 @@ public class AttendanceManagementService {
 	 	//출근
 	 	public void checkIn(int empno, int deptno, int employeeAttendanceNo) {
 	 	    
-//	 		if (hasCheckedInToday(empno)) {
-//	 			Date startTime = dao.startTime(empno);
-//	 			if(startTime==null) {
-//	 				dao.updateStartTime(empno);
-//	 			}
-//	 		}else {
+	 		if (hasCheckedInToday(empno)) {
+	 			Date startTime = dao.startTime(empno);
+	 			if(startTime==null) {
+	 				dao.updateStartTime(empno);
+	 			}
+	 		}else {
 	 			dao.insertStartTime(empno, deptno, employeeAttendanceNo);
-//	 		}
+	 		}
 	 	}
 	 	
 	 	//퇴근
@@ -65,10 +51,10 @@ public class AttendanceManagementService {
 				return dao.hasCheckedInToday(empno) > 0;
 	    }
 
-		//검색 된 리스트
-		public List<AttendanceManagementDto> getAttendanceByDateRange(Integer empno, Integer deptno, Date startDate, Date endDate, int start) {
-		    return dao.getAttendanceByDateRange(empno, deptno, startDate, endDate, start);
-		}
+		//일반 검색 된 리스트
+	    public List<AttendanceManagementDto> getAttendanceByDateRange2(int empno, Date startDate, Date endDate,int start) { 
+	        	return dao.getAttendanceByDateRange2(empno, startDate, endDate,start);
+	    }
 	    
 	    //리스트 글 갯수
 	    public int count(int empno) { 
@@ -95,7 +81,7 @@ public class AttendanceManagementService {
 		}
 	    
 	    // 검색시 전체 글갯수
-	    public int aSCount( int empno, int deptno, Date startDate, Date endDate) {
-	    		return dao.getAttendanceCount(empno, deptno, startDate, endDate);
+	    public int aSCount( int empno, Date startDate, Date endDate) {
+	    		return dao.getAttendanceCount(empno, startDate, endDate);
 	    }
 }

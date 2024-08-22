@@ -54,7 +54,7 @@
         	<h2>${user.empno}님의 근태현황 입니다.</h2>
         	
 			<div class="form-container">
-        	<form action="/attendance/search" method="get">
+        	<form action="/attendance/search2" method="get">
             <label for="startDate">출근일자:</label>
             <input type="date" id="startDate" name="startDate"required>
             <label for="endDate">~</label>

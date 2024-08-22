@@ -51,29 +51,21 @@
           
             <section class="main-content">
              <div class="container">
-        	<h2>${user.empno}님의 근태현황 입니다.</h2>
+        	<h2>사원근태현황</h2>
 			<div class="form-container">
-        	<form action="/attendance/search" method="get">
+        	
+    		<form action="/attendance/search" method="get">
     		<label for="empno">사원번호:</label>
-    		<input type="text" id="empno" name="empno">
-    
-    		<label for="deptno">부서번호:</label>
-    		<input type="text" id="deptno" name="deptno">
-
-    		<label for="startDate">출근일자:</label>
-    		<input type="date" id="startDate" name="startDate">
-    
-    		<label for="endDate">~</label>
-    		<input type="date" id="endDate" name="endDate">
-
+    		<input type="text" id="empno" name="empno" required>
+    		
     		<button type="submit">검색</button>
 			
-            <button type="button" onclick="location.href='/attendance/managementList?p=1'">초기화</button>
+            <button type="button" onclick="location.href='/attendance/adminManagementList?p=1'">초기화</button>
         	</form>
         
         	<div class="button-group">
            
-            <button type="button" onclick="location.href='/attendance/downloadExcel2'">엑셀다운로드</button>
+            <button type="button" onclick="location.href='/attendance/downloadExcel3'">엑셀다운로드</button>
        		</div>
         </div>
 
@@ -117,13 +109,13 @@
 
       <div class="pagination">
     <c:if test="${begin > pageNum}">
-        <a href="search?empno=${empno}&deptno=${deptno}&startDate=${startDate}&endDate=${endDate}&p=${begin-1}">[이전]</a>
+        <a href="search?empno=${empno}&startDate=${startDate}&endDate=${endDate}&p=${begin-1}">[이전]</a>
     </c:if>
     <c:forEach begin="${begin}" end="${end}" var="i">
-        <a href="search?empno=${empno}&deptno=${deptno}&startDate=${startDate}&endDate=${endDate}&p=${i}" class="${i == page ? 'active' : ''}">${i}</a>
+        <a href="search?empno=${empno}&startDate=${startDate}&endDate=${endDate}&p=${i}" class="${i == page ? 'active' : ''}">${i}</a>
     </c:forEach>
     <c:if test="${end < totalPages}">
-        <a href="search?empno=${empno}&deptno=${deptno}&startDate=${startDate}&endDate=${endDate}&p=${end+1}">[다음]</a>
+        <a href="search?empno=${empno}&startDate=${startDate}&endDate=${endDate}&p=${end+1}">[다음]</a>
     </c:if>
     <c:if test="${count == 0}">
     </c:if>
@@ -141,7 +133,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
-datea= ${user.att.startTime}
 
 $('#start').click(function(){
 	deptno = ${user.deptno};

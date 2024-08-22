@@ -89,13 +89,14 @@ html, body {
 /* 진행상태 스타일 */
 .cbutton {
 	margin: 2px; /* 버튼 주위에 여백 추가 */
-	padding: 9px 18px; /* 버튼 내부에 여백 추가 */
 	background-color: #00bfff; /* 버튼 배경색 설정 */
 	color: #fff; /* 버튼 텍스트 색상 설정 */
 	border: none; /* 버튼 경계선 제거 */
 	cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
 	border-radius: 4px; /* 버튼의 모서리를 둥글게 설정 */
 	font-weight: bold;
+	width: 80px;
+    height: 30px;
 }
 .button{
 	margin: 5px;

@@ -35,7 +35,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping("/attendance")
 @SessionAttributes("user")
 public class AttendanceManagementController {
-
+	//1
     @Autowired
     private AttendanceManagementService service;
     

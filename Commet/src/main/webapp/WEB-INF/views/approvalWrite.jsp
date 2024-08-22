@@ -165,7 +165,9 @@
                             </tr>
                         </table>
                         <div class="section-title">결재내용</div>
-                        <textarea class="approval_content" name="approval_content" placeholder="내용을 입력하세요." required></textarea>
+                       <input type="hidden" name="approval_no" value="${approval_no}">
+        				<input type="file" name="file">
+        				<textarea id="editor" style="width: 100%; height: 200px;" name="approval_content"></textarea>
                         <div class="form-actions">
                             <button type="submit">결재요청</button>
                             <button type="button" class="cancel" onclick="window.location.href='/approval/status'">취소</button>
@@ -180,6 +182,13 @@
     </footer>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
+    ClassicEditor.create( document.querySelector( '#editor' ), {
+        language: "ko", ckfinder:{uploadUrl:'http://localhost:8083/img/upload'}
+      }).then(editer => {
+    	  window.editer = editer
+      }).catch(error => {
+    	  console.error(error)
+      });
         function updateTime() {
             const now = new Date();
             const options = {

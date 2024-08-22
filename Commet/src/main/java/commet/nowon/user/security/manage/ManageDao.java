@@ -25,7 +25,7 @@ public interface ManageDao {
 	@Select("select * from position")// 직급검색
 	List<ManageDto> searchPosition();
 	
-    @Insert("insert into emp(ename, empno, deptno, jop, position, imgPath, phone, email, address, detailAddr, birthday, hiredate, sal, memo) values(#{ename}, #{empno}, #{deptno}, #{jop}, #{position}, #{imgPath}, #{phone}, #{email}, #{address}, #{detailAddr}, #{birthday}, #{hiredate}, #{sal}, #{memo})")
+    @Insert("insert into emp(ename, empno, deptno, jop, position, imgPath, phone, email, address, detailAddr, birthday, hiredate, sal, memo) values(#{ename}, (SELECT COALESCE(MAX(empno) + 1, 1) FROM (SELECT empno FROM emp) AS temp), #{deptno}, #{jop}, #{position}, #{imgPath}, #{phone}, #{email}, #{address}, #{detailAddr}, #{birthday}, #{hiredate}, #{sal}, #{memo})")
     int insertEmp(ManageDto dto); // DB에 사원 정보 저장 메서드
 
     @Select("select count(*) from emp")
@@ -38,7 +38,7 @@ public interface ManageDao {
     ManageDto getempByID(int id); // 사원 번호
     
     @Update("update emp set deptno=#{deptno}, ename=#{ename}, jop=#{jop}, position=#{position}, phone=#{phone}, email=#{email}, address=#{address}, detailAddr=#{detailAddr}, memo=#{memo}, sal=#{sal}, imgPath=#{imgPath} where empno=#{empno}")
-    int updateEmp(ManageDto dto); // 사원 정보 수정 / 부서이름이 deptno를 dept 에서 join해서 이름을 가져와서 수정 버튼 누를시 있는 데이터를 통제로 보냄 그래서 안넣어둠
+    int updateEmp(ManageDto ModifyDto); // 사원 정보 수정 / 부서이름이 deptno를 dept 에서 join해서 이름을 가져와서 수정 버튼 누를시 있는 데이터를 통제로 보냄 그래서 안넣어둠
 
     @Select({
         "<script>",
@@ -57,16 +57,15 @@ public interface ManageDao {
 	   "select * from emp natural join dept",
 	   "<where>",
 	   "<if test=\"empno != null and empno != 0\">",
-	   "empno = #{empno}",
+	   "empno LIKE CONCAT('%', #{empno}, '%')",
 	   "</if>",
-	   "<if test=\"ename != null and empno != ''\">",
-	   "<if test=\"empno != null and empno != 0\">AND</if>",
+	   "<if test=\"ename != null and ename != ''\">",
 	   "ename LIKE CONCAT('%', #{ename}, '%')",
 	   "</if>",
 	   "</where>",
 	   "</script>"
    })
-    List<ManageDto> searchEmps(@Param("empno") Integer empno, @Param("ename") String ename);
+    List<ManageDto> searchEmps(@Param("empno") Integer empno, @Param("ename") String ename);// 사원이름과 번호로 검색하는것 
     
 
     @Delete("<script>" + 

@@ -144,38 +144,9 @@
         }
         
         /* 숨겨진 등록 버튼 */
-        #submitButton {
-            display: none;
+/*         #submitButton { */
+/*             display: none; */
     </style>
-    <!-- Daum 주소 검색 API 스크립트 추가 -->
-    <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>    
-    <!-- 글수정시 수정버튼을 눌렀을때만 수정 가능 하게 하는 기능인데 -->
-    <script>
-    function enableEdit() {
-        const inputs = document.querySelectorAll('input, textarea, select');
-        inputs.forEach(input => {
-            input.removeAttribute('readonly');
-            if (input.tagName.toLowerCase() === 'select') {
-                input.removeAttribute('disabled');
-            }
-        });
-
-        document.getElementById('addressSearchBtn').style.display = 'inline-block';
-        document.getElementById('submitButton').style.display = 'inline-block'; // 등록 버튼 보이기
-        document.getElementById('modify').style.display = 'none'; // 수정 버튼 숨기기
-    }
-    
-    function execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                var roadAddr = data.roadAddress; 
-                var jibunAddr = data.jibunAddress; 
-
-                document.getElementById('address').value = roadAddr || jibunAddr;
-            }
-        }).open();
-    }
-    </script>
     
 </head>
 <body>
@@ -184,10 +155,24 @@
     <div class="modal-content">
         <span class="close" onclick="location.href='/emp_manage'">&times;</span>
         <h2>사원정보</h2>
-        <form action="/empInfo" method="post" >
+        <img src="/upload/${empInfo.imgPath}" alt="Profile Image" width="100">
+                    <!-- 사진 업로드 폼 -->
+            <form action="/modify/uploadPhoto" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="no" value="${empInfo.empno}">
+               
+                <div class="form-group">
+                    <label for="photo"></label>
+                    <input type="file" name="imgPath1" id="imgPath" accept="image/*">
+                    <input type="hidden" name="redirectPage" value="empModify">
+                </div>
+                <div class="button-container">
+                    <input type="submit" value="업로드">
+
+                </div>
+            </form> 
+        <form action="/empModify" method="post" modelAttribute="ModifyDto">
             <input type="hidden" name="_method" value="put">
-            
-            <img src="/upload/${empInfo.imgPath}" alt="Profile Image" width="100">
+            <input type="hidden" name="imgPath" value="${empInfo.imgPath}">
             <table>
             <tr>
                 <td>사원 이름:</td><td><input type="text" name="ename" value="${empInfo.ename}" required readonly></td>
@@ -246,5 +231,36 @@
         </form>
     </div>
 </div>
+
+    <!-- Daum 주소 검색 API 스크립트 추가 -->
+    <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>    
+    <!-- 글수정시 수정버튼을 눌렀을때만 수정 가능 하게 하는 기능인데 -->
+    <script>
+    function enableEdit() {
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.removeAttribute('readonly');
+            if (input.tagName.toLowerCase() === 'select') {
+                input.removeAttribute('disabled');
+            }
+        });
+
+        document.getElementById('addressSearchBtn').style.display = 'inline-block';
+        document.getElementById('submitButton').style.display = 'inline-block'; // 등록 버튼 보이기
+        document.getElementById('modify').style.display = 'none'; // 수정 버튼 숨기기
+    }
+    
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var roadAddr = data.roadAddress; 
+                var jibunAddr = data.jibunAddress; 
+
+                document.getElementById('address').value = roadAddr || jibunAddr;
+            }
+        }).open();
+    }
+    </script>
+    
 </body>
 </html>

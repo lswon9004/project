@@ -38,4 +38,7 @@ public class EmpService {
 	public int updatepw(int empno) {
 		return dao.updatepw(empno);
 	}
+	public List<EmpDto> alist(){
+		return dao.annualList();
+	}
 }

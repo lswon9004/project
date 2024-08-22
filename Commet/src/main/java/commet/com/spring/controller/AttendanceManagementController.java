@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -23,9 +24,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import commet.attendance.AttendanceService;
 import commet.com.spring.dto.AttendanceManagementDto;
 import commet.com.spring.service.AttendanceManagementService;
 import commet.swon.emp.EmpDto;
+import commet.swon.emp.EmpService;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -35,6 +38,11 @@ public class AttendanceManagementController {
 
     @Autowired
     private AttendanceManagementService service;
+    
+    @Autowired
+  	AttendanceService aservice;
+      @Autowired
+      EmpService eservice;
     
     // @SessionAttributes 로그인정보 받아 오는 메서드
     @ModelAttribute("user") 
@@ -47,15 +55,14 @@ public class AttendanceManagementController {
     @GetMapping("/managementList") 
     public String getManagementList(@ModelAttribute("user") EmpDto dto,
     												@RequestParam(name = "p", defaultValue = "1") int page, Model model) {
-    		int count = service.count2();
+    		int count = service.count2(dto.getEmpno());
     		if (count > 0) {
-    		int perPage = 5;
+    		int perPage = 8;
         	int startRow = (page - 1) * perPage;
 
             List<AttendanceManagementDto> attendanceList = service.managementList(startRow, dto.getEmpno());
             model.addAttribute("attendanceList", attendanceList);
             model.addAttribute("start", startRow+1);
-
             int pageNum = 5;
             int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0);
             int begin = (page - 1) / pageNum * pageNum + 1;
@@ -63,6 +70,13 @@ public class AttendanceManagementController {
             if (end > totalPages) {
                 end = totalPages;
             }
+            
+            List<EmpDto> alist = eservice.alist(); //연차 . 잔여연차 받아 오는 부분
+            model.addAttribute("alist", alist);
+            List<Map<String, Integer>> leaveCount = service.leaveCount(dto.getEmpno());
+            model.addAttribute("leaveCountlist", leaveCount); //연차 . 잔여연차 받아 오는 부분
+            
+            
             model.addAttribute("begin", begin);
             model.addAttribute("end", end);
             model.addAttribute("pageNum", pageNum);
@@ -124,6 +138,11 @@ public class AttendanceManagementController {
                 end1 = totalPages;
         }
         SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
+        
+        List<EmpDto> alist = eservice.alist(); //연차 . 잔여연차 받아 오는 부분
+        model.addAttribute("alist", alist);
+        List<Map<String, Integer>> leaveCount = service.leaveCount(user.getEmpno());
+        model.addAttribute("leaveCountlist", leaveCount); //연차 . 잔여연차 받아 오는 부분
         
         model.addAttribute("startDate", sdf.format(startDate));
         model.addAttribute("endDate", sdf.format(endDate));

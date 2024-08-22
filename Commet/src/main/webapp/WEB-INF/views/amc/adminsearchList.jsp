@@ -14,7 +14,7 @@
      <div class="container">
         <header>
             <div class="user-info">
-               <img src="/upload/${user.imgPath}" alt="User Profile">
+                <img src="/upload/${user.imgPath}" alt="User Profile">
                 <div>
                     <p>이름: ${user.ename }</p>
                     <p>직책: ${user.position }</p>
@@ -26,11 +26,12 @@
             <div class="header-right">
                 <button id="start">업무시작</button>
                 <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">0d:00/</c:if></p>
-                <p id="endTime">00:00</p>
+                <p id="startTime"><c:if test="${user.check_in !=null}"><fmt:formatDate value="${user.check_in}" pattern="HH:mm" />/</c:if><c:if test="${user.check_in==null}">00:00/</c:if></p>
+                <p id="endTime"><c:if test="${user.check_out !=null}"><fmt:formatDate value="${user.check_out}" pattern="HH:mm" />/</c:if><c:if test="${user.check_out==null}">00:00/</c:if></p>
                 <nav>
-                    <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    <a href="#">개인정보수정</a>
+					<c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
+                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    
+                    <a href="/staffModify">개인정보수정</a>
                     <a href="/bullboard">익명게시판</a>
                     <a href="/logout">로그아웃</a>
                 </nav>
@@ -41,6 +42,7 @@
                 <ul class="menu">
                     <li><a href="/searchCustomers">통합업무</a></li>
                      <li><a href="/attendance/managementList">근태현황</a>
+                     <c:if test="${user.right>=2 }"> <li><a href="/attendance/adminManagementList">전체사원근태현황</a></li></c:if>
                     <li><a href="/boards">게시판</a></li>
                     <li><a href="/approval/${user.empno}">전자결재</a></li>
                     <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
@@ -52,6 +54,7 @@
             <section class="main-content">
              <div class="container">
         	<h2>사원근태현황</h2>
+        	<div class="header-line"></div>
 			<div class="form-container">
         	
     		<form action="/attendance/search" method="get">
@@ -85,21 +88,28 @@
             <tbody>
                 <c:if test="${count == 0}">
                     <tr>
-                        <td colspan="8" class="tac">저장된 근태현황이 없습니다.</td>
+                        <td colspan="8" class="tac">데이터가 없습니다.</td>
                     </tr>
                 </c:if>
                 <c:if test="${count > 0}">
                     <c:forEach var="attendance" items="${attendanceList}">
                         <tr>
-                         <td><c:out value="${start}"/>
-									<c:set var="start" value="${start+1}" /></td>
-                            <td>${attendance.employee_attendance_no}</td>
+                      		<td>${attendance.employee_attendance_no}</td>
+                            <td>${attendance.empno}</td>
                             <td><fmt:formatDate value="${attendance.date}" pattern="yyyy-MM-dd"/></td>
                             <td><fmt:formatDate value="${attendance.check_in}" pattern="HH:mm:ss"/></td>
                             <td><fmt:formatDate value="${attendance.check_out}" pattern="HH:mm:ss"/></td>
                             <td>${attendance.worktype}</td>
-                            <td>${attendance.early_leave}</td>
-                            <td></td>
+                              <td> <c:forEach var="count" items="${leaveCountlist}">
+                            				<c:if test="${count.empno== attendance.empno}">
+                            					${count.c }
+                            				</c:if>
+                            		 </c:forEach></td>
+                            <td><c:forEach var="alist" items="${alist}">
+                            				<c:if test="${alist.empno== attendance.empno}">
+                            					${alist.annual }
+                            				</c:if>
+                            		 </c:forEach></td>
                     
                         </tr>
                     </c:forEach>

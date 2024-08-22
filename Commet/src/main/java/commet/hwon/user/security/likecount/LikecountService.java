@@ -23,11 +23,15 @@ public class LikecountService {
 	 public int increaseLikeCount(int no, int empno) {
 		int i = likeDao.likecountCheck(empno, no);
 		if(i>0) {
-			return likeDao.decreaseLikeCount(empno, no);
+			 likeDao.decreaseLikeCount(empno, no);
 		}else {
-			return likeDao.insertlikeCount(empno, no);
+			if(likeDao.slcount(empno, no)>0) {
+				 likeDao.increaseLikeCount(empno, no);
+			}else {
+				 likeDao.insertlikeCount(empno, no);
+			}
 		}
-	        
+	        return likeDao.likeCount(no);
 	    }
 
 	 //모든 게시글에 대한 좋아요 수 목록 반환

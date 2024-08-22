@@ -31,17 +31,13 @@ import jakarta.servlet.http.HttpServletResponse;
 @SessionAttributes("user")
 public class CustomerInfoController {
 	
-
 	@Autowired
 	private CustomerInfoService Service;
-	
 	
 	@ModelAttribute("user") // @SessionAttributes 로그인정보 받아 오는 메서드
     public EmpDto getDto() {
        return new EmpDto();
     }
-	
-	
 	
 	@GetMapping("/customerForm") // 새로운 CustomerInfoDTO 객체를 모델에 추가하여 고객 정보 입력 폼을 표시
 	public String showForm(Model model) {
@@ -49,7 +45,6 @@ public class CustomerInfoController {
 		return "customer/customerForm";
 	}
 	
-
 	@PostMapping("/saveCustomer") // 입력된 고객 정보를 저장하고, 고객 목록 페이지로 리다이렉트
 	public String saveCustomer(@ModelAttribute("customerInfo") CustomerInfoDTO customerInfo) {
 		Service.saveCustomerInfo(customerInfo);
@@ -147,31 +142,24 @@ public class CustomerInfoController {
 	    // 출력 스트림에 통합 문서 쓰기
 	    workbook.write(response.getOutputStream());
 	    workbook.close();
-	}
-
-	@GetMapping("/customerList") // 페이지 페이징처리 는 첫 화면만 구현됨 이동및 검색 시 searchCustomers 메서드에서 페이징 처리 되게 구현
-	public String customerList(@RequestParam(name = "p", defaultValue = "1") int page, Model m) {
-		int count = Service.count();
-			if (count > 0) {
-			int perPage = 5;
-			int startRow = (page - 1) * perPage;
-
-			List<CustomerInfoDTO> list = Service.customerList(startRow,count);
-			m.addAttribute("blist", list);
-
-			int pageNum = 5;
-			int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0);
-			int begin = (page - 1) / pageNum * pageNum + 1;
-			int end = begin + pageNum - 1;
-			if (end > totalPages) {
-				end = totalPages;
-			}
-			m.addAttribute("begin", begin);
-			m.addAttribute("end", end);
-			m.addAttribute("pageNum", pageNum);
-			m.addAttribute("totalPages", totalPages);
 		}
-			m.addAttribute("count", count);
+
+		@GetMapping("/customerList") // 페이지 페이징처리 는 첫 화면만 구현됨 이동및 검색 시 searchCustomers 메서드에서 페이징 처리 되게 구현
+		public String customerList(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+	 											@RequestParam(value = "pageSize", required = false, defaultValue = "8") int pageSize,Model model) {
+		
+			
+			int start = (page - 1) * pageSize;
+			List<CustomerInfoDTO> list = Service.customerList(page, pageSize);
+			int totalCustomers = Service.count();
+		    int totalPages = (int) Math.ceil((double) totalCustomers / pageSize);
+
+		    model.addAttribute("blist", list);
+		    model.addAttribute("currentPage", page);
+		    model.addAttribute("totalPages", totalPages);
+		    model.addAttribute("pageSize", pageSize);
+		    
+		    
 
 		return "customer/customerList";
 	}
@@ -180,10 +168,9 @@ public class CustomerInfoController {
 	@GetMapping("/searchCustomers") // 고객명 / 연락처 입력하면 검색하는 메서드 페이징처리
 	public String searchCustomers(@RequestParam(value = "customerName", required = false) String customerName,
 	        										@RequestParam(value = "contact", required = false) String contact,
-	        										@RequestParam(value = "empno", required = false) Integer empno,
-	        											@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-	        												@RequestParam(value = "pageSize", required = false, defaultValue = "8") int pageSize,Model model) {
-	    
+	        										 	@RequestParam(value = "empno", required = false) Integer empno,
+	        										 		@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+	        										 			@RequestParam(value = "pageSize", required = false, defaultValue = "8") int pageSize,Model model) {
 		int start = (page - 1) * pageSize;
 		List<CustomerInfoDTO> searchResults = Service.searchCustomersWithPaging(customerName, contact, empno,page, pageSize);
 		int totalCustomers = Service.countSearchCustomers(customerName, contact ,empno);
@@ -194,6 +181,7 @@ public class CustomerInfoController {
 	    model.addAttribute("currentPage", page);
 	    model.addAttribute("totalPages", totalPages);
 	    model.addAttribute("pageSize", pageSize);
+	    model.addAttribute("count", totalCustomers);
 	    
 		return "customer/customerList";
 	}
@@ -204,8 +192,8 @@ public class CustomerInfoController {
 											@RequestParam(value = "pageSize", required = false, defaultValue = "8") int pageSize,Model model) {
 		 	
 			int start = (page - 1) * pageSize;
-		 	int totalCustomers = Service.countCustomersByStatus(status);
-		    int totalPages = (int) Math.ceil((double) totalCustomers / pageSize);
+		 	int totalCustomers2 = Service.countCustomersByStatus(status);
+		    int totalPages = (int) Math.ceil((double) totalCustomers2 / pageSize);
 
 		    List<CustomerInfoDTO> filteredCustomers = Service.getCustomersByStatusWithPaging(status, page, pageSize);
 
@@ -214,6 +202,7 @@ public class CustomerInfoController {
 		    model.addAttribute("totalPages", totalPages);
 		    model.addAttribute("status", status);
 		    model.addAttribute("pageSize", pageSize);
+		    model.addAttribute("count", totalCustomers2);
 		    
 		return "customer/filtercustomerList";
 	}

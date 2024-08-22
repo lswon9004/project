@@ -1,5 +1,7 @@
 package commet.swon.approval;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -8,20 +10,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import commet.swon.emp.EmpDto;
 import commet.swon.emp.EmpService;
+import commet.swon.file.FilesDto;
+import commet.swon.file.FilesService;
+import commet.swon.img.ImgController;
 
 
 @Controller
 @SessionAttributes("user")
 public class ApprovalController {
+	@Autowired
+	FilesService service;
 	@ModelAttribute("user")
 	   public EmpDto getDto() {
 	      return new EmpDto();
@@ -40,8 +49,8 @@ public class ApprovalController {
 		return "/approvalWrite";
 	}
 	@PostMapping("/approval/insert")
-	public String insert(ApprovalDto dto,@ModelAttribute("user")EmpDto edto) {
-		
+	public String insert(ApprovalDto dto,@ModelAttribute("user")EmpDto edto,@RequestParam("file")MultipartFile file) {
+		fileUpload(file, dto.getApproval_no());
 		dto.setEmpno(edto.getEmpno());
 		dto.setDeptno(edto.getDeptno());
 		aService.insertApproval(dto);
@@ -55,7 +64,9 @@ public class ApprovalController {
 	}
 	@GetMapping("/approval/update/{no}")
 	public String updatecontent(@PathVariable("no")int no, Model m) {
+		FilesDto fDto = service.selectFile(no);
 		ApprovalDto dto = aService.oneApproval(no);
+		m.addAttribute("file", fDto);
 		m.addAttribute("dto", dto);
 		return "/approval/upadte";
 	}
@@ -172,6 +183,8 @@ public class ApprovalController {
 	}
 	@GetMapping("/approval/statusContent/{no}")
 	public String statusContent(@PathVariable("no")int no, Model m) {
+		FilesDto fDto = service.selectFile(no);
+		m.addAttribute("fdto", fDto);
 		ApprovalDto dto = aService.oneApproval(no);
 		m.addAttribute("dto", dto);
 		return "/approval/statusContent";
@@ -184,5 +197,24 @@ public class ApprovalController {
 		System.out.println(date);
 		aService.updateStatus(dto.getApproval_status1(), dto.getApproval_comm(), dto.getApproval_no(),dto.getApproval_type(),date,dto.getEmpno());  
 		return "redirect:/approval/status";
+	}
+	public boolean fileUpload(MultipartFile file,int no) {
+		String newFileName = ImgController.makeFileName(file.getOriginalFilename());
+		String fname = file.getOriginalFilename();
+        File newFile = null;
+        String path = null;
+        try {
+            path = ResourceUtils.getFile("classpath:static/upload/document/").toPath().toString();
+            newFile = new File(path, newFileName);
+            file.transferTo(newFile);
+        } catch (IOException | IllegalStateException e) {
+            e.printStackTrace();
+        }
+        if (newFile != null) {
+        	service.insertfile(no, newFileName, fname);
+        	return true;
+        }else {
+        	return false;
+        }
 	}
 }

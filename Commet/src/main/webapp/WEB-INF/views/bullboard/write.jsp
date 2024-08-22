@@ -101,15 +101,14 @@ button:hover {
         <h2>익명게시글 작성</h2>
         <form action="/save" method="post" enctype="multipart/form-data">
             <label class="label-title">제목</label>
-            <input type="text" name="title" value="${board.title}" required>
+            <input type="text" name="title" value="${board.title}" required placeholder="제목을 입력하세요"/>
             <!-- 임시 작성자 기능 -->
             <label class="label-iid">작성자</label>
-            <input type="text" name="iid" required>
+            <input type="text" name="iid" required placeholder="작성자을 입력하세요"/>
             <label class="label-content">내용</label>
-             <!-- 스마트에디터 적용 -->
-            <textarea name="content" rows="10" required>${board.content}</textarea>
+            <textarea name="content" rows="10" required placeholder="내용을 입력하세요">${board.content}</textarea>
             <label class="label-password">비밀번호</label>
-            <input type="password" name="password" required>
+            <input type="password" name="password" required placeholder="비밀번호를 입력하세요"/>
             <!-- 저장 및 닫기 버튼 기능 -->
               <div style="display: flex-end;">
             <button type="submit">저장</button> 

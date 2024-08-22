@@ -22,6 +22,9 @@ public interface HatecountDao {
 	@Select("select count(*) from hatecount where `table` = 'Bulletin_Board' and board_no = #{no} and empno = #{empno} and count = 1")
 	int hatecountCheck(@Param("empno") int empno,@Param("no") int no);
 	
+	@Select("select count(*) from hatecount where `table` = 'Bulletin_Board' and board_no = #{no} and empno = #{empno}")
+	int shcount(@Param("empno") int empno,@Param("no") int no);
+	
 	//특정 사용자가 특정 게시글에 대해 '싫어요'를 추가, 변경
 	@Update("UPDATE hatecount SET count =  1 WHERE board_no = #{no} and `table` = 'Bulletin_Board' and empno = #{empno}")
     int increasehateCount(@Param("empno") int empno,@Param("no") int no);

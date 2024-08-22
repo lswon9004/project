@@ -15,9 +15,6 @@ body {
 }
 
 .container {
-    animation: fadeIn 2s ease-in-out;
-}
-.container {
     max-width: 1200px;
     margin: 50px auto;
     background-color: #fff;
@@ -85,6 +82,13 @@ button {
 button:hover {
     background-color: #005f99;
 }
+
+.write, .main {
+    float: right; 
+    margin: 5px 5px;
+    padding: 10px;
+}
+
 
 #page {
     text-align: center;
@@ -170,10 +174,10 @@ button:hover {
                </c:if>
             </tbody>
         </table>
-        <div class="button-container">
-            <button onclick="location.href='/write'">글쓰기</button>
-        </div>
         
+          <button class="write" onclick="location.href='/write'">글쓰기</button>
+         <button class="main" onclick="location.href='/main'">메인화면</button>
+       
         <!-- 페이지 네비게이션 -->
         <div id="page">
 				<c:if test="${begin > pageNum }">

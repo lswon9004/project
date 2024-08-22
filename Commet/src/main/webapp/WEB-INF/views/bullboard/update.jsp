@@ -20,15 +20,17 @@ body {
     padding: 20px;
 }
 
+h2 {
+    text-align: center;
+}
 
 form {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    margin: 20px; /* 마진 조정 */
+    padding: 20px; /* 패딩 추가 */
+    border: 1px solid #ddd; /* 테두리 추가 */
+    background-color: #F0F0F0;  /* 배경색 변경 */
 }
 
 label {
@@ -69,17 +71,18 @@ input[type="text"], textarea {
 </head>
 <body>
 <div class="container">
+<h2>익명게시글 수정</h2>
  <form action="/bullboard/update" method="post" style="background-color: #F0F0F0;"><!-- 폼데이터가 url로 post를 요청 -->
  <input type="hidden" name="no" value="${board.no}" /><!-- 게시글 번호를 숨겨진 필드로 전송 -->
   <label for="iid">작성자</label>
-  <input type="text" name="iid" value="${board.iid}" />
+  <input type="text" name="iid" value="${board.iid}" placeholder="작성자를 입력하세요" />
   <div>
    <label for="title">제목</label>
-   <input type="text" name="title" value="${board.title}" />
+   <input type="text" name="title" value="${board.title}" placeholder="제목을 입력하세요" />
    </div>
    <div>
     <label for="content">내용</label>
-    <textarea name="content">${board.content}</textarea>
+    <textarea name="content" placeholder="내용을 입력하세요">${board.content}</textarea>
     </div>
     <div class="button-box">
      <button type="submit">수정완료</button>

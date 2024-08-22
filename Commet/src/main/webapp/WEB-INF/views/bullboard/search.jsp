@@ -112,7 +112,7 @@ button:hover {
             </tbody>
         </table>
         <div class="button-container">
-            <button onclick="location.href='bullboard'">목록으로</button>
+            <button onclick="location.href='bullboard'">목록</button>
         </div>
     </div>
 </body>

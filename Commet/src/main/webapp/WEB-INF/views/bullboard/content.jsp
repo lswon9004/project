@@ -20,10 +20,11 @@ body {
     background-color: white; /* 하얀 바탕색 */
     border: 1px solid rgba(0, 0, 0, 0.5); /* 흐린 실선 테두리 */
     border-radius: 10px; /* 둥근 테두리 */
-    padding: 20px; /* 내부 패딩 */
-    margin: 10px auto; /* 외부 마진 */
-    width: 80%; /* 너비 */
-    height: auto; /* 높이 */
+    padding: 30px; /* 내부 패딩 */
+    margin: 20px auto; /* 외부 마진 */
+    width: 60%; /* 너비 */
+    height: 70%; /* 높이 */
+    overflow: auto;
 }
 
 #detailcontent {
@@ -44,11 +45,11 @@ body {
 }
 
 h1 {
-    font-family: 'Courier New', monospace; /* 폰트 변경 */
+    font-family: Arial, sans-serif; /* 폰트 변경 */
     text-align: center;
-    color: blue;
-    background-color: yellow;
+    color: black;
     font-size: 30px;
+    font-weight: bold;
 }
 
 p {
@@ -59,35 +60,36 @@ p {
 }
 
 #like-button {
-    background-color: lightblue; /* 좋아요 버튼의 색상을 연한 파랑으로 설정 */
+    background-color: red; /* 좋아요 버튼의 색상을 연한 파랑으로 설정 */
     border-radius: 5px; /* 테두리를 둥글게 설정 */
     border: none;
     margin: 5px;
     padding: 10px 20px; /* 버튼 크기를 크게 설정 */
+    cursor: pointer;
 }
 
 #hate-button {
-    background-color: lightcoral; /* 싫어요 버튼의 색상을 연한 빨강으로 설정 */
+    background-color: blue; /* 싫어요 버튼의 색상을 연한 빨강으로 설정 */
     border-radius: 5px; /* 테두리를 둥글게 설정 */
     border: none;
     margin: 5px;
     padding: 10px 20px; /* 버튼 크기를 크게 설정 */
+    cursor: pointer;
 }
 
 #input1, #input2 {
-    /* 원하는 스타일을 여기에 추가하세요. 예를 들어: */
+    
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
 }
 
 .reply {
-    /* 원하는 스타일을 여기에 추가하세요. 예를 들어: */
+    
     border: 1px solid rgba(0, 0, 0, 0.5);
     padding: 10px;
     margin-bottom: 10px;
     background-color: #f2f2f2;
-    
 }
 
 .delete-reply {
@@ -98,39 +100,65 @@ p {
     color: #fff;
     cursor: pointer;
     border-radius: 4px;
+   
+  
 }
+
+#pwinput {
+    padding: 3px 3px;
+    box-sizing: border-box;
+    width: 100px;
+    height: 30px;
+    
+}
+
 
 #reply-form {
     display: flex;
     justify-content: flex-end; /* 요소를 중앙으로 정렬 */
 }
 
-#id-input, #password-input2, #content-input {
-     display: flex;
+#id-input, #password-input2{
+    display: flex;
     justify-content: flex-end; /* 요소를 오른쪽으로 정렬 */
+    margin: 1px;
+    width: 100px;
+    height: 30px;
+    padding: 1px 1px;
    
 }
 
+#content-input {
+    width: 700px;
+    height: 30px;
+    margin: 3px;
+    padding: 1px 1px;
+    
+}
+
 #submit-reply {
-    padding: 10px 20px;
     border: none;
     background-color: #00bfff;
     color: #fff;
     cursor: pointer;
     border-radius: 4px;
-    margin: 5px;
+    margin: 3px;
+    width: 79px;
+    height: 35px;
+   padding: 10px 20px;
 
 }
 
 #content-del, #password-input1 {
     display: flex;
     justify-content: flex-end; /* 요소를 오른쪽으로 정렬 */
-    margin: 5px;
+    margin: 1px;
+    padding: 1px 1px;
      
 }
 
 .condel {
-   margin-left: 10px; /* 요소들 사이의 간격을 10px로 설정 */
+    margin-left: 10px; /* 요소들 사이의 간격을 10px로 설정 */
     padding: 10px 20px;
     border: none;
     background-color: #00bfff;
@@ -140,11 +168,9 @@ p {
 
 }
 
-
-
 .button-box {
     display: flex;
-    justify-content: center; /* 요소를 가운데로 정렬 */
+    justify-content: center; 
 }
 
 .button-box button {
@@ -164,22 +190,27 @@ p {
 
 .button-box2 {
     display: flex;
-    justify-content: flex-end; /* 요소를 오른쪽으로 정렬 */
+    justify-content: flex-end; 
 }
 
 .button-box2 input {
-  margin:5px;
+   margin: 5px;
+    padding: 10px;
+    width: 105px;
+    height: 35px;
+    box-sizing: border-box;
 
 }
 
 .button-box2 button {
-    margin-left: 10px; /* 요소들 사이의 간격을 10px로 설정 */
-    padding: 10px 20px;
+    margin: 3px; 
     border: none;
     background-color: #00bfff;
     color: #fff;
     cursor: pointer;
     border-radius: 4px;
+    width: 80px;
+    height: 35px;
 }
 </style>
 </head>
@@ -189,7 +220,7 @@ p {
      <form action="/content/${board.no}" method="post" id="detailcontent"> 
       
       <div class="details-section">
-      <h1>${board.title}</h1>
+      <h1> ${board.title} </h1>
        <p><strong>작성자 </strong>${board.iid}</p>
        <p><strong>작성일 </strong><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></p>
        <p><strong>조회수 </strong>${board.readCount +1}</p>
@@ -201,8 +232,8 @@ p {
        
        <br>
        <div style="display: flex; justify-content: center; align-items: center; gap:5px;">
+        <span id="like-count">${likeCount}</span>
         <input type="button" id="like-button" data-board-no="${board.no}" value="👍" /><!-- 좋아요 버튼 -->
-         <span id="like-count">${likeCount}</span>
         <input type="button" id="hate-button" data-board-no="${board.no}" value="👎" /><!-- 싫어요 버튼 -->
         <span id="hate-count">${hateCount}</span>
         </div>
@@ -215,10 +246,10 @@ p {
     	<input id="input1" type="hidden" name="cno" value="${reply.cno }">
     	<input id="input2" type="hidden" name="no" value="${board.no }">
         <div class="reply">
-           <p>${reply.id}</p>           
+            <p>[${reply.id}]</p>           
             <p>${reply.content}</p>
-             <label for="password-input">Password</label>
-            <input type="password" id="password-input-${reply.id}" name="password"> 
+             <label for="password-input"></label>
+            <input type="password" id="pwinput" value="${reply.id}" name="password" placeholder="비밀번호"/> 
             <button class="delete-reply" data-reply-id="${reply.id}">댓글 삭제</button>
         </div>
        </form>
@@ -229,21 +260,21 @@ p {
      <form id="reply-form" action="/content/insert" method="post">
     <!-- id 입력 -->
      <div style="display: flex; align-items: center;">
-    <label for="id-input">작성자 </label>
-    <input type="text" id="id-input" name="id" />
+    <label for="id-input"></label>
+    <input type="text" id="id-input" name="id" placeholder="작성자" size=10 />
     </div>
-   
+ 
     <input type="hidden" name="board_no" value="${board.no}"/>
    
     <!-- password 입력 -->
     <div style="display: flex; align-items: center;">
-    <label for="password-input">암호 </label>
-    <input type="password" id="password-input2" name="password" />
+    <label for="password-input"></label>
+    <input type="password" id="password-input2" name="password" placeholder="비밀번호" size=10 />
     </div>
      <!-- content 입력 -->
     <div style="display: flex; align-items: center;">
-    <label for="content-input">댓글 </label>
-    <input type="text" id="content-input" name="content" />
+    <label for="content-input"></label>
+    <input type="text" id="content-input" name="content" placeholder="댓글을 입력하세요" />
      </div>
      <!-- 제출 버튼 -->
     <input type="submit" id="submit-reply" value="댓글 등록" />
@@ -252,15 +283,14 @@ p {
         
     <form id="content-del" action="/delete/${board.no}" method="post">
       <label for="password-input"></label>
-       <input type="password" id="password-input1" name="password" />
+       <input type="password" id="password-input1" name="password" placeholder="비밀번호" size=10 />
        <button class="condel" type="submit">글삭제</button>
      </form>
         <br>
      
       <div class="button-box2">
-
-      <input id="pw" type="password"/>
-      <button onclick="update()">수정</button>
+       <input id="pw" type="password" placeholder="비밀번호" size=10 />
+       <button onclick="update()">수정</button>
       </div>  
       <hr>
     

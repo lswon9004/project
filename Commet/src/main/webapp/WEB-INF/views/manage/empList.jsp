@@ -231,13 +231,13 @@
     
    <div class="pagination">
         <c:if test="${begin > 1}">
-            <a href="searchEmps?p=${begin-1}">[이전]</a>
+            <a href="emp_manage?p=${begin-1}">[이전]</a>
         </c:if>
         <c:forEach begin="1" end="${totalPages}" var="i">
-            <a href="searchEmps?p=${i}">${i}</a>
+            <a href="emp_manage?p=${i}">${i}</a>
         </c:forEach>
         <c:if test="${end < totalPages}">
-            <a href="searchEmps?p=${end+1}">[다음]</a>
+            <a href="emp_manage?p=${end+1}">[다음]</a>
         </c:if>
     </div>
 

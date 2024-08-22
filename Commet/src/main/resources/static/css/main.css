@@ -98,7 +98,7 @@ html, body {
 	font-weight: bold;
 }
 .button{
-		margin: 5px;
+	margin: 5px;
 	padding: 9px 18px;
 	background-color: #00bfff; /* 버튼 배경색 */
 	color: #fff;

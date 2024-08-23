@@ -146,6 +146,7 @@
         #submitButton {
             display: none;
     </style>
+    
     <!-- Daum 주소 검색 API 스크립트 추가 -->
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>    
     <!-- 글수정시 수정버튼을 눌렀을때만 수정 가능 하게 하는 기능인데 -->

@@ -40,7 +40,6 @@ public class AttendanceManagementService {
 	 	
 	 	//출근
 	 	public void checkIn(int empno, int deptno, int employeeAttendanceNo) {
-	 	    
 	 		if (hasCheckedInToday(empno)) {
 	 			Date startTime = dao.startTime(empno);
 	 			if(startTime==null) {
@@ -48,8 +47,13 @@ public class AttendanceManagementService {
 	 			}
 	 		}else {
 	 			dao.insertStartTime(empno, deptno, employeeAttendanceNo);
-	 		}
+	 			}
 	 	}
+	 	
+	 	// 출근일자가 0보다 크면 출근 버튼 못누름
+	 	public boolean hasCheckedInToday(int empno) { 
+	 			return dao.hasCheckedInToday(empno) > 0;
+	 	    }
 	 	
 	 	//퇴근
 		public void checkOut(int empno) { 
@@ -60,11 +64,6 @@ public class AttendanceManagementService {
 		public void markAbsent(int empno) {
 		        dao.markAbsent(empno);
 		    }
-		
-		// 출근일자가 0보다 크면 출근 버튼 못누름
-		public boolean hasCheckedInToday(int empno) { 
-				return dao.hasCheckedInToday(empno) > 0;
-	    }
 
 		//일반 검색 된 리스트
 	    public List<AttendanceManagementDto> getAttendanceByDateRange2(int empno, Date startDate, Date endDate,int start) { 

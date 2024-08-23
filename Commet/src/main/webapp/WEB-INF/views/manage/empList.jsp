@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.Calendar" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,112 +11,6 @@
     <title>Task Management Portal</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .prev-month, .next-month {
-            color: #ccc;
-        }
-        body {
-            font-family: Arial, sans-serif;
-        }
-        h2 {
-    		text-align: center; /* 제목을 중앙 정렬 */
-    		color: #333; /* 제목 색상을 진한 회색으로 설정 */
-    		margin-top: 2px; /* 상단에 20px의 여백을 추가 */
-    		margin-bottom: 4px; /* 하단에 20px의 여백을 추가 */
-    		
-		}
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            border: 1px solid #e0e0e0;
-        }
-        th, td {
-            padding: 12px;
-            text-align: center;
-        }
-        th {
-            background-color: #f8f8f8;
-            color: #333;
-            font-weight: bold;
-        }
-        td {
-            background-color: #fff;
-        }
-        tr:nth-child(even) td {
-            background-color: #f2f2f2;
-        }
-        input[type="checkbox"] {
-            transform: scale(1.2);
-        }
-        .button {
-            margin: 5px;
-            padding: 10px 20px;
-            background-color: #00bfff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .button:hover {
-            background-color: #ccc;
-        }
-        .dropdown {
-            display: inline-block;
-            position: relative;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        .pagination {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .pagination a {
-            margin: 0 5px;
-            padding: 8px 16px;
-            text-decoration: none;
-            border: 1px solid #ddd;
-            color: #007bff;
-            border-radius: 4px;
-        }
-        .pagination a.active {
-            font-weight: bold;
-            background-color: #007bff;
-            color: white;
-        }
-        .pagination a:hover {
-            background-color: #0056b3;
-            color: white;
-        }
         .button-container {
             display: flex;
             justify-content: space-between;
@@ -133,7 +28,8 @@
         }
         .search-form select {
             padding: 5px;
-            margin-right: 10px;
+            width: 100px;
+            margin-right: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
@@ -141,54 +37,24 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="user-info">
-               <img src="/upload/${user.imgPath}" alt="User Profile">
-                <div>
-                    <p>이름: ${user.ename }</p>
-                    <p>직책: ${user.position }</p>
-                    <p>사번: ${user.empno }</p>
-                    <p>${user.ename }님 환영합니다.</p>
-                </div>
-            </div>
-            <h1>코멧 업무포털</h1>
-            <div class="header-right">
-                <button id="start">업무시작</button>
-                <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">00:00/</c:if></p>
-                <p id="endTime">00:00</p>
-                <nav>
-                    
-                    <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->
-                    
-                    <a href="/bullboard">익명게시판</a>
-                    <a href="/logout">로그아웃</a>
-                </nav>
-            </div>
-        </header>
+      <!-- Include header -->
+        <jsp:include page="/WEB-INF/views/header.jsp" />
+        
+        <!-- Main content area -->
         <main>
-            <aside>
-                <ul class="menu">
-                    <li><a href="/customerList">통합업무</a></li>
-                     <li><a href="/attendance/managementList">근태현황</a>
-                    <li><a href="/boards">게시판</a></li>
-                    <li><a href="/approval/${user.empno}">전자결재</a></li>
-                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-					<c:if test="${user.right>=3 }"> <li><a href="/emp_manage" class="active">직원관리</a></li></c:if>
-                </ul>
-                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
-                <p class="footer-text">코멧업무포털</p>
-            </aside>
+            <!-- Include aside (sidebar) -->
+            <jsp:include page="/WEB-INF/views/aside.jsp" />
+          <!--   여기서부터 가운데 메인 -->
             <section class="main-content">
          <h2>직원관리</h2>
-    
+    <div class="header-line"></div>
     <form action="/deleteEmp" method="post">
         <div class="button-container">
             <div class="search-form">
-        		<select id="searchType" name="searchType">
-    <option value="empno" ${searchType == 'empno' ? 'selected' : ''}>사원번호</option>
-    <option value="ename" ${searchType == 'ename' ? 'selected' : ''}>사원이름</option>
+
+        		<select class="cbutton" id="searchType" name="searchType">
+            		<option class="dropdown" value="empno">사원번호</option>
+            		<option class="dropdown" value="ename">사원이름</option>
         		</select>
 				<input type="text" id="searchInput" name="searchInput" />
         		<button type="button" class="button" id="sButton" onclick="performSearch()">검색</button>
@@ -226,6 +92,11 @@
                     </tr>
                 </c:forEach>
             </tbody>
+             <c:if test="${count == 0}">
+					<tr>
+						<td colspan="5" class="tac">등록된 게시글이 없습니다.</td>
+					</tr>
+				</c:if>
         </table>
     </form>
     
@@ -298,6 +169,10 @@
         </main>
     </div>
 </body>
+
+<footer>
+<p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
+</footer>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
@@ -351,4 +226,35 @@ $(document).ready(function(){
 });
 </script>
 
+    <!-- jQuery를 사용하여 “전체 선택” 체크박스를 클릭하면 모든 체크박스를 선택하거나 선택 해제할 수 있도록 스크립트를 추가했습니다. -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#selectAll").click(function(){
+                $("input[type=checkbox]").prop('checked', this.checked);
+            });
+        });
+    </script>
+    <script>
+    function updateTime() {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            weekday: 'long', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit'
+        };
+        const currentTimeString = now.toLocaleDateString('ko-KR', options);
+        document.getElementById('current-time').innerText = currentTimeString;
+    }
+
+    // 처음 페이지 로드 시 시간을 표시
+    updateTime();
+
+    // 매 초마다 시간을 업데이트
+    setInterval(updateTime, 1000);
+</script>
 </html>

@@ -14,41 +14,14 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="user-info">
-               <img src="/upload/${user.imgPath}" alt="User Profile">
-                <div>
-                    <p>이름: ${user.ename }</p>
-                    <p>직책: ${user.position }</p>
-                    <p>사번: ${user.empno }</p>
-                    <p>${user.ename }님 환영합니다.</p>
-                </div>
-            </div>
-            <h1>코멧 업무포털</h1>
-            <div class="header-right">
-                <button id="start">업무시작</button>
-                <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">0d:00/</c:if></p>
-                <p id="endTime">00:00</p>
-                <nav>
-                    <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    
-                    <a href="/bullboard">익명게시판</a>
-                    <a href="/logout">로그아웃</a>
-                </nav>
-            </div>
-        </header>
+      <!-- Include header -->
+        <jsp:include page="/WEB-INF/views/header.jsp" />
+        
+        <!-- Main content area -->
         <main>
-            <aside>
-                <ul class="menu">
-                    <li><a href="/searchCustomers">통합업무</a></li>
-                     <li><a href="/attendance/managementList">근태현황</a>
-                    <li><a href="/boards">게시판</a></li>
-                    <li><a href="/approval/${user.empno}" class="active">전자결재</a></li>
-                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                    <c:if test="${user.right>=3 }"> <li><a href="/emp_manage">직원관리</a></li></c:if>
-                </ul>
-            </aside>
+            <!-- Include aside (sidebar) -->
+            <jsp:include page="/WEB-INF/views/aside.jsp" />
+          <!--   여기서부터 가운데 메인 -->
             <section class="main-content">
             <h2>전자결재</h2>
             <div class="header-line"></div>
@@ -62,12 +35,12 @@
         <label for="startDate">작성일:</label>
         <input type="date" id="startDate" name="startDate"> ~
         <input type="date" id="endDate" name="endDate">
-        <select name="approval_status1">
-        	<option>분류</option>
-            <option>요청</option>
-            <option>승인</option>
-            <option>대기</option>
-            <option>반려</option>
+        <select class="cbutton" name="approval_status1" style="width: 70px;">
+        	<option class="dropdown">분류</option>
+            <option class="dropdown">요청</option>
+            <option class="dropdown">승인</option>
+            <option class="dropdown">대기</option>
+            <option class="dropdown">반려</option>
         </select>
         <button type="submit">조회</button>
     </form>

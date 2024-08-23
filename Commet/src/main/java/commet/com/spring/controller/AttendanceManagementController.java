@@ -3,6 +3,7 @@ package commet.com.spring.controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import commet.attendance.AttendanceService;
@@ -35,7 +37,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping("/attendance")
 @SessionAttributes("user")
 public class AttendanceManagementController {
-
+	
     @Autowired
     private AttendanceManagementService service;
     
@@ -90,8 +92,12 @@ public class AttendanceManagementController {
     
     // 출근 일자가 입력 돼 있으면 출근 버튼 못누름
     @GetMapping("/checkInStatus") 
-    public boolean checkInStatus(@ModelAttribute("user") EmpDto user) {
-    		return service.hasCheckedInToday(user.getEmpno());
+    @ResponseBody
+    public Map<String, Object> checkInStatus(@ModelAttribute("user") EmpDto user) {
+    	boolean hasCheckedIn = service.hasCheckedInToday(user.getEmpno());
+        Map<String, Object> response = new HashMap<>();
+        response.put("hasCheckedIn", hasCheckedIn);
+        return response;
     }
     
     //출근

@@ -6,8 +6,6 @@
     <div class="user-info">
         <img src="/upload/${user.imgPath}" alt="User Profile">
         <div>
-        
-       
             <p>이름: ${user.ename }</p>
             <p>직책: ${user.position }</p>
             <p>사번: ${user.empno }</p>

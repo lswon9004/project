@@ -184,7 +184,7 @@
     <!-- 고객명을 입력 했을때 새로 팝업이 열리는 스크립트 추가 -->
     <script type="text/javascript">
     	function openPopup(customerID) {
-        window.open('${pageContext.request.contextPath}/customerDetail/' + customerID, 'CustomerDetail', 'width=1000,height=1000,scrollbars=yes,resizable=yes');
+        window.open('${pageContext.request.contextPath}/customerDetail/' + customerID, 'CustomerDetail', 'width=1100,height=610,scrollbars=yes,resizable=yes');
     	}
 	</script>
 	

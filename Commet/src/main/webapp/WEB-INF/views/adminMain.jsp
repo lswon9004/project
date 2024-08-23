@@ -41,7 +41,7 @@
 
     %>
      <div class="container">
-     
+
       <!-- Include header -->
         <jsp:include page="/WEB-INF/views/header.jsp" />
         
@@ -52,6 +52,7 @@
             <jsp:include page="/WEB-INF/views/aside.jsp" />
             
             <!-- 여기서부터 가운데 메인 -->
+
             <section class="main-content">
                 <div class="status-overview">
                     <h2>나의 출근 현황</h2>

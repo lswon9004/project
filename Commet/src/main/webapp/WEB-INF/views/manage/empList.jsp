@@ -59,6 +59,7 @@
 				<input type="text" id="searchInput" name="searchInput"/>
         		<button type="button" class="button" id="sButton" onclick="performSearch()">검색</button>
             </div>
+            
             <div>
                 <input type="button" class="button" onclick="location.href='/insert'" value="등록"/> 
                 <input type="button" class="button" onclick="downloadExcel()" value="엑셀다운로드"/>

@@ -41,8 +41,7 @@
 						<a class="active" href="/adminMain">Home</a>
 					</c:if>
 					<!--다른 jsp 파일에서 적용할거 -->
-					 <a href="/bullboard">익명게시판</a>
-					 <a href="/logout">로그아웃</a>
+					<a href="/bullboard">익명게시판</a> <a href="/logout">로그아웃</a>
 				</nav>
 			</div>
 		</header>
@@ -57,7 +56,7 @@
 						<li><a href="/approval/status">결재승인</a></li>
 					</c:if>
 					<c:if test="${user.right>=3 }">
-						<li><a href="/emp_manage" class="active">직원관리</a></li>
+						<li><a href="/emp_manage">직원관리</a></li>
 					</c:if>
 				</ul>
 			</aside>
@@ -78,15 +77,7 @@
 						<button onclick="location.href='/boards/write'">글쓰기</button>
 					</div>
 				</div>
-				<table style="width: 113.65%;">
-					<colgroup>
-						<col style="width: 10%;" />
-						<col />
-						<col style="width: 12%;" />
-						<col style="width: 12%;" />
-						<col style="width: 12%;" />
-						<col style="width: 12%;" />
-					</colgroup>
+				<table>
 					<!-- 게시판 목록을 표시하는 테이블 -->
 					<thead>
 						<!-- thead 영역 (번호 제목 작성자 작성일 조회수가 포함) -->

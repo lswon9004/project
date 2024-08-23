@@ -55,7 +55,6 @@
              
         	<h2>${user.ename }님의 근태현황 입니다.</h2>
         	<div class="header-line"></div>
-        	
 			<div class="form-container">
         	<form action="/attendance/search2" method="get">
             <label for="startDate">출근일자:</label>

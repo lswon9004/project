@@ -101,7 +101,7 @@
             <section class="main-content">
                 <div class="approval-form-container">
                     <h1>인장 신청</h1>
-                    <form method="post" action="/approval/insert" name="approvalDto">
+                    <form method="post" action="/approval/insert" name="approvalDto" enctype="multipart/form-data">
                         <table>
                             <tr>
                                 <th>문서번호</th>

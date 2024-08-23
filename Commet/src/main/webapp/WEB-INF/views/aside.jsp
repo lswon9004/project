@@ -4,7 +4,7 @@
 
   			<aside>
                 <ul class="menu"><!-- 박선욱 -->
-                    <li><a href="/searchCustomers">통합업무</a></li>
+                    <li><a href="/searchCustomers">고객문의</a></li>
                      <li><a href="/attendance/managementList">근태현황</a>
                      <c:if test="${user.right>=2 }"> <li><a href="/attendance/adminManagementList">전체사원근태현황</a></li></c:if>
                     <li><a href="/boards">게시판</a></li>

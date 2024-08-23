@@ -123,7 +123,7 @@
             <textarea id="memo" name="memo"></textarea>
             
             <label for="empno">접수사번:</label>
-            <input type="text" name="empno" value="${user.empno}" readonly></input>
+            <input type="text" name="empno" value="${user.empno}" readonly style="pointer-events: none;"></input>
 
             <div class="button-container">
                 <button type="submit">저장</button>

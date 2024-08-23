@@ -66,7 +66,13 @@ input[type="text"], textarea {
 .button-box button:hover {
     background-color: #005f99;
 }
+.ck.ck-editor{
 
+        width: 100%;
+        }
+        .ck-editor__editable {
+           height: 200px;
+        }
 </style>
 </head>
 <body>
@@ -82,12 +88,27 @@ input[type="text"], textarea {
    </div>
    <div>
     <label for="content">내용</label>
-    <textarea name="content" placeholder="내용을 입력하세요">${board.content}</textarea>
+    <textarea id="editor" name="content" placeholder="내용을 입력하세요">${board.content}</textarea>
     </div>
     <div class="button-box">
      <button type="submit">수정완료</button>
     </div>
  </form>
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+    
+    <script>
+    ClassicEditor.create(document.querySelector('#editor'), {
+        language: "ko",
+        ckfinder: { uploadUrl: 'http://localhost:8083/img/upload' }
+    }).then(editor => {
+        window.editor = editor;
+    }).catch(error => {
+        console.error(error);
+    });
+    </script>
+
 </body>
 </html>

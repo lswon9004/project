@@ -213,6 +213,13 @@ p {
     width: 80px;
     height: 35px;
 }
+.ck.ck-editor{
+
+        width: 100%;
+        }
+        .ck-editor__editable {
+           height: 200px;
+        }
 </style>
 </head>
 <body>
@@ -227,11 +234,8 @@ p {
        <p><strong>조회수 </strong>${board.readCount +1}</p>
        </div>
         <hr>
-         <div class="content-display">
-         <p>${board.content}</p>
-         </div>
+         <textarea  id="editor">${board.content}</textarea>
        
-       <br>
        <div style="display: flex; justify-content: center; align-items: center; gap:5px;">
         <span id="like-count">${likeCount}</span>
         <input type="button" id="like-button" data-board-no="${board.no}" value="👍" /><!-- 좋아요 버튼 -->
@@ -302,6 +306,22 @@ p {
 </div>  
           
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+    
+    <script>
+    ClassicEditor.create(document.querySelector('#editor'), {
+        language: "ko",
+        ckfinder: { uploadUrl: 'http://localhost:8083/img/upload' }
+    }).then(editor => {
+        window.editor = editor;
+        editor.enableReadOnlyMode('#editor'); // 읽기 전용 모드 설정
+
+    }).catch(error => {
+        console.error(error);
+    });
+    </script>
 <script>
 $(document).ready(function() {
 	boardNo = ${board.no}

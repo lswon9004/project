@@ -94,6 +94,13 @@ button {
 button:hover {
     background-color: #005f99;
 }  
+.ck.ck-editor{
+
+        width: 100%;
+        }
+        .ck-editor__editable {
+           height: 200px;
+        }
 </style>
 </head>
 <body>
@@ -106,7 +113,7 @@ button:hover {
             <label class="label-iid">작성자</label>
             <input type="text" name="iid" required placeholder="작성자을 입력하세요"/>
             <label class="label-content">내용</label>
-            <textarea name="content" rows="10" required placeholder="내용을 입력하세요">${board.content}</textarea>
+            <textarea id="editor" name="content" rows="10" placeholder="내용을 입력하세요">${board.content}</textarea>
             <label class="label-password">비밀번호</label>
             <input type="password" name="password" required placeholder="비밀번호를 입력하세요"/>
             <!-- 저장 및 닫기 버튼 기능 -->
@@ -115,6 +122,20 @@ button:hover {
             <button type="button" onclick="location.href='close'">닫기</button>
             </div>
         </form>
-    </div>     
+    </div>  
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+    
+    <script>
+    ClassicEditor.create(document.querySelector('#editor'), {
+        language: "ko",
+        ckfinder: { uploadUrl: 'http://localhost:8083/img/upload' }
+    }).then(editor => {
+        window.editor = editor;
+    }).catch(error => {
+        console.error(error);
+    });
+    </script>   
 </body>
 </html>

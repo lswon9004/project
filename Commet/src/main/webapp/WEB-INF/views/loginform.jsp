@@ -30,7 +30,7 @@
         <div class="content_box4">
           <div class="flex_col">
             <div class="flex_col1">
-              <h1 class="hero_title">코멧</h1>
+              <h1 class="hero_title">WELCOME</h1>
               <div class="text11">사원 번호와 비밀번호를 입력하세요.</div>
             </div>
             

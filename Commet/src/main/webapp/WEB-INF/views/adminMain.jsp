@@ -41,17 +41,43 @@
 
     %>
      <div class="container">
-     
-      <!-- Include header -->
-        <jsp:include page="/WEB-INF/views/header.jsp" />
-        
-        <!-- Main content area -->
-        <main>
 
-            <!-- Include aside (sidebar) -->
-            <jsp:include page="/WEB-INF/views/aside.jsp" />
-            
-            <!-- 여기서부터 가운데 메인 -->
+        <header>
+            <div class="user-info">
+               <img src="/upload/${user.imgPath}" alt="User Profile">
+                <div>
+                    <p>이름: ${user.ename }</p>
+                    <p>직책: ${user.position }</p>
+                    <p>사번: ${user.empno }</p>
+                    <p>${user.ename }님 환영합니다.</p>
+                </div>
+            </div>
+            <h1>코멧 관리자 업무포털</h1>
+            <div class="header-right">
+                <button id="start">업무시작</button>
+                <button id="end">업무종료</button>
+                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">00:00/</c:if></p>
+                <p id="endTime">00:00</p>
+                <nav>
+                    <a href="/adminMain">Home</a>
+                    <a href="/staffModify">개인정보수정</a>
+                    <a href="/bullboard">익명게시판</a>
+                    <a href="/logout">로그아웃</a>
+                </nav>
+            </div>
+        </header>
+        <main>
+            <aside>
+                <ul class="menu">
+                    <li><a href="/customerList">통합업무</a></li>
+                   <li><a href="/attendance/managementList">근태현황</a>
+                    <li><a href="/boards">게시판</a></li>
+                    <li><a href="/approval/${user.empno}">전자결재</a></li>
+                    <li><a href="/approval/status">결재승인</a></li>
+                    <li><a href="/emp_manage">직원관리</a></li>
+                </ul>
+     
+            </aside>
             <section class="main-content">
                 <div class="status-overview">
                     <h2>나의 출근 현황</h2>

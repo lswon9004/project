@@ -78,6 +78,17 @@ button {
 button:hover {
     background-color: #005f99;
 }
+
+#page {
+    text-align: center;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+#page a:hover {
+    color: #007BFF;
+}
 </style>
 </head>
 <body>
@@ -97,6 +108,8 @@ button:hover {
                     <th>작성자</th>
                     <th>작성일</th>
                     <th>조회수</th>
+                    <th>좋아요</th>
+                    <th>싫어요</th>
                 </tr>
             </thead>
             <tbody>
@@ -107,13 +120,53 @@ button:hover {
                         <td>${board.iid}</td>
                         <td><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></td>
                         <td>${board.readCount}</td>
+                        <td>
+                        <c:forEach var="likeCount" items="${likeCountList}">
+                        		<c:if test="${likeCount.no==board.no}">
+                        			<c:if test="${likeCount.count!=null}">
+                        				${likeCount.count }
+                        			</c:if>
+                        			<c:if test="${likeCount.count==null}">
+                        				0
+                        			</c:if>
+                        		</c:if>
+                        	</c:forEach> 
+                        	</td>
+                             <td>
+                              <c:forEach var="hateCount" items="${hateCountList}">
+                        		<c:if test="${hateCount.board_no==board.no}">
+                        			<c:if test="${hateCount.count!=null}">
+                        				${hateCount.count }
+                        			</c:if>
+                        			<c:if test="${hateCount.count==null}">
+                        				0
+                        			</c:if>
+                        		</c:if>
+                        	</c:forEach>
+                       </td> 
                     </tr>
                 </c:forEach>
+                <c:if test="${count == 0}">
+					<tr>
+						<td colspan="7" class="tac">등록된 게시글이 없습니다.</td>
+					</tr>
+				</c:if>
             </tbody>
         </table>
         <div class="button-container">
             <button onclick="location.href='bullboard'">목록</button>
         </div>
+        <div id="page">
+				<c:if test="${begin > pageNum }">
+					<a href="/search?p=${begin-1 }&title=${title}">[이전]</a>
+				</c:if>
+				<c:forEach begin="${begin }" end="${end}" var="i">
+					<a href="/search?p=${i}&title=${title}">${i}</a>
+				</c:forEach>
+				<c:if test="${end < totalPages }">
+					<a href="/search?p=${end+1}&title=${title}">[다음]</a>
+				</c:if>
+	    </div>
     </div>
 </body>
 </html>

@@ -56,6 +56,7 @@ public class ManageService {
     public int countSearchResults(int empno, String ename) {
         return dao.countSearchResults(empno, ename);
     }  
+
     
     public void deleteEmps(int[] emps) {
     	dao.deleteEmps(emps);

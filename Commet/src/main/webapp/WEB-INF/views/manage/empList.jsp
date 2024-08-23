@@ -56,10 +56,9 @@
             		<option class="dropdown" value="empno">사원번호</option>
             		<option class="dropdown" value="ename">사원이름</option>
         		</select>
-				<input type="text" id="searchInput" name="searchInput"/>
+				<input type="text" id="searchInput" name="searchInput" />
         		<button type="button" class="button" id="sButton" onclick="performSearch()">검색</button>
             </div>
-<!--             1 -->
             <div>
                 <input type="button" class="button" onclick="location.href='/insert'" value="등록"/> 
                 <input type="button" class="button" onclick="downloadExcel()" value="엑셀다운로드"/>
@@ -85,7 +84,7 @@
                         <td><input type="checkbox" name="empnos" value="${emp.empno}"></td>
                         <td><a href="/empDetail/${emp.empno}">${emp.ename}</a></td>
 						<td>${emp.empno}</td>
-                        <td>${emp.deptname}</td> <!-- dept에서 가저오는거 안해놔서 안가저옴 -->
+                        <td>${emp.deptname}</td>
                         <td>${emp.deptno}</td> 
                         <td>${emp.position}</td>
                         <td><fmt:formatDate value="${emp.hiredate}" pattern="yyyy-MM-dd"/></td>

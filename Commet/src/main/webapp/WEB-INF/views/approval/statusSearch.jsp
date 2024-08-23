@@ -8,33 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Management Portal</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
-  <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .form-container {
-            margin-bottom: 20px;
-        }
-        .form-container input {
-            margin-right: 10px;
-        }
-        .form-container button {
-            margin-right: 10px;
-        }
-        .paging{text-align:center;margin:15px 0;}
-		.paging strong{display:inline-block;width:25px;height:25px;line-height:24px;marging-right:5px;border:1px solid #ccc;color:#666;text-align:cetner;}
-		.paging .page{display:inline-block;width:25px;height:25px;line-height:24px;margin-right:5px;background:#49be5a;color:#fff;text-align:center;}
-       
-    </style>   
 </head>
 <body>
     <div class="container">
@@ -46,7 +19,9 @@
             <!-- Include aside (sidebar) -->
             <jsp:include page="/WEB-INF/views/aside.jsp" />
           <!--   여기서부터 가운데 메인 -->
-            <section class="main-content">
+           <section class="main-content">
+				<h2>결재승인</h2>
+				<div class="header-line"></div>
                 <div class="status-overview">
                     <div class="form-container">
         <form action="/approval/status/search">
@@ -58,33 +33,17 @@
         <label for="startDate">작성일:</label>
         <input type="date" id="startDate" name="startDate">~
         <input type="date" id="endDate" name="endDate">
-        <button>조회</button>
-        <select name="approval_status1">
-        	<option>
-        		요청
-        	</option>
-        	<option>
-        		승인
-        	</option >
-        	<option>
-        		대기
-        	</option>
-        	<option>
-        		반려
-        	</option>
-        </select>
-        </form>
-        
+       <select class="cbutton" name="approval_status1" style="width: 70px">
+								<option class="dropdown">분류</option>
+								<option class="dropdown">요청</option>
+								<option class="dropdown">승인</option>
+								<option class="dropdown">대기</option>
+								<option class="dropdown">반려</option>
+							</select>
+							<button>조회</button>
+						</form>
     </div>
     <table>
-    	<colgroup>
-			<col style="width:10%;" />
-			<col />
-			<col style="width:12%;" />
-			<col style="width:12%;" />
-			<col style="width:12%;" />
-			<col style="width:12%;" />
-		</colgroup>
         <thead>
             <tr>
                 <th>결재번호</th>
@@ -99,7 +58,7 @@
         <tbody>
             <c:if test="${count == 0}">
 					<tr>
-						<td colspan="6" class="tac">게시판에 저장된 글이 없습니다.</td>
+						<td colspan="6" class="tac">결재 목록이 없습니다.</td>
 					</tr>
 				</c:if>
 				<c:if test="${count > 0}">
@@ -122,7 +81,7 @@
         </tbody>
     </table>
                 </div>
-                <div class="paging">
+                <div class="pagination">
 		<div id="page">
 				<c:if test="${begin > pageNum }">
 					<a href="/approval/search?p=${begin-1 }&approval_no=${approval_no}&approval_title=${approval_title}&approval_status1=${approval_status1}&startDate=${startDate}&endDate=${endDate}" class="page prv">&lt;</a>

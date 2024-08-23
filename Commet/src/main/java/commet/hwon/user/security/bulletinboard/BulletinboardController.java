@@ -80,7 +80,7 @@ public class BulletinboardController {
     	int startRow = (page - 1) * perPage;
     	
     	//게시글 목록 가져오기
-    	List<BulletinboardDto> boards = boardService.getAllBoards(startRow, perPage);
+    	List<BulletinboardDto> boards = boardService.getAllBoards(startRow);
     	model.addAttribute("boardList", boards);
     	 List<Map<String, Integer>> likeCountList = likeService.likeCountList();
     	 List<Map<String, Integer>> hateCountList = hateService.hateCountList();
@@ -164,12 +164,35 @@ public class BulletinboardController {
     // 게시글을 검색하는 요청을 처리하는 메서드
     @GetMapping("/search")
     public String searchBoard(@RequestParam(name="title", defaultValue = "") String title,
-                              @RequestParam(name="content", defaultValue = "") String content,
                               @RequestParam(name="p", defaultValue = "1") int page,
                               Model model) {
-        int startRow = (page - 1) * 10;
-        List<BulletinboardDto> searchResults = boardService.searchBoard(title, content, startRow);
+    	System.out.println(title);
+    	int scount = boardService.searchCount(title);
+    	if(scount>0) {
+		int perPage = 10;
+		List<Map<String, Integer>> likeCountList = likeService.likeCountList();
+   	 	List<Map<String, Integer>> hateCountList = hateService.hateCountList();
+   	 	model.addAttribute("likeCountList", likeCountList);
+   	 	model.addAttribute("hateCountList", hateCountList);
+    
+		int startRow = (page - 1) * perPage;
+        List<BulletinboardDto> searchResults = boardService.searchBoard(title, startRow);
         model.addAttribute("boardList", searchResults);
+        int pageNum = 5;
+        int totalPages = scount / perPage + (scount % perPage > 0 ? 1 : 0);
+        int begin = (page - 1) / pageNum * pageNum + 1;
+        int end = begin + pageNum - 1;
+        if (end > totalPages) {
+            end = totalPages;
+        }
+        model.addAttribute("begin", begin);
+        model.addAttribute("end", end);
+        model.addAttribute("pageNum", pageNum);
+        model.addAttribute("totalPages", totalPages);
+    	}
+    	model.addAttribute("title", title);
+    	model.addAttribute("count", scount);
+    	System.out.println(scount);
         return "/bullboard/search";
     }
     

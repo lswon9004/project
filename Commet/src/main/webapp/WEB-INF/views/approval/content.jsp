@@ -114,11 +114,11 @@
                                 <th>문서번호</th>
                                 <td>${dto.approval_no}</td>
                                 <th>기안일자</th>
-                                <td><fmt:formatDate value="${startTime}" pattern="yyyy-MM-dd" /></td>
+                                <td><fmt:formatDate value="${user.check_in}" pattern="yyyy-MM-dd" /></td>
                             </tr>
                             <tr>
                                 <th>서류 종류</th>
-                                 <td>
+                                 <td>   
                                     <c:choose>
                                         <c:when test="${dto.approval_type == 1}">연차/휴가신청</c:when>
                                         <c:when test="${dto.approval_type == 2}">출장신청</c:when>

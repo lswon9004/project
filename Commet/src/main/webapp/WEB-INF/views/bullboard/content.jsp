@@ -17,35 +17,36 @@ body {
 }
 
 .container {
-    background-color: white; /* 하얀 바탕색 */
-    border: 1px solid rgba(0, 0, 0, 0.5); /* 흐린 실선 테두리 */
-    border-radius: 10px; /* 둥근 테두리 */
-    padding: 30px; /* 내부 패딩 */
-    margin: 20px auto; /* 외부 마진 */
-    width: 60%; /* 너비 */
-    height: 70%; /* 높이 */
+    background-color: white; 
+    border: 1px solid rgba(0, 0, 0, 0.5); 
+    border-radius: 10px; 
+    padding: 30px; 
+    margin: 20px auto; 
+    width: 60%; 
+    height: 70%; 
     overflow: auto;
+    
 }
 
 #detailcontent {
-    border: 1px solid rgba(0, 0, 0, 0.5); /* 테두리 추가 */
+    border: 1px solid rgba(0, 0, 0, 0.5); 
 }
 
 .details-section, .content-display {
    
-    margin-bottom: 10px; /* 각 섹션 사이에 마진 추가 */
+    margin-bottom: 10px; 
     background-color:white;
-    position: auto; /* 위치를 상대적으로 설정 */
+    position: auto; 
     font-size: 20px;
     
 }
 
 .content-display {
-    top: -1px; /* 위치를 위로 1px 이동 */
+    top: -1px; 
 }
 
 h1 {
-    font-family: Arial, sans-serif; /* 폰트 변경 */
+    font-family: Arial, sans-serif; 
     text-align: center;
     color: black;
     font-size: 30px;
@@ -60,20 +61,20 @@ p {
 }
 
 #like-button {
-    background-color: red; /* 좋아요 버튼의 색상을 연한 파랑으로 설정 */
-    border-radius: 5px; /* 테두리를 둥글게 설정 */
+    background-color: red; 
+    border-radius: 5px; 
     border: none;
     margin: 5px;
-    padding: 10px 20px; /* 버튼 크기를 크게 설정 */
+    padding: 5px 10px; 
     cursor: pointer;
 }
 
 #hate-button {
-    background-color: blue; /* 싫어요 버튼의 색상을 연한 빨강으로 설정 */
-    border-radius: 5px; /* 테두리를 둥글게 설정 */
+    background-color: blue; 
+    border-radius: 5px; 
     border: none;
     margin: 5px;
-    padding: 10px 20px; /* 버튼 크기를 크게 설정 */
+    padding: 5px 10px; 
     cursor: pointer;
 }
 
@@ -93,7 +94,7 @@ p {
 }
 
 .delete-reply {
-    margin-left: 10px; /* 요소들 사이의 간격을 10px로 설정 */
+    margin-left: 10px; 
     padding: 10px 20px;
     border: none;
     background-color: #00bfff;
@@ -149,29 +150,37 @@ p {
    padding: auto;
 
 }
-
-#content-del, #password-input1 {
-    display: flex;
-    justify-content: flex-end; /* 요소를 오른쪽으로 정렬 */
-    margin: 1px;
-    padding: 1px 1px;
-     
+#password-input1, #pw{
+    margin: 5px;
+    padding: 5px 10px;
 }
 
 .condel {
-    margin-left: 10px; /* 요소들 사이의 간격을 10px로 설정 */
+    margin: 5px;
     padding: 10px 20px;
     border: none;
     background-color: #00bfff;
     color: #fff;
     cursor: pointer;
     border-radius: 4px;
+    
+}
 
+.upda {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #00bfff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    
 }
 
 .button-box {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
+     
 }
 
 .button-box button {
@@ -181,12 +190,6 @@ p {
     color: #fff;
     cursor: pointer;
     border-radius: 4px;
-}
-
-#pw {
-    display: flex; /* 블록 요소로 설정 */
-    margin-bottom: 10px; /* 아래쪽 마진 추가 */
-    justify-content: center; 
 }
 
 .button-box2 {
@@ -247,7 +250,7 @@ p {
      
      <!-- 댓글 목록 -->
     <c:forEach var="reply" items="${replies}">
-     <form action="/reply/delete" method="post">
+     <form action="/reply/delete" method="post" style="display: flex; justify-content: space-between;">
     	<input id="input1" type="hidden" name="cno" value="${reply.cno }">
     	<input id="input2" type="hidden" name="no" value="${board.no }">
         <div class="reply">
@@ -286,23 +289,20 @@ p {
     </form>
    <br>
         
-    <form id="content-del" action="/delete/${board.no}" method="post">
-      <label for="password-input"></label>
+    <form id="content-del" action="/delete/${board.no}" method="post"
+          style="display: flex; justify-content: flex-end;">
+      <label for="password-input"></label>  
        <input type="password" id="password-input1" name="password" placeholder="비밀번호" size=10 />
        <button class="condel" type="submit">글삭제</button>
-     </form>
-        <br>
-     
-      <div class="button-box2">
+       
        <input id="pw" type="password" placeholder="비밀번호" size=10 />
-       <button onclick="update()">수정</button>
-      </div>  
+       <button class="upda" onclick="update()">수정</button>
+     </form>
+       <br>
       <hr>
-    
     <div class="button-box">
       <button onclick="location.href='/bullboard'">목록</button>
     </div>
-  
 </div>  
           
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

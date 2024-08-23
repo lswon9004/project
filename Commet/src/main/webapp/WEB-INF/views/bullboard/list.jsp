@@ -7,15 +7,15 @@
 <head>
 <title>익명게시판 글목록</title>
 <style>
+
 body {
     font-family: Arial, sans-serif;
     background-color: #ADD8E6; 
-    margin: 0;
-    padding: 0;
 }
 
 .container {
-    max-width: 1200px;
+    width: 900px;
+    height: 700px;
     margin: 50px auto;
     background-color: #fff;
     border: 1px solid #ddd;
@@ -92,13 +92,10 @@ button:hover {
 
 #page {
     text-align: center;
-    margin-top: 20px;
-}
-
-#page a {
-    margin: 0 5px;
-    text-decoration: none;
-    color: #333;
+    margin: 50px;
+    display: flex;
+    justify-content: center;
+    padding : 10px;
 }
 
 #page a:hover {
@@ -174,10 +171,8 @@ button:hover {
                </c:if>
             </tbody>
         </table>
-        
           <button class="write" onclick="location.href='/write'">글쓰기</button>
-         <button class="main" onclick="location.href='/main'">메인화면</button>
-       
+          <button class="main" onclick="location.href='/main'">메인화면</button>
         <!-- 페이지 네비게이션 -->
         <div id="page">
 				<c:if test="${begin > pageNum }">
@@ -189,7 +184,7 @@ button:hover {
 				<c:if test="${end < totalPages }">
 					<a href="/bullboard?p=${end+1}">[다음]</a>
 				</c:if>
-			</div>
+	    </div>
     </div>
 </body>
 </html>

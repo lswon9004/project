@@ -20,8 +20,8 @@ public class BulletinboardService {
 	}
 	 
     //모든 게시글을 조회, start와 perpage 페이지네이션
-    public List<BulletinboardDto> getAllBoards(int start, int perPage) {
-        return boardDao.findAll(start,10);
+    public List<BulletinboardDto> getAllBoards(int start) {
+        return boardDao.findAll(start);
     }
     
     //특정 번호(no)의 게시글을 조회
@@ -56,10 +56,13 @@ public class BulletinboardService {
    }
    
    //제목과 내용으로 게시글을 검색하고, 검색 결과를 페이지네이션처리
-   public List<BulletinboardDto> searchBoard(String title, String content, int start) {
+   public List<BulletinboardDto> searchBoard(String title, int start) {
        title = "%"+title+"%";
-       content = "%"+content+"%";
-       return boardDao.search(title,content,start);
+       return boardDao.search(title,start);
+   }
+   public int searchCount(String title) {
+       title = "%"+title+"%";
+	   return boardDao.searchcount(title);
    }
 	
 }

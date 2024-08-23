@@ -46,6 +46,7 @@
         
         <!-- Main content area -->
         <main>
+
             <!-- Include aside (sidebar) -->
             <jsp:include page="/WEB-INF/views/aside.jsp" />
             

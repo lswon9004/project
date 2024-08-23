@@ -118,7 +118,7 @@
                             </tr>
                             <tr>
                                 <th>서류 종류</th>
-                                 <td>
+                                 <td>   
                                     <c:choose>
                                         <c:when test="${dto.approval_type == 1}">연차/휴가신청</c:when>
                                         <c:when test="${dto.approval_type == 2}">출장신청</c:when>

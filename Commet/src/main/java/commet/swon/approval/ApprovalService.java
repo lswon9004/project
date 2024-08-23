@@ -74,9 +74,13 @@ public class ApprovalService {
 	}
 	@Transactional
 	public int updateStatus(String approval_status1, String approval_comm,int no,int approval_type,Date date,int empno) {
-		if(approval_type==1) {
+		if((approval_type==1)&&date!=null) {
 			int deptno = EDao.getDeptno(empno);
+			if(Adao.scount(empno)==0) {
 			Adao.insertdata(empno, deptno, date);
+			}else {
+				Adao.updatedata(empno, date);
+			}
 		}
 		return dao.updateStatus(approval_status1, approval_comm, no);
 	}

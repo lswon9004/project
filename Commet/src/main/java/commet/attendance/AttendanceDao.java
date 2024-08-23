@@ -23,6 +23,8 @@ public interface AttendanceDao {
 	List<Integer> vacationList(Date date);
 	@Insert("insert into Attendance_Management(empno,deptno,date,worktype) values(#{empno},#{deptno},#{date},'휴가')")
 	int insertdata(@Param("empno")int empno,@Param("deptno")int deptno,@Param("date")Date date);
+	@Update("Update Attendance_Management set worktype = '휴가' where empno = #{empno} and date = #{date}")
+	int updatedata(@Param("empno")int empno,@Param("date")Date date);
 	@Select("SELECT COUNT(*) AS work_days "
 			+ "FROM attendance_management "
 			+ "WHERE empno = #{empno} "

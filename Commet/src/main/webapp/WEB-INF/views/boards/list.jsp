@@ -11,7 +11,9 @@
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
 </head>
 <body>
-<div class="container">
+
+
+     <div class="container">
       <!-- Include header -->
         <jsp:include page="/WEB-INF/views/header.jsp" />
         
@@ -19,7 +21,8 @@
         <main>
             <!-- Include aside (sidebar) -->
             <jsp:include page="/WEB-INF/views/aside.jsp" />
-          <!-- 여기서부터 가운데 메인 -->
+
+          <!--   여기서부터 가운데 메인 -->
             <section class="main-content">
             		<h2>게시판</h2>
             		<div class="header-line"></div>

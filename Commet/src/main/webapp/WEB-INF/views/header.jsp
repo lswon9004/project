@@ -15,7 +15,7 @@
         </div>
     </div>
     <h1>
-        코멧 업무포털
+        코멧<c:if test="${user.right>=3}"> 관리자</c:if> 업무포털
     </h1>
     <div class="header-right">
         <button id="start">업무시작</button>

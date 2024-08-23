@@ -53,10 +53,10 @@ h1 {
 }
 
 p {
-    color: #333; /* 텍스트 색상 변경 */
-    padding: 10px; /* 패딩 추가 */
-    text-align: left; /* 텍스트 정렬 변경 */
-    display: inline-block; /* p 태그를 나란히 정렬 */
+    color: #333; 
+    padding: 10px; 
+    text-align: left; 
+    display: inline-block;
 }
 
 #like-button {
@@ -115,24 +115,25 @@ p {
 
 #reply-form {
     display: flex;
-    justify-content: flex-end; /* 요소를 중앙으로 정렬 */
+    justify-content: flex-end; 
+    margin: auto;
 }
 
 #id-input, #password-input2{
     display: flex;
-    justify-content: flex-end; /* 요소를 오른쪽으로 정렬 */
-    margin: 1px;
+    justify-content: flex-end; 
+    margin: auto;
     width: 100px;
     height: 30px;
-    padding: 1px 1px;
+    padding: 3px 3px;
    
 }
 
 #content-input {
     width: 700px;
     height: 30px;
-    margin: 3px;
-    padding: 1px 1px;
+     margin: auto;
+    padding: 3px 3px;
     
 }
 
@@ -142,10 +143,10 @@ p {
     color: #fff;
     cursor: pointer;
     border-radius: 4px;
-    margin: 3px;
-    width: 79px;
-    height: 35px;
-   padding: 10px 20px;
+    margin: auto;
+    width: 80px;
+    height: 40px;
+   padding: auto;
 
 }
 

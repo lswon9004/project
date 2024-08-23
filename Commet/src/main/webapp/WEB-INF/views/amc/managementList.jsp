@@ -12,50 +12,21 @@
 </head>
 <body>
       <div class="container">
-        <header>
-            <div class="user-info">
-                <img src="/upload/${user.imgPath}" alt="User Profile">
-                <div>
-                    <p>이름: ${user.ename }</p>
-                    <p>직책: ${user.position }</p>
-                    <p>사번: ${user.empno }</p>
-                    <p>${user.ename }님 환영합니다.</p>
-                </div>
-            </div>
-            <h1>코멧 업무포털</h1>
-            <div class="header-right">
-                <button id="start">업무시작</button>
-                <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${user.check_in !=null}"><fmt:formatDate value="${user.check_in}" pattern="HH:mm" />/</c:if><c:if test="${user.check_in==null}">00:00/</c:if></p>
-                <p id="endTime"><c:if test="${user.check_out !=null}"><fmt:formatDate value="${user.check_out}" pattern="HH:mm" />/</c:if><c:if test="${user.check_out==null}">00:00/</c:if></p>
-                <nav>
-					<c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    
-                    <a href="/staffModify">개인정보수정</a>
-                    <a href="/bullboard">익명게시판</a>
-                    <a href="/logout">로그아웃</a>
-                </nav>
-            </div>
-        </header>
+      <!-- Include header -->
+        <jsp:include page="/WEB-INF/views/header.jsp" />
+        
+        <!-- Main content area -->
         <main>
-            <aside>
-                <ul class="menu">
-                    <li><a href="/searchCustomers">통합업무</a></li>
-                     <li><a href="/attendance/managementList">근태현황</a>
-                     <c:if test="${user.right>=2 }"> <li><a href="/attendance/adminManagementList">전체사원근태현황</a></li></c:if>
-                    <li><a href="/boards">게시판</a></li>
-                    <li><a href="/approval/${user.empno}">전자결재</a></li>
-                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage" class="active">직원관리</a></li></c:if>
-                </ul>
-            </aside>
+            <!-- Include aside (sidebar) -->
+            <jsp:include page="/WEB-INF/views/aside.jsp" />
+          <!--   여기서부터 가운데 메인 -->
+          
             <!-- 여기서부터 메인 -->
             <section class="main-content">
              <div class="container">
              
         	<h2>${user.ename }님의 근태현황 입니다.</h2>
         	<div class="header-line"></div>
-        	
 			<div class="form-container">
         	<form action="/attendance/search2" method="get">
             <label for="startDate">출근일자:</label>
@@ -144,51 +115,55 @@
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript"> 
-empno = ${user.empno};
-
-$('#start').click(function(){
-	deptno = ${user.deptno};
-	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
-		if (data){			
+<script type="text/javascript"> /* 메인화면 업무시작버튼 이벤트 */
+		empno = ${user.empno};
+			$('#start').click(function(){
+			deptno = ${user.deptno};
+			$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
+			if (data){			
 			$('#startTime').text(data+'/');						
-		 }else{
+		 	}else{
 			alert('이미 출근버튼을 누르셨습니다.')
 			alert(date)
-		} 
+			} 
+		})
 	})
-})
-$('#end').click(function(){
-	$.getJSON('/endTime',{'empno':empno},function(data){
-		$('#endTime').text(data)
+			$('#end').click(function(){
+			$.getJSON('/endTime',{'empno':empno},function(data){
+				$('#endTime').text(data)
+		})
 	})
-})
- function selectDate(date) {
-	$.getJSON('/vacation',{'date':date},function(data){
-		$('#vlist').append(datea)
-	})
-}
+ 	function selectDate(date) {
+			$.getJSON('/vacation',{'date':date},function(data){
+				$('#vlist').append(datea)
+		})
+	}	
 </script>
 
- 
+	<!-- 근태현황 출근버튼 -->
    	<script>
-        $(document).ready(function() {
-            $("#checkInButton").click(function(event) {
-                event.preventDefault(); // 기본 동작을 막음
-                $.ajax({
-                    url: "/attendance/checkInStatus",
-                    method: "GET",
-                    success: function(data) {
-                        if (data) {
-                            alert("출근 버튼을 이미 눌렀습니다.");
-                        } else {
-                            $("#checkInForm").submit(); // 출근 폼 제출
-                        }
-                    }
-                });
-            });
-        });
+   	empno = ${user.empno};
+   	$('#start').click(function(){
+   	    $.post("/attendance/checkInStatus", function(data){
+   	        if (data.hasCheckedIn) {
+   	            alert("출근 완료");
+   	        } else {
+   	            $.post("/attendance/checkIn", function(){
+   	                alert("출근이 완료되었습니다.");
+   	                location.reload(); // 출근 후 페이지를 새로고침하여 변경사항을 반영
+   	            });
+   	        }
+   	    });
+   	});
+
+   	$('#end').click(function(){
+   	    $.getJSON('/endTime',{'empno':empno},function(data){
+   	        $('#endTime').text(data)
+   	    })
+   	});
     </script>
+    
+ <!--    실시간 시간 표시해 주는 스크립트 -->
     <script>
     function updateTime() {
         const now = new Date();

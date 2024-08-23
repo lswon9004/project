@@ -37,45 +37,15 @@
     </style>   
 </head>
 <body>
-     <div class="container">
-        <header>
-            <div class="user-info">
-                <img src="profile.jpg" alt="User Profile">
-                <div>
-                    <p>이름: 김자바</p>
-                    <p>직책: ${user.position }</p>
-                    <p>사번: ${user.empno }</p>
-                    <p>김자바 님 환영합니다.</p>
-                </div>
-            </div>
-            <h1>코멧 업무포털</h1>
-            <div class="header-right">
-                <button id="start">업무시작</button>
-                <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">00:00/</c:if></p>
-                <p id="endTime">00:00</p>
-                <nav>
-                    <a href="/main">Home</a>
-                    <a href="#">연봉계산기</a>
-                    <a href="#">개인정보수정</a>
-                    <a href="/logout">로그아웃</a>
-                </nav>
-            </div>
-        </header>
+    <div class="container">
+      <!-- Include header -->
+        <jsp:include page="/WEB-INF/views/header.jsp" />
+        
+        <!-- Main content area -->
         <main>
-            <aside>
-                <ul class="menu">
-                    <li><a href="#">통합업무</a></li>
-                    <li><a href="#">게시판</a></li>
-                    <li><a href="/approval">전자결재</a></li>
-                    <li><a href="/approval/status">결재승인</a></li>
-                    <li><a href="#">캘린더</a></li>
-                    <li><a href="#">직원관리</a></li>
-                    <li><a href="#">관찰관리</a></li>
-                </ul>
-                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
-                <p class="footer-text">코멧업무포털</p>
-            </aside>
+            <!-- Include aside (sidebar) -->
+            <jsp:include page="/WEB-INF/views/aside.jsp" />
+          <!--   여기서부터 가운데 메인 -->
             <section class="main-content">
                 <div class="status-overview">
                     <div class="form-container">

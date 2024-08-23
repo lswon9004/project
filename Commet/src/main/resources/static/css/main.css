@@ -9,11 +9,11 @@ html, body {
     height: 100%;
    /* overflow: hidden; */
 }
-     select {
-        width: 57px;
-        height: 27px;
-        border-radius: 5px;
-        }
+/*      select { */
+/*         width: 57px; */
+/*         height: 27px; */
+/*         border-radius: 5px; */
+/*         } */
 
 		/* 버튼 컨테이너 스타일링 */
 		.button-container {
@@ -89,16 +89,18 @@ html, body {
 /* 진행상태 스타일 */
 .cbutton {
 	margin: 2px; /* 버튼 주위에 여백 추가 */
-	padding: 9px 18px; /* 버튼 내부에 여백 추가 */
+	padding: 5px;
 	background-color: #00bfff; /* 버튼 배경색 설정 */
 	color: #fff; /* 버튼 텍스트 색상 설정 */
 	border: none; /* 버튼 경계선 제거 */
 	cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
 	border-radius: 4px; /* 버튼의 모서리를 둥글게 설정 */
 	font-weight: bold;
+	width: 100px;
+    height: 30px;
 }
 .button{
-		margin: 5px;
+	margin: 5px;
 	padding: 9px 18px;
 	background-color: #00bfff; /* 버튼 배경색 */
 	color: #fff;
@@ -164,7 +166,7 @@ label {
 /* 날짜 입력 필드 스타일 */
 input[type="date"] {
 	padding: 5px; /* 입력 필드 내부 여백을 추가 */
-	margin: 0 10px; /* 입력 필드 좌우에 여백을 추가 */
+	margin: 5px; /* 입력 필드 좌우에 여백을 추가 */
 	border: 1px solid #ccc; /* 입력 필드 경계선을 회색으로 설정 */
 	border-radius: 4px; /* 입력 필드 모서리를 둥글게 설정 */
 }

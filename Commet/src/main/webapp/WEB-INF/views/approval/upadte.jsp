@@ -90,6 +90,7 @@
 </head>
 <body>
     <div class="container">
+<<<<<<< HEAD
         <header>
             <div class="user-info">
                 <img src="/upload/${user.imgPath}" alt="User Profile">
@@ -114,7 +115,14 @@
                 </nav>
             </div>
         </header>
+=======
+      <!-- Include header -->
+        <jsp:include page="/WEB-INF/views/header.jsp" />
+        
+        <!-- Main content area -->
+>>>>>>> refs/heads/main
         <main>
+<<<<<<< HEAD
             <aside>
                 <ul class="menu">
                     <li><a href="/searchCustomers">통합업무</a></li>
@@ -125,6 +133,11 @@
                     <c:if test="${user.right>=2 }"> <li><a href="/emp_manage" >직원관리</a></li></c:if>
                 </ul>
             </aside>
+=======
+            <!-- Include aside (sidebar) -->
+            <jsp:include page="/WEB-INF/views/aside.jsp" />
+          <!--   여기서부터 가운데 메인 -->
+>>>>>>> refs/heads/main
             <section class="main-content">
                 <div class="approval-form-container">
                     <h1>인장 신청</h1>

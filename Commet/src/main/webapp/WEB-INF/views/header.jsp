@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <header>
-    <div class="user-info"><!-- 박선 -->
+    <div class="user-info"><!-- 박선욱 -->
         <img src="/upload/${user.imgPath}" alt="User Profile">
         <div>
             <p>이름: ${user.ename }</p>

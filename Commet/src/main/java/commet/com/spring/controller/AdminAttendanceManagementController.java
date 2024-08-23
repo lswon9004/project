@@ -102,7 +102,7 @@ public class AdminAttendanceManagementController {
             List<EmpDto> alist = eservice.alist();//연차 . 잔여연차 받아 오는 부분
             model.addAttribute("alist", alist);
             List<Map<String, Integer>> leaveCount = service.leaveCount(dto.getEmpno());
-            model.addAttribute("leaveCountlist", leaveCount);//연차 . 잔여연차 받아 오는 부분
+            model.addAttribute("leaveCountlist", leaveCount);//연차 . 잔여연차 받아 오는 부분   a
          
             model.addAttribute("begin", begin);
             model.addAttribute("end", end1);

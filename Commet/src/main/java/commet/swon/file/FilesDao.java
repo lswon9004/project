@@ -12,5 +12,5 @@ public interface FilesDao {
 	@Select("select * from file where board_name = 'approval' and board_no= #{no}")
 	FilesDto oneFile(int no);
 	@Select("select * from file where file_no =#{no}")
-	FilesDto oneDownFile(int no);
+	FilesDto oneDownFile(int no);///a
 }

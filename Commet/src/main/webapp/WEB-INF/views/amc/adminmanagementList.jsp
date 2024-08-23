@@ -17,7 +17,7 @@
         
         <!-- Main content area -->
         <main>
-            <!-- Include aside (sidebar) -->
+            <!-- Include aside (sidebar) a-->
             <jsp:include page="/WEB-INF/views/aside.jsp" />
             
             <!-- 여기서부터 메인 -->

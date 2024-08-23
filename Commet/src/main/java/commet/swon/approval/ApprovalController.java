@@ -64,7 +64,7 @@ public class ApprovalController {
 		m.addAttribute("dto", dto);
 		return "/approval/content";
 	}
-	@GetMapping("/approval/update/{no}")
+	@GetMapping("/approval/update/{no}")//a
 	public String updatecontent(@PathVariable("no")int no, Model m) {
 		FilesDto fDto = service.selectFile(no);
 		ApprovalDto dto = aService.oneApproval(no);

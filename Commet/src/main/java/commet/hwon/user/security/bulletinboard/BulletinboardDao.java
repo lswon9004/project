@@ -18,8 +18,8 @@ public interface BulletinboardDao {
     void save(@Param("title")String title,@Param("content")String content,@Param("iid")String iid,@Param("password")String password);
    
     //데이터베이스에서 모든 게시글을 조회하는 메서드 , start와 count 페이지네이션 사용
-    @Select("SELECT * FROM BULLETIN_BOARD order by ref_date")    
-    List<BulletinboardDto> findAll(@Param("start")int start,@Param("count")int count);
+    @Select("SELECT * FROM BULLETIN_BOARD order by ref_date limit #{start} ,10")    
+    List<BulletinboardDto> findAll(@Param("start")int start);
     
     //게시글의 총 수를 반환함
     @Select("select count(*) from BULLETIN_BOARD ")
@@ -50,12 +50,18 @@ public interface BulletinboardDao {
        		"<if test=\"title !=''\"> ",
        			"title LIKE  #{title} ",
        		"</if>",
-       		"<if test=\"content == ''\">",
-       			"and content LIKE  #{content} ",
-       		"</if> ",
+       		
        "</where> ",
        "order by ref_date desc limit #{start} , 10 </script>"})
-      List<BulletinboardDto> search(@Param("title")String title,@Param("content")String content,@Param("start") int start);
+      List<BulletinboardDto> search(@Param("title")String title,@Param("start") int start);
+       @Select({"<script> SELECT count(*) FROM BULLETIN_BOARD ",
+           "<where> ",
+           		"<if test=\"title !=''\"> ",
+           			"title LIKE  #{title} ",
+           		"</if>",
+           		
+           "</where> </script>"})
+          int searchcount(@Param("title")String title);
 
 
 

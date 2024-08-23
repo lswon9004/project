@@ -37,17 +37,17 @@
             <div class="content_box2">
               <div class="flex_col2">
                 <p class="highlight2">사원번호</p>
-                <div class="content_box"><input type="number" id="no" class="highlight11" style="border: none;" placeholder="202410012"></div>
+                <div class="content_box"><input type="number" id="no" class="highlight11" style="border: none;" placeholder="사원번호를입력하세요"></div>
               </div>
             </div>
             <div class="content_box21">
               <div class="flex_col2">
                 <p class="highlight2">비밀번호</p>
-                <div class="content_box"><input type="password" id="pw" class="highlight11" style="border: none;" placeholder="password"></div>
+                <div class="content_box"><input type="password" id="pw" class="highlight11" style="border: none;" placeholder="비밀번호를입력하세요"></div>
               </div>
             </div>
             
-            <div class="text"><a href="/findpw">Forgot Password?</a></div>
+            <div class="text"><a href="/findpw">비밀번호찾기</a></div>
 
             <button class="btn" onclick="move()">
               <!-- TODO --> 

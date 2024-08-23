@@ -86,8 +86,7 @@
                 <p class="footer-text">코멧업무포털</p>
             </aside>
             <section class="main-content">
-                <div class="status-overview">
-                    <div class="form-container">
+                    <div class="approval-form-container">
         				<h1 style="text-align: center;">결재 신청</h1>
         				<table>
         				<colgroup>
@@ -128,7 +127,7 @@
         						</td>
         					</tr>
         				</table>
-        				<textarea style="width: 100%; height: 200px;" readonly="readonly">${dto.approval_content }</textarea>
+        				<textarea id="editor" style="width: 100%; height: 200px;" readonly="readonly">${dto.approval_content }</textarea>
         				<form method="post" action="/approval/statusForm">
         				<c:if test="${dto.approval_type ==1 }">
         				<input type="date" name="date">
@@ -156,14 +155,49 @@
         					</tr>
         				</table>
         				<button>등록</button>
-        				<input type="button"  onclick="window.location.href='/approval/status'" value="취소" />
+        				<input class="button" type="button"  onclick="history.go(-1)" value="취소" />
         				</form>
-   					 </div>
    
                 </div>
             </section>
         </main>
     </div>
+    <footer>
+        <p class="footer-text">현재시간 : <span id="current-time"></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
     
+    <script>
+    ClassicEditor.create(document.querySelector('#editor'), {
+        language: "ko",
+        ckfinder: { uploadUrl: 'http://localhost:8083/img/upload' }
+    }).then(editor => {
+        window.editor = editor;
+        editor.enableReadOnlyMode('#editor'); // 읽기 전용 모드 설정
+    }).catch(error => {
+        console.error(error);
+    });
+
+        function updateTime() {
+            const now = new Date();
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                weekday: 'long',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            const currentTimeString = now.toLocaleDateString('ko-KR', options);
+            document.getElementById('current-time').innerText = currentTimeString;
+        }
+
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
 </body>
 </html>

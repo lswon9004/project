@@ -57,11 +57,18 @@ public class ImgController {
 	    public void fileDownload(@PathVariable("no") int no,
 	                             HttpServletResponse response) throws IOException {
 		 FilesDto dto = service.downFile(no);
-	        File f = new File("classpath:static/upload/document/", dto.getPath());
+		 String path = null;
+	        try {
+	            path = ResourceUtils.getFile("classpath:static/upload/document/").toPath().toString();
+	        } catch (IOException | IllegalStateException e) {
+	            e.printStackTrace();
+	        }
+	        File f = new File(path, dto.getPath());
 	        // file 다운로드 설정
 	        response.setContentType("application/download");
 	        response.setContentLength((int)f.length());
-	        response.setHeader("Content-disposition", "attachment;filename=\"" + dto.getFname() + "\"");
+	        response.setHeader("Content-disposition", "attachment;filename=\"" + dto.getPath() + "\"");
+	        response.setCharacterEncoding("CP949"); // 인코딩 설정 추가
 	        // response 객체를 통해서 서버로부터 파일 다운로드
 	        OutputStream os = response.getOutputStream();
 	        // 파일 입력 객체 생성

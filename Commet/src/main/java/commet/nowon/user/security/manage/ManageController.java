@@ -37,27 +37,10 @@ public class ManageController {
 	@Autowired 
 	ManageService service;
 	
-//	@Autowired
-//	EmpService eservice; //empservice에 있는 getRight 사용하기 위해 
-//	public int noCheck(String position) { // 직급의 권한레벨 확인
-//	return eservice.getRight(position);
-//}	
-	
 	@ModelAttribute("user")
 	public EmpDto getDto() {
 		return new EmpDto();
 	}
-	  
-//	@GetMapping("/insert") // get 방식으로 /insert 받으면 사원정보입력창으로 이동 
-//	public String empform(){
-//		return "manage/newEmp";
-//	}
-//	
-//	@PostMapping("/insert") // newEmp.jsp 에서 사원등록하면 리다이렉트로 /emp_manage 요청 empList.jsp 화면보여줌
-//	public String insert(@ModelAttribute("dto") ManageDto dto) {
-//		service.insertEmp(dto);
-//		return "redirect:/emp_manage"; 
-//	}
 	
     @RequestMapping("/emp_manage") // 직원관리 메인화면
     public String empList(@ModelAttribute("user")EmpDto dto, @RequestParam(name = "p", defaultValue = "1") int page, Model m) {
@@ -94,6 +77,10 @@ public class ManageController {
     
 	@GetMapping("/empModify") // empinfo 에서 들고온 사원정보를 수정 화면에 보여줌
 	public String showModify(@RequestParam("no")int no, Model model) {
+	    List<ManageDto> deptList = service.searchDept();
+	    List<ManageDto> positionList = service.searchPosition();
+	    model.addAttribute("positionList", positionList);
+	    model.addAttribute("deptList", deptList);
 		ManageDto empInfo = service.getempByID(no); 
     	model.addAttribute("empInfo", empInfo);
     	return "manage/empModify";
@@ -115,21 +102,24 @@ public class ManageController {
     @PutMapping("/empModify")//정보수정
     public String updateEmp(ManageDto ModifyDto) {
     	service.updateEmp(ModifyDto);
-    	System.out.println(ModifyDto);
         return "redirect:/emp_manage";
     }
 	
 	  @PostMapping("/deleteEmp") //삭제 
-	  public String deleteEmp(@RequestParam("empnos") int[] empnos) { //삭제할 고객ID배열에 해당하는 고객정보를 삭제 
-		  service.deleteEmps(empnos);
-		  return "redirect:/emp_manage";
+	  public String deleteEmp(@RequestParam(value = "empnos", required = false) int[] empnos) { //삭제할 고객ID배열에 해당하는 고객정보를 삭제 
+		    if (empnos == null) {
+		        // 파라미터가 없을 경우 처리
+		        return "redirect:/emp_manage";
+		    }
+		    // 파라미터가 있을 경우 처리
+		    service.deleteEmps(empnos);
+		    return "redirect:/emp_manage";
 	  }
 	  
 	  @GetMapping("/searchEmps")//사원이름 / 사원번호 입력하면 검색하는 메서드 
 	  public String searchEmps(@RequestParam(value = "empno", defaultValue = "0") Integer empno,
 			  						@RequestParam(value = "ename", required = false) String ename, Model model) {
 	  List<ManageDto> searchResults = service.searchEmps(empno, ename);
-	  System.out.println(searchResults);
 	  model.addAttribute("elist", searchResults);
 	  System.out.println(searchResults);
 	  return "manage/empList";
@@ -241,10 +231,9 @@ public class ManageController {
 	            model.addAttribute("photoPath", "/upload/" + newFileName);
 				String filePath = request.getServletContext().getRealPath("empImg"); 
 				empInfo.setImgPath(newFileName);
-				System.out.println(newFileName);
 				model.addAttribute("empInfo", empInfo);
 				File file = new File(filePath);
-				System.out.println(filePath);
+
 	        }
 	            return "manage/empModify";
 	    }

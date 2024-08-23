@@ -183,18 +183,18 @@
 				<td>부서:</td> <!-- db에서 dept 부서와 번호 저장 안해두면 작동안할수있음-->
 				<td>	
 					<select id="selected" name="deptno" readonly> 
-        				<option value="100" ${empInfo.deptno == '100' ? 'selected' : ''}>qwer</option>
-        				<option value="200" ${empInfo.deptno == '200' ? 'selected' : ''}>sdff</option>
-        				<option value="300" ${empInfo.deptno == '300' ? 'selected' : ''}>asdf</option>
+        				<c:forEach var="dept" items="${deptList}">
+        				 	<option value="${dept.deptno}">${dept.deptname}</option>
+    					</c:forEach>
 					</select>
 				</td>
 				<td>담당업무:</td><td><input type="text" name="jop" value="${empInfo.jop}" readonly></td>
 				<td>직급:</td>
 				<td>
 				<select name="position" readonly>
-        			<option value="대리" ${empInfo.position == '대리' ? 'selected' : ''}>대리</option>
-        			<option value="팀장" ${empInfo.position == '팀장' ? 'selected' : ''}>팀장</option>
-        			<option value="관리자" ${empInfo.position == '관리자' ? 'selected' : ''}>관리자</option>
+        				<c:forEach var="position" items="${positionList}">
+        				 	<option value="${position.position}">${position.position}</option>
+    					</c:forEach>
 				</select>
 				</td>
             </tr>

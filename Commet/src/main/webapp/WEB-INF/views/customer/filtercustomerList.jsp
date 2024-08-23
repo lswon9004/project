@@ -11,44 +11,15 @@
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
 </head>
 <body>
-      <div class="container">
-        <header>
-            <div class="user-info">
-                <img src="/upload/${user.imgPath}" alt="User Profile">
-                <div>
-                    <p>이름: ${user.ename }</p>
-                    <p>직책: ${user.position }</p>
-                    <p>사번: ${user.empno }</p>
-                    <p>${user.ename }님 환영합니다.</p>
-                </div>
-            </div>
-            <h1>코멧 업무포털</h1>
-            <div class="header-right">
-                <button id="start">업무시작</button>
-                <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${user.check_in !=null}"><fmt:formatDate value="${user.check_in}" pattern="HH:mm" />/</c:if><c:if test="${user.check_in==null}">00:00/</c:if></p>
-                <p id="endTime"><c:if test="${user.check_out !=null}"><fmt:formatDate value="${user.check_out}" pattern="HH:mm" />/</c:if><c:if test="${user.check_out==null}">00:00/</c:if></p>
-                <nav>
-					<c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->                    
-                    <a href="/staffModify">개인정보수정</a>
-                    <a href="/bullboard">익명게시판</a>
-                    <a href="/logout">로그아웃</a>
-                </nav>
-            </div>
-        </header>
+     <div class="container">
+      <!-- Include header -->
+        <jsp:include page="/WEB-INF/views/header.jsp" />
+        
+        <!-- Main content area -->
         <main>
-            <aside>
-                <ul class="menu">
-                    <li><a href="/searchCustomers">통합업무</a></li>
-                     <li><a href="/attendance/managementList">근태현황</a>
-                     <c:if test="${user.right>=2 }"> <li><a href="/attendance/adminManagementList">전체사원근태현황</a></li></c:if>
-                    <li><a href="/boards">게시판</a></li>
-                    <li><a href="/approval/${user.empno}">전자결재</a></li>
-                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage" class="active">직원관리</a></li></c:if>
-                </ul>
-            </aside>
+            <!-- Include aside (sidebar) -->
+            <jsp:include page="/WEB-INF/views/aside.jsp" />
+          <!--   여기서부터 가운데 메인 -->
             
       <!-- 여기서부터 가운데 메인 -->
       <section class="main-content">

@@ -46,9 +46,7 @@
                 <div class="content_box"><input type="password" id="pw" class="highlight11" style="border: none;" placeholder="password"></div>
               </div>
             </div>
-            
-            <div class="text"><a href="/findpw">Forgot Password?</a></div>
-
+            <div class="text"><a href="/findpw"  style="margin-left: 290px">비밀번호 찾기</a></div>
             <button class="btn" onclick="move()">
               <!-- TODO --> 
               로그인

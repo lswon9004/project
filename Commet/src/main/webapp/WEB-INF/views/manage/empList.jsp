@@ -51,12 +51,13 @@
     <form action="/deleteEmp" method="post">
         <div class="button-container">
             <div class="search-form">
+
         		<select class="cbutton" id="searchType" name="searchType">
             		<option class="dropdown" value="empno">사원번호</option>
             		<option class="dropdown" value="ename">사원이름</option>
         		</select>
 				<input type="text" id="searchInput" name="searchInput" />
-        		<button type="button" class="button" onclick="performSearch()">검색</button>
+        		<button type="button" class="button" id="sButton" onclick="performSearch()">검색</button>
             </div>
             <div>
                 <input type="button" class="button" onclick="location.href='/insert'" value="등록"/> 
@@ -111,6 +112,7 @@
         </c:if>
     </div>
 
+</script>
     <script>
         function performSearch() {
             const searchType = document.getElementById('searchType').value;
@@ -167,6 +169,7 @@
         </main>
     </div>
 </body>
+
 <footer>
 <p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
 </footer>
@@ -194,7 +197,35 @@ $('#end').click(function(){
 		$('#vlist').append(datea)
 	})
 }
+
+$(document).ready(function(){	
+	$("button[type=submit]").click(function(event){
+    	// 고객 ID 체크박스가 하나도 선택되지 않았으면 아무 동작도 하지 않음
+    if ($("input[name='empnos']:checked").length === 0) {
+        event.preventDefault(); // 기본 동작(폼 제출) 취소
+		 *alert('삭제할 항목을 선택하세요.');  알러트 창이 검색 할때도 나타나서 주석처리함*
+    	}
+	});
+});
+
+$(document).ready(function(){
+	<!-- jQuery를 사용하여 “전체 선택” 체크박스를 클릭하면 모든 체크박스를 선택하거나 선택 해제할 수 있도록 스크립트를 추가 및 검색 기능 -->
+    $("#selectAll").click(function(){
+        $("input[type=checkbox]").prop('checked', this.checked);
+    });
+    
+	 // 엔터 키를 눌렀을 때 검색이 되도록 추가된 부분
+    $("#searchInput").keypress(function(event) {
+        if (event.which === 13) { // 엔터 키의 키 코드는 13입니다.
+            $('#sButton').click(); // 검색 버튼을 클릭합니다.
+        }
+    });
+    
+	
+	 
+});
 </script>
+
     <!-- jQuery를 사용하여 “전체 선택” 체크박스를 클릭하면 모든 체크박스를 선택하거나 선택 해제할 수 있도록 스크립트를 추가했습니다. -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">

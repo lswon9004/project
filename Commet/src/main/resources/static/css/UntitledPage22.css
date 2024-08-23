@@ -53,22 +53,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px 0;
     width: 78.97%;
   }
 
   .hero_title {
     display: flex;
     justify-content: center;
-    font: 700 40px/1.4 Inter, Helvetica, Arial, serif;
-    color: rgb(51 56 66);
+    font: 700 50px/1.4 Inter, Helvetica, Arial, serif;
+    color: #00e5ff;
     text-align: center;
   }
 
   .text11 {
     display: flex;
     justify-content: center;
-    font: 400 14px/1.57 Inter, Helvetica, Arial, serif;
+    font: 400 16px/1.57 Inter, Helvetica, Arial, serif;
     color: rgb(142 147 160);
     text-align: center;
     letter-spacing: -0.1px;
@@ -105,7 +104,7 @@
     margin: 12px 0 11px 20px;
     width: 184px;
     font: 400 18px/1.55 Inter, Helvetica, Arial, serif;
-    color: black;
+    color: #00bfff;;
   }
 
   .content_box21 {
@@ -117,7 +116,7 @@
 
   .highlight11 {
     margin: 12px 0 11px 20px;
-    width: 175px;
+    width: 340px;
     font: 400 18px/1.55 Inter, Helvetica, Arial, serif;
     color: black;
   }

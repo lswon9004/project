@@ -71,13 +71,13 @@
 							<input type="text" id="approval_title" name="approval_title">
 							<label for="startDate">작성일:</label> <input type="date"
 								id="startDate" name="startDate">~ <input type="date"
-								id="endDate" name="endDate"> <select
-								name="approval_status1">
-								<option>분류</option>
-								<option>요청</option>
-								<option>승인</option>
-								<option>대기</option>
-								<option>반려</option>
+								id="endDate" name="endDate">
+							<select class="cbutton" name="approval_status1" style="width: 70px">
+								<option class="dropdown">분류</option>
+								<option class="dropdown">요청</option>
+								<option class="dropdown">승인</option>
+								<option class="dropdown">대기</option>
+								<option class="dropdown">반려</option>
 							</select>
 							<button>조회</button>
 						</form>

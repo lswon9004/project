@@ -47,7 +47,7 @@
               </div>
             </div>
             
-            <div class="text"><a href="/">Forgot Password?</a></div>
+            <div class="text"><a href="/findpw">Forgot Password?</a></div>
             <button class="btn" onclick="move()">
               <!-- TODO --> 
               Continue

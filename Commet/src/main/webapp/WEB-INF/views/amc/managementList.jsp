@@ -144,51 +144,55 @@
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript"> 
-empno = ${user.empno};
-
-$('#start').click(function(){
-	deptno = ${user.deptno};
-	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
-		if (data){			
+<script type="text/javascript"> /* 메인화면 업무시작버튼 이벤트 */
+		empno = ${user.empno};
+			$('#start').click(function(){
+			deptno = ${user.deptno};
+			$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
+			if (data){			
 			$('#startTime').text(data+'/');						
-		 }else{
+		 	}else{
 			alert('이미 출근버튼을 누르셨습니다.')
 			alert(date)
-		} 
+			} 
+		})
 	})
-})
-$('#end').click(function(){
-	$.getJSON('/endTime',{'empno':empno},function(data){
-		$('#endTime').text(data)
+			$('#end').click(function(){
+			$.getJSON('/endTime',{'empno':empno},function(data){
+				$('#endTime').text(data)
+		})
 	})
-})
- function selectDate(date) {
-	$.getJSON('/vacation',{'date':date},function(data){
-		$('#vlist').append(datea)
-	})
-}
+ 	function selectDate(date) {
+			$.getJSON('/vacation',{'date':date},function(data){
+				$('#vlist').append(datea)
+		})
+	}	
 </script>
 
- 
+	<!-- 근태현황 출근버튼 -->
    	<script>
-        $(document).ready(function() {
-            $("#checkInButton").click(function(event) {
-                event.preventDefault(); // 기본 동작을 막음
-                $.ajax({
-                    url: "/attendance/checkInStatus",
-                    method: "GET",
-                    success: function(data) {
-                        if (data) {
-                            alert("출근 버튼을 이미 눌렀습니다.");
-                        } else {
-                            $("#checkInForm").submit(); // 출근 폼 제출
-                        }
-                    }
-                });
-            });
-        });
+   	empno = ${user.empno};
+   	$('#start').click(function(){
+   	    $.post("/attendance/checkInStatus", function(data){
+   	        if (data.hasCheckedIn) {
+   	            alert("출근 완료");
+   	        } else {
+   	            $.post("/attendance/checkIn", function(){
+   	                alert("출근이 완료되었습니다.");
+   	                location.reload(); // 출근 후 페이지를 새로고침하여 변경사항을 반영
+   	            });
+   	        }
+   	    });
+   	});
+
+   	$('#end').click(function(){
+   	    $.getJSON('/endTime',{'empno':empno},function(data){
+   	        $('#endTime').text(data)
+   	    })
+   	});
     </script>
+    
+ <!--    실시간 시간 표시해 주는 스크립트 -->
     <script>
     function updateTime() {
         const now = new Date();

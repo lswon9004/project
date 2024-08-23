@@ -47,7 +47,8 @@
               </div>
             </div>
             
-            <div class="text"><a href="/">비밀번호 찾기</a></div>
+            <div class="text"><a href="/findpw">Forgot Password?</a></div>
+
             <button class="btn" onclick="move()">
               <!-- TODO --> 
               로그인

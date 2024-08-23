@@ -70,7 +70,7 @@
   .text11 {
     display: flex;
     justify-content: center;
-    font: 400 14px/1.57 Inter, Helvetica, Arial, serif;
+    font: 400 14px/1.57 Inter, Helvetica, Arial, bold;
     color: #9095A0FF;
     text-align: center;
     letter-spacing: -0.1px;
@@ -78,7 +78,9 @@
 
   .content_box2 {
     display: flex;
+     font: 700 50px/1.4 Inter, Helvetica, Arial, bold;
     flex-direction: column;
+    color: #9095A0FF;
     margin: 4px 0 0;
     width: 100%;
   }
@@ -106,7 +108,7 @@
   .highlight1 {
     margin: 12px 0 11px 20px;
     width: 184px;
-    font: 400 18px/1.55 Inter, Helvetica, Arial, serif;
+    font: 400 18px/1.55 Inter, Helvetica, Arial, bold;
     color: #00bfff;;
   }
 
@@ -120,14 +122,14 @@
   .highlight11 {
     margin: 12px 0 11px 20px;
     width: 340px;
-    font: 400 18px/1.55 Inter, Helvetica, Arial, serif;
+    font: 400 18px/1.55 Inter, Helvetica, Arial, bold;
     color: black;
   }
 
   .text {
     margin: 8px 0 0;
     width: 100%;
-    font: 400 14px/1.57 Inter, Helvetica, Arial, serif;
+    font: 400 14px/1.57 Inter, Helvetica, Arial, bold;
     color: rgb(0 188 214);
   }
 
@@ -144,14 +146,20 @@
     border-radius: 100px;
     padding: 12px 0px;
     border: aliceblue;
+    cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
   }
+  
+  /* 버튼 호버(마우스를 올렸을 때) 스타일 */
+.btn:hover {
+	background-color: #0056b3; /* 버튼 배경색을 어두운 파란색으로 변경 */
+}
 
   .btn1 {
     display: flex;
     justify-content: center;
     margin: 650px 0px 5px;
     min-width: 108px;
-    font: 400 14px/1.57 Inter, Helvetica, Arial, serif;
+    font: 400 14px/1.57 Inter, Helvetica, Arial, bold;
     color: rgb(255 255 255);
     text-align: center;
     background-color: rgb(0 188 214);

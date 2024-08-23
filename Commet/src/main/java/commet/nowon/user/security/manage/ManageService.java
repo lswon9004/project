@@ -36,6 +36,10 @@ public class ManageService {
 		m.put("empno", empno);
 		return dao.managemain(m);
     }
+    
+    public int countSearchResults(int empno, String ename) {
+        return dao.countSearchResults(empno, ename);
+    }
    
     public ManageDto getempByID(int id) {
         return dao.getempByID(id);
@@ -48,14 +52,12 @@ public class ManageService {
     public List<ManageDto> getEmpsByIds(int[] empnos) {
         return dao.getEmpsByIds(empnos);
     }
-    
+
     public List<ManageDto> searchEmpsWithPagination(int empno, String ename, int start, int count) {
         return dao.searchEmpsWithPagination(empno, ename, start, count);
     }
 
-    public int countSearchResults(int empno, String ename) {
-        return dao.countSearchResults(empno, ename);
-    }
+   
     
     public void deleteEmps(int[] emps) {
     	dao.deleteEmps(emps);

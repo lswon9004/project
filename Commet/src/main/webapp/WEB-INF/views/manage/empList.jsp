@@ -56,7 +56,7 @@
             		<option class="dropdown" value="empno">사원번호</option>
             		<option class="dropdown" value="ename">사원이름</option>
         		</select>
-				<input type="text" id="searchInput" name="searchInput" />
+				<input type="text" id="searchInput" name="searchInput"/>
         		<button type="button" class="button" id="sButton" onclick="performSearch()">검색</button>
             </div>
             <div>

@@ -49,8 +49,12 @@ public class ManageService {
         return dao.getEmpsByIds(empnos);
     }
     
-    public List<ManageDto> searchEmps(int empno, String ename) {
-        return dao.searchEmps(empno, ename);
+    public List<ManageDto> searchEmpsWithPagination(int empno, String ename, int start, int count) {
+        return dao.searchEmpsWithPagination(empno, ename, start, count);
+    }
+
+    public int countSearchResults(int empno, String ename) {
+        return dao.countSearchResults(empno, ename);
     }
     
     public void deleteEmps(int[] emps) {

@@ -30,27 +30,27 @@
         <div class="content_box4">
           <div class="flex_col">
             <div class="flex_col1">
-              <h1 class="hero_title">Welcome back</h1>
-              <div class="text11">Enter your details to get sign in to your accoun.</div>
+              <h1 class="hero_title">코멧</h1>
+              <div class="text11">사원 번호와 비밀번호를 입력하세요.</div>
             </div>
             
             <div class="content_box2">
               <div class="flex_col2">
-                <p class="highlight2">Empno</p>
+                <p class="highlight2">사원번호</p>
                 <div class="content_box"><input type="number" id="no" class="highlight11" style="border: none;" placeholder="202410012"></div>
               </div>
             </div>
             <div class="content_box21">
               <div class="flex_col2">
-                <p class="highlight2">Password</p>
+                <p class="highlight2">비밀번호</p>
                 <div class="content_box"><input type="password" id="pw" class="highlight11" style="border: none;" placeholder="password"></div>
               </div>
             </div>
             
-            <div class="text"><a href="/">Forgot Password?</a></div>
+            <div class="text"><a href="/">비밀번호 찾기</a></div>
             <button class="btn" onclick="move()">
               <!-- TODO --> 
-              Continue
+              로그인
             </button>
           </div>
         </div>

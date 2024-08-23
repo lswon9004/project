@@ -28,7 +28,7 @@
 			
         	<form action="/attendance/search" method="get">
     		<label for="empno">사원번호:</label>
-    		<input type="text" id="empno" name="empno" required>
+    		<input type="text" id="empno" name="no" required>
     		
     		<button type="submit">검색</button>
 

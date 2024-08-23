@@ -84,7 +84,7 @@
                         <td><input type="checkbox" name="empnos" value="${emp.empno}"></td>
                         <td><a href="/empDetail/${emp.empno}">${emp.ename}</a></td>
 						<td>${emp.empno}</td>
-                        <td>${emp.deptname}</td> <!-- dept에서 가저오는거 안해놔서 안가저옴 -->
+                        <td>${emp.deptname}</td>
                         <td>${emp.deptno}</td> 
                         <td>${emp.position}</td>
                         <td><fmt:formatDate value="${emp.hiredate}" pattern="yyyy-MM-dd"/></td>

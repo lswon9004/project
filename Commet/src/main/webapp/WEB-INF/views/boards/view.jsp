@@ -11,51 +11,25 @@
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
         <style type="text/css">
     .ck.ck-editor{
-
         width: 100%;
         }
         .ck-editor__editable {
-           height: 200px;
+        height: 200px;
         }
     </style>
 </head>
 <body>
-           <div class="container">
-        <header>
-            <div class="user-info">
-               <img src="/upload/${user.imgPath}" alt="User Profile">
-                <div>
-                    <p>이름: ${user.ename }</p>
-                    <p>직책: ${user.position }</p>
-                    <p>사번: ${user.empno }</p>
-                    <p>${user.ename }님 환영합니다.</p>
-                </div>
-            </div>
-            <h1>코멧 업무포털</h1>
-            <div class="header-right">
-                <button id="start">업무시작</button>
-                <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">0d:00/</c:if></p>
-                <p id="endTime">00:00</p>
-                <nav>
-                    <c:if test="${user.right<3}"><a class="active" href="/main">Home</a> </c:if><!--다른 jsp 파일에서 적용할거 -->
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a> </c:if> <!--다른 jsp 파일에서 적용할거 -->
-                    <a href="/bullboard">익명게시판</a>
-                    <a href="/logout">로그아웃</a>
-                </nav>
-            </div>
-        </header>
+<div class="container">
+      <!-- Include header -->
+        <jsp:include page="/WEB-INF/views/header.jsp" />
+        
+        <!-- Main content area -->
         <main>
-            <aside>
-                <ul class="menu">
-                    <li><a href="/searchCustomers">통합업무</a></li>
-                     <li><a href="/attendance/managementList">근태현황</a>
-                    <li><a href="/boards" class="active">게시판</a></li>
-                    <li><a href="/approval/${user.empno}">전자결재</a></li>
-                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                    <c:if test="${user.right>=2 }"> <li><a href="/emp_manage">직원관리</a></li></c:if>
-                </ul>
-            </aside>
+
+            <!-- Include aside (sidebar) -->
+            <jsp:include page="/WEB-INF/views/aside.jsp" />
+            
+            <!-- 여기서부터 가운데 메인 -->
             <section class="board-main-content">
                 <!-- 메인 콘텐츠 영역 -->
               <div class="board-viewtitle">게시글</div>
@@ -75,7 +49,7 @@
                 <!-- 작성자와 작성일자를 인라인으로 표시 -->
                 
                 <div class="section-title">내용</div>
-                          <textarea id="editor" class="text" id="content" name="content">${board.content}</textarea>
+                          <textarea id="editor" class="text" id="content" name="content" style="height: 370px;">${board.content}</textarea>
                 </div>
                 <div class="like-dislike"> <!-- 추천 버튼 지정 -->
                     <form id="likeForm" action="${hasLiked ? '/boards/unlike' : '/boards/like'}" method="post">
@@ -91,7 +65,7 @@
                 <!-- 각 댓글을 지정하며, 댓글 수정 및 삭제 폼을 포함함 -->
                     <div class="comment"> 
                         <p>${comment.text}</p>
-                        <div class="meta">작성자: ${comment.empno} | 작성일: ${comment.regdate}</div>
+                        <div class="meta">작성자: ${comment.empno} | 작성일: <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" /></div>
                         <c:if test="${comment.empno == user.empno}">
                             <div class="comment-actions">
                                 <form class="comment-update-form" method="post" style="display: inline;">

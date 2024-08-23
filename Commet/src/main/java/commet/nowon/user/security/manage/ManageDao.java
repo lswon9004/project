@@ -52,6 +52,7 @@ public interface ManageDao {
     })
     List<ManageDto> getEmpsByIds(int[] empnos); // 고객 정보 조회
 
+   // 사원이름과 번호로 검색하는것 
    @Select({
 	   "<script>",
 	   "select * from emp natural join dept",
@@ -65,16 +66,34 @@ public interface ManageDao {
 	   "</where>",
 	   "</script>"
    })
-    List<ManageDto> searchEmps(@Param("empno") Integer empno, @Param("ename") String ename);// 사원이름과 번호로 검색하는것 
-    
+   List<ManageDto> searchEmpsWithPagination(@Param("empno") Integer empno, @Param("ename") String ename, @Param("start") int start, @Param("count") int count);
+   
+   // 검색된 결과의 전체 수를 가져오기 위한 메서드
+   @Select({
+	   "<script>",
+	   "select count(*) from emp e",
+	   "left join dept d on e.deptno = d.deptno",
+	   "<where>",
+	   "<if test=\"empno != null and empno != 0\">",
+	   "e.empno LIKE CONCAT('%', #{empno}, '%')",
+	   "</if>",
+	   "<if test=\"ename != null and ename != ''\">",
+	   "e.ename LIKE CONCAT('%', #{ename}, '%')",
+	   "</if>",
+	   "</where>",
+	   "</script>"
+   })
+   int countSearchResults(@Param("empno") Integer empno, @Param("ename") String ename);
 
+
+   	// 고객 삭제
     @Delete("<script>" + 
             "delete from emp where empno in " +
             "<foreach item='id' collection='array' open='(' separator=',' close=')'>" + 
             "#{id}" + 
             "</foreach>" + 
             "</script>")
-    void deleteEmps(int[] empnos); // 고객 삭제
+    void deleteEmps(int[] empnos);
     
     
     

@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
   			<aside>
-                <ul class="menu"><!-- 박선욱 -->
+                <ul class="menu"><!-- 박선욱 a-->
                     <li><a href="/searchCustomers">고객문의</a></li>
                      <li><a href="/attendance/managementList">근태현황</a>
                      <c:if test="${user.right>=2 }"> <li><a href="/attendance/adminManagementList">전체사원근태현황</a></li></c:if>

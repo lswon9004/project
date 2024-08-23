@@ -44,7 +44,7 @@
     		<button type="submit">결근처리</button>
 			</form>
 			
-			<!-- 메시지 표시 영역 -->
+			<!-- 메시지 표시 영역 a-->
 			<c:if test="${not empty message}">
     		<p>${message}</p>
 			</c:if>

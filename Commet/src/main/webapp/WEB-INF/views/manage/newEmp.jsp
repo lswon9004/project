@@ -80,7 +80,7 @@
             background-color: #f2f2f2;
         }
         
-        button, #addressSearchBtn { /* 주소검색 CSS */
+        button, #addressSearchBtn { /* 주소검색 CSS   a*/
     	padding: auto;
     	margin-top: 5px;
     	border: none;

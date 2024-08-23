@@ -63,10 +63,28 @@ public interface ManageDao {
 	   "ename LIKE CONCAT('%', #{ename}, '%')",
 	   "</if>",
 	   "</where>",
+	   "order by empno desc",
+	   "limit #{start}, #{count}",
 	   "</script>"
    })
-    List<ManageDto> searchEmps(@Param("empno") Integer empno, @Param("ename") String ename);// 사원이름과 번호로 검색하는것 
-    
+   List<ManageDto> searchEmpsWithPagination(@Param("empno") Integer empno, @Param("ename") String ename, @Param("start") int start, @Param("count") int count);// 사원이름과 번호로 검색하는것 
+   
+   // 검색된 결과의 전체 수를 가져오기 위한 메서드
+   @Select({
+	   "<script>",
+	   "select count(*) from emp e",
+	   "left join dept d on e.deptno = d.deptno",
+	   "<where>",
+	   "<if test=\"empno != null and empno != 0\">",
+	   "e.empno LIKE CONCAT('%', #{empno}, '%')",
+	   "</if>",
+	   "<if test=\"ename != null and ename != ''\">",
+	   "e.ename LIKE CONCAT('%', #{ename}, '%')",
+	   "</if>",
+	   "</where>",
+	   "</script>"
+   })
+   int countSearchResults(@Param("empno") Integer empno, @Param("ename") String ename);
 
     @Delete("<script>" + 
             "delete from emp where empno in " +

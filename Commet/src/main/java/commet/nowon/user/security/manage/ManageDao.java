@@ -64,8 +64,8 @@ public interface ManageDao {
 	   "ename LIKE CONCAT('%', #{ename}, '%')",
 	   "</if>",
 	   "</where>",
-	   "order by empno desc",
-	   "limit #{start}, #{count}",
+	    "order by empno desc",
+	    "limit #{start}, #{count}",
 	   "</script>"
    })
    List<ManageDto> searchEmpsWithPagination(@Param("empno") Integer empno, @Param("ename") String ename, @Param("start") int start, @Param("count") int count);
@@ -86,6 +86,7 @@ public interface ManageDao {
 	   "</script>"
    })
    int countSearchResults(@Param("empno") Integer empno, @Param("ename") String ename);
+
 
    	// 고객 삭제
     @Delete("<script>" + 

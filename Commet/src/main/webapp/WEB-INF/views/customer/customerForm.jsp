@@ -30,11 +30,9 @@
 
         .modal-content {
             background-color: #fff; /* 세부정보 포함 배경색 */
-            padding: 20px;
-            border: 1px solid #888;
+            padding: 17px;
+            border: 0px solid #888;
             border-radius: 8px;
-            width: 90%;
-            max-width: 1000px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 

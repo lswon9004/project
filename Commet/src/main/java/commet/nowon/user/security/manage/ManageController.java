@@ -116,35 +116,35 @@ public class ManageController {
 		    return "redirect:/emp_manage";
 	  }
 	  
-	  @GetMapping("/searchEmps")//사원이름 / 사원번호 입력하면 검색하는 메서드 
-	  public String searchEmps(@RequestParam(value = "empno", defaultValue = "0") Integer empno,
-			  						@RequestParam(value = "ename", required = false) String ename,
-			  						@RequestParam(name = "p", defaultValue = "1") int page, Model model) {
-		    int perPage = 10; // 한 페이지에 보일 글의 갯수
-		    int startRow = (page - 1) * perPage; // 시작 위치 계산
+	     @GetMapping("/searchEmps")//사원이름 / 사원번호 입력하면 검색하는 메서드 
+	     public String searchEmps(@RequestParam(value = "empno", defaultValue = "0") Integer empno,
+	                             @RequestParam(value = "ename", required = false) String ename,
+	                             @RequestParam(name = "p", defaultValue = "1") int page, Model model) {
+	          int perPage = 10; // 한 페이지에 보일 글의 갯수
+	          int startRow = (page - 1) * perPage; // 시작 위치 계산
 
-		    List<ManageDto> searchResults = service.searchEmpsWithPagination(empno, ename, startRow, perPage);
-		    model.addAttribute("elist", searchResults);
+	          List<ManageDto> searchResults = service.searchEmpsWithPagination(empno, ename, startRow, perPage);
+	          model.addAttribute("elist", searchResults);
 
-		    int count = service.countSearchResults(empno, ename);
-		    if (count > 0) {
-		        int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0);
-		        int pageNum = 5; // 보여질 페이지 번호 수
-		        int begin = (page - 1) / pageNum * pageNum + 1;
-		        int end = begin + pageNum - 1;
-		        if (end > totalPages) {
-		            end = totalPages;
-		        }
-		        model.addAttribute("begin", begin);
-		        model.addAttribute("end", end);
-		        model.addAttribute("totalPages", totalPages);
-		        model.addAttribute("pageNum", pageNum);
-		    }
-		    model.addAttribute("count", count);
-		    model.addAttribute("currentPage", page);
-		    
-	  return "manage/empList";
-	  }
+	          int count = service.countSearchResults(empno, ename);
+	          if (count > 0) {
+	              int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0);
+	              int pageNum = 5; // 보여질 페이지 번호 수
+	              int begin = (page - 1) / pageNum * pageNum + 1;
+	              int end = begin + pageNum - 1;
+	              if (end > totalPages) {
+	                  end = totalPages;
+	              }
+	              model.addAttribute("begin", begin);
+	              model.addAttribute("end", end);
+	              model.addAttribute("totalPages", totalPages);
+	              model.addAttribute("pageNum", pageNum);
+	          }
+	          model.addAttribute("count", count);
+	          model.addAttribute("currentPage", page);
+	          
+	     return "manage/empList";
+	     }
 
 	  @PostMapping("/downloadEmpExcel") // 엑셀 다운로드 
 	  public void downloadEmpExcel(@RequestParam("empnos") int[] empnos, HttpServletResponse response) throws IOException {

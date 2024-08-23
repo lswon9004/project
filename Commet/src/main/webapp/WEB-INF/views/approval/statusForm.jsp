@@ -98,6 +98,7 @@
         
         <!-- Main content area -->
         <main>
+
             <!-- Include aside (sidebar) -->
             <jsp:include page="/WEB-INF/views/aside.jsp" />
           <!--   여기서부터 가운데 메인 -->
@@ -131,7 +132,7 @@
 						</tr>
 					</table>
 					<div class="section-title">결재내용</div>
-					<textarea style="width: 100%; height: 100px; pointer-events: none;"
+					<textarea id="editor" style="width: 100%; height: 100px; pointer-events: none;"
 						readonly="readonly">${dto.approval_content}</textarea>
 					<form method="get" action="/approval/statusForm/${dto.approval_no}">
 
@@ -172,8 +173,20 @@
 		<p class="footer-text">코멧업무포털</p>
 	</footer>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script>
-		function updateTime() {
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+    
+    <script>
+    ClassicEditor.create(document.querySelector('#editor'), {
+        language: "ko",
+        ckfinder: { uploadUrl: 'http://localhost:8083/img/upload' }
+    }).then(editor => {
+        window.editor = editor;
+        editor.enableReadOnlyMode('#editor'); // 읽기 전용 모드 설정
+    }).catch(error => {
+        console.error(error);
+    });		function updateTime() {
 			const now = new Date();
 			const options = {
 				year : 'numeric',

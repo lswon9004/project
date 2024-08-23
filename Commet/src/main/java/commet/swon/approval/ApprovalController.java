@@ -58,6 +58,8 @@ public class ApprovalController {
 	}
 	@GetMapping("/approval/content/{no}")
 	public String content(@PathVariable("no")int no, Model m) {
+		FilesDto fDto = service.selectFile(no);
+		m.addAttribute("fdto", fDto);
 		ApprovalDto dto = aService.oneApproval(no);
 		m.addAttribute("dto", dto);
 		return "/approval/content";
@@ -74,7 +76,7 @@ public class ApprovalController {
 	public String update(@PathVariable("no")int no,@ModelAttribute("user")EmpDto edto,
 						 @RequestParam("approval_type")int approval_type,@RequestParam("approval_content")String approval_content) {
 		aService.updateApproval(approval_content, no, approval_type);
-		return"redirect:/approval/"+edto.getEmpno();
+		return"redirect:/approval/content/"+no;
 	}
 	@GetMapping("/approval/search")
 	public String approvalSearch(@RequestParam(name = "approval_no")String approval_no,
@@ -194,7 +196,6 @@ public class ApprovalController {
 							   @DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(name = "date",required = false)Date date
 							   ) {
 		
-		System.out.println(date);
 		aService.updateStatus(dto.getApproval_status1(), dto.getApproval_comm(), dto.getApproval_no(),dto.getApproval_type(),date,dto.getEmpno());  
 		return "redirect:/approval/status";
 	}

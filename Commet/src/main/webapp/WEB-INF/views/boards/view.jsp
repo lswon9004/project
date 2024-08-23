@@ -9,6 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Management Portal</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
+        <style type="text/css">
+    .ck.ck-editor{
+
+        width: 100%;
+        }
+        .ck-editor__editable {
+           height: 200px;
+        }
+    </style>
 </head>
 <body>
            <div class="container">
@@ -66,7 +75,7 @@
                 <!-- 작성자와 작성일자를 인라인으로 표시 -->
                 
                 <div class="section-title">내용</div>
-                    <div class="section-content" style="height: 250px;">${board.content}</div>
+                          <textarea id="editor" class="text" id="content" name="content">${board.content}</textarea>
                 </div>
                 <div class="like-dislike"> <!-- 추천 버튼 지정 -->
                     <form id="likeForm" action="${hasLiked ? '/boards/unlike' : '/boards/like'}" method="post">
@@ -128,8 +137,21 @@
 <p class="footer-text">현재시간 : <span id="current-time" style=""></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
 </footer>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript"> 
-empno = ${user.empno};
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+    
+    <script>
+    ClassicEditor.create(document.querySelector('#editor'), {
+        language: "ko",
+        ckfinder: { uploadUrl: 'http://localhost:8083/img/upload' }
+    }).then(editor => {
+        window.editor = editor;
+        editor.enableReadOnlyMode('#editor'); // 읽기 전용 모드 설정
+    }).catch(error => {
+        console.error(error);
+    });
+    empno = ${user.empno};
 $('#start').click(function(){
 	deptno = ${user.deptno};
 	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){

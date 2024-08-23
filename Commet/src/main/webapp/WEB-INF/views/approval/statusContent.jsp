@@ -130,8 +130,12 @@
                                 <td>${dto.approver1_empno}</td>
                             </tr>
                         </table>
+                        <div>
+                        	첨부파일
+                        	<a href="/fileDownload/${fdto.file_no }">${fdto.fname } </a>
+                        </div>
                         <div class="section-title">결재내용</div>
-                        <textarea style="width: 100%; height: 100px; pointer-events: none;" readonly="readonly">${dto.approval_content}</textarea>
+                        <textarea id="editor" style="width: 100%; height: 100px; pointer-events: none;" readonly="readonly">${dto.approval_content}</textarea>
                        <form method="get" action="/approval/statusForm/${dto.approval_no}">
         				<table>
         					<tr>
@@ -144,7 +148,8 @@
         					<tr>
         						<td style="font-weight: bold">결재 의견</td>
         						<td style="margin: 0 0;padding: 0 0;">
-        							<textarea style="width: 100%; font-size: 20px; border: 0; outline: aliceblue;" name="approval_comm" readonly="readonly"></textarea>
+        							<textarea  style="width: 100%; font-size: 20px; border: 0px solid #ddd" name="approval_comm" readonly="readonly">${dto.approval_comm }</textarea>
+
         						</td>
         					</tr>
         				</table>
@@ -159,7 +164,21 @@
         <p class="footer-text">현재시간 : <span id="current-time"></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
     </footer>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+    
     <script>
+    ClassicEditor.create(document.querySelector('#editor'), {
+        language: "ko",
+        ckfinder: { uploadUrl: 'http://localhost:8083/img/upload' }
+    }).then(editor => {
+        window.editor = editor;
+        editor.enableReadOnlyMode('#editor'); // 읽기 전용 모드 설정
+    }).catch(error => {
+        console.error(error);
+    });
+
         function updateTime() {
             const now = new Date();
             const options = {

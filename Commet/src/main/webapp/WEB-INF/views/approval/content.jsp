@@ -86,6 +86,13 @@
             font-weight: bold;
             margin-bottom: 10px;
         }
+          .ck.ck-editor{
+
+        max-width: 100%;
+        }
+        .ck-editor__editable {
+            min-height: 200px;
+        }
     </style>
 </head>
 <body>
@@ -130,7 +137,11 @@
                             </tr>
                         </table>
                         <div class="section-title">결재내용</div>
-                        <textarea style="width: 100%; height: 100px; pointer-events: none;" readonly="readonly">${dto.approval_content}</textarea>
+                        <div>
+                        	첨부파일
+                        	<a href="/fileDownload/${fdto.file_no }">${fdto.fname } </a>
+                        </div>
+                        <textarea id="editor" style="width: 100%; height: 100px; pointer-events: none;" readonly="readonly">${dto.approval_content}</textarea>
                         <div class="section-title">결재 의견</div>
                         <textarea style="width: 100%; height: 100px;" readonly="readonly">${dto.approval_comm}</textarea>
                         <div class="form-actions">
@@ -159,7 +170,7 @@
     }).catch(error => {
         console.error(error);
     });
-    <script>
+
         function updateTime() {
             const now = new Date();
             const options = {

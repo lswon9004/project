@@ -86,6 +86,13 @@
             font-weight: bold;
             margin-bottom: 10px;
         }
+        .ck.ck-editor{
+
+        width: 100%;
+        }
+        .ck-editor__editable {
+           height: 200px;
+        }
     </style>
 </head>
 <body>
@@ -101,13 +108,13 @@
             <section class="main-content">
                 <div class="approval-form-container">
                     <h1>인장 신청</h1>
-                    <form method="post" action="/approval/insert" name="approvalDto">
+                    <form method="post" action="/approval/insert" name="approvalDto" enctype="multipart/form-data">
                         <table>
                             <tr>
                                 <th>문서번호</th>
                                 <td>자동채번.</td>
                                 <th>기안일자</th>
-                                <td><fmt:formatDate value="${startTime}" pattern="yyyy-MM-dd" /></td>
+                                <td><fmt:formatDate value="${user.check_in}" pattern="yyyy-MM-dd" /></td>
                             </tr>
                             <tr>
                                 <th>서류 종류</th>
@@ -143,7 +150,7 @@
         				<textarea id="editor" style="width: 100%; height: 200px;" name="approval_content"></textarea>
                         <div class="form-actions">
                             <button type="submit">결재요청</button>
-                            <button type="button" class="cancel" onclick="window.location.href='/approval/status'">취소</button>
+                            <button type="button" class="cancel" onclick="history.go(-1)">취소</button>
                         </div>
                     </form>
                 </div>
@@ -154,6 +161,9 @@
         <p class="footer-text">현재시간 : <span id="current-time"></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
     </footer>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
     <script>
     ClassicEditor.create( document.querySelector( '#editor' ), {
         language: "ko", ckfinder:{uploadUrl:'http://localhost:8083/img/upload'}

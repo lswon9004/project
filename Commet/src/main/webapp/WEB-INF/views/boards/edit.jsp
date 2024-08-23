@@ -9,6 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Management Portal</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <style type="text/css">
+    .ck.ck-editor{
+
+        width: 100%;
+        }
+        .ck-editor__editable {
+           height: 200px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -36,7 +45,7 @@
                             <div class="section-title">제목</div>
                                 <input class= "title-text" type="text" id="title" name="title" value="${board.title}" required>
                             <div class="section-title">내용</div>
-                                <textarea class="text" id="content" name="content" required>${board.content}</textarea>
+                                <textarea id="editor" class="text" id="content" name="content">${board.content}</textarea>
                         </div>
                         <div class="form-actions" style="display: ruby-text;">
                         <button onclick="location.href='/boards'">목록</button>
@@ -53,7 +62,19 @@
     <p class="footer-text">현재시간 : <span id="current-time"></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
 </footer>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript">
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+    
+    <script>
+    ClassicEditor.create(document.querySelector('#editor'), {
+        language: "ko",
+        ckfinder: { uploadUrl: 'http://localhost:8083/img/upload' }
+    }).then(editor => {
+        window.editor = editor;
+    }).catch(error => {
+        console.error(error);
+    });
 empno = ${user.empno};
 $('#start').click(function(){
 	deptno = ${user.deptno};

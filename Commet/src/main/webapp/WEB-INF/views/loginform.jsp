@@ -46,13 +46,9 @@
                 <div class="content_box"><input type="password" id="pw" class="highlight11" style="border: none;" placeholder="비밀번호를입력하세요"></div>
               </div>
             </div>
-<<<<<<< HEAD
             
-            <div class="text"><a href="/findpw">비밀번호찾기</a></div>
 
-=======
             <div class="text"><a href="/findpw"  style="margin-left: 290px">비밀번호 찾기</a></div>
->>>>>>> refs/heads/main
             <button class="btn" onclick="move()">
               <!-- TODO --> 
               로그인

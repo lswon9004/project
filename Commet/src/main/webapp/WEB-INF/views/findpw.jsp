@@ -80,11 +80,8 @@
             border-radius: 20px;
             border: aliceblue;
             width: 320px;
-<<<<<<< HEAD
             height: 47px;
-=======
    			height: 47px;
->>>>>>> refs/heads/main
         }
 
         /* 메시지 스타일 */
@@ -115,11 +112,7 @@
         <form method="post" id="findpw">
             <input id="empno" type="number" name="empno" required="required" placeholder="사번"><br>
             <input type="email" name="email" id="email" placeholder="이메일">
-<<<<<<< HEAD
             <input type="button" id="btn" value="Email확인" onclick="emailCheck()"><br>
-=======
-            <input type="button" id="btn" value="email확인" onclick="emailCheck()"><br>
->>>>>>> refs/heads/main
             <div id="dd" style="padding: 5px;">
             </div>
             <button id="btn1">비밀번호 초기화</button>

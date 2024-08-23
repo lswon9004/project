@@ -98,44 +98,7 @@
         
         <!-- Main content area -->
         <main>
-<<<<<<< HEAD
-            <aside>
-                <ul class="menu">
-                    <li><a href="#">통합업무</a></li>
-                    <li><a href="#">게시판</a></li>
-                    <li><a href="/approval">전자결재</a></li>
-                    <li><a href="#">결재승인</a></li>
-                    <li><a href="#">캘린더</a></li>
-                    <li><a href="#">직원관리</a></li>
-                    <li><a href="#">관찰관리</a></li>
-                </ul>
-                <p class="footer-text">현재시간 : 24/07/31 수요일 09:15</p>
-                <p class="footer-text">코멧업무포털</p>
-            </aside>
-            <section class="main-content">
-                    <div class="approval-form-container">
-        				<h1 style="text-align: center;">결재 신청</h1>
-        				<table>
-        				<colgroup>
-			<col style="width:25%;" />
-			<col style="width:25%;" />
-			<col style="width:25%;" />
-			<col style="width:25%;" />
-		</colgroup>
-        					<tr>
-        						<td>문서번호</td>
-        						<td>${dto.approval_no}</td>
-        						<td>기안일자</td>
-        						<td><fmt:formatDate value="${dto.created_date}" pattern="yyyy-MM-dd" /></td>
-        					</tr>
-        					<tr>
-        					<td>서류 종류</td>
-        						<td style="margin: 0 0;padding: 0 0;"><c:choose>
-									<c:when test="${dto.approval_type ==1 }">연차/휴가신청</c:when>
-									<c:when test="${dto.approval_type ==2 }">출장신청</c:when>
-									<c:when test="${dto.approval_type ==3 }">문서결재</c:when>
-									<c:when test="${dto.approval_type ==4 }">비품신청</c:when>
-=======
+
             <!-- Include aside (sidebar) -->
             <jsp:include page="/WEB-INF/views/aside.jsp" />
           <!--   여기서부터 가운데 메인 -->
@@ -157,100 +120,7 @@
 									<c:when test="${dto.approval_type == 2}">출장신청</c:when>
 									<c:when test="${dto.approval_type == 3}">문서결재</c:when>
 									<c:when test="${dto.approval_type == 4}">비품신청</c:when>
->>>>>>> refs/heads/main
 								</c:choose></td>
-<<<<<<< HEAD
-        						<td>사원 번호</td>
-        						<td>${dto.empno }</td>
-        					</tr>
-        					<tr>
-        						<td>
-        							결재 제목
-        						</td>
-        						<td > 
-        							${dto.approval_title}
-        						</td>
-        						<td>
-        							담당자
-        						</td>
-        						<td>
-        							${dto.approver1_empno }
-        						</td>
-        					</tr>
-        				</table>
-        				<textarea id="editor" style="width: 100%; height: 200px;" readonly="readonly">${dto.approval_content }</textarea>
-        				<form method="post" action="/approval/statusForm">
-        				<c:if test="${dto.approval_type ==1 }">
-        				<input type="date" name="date">
-        				</c:if>
-        				<input type="hidden" name="empno" value="${dto.empno }">
-        				<input type="hidden" name="approval_no" value="${dto.approval_no }">
-        				<input type="hidden" name="approval_type" value="${dto.approval_type }">
-        				<table>
-        				<colgroup>
-			<col style="width:25%;" />
-			<col style="width:75%;" />
-		</colgroup>
-        					<tr>
-        						<td>결재 처리</td>
-        						<td>
-        							<label for="1">승인</label> : <input type="radio" id="1" name="approval_status1" value="승인" checked="checked">
-        							<label for="2">반려 </label>: <input type="radio" id="2" name="approval_status1" value="반려">
-        						</td>
-        					</tr>
-        					<tr>
-        						<td>결재 의견</td>
-        						<td style="margin: 0 0;padding: 0 0;">
-        							<textarea  style="width: 100%; font-size: 20px;" rows="5" name="approval_comm"></textarea>
-        						</td>
-        					</tr>
-        				</table>
-        				<button>등록</button>
-        				<input class="button" type="button"  onclick="history.go(-1)" value="취소" />
-        				</form>
-   
-                </div>
-            </section>
-        </main>
-    </div>
-    <footer>
-        <p class="footer-text">현재시간 : <span id="current-time"></span></p>&nbsp;<p class="footer-text">코멧업무포털</p>
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
-    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
-    
-    <script>
-    ClassicEditor.create(document.querySelector('#editor'), {
-        language: "ko",
-        ckfinder: { uploadUrl: 'http://localhost:8083/img/upload' }
-    }).then(editor => {
-        window.editor = editor;
-        editor.enableReadOnlyMode('#editor'); // 읽기 전용 모드 설정
-    }).catch(error => {
-        console.error(error);
-    });
-
-        function updateTime() {
-            const now = new Date();
-            const options = {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                weekday: 'long',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            };
-            const currentTimeString = now.toLocaleDateString('ko-KR', options);
-            document.getElementById('current-time').innerText = currentTimeString;
-        }
-
-        updateTime();
-        setInterval(updateTime, 1000);
-    </script>
-=======
 							<th>사원 번호</th>
 							<td>${dto.empno }</td>
 						</tr>
@@ -262,7 +132,7 @@
 						</tr>
 					</table>
 					<div class="section-title">결재내용</div>
-					<textarea style="width: 100%; height: 100px; pointer-events: none;"
+					<textarea id="editor" style="width: 100%; height: 100px; pointer-events: none;"
 						readonly="readonly">${dto.approval_content}</textarea>
 					<form method="get" action="/approval/statusForm/${dto.approval_no}">
 
@@ -303,8 +173,20 @@
 		<p class="footer-text">코멧업무포털</p>
 	</footer>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script>
-		function updateTime() {
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+    <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+    
+    <script>
+    ClassicEditor.create(document.querySelector('#editor'), {
+        language: "ko",
+        ckfinder: { uploadUrl: 'http://localhost:8083/img/upload' }
+    }).then(editor => {
+        window.editor = editor;
+        editor.enableReadOnlyMode('#editor'); // 읽기 전용 모드 설정
+    }).catch(error => {
+        console.error(error);
+    });		function updateTime() {
 			const now = new Date();
 			const options = {
 				year : 'numeric',
@@ -322,6 +204,5 @@
 		updateTime();
 		setInterval(updateTime, 1000);
 	</script>
->>>>>>> refs/heads/main
 </body>
 </html>

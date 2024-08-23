@@ -148,11 +148,8 @@
         					<tr>
         						<td style="font-weight: bold">결재 의견</td>
         						<td style="margin: 0 0;padding: 0 0;">
-<<<<<<< HEAD
         							<textarea  style="width: 100%; font-size: 20px; border: 0px solid #ddd" name="approval_comm" readonly="readonly">${dto.approval_comm }</textarea>
-=======
-        							<textarea style="width: 100%; font-size: 20px; border: 0; outline: aliceblue;" name="approval_comm" readonly="readonly"></textarea>
->>>>>>> refs/heads/main
+
         						</td>
         					</tr>
         				</table>

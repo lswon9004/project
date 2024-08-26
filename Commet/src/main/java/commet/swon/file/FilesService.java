@@ -8,7 +8,7 @@ public class FilesService {
 	@Autowired
 	FilesDao dao;
 	public FilesDto selectFile(int no) {
-		return dao.oneFile(no);
+		return dao.oneFile(no);//a
 	}
 	public int insertfile(int no,String path,String fname) {
 		return dao.insertFile(no, path, fname);

@@ -134,8 +134,7 @@
 					<div class="section-title">결재내용</div>
 					<textarea id="editor" style="width: 100%; height: 100px; pointer-events: none;"
 						readonly="readonly">${dto.approval_content}</textarea>
-					<form method="get" action="/approval/statusForm/${dto.approval_no}">
-
+					<form method="post" action="/approval/statusForm">
 						<table>
 							<tr>
 								<td style="font-weight: bold">결재 처리</td>

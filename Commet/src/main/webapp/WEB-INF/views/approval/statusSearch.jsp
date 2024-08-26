@@ -18,7 +18,7 @@
         <main>
             <!-- Include aside (sidebar) -->
             <jsp:include page="/WEB-INF/views/aside.jsp" />
-          <!--   여기서부터 가운데 메인 -->
+          <!--   여기서부터 가운데 메인 a-->
            <section class="main-content">
 				<h2>결재승인</h2>
 				<div class="header-line"></div>

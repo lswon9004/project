@@ -34,7 +34,7 @@
                 <!-- 메인 콘텐츠 영역 -->
               <div class="board-viewtitle">게시글</div>
 	<div class="board-title"></div> <!-- 게시판 제목 지정 -->
-            <div class="board-detail"> <!-- 게시글 상세 내용 표시 -->
+            <div class="board-detail"> <!-- 게시글 상세 내용 표시 a-->
             <div class="section-inline-section"> 
             <div class="right">
                       <div><strong>작성자:</strong> ${user.empno}</div>

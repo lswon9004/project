@@ -41,7 +41,7 @@
                     %>
      <div class="container">
      
-      <!-- Include header -->
+      <!-- Include header a-->
         <jsp:include page="/WEB-INF/views/header.jsp" />
         
         <!-- Main content area -->

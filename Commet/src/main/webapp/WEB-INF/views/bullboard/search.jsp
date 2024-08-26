@@ -9,20 +9,22 @@
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #ADD8E6; 
+    background-color: #FFFFFF; 
     margin: 0;
     padding: 0;
 }
 
 .container {
-    max-width: 1200px;
+    width: 900px;
+    height: 700px;
     margin: 50px auto;
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 3px solid #000000;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
+
 
 h2 {
     text-align: center;
@@ -81,10 +83,17 @@ button:hover {
 
 #page {
     text-align: center;
-    margin: 10px;
     display: flex;
     justify-content: center;
+    margin: 300px;
 }
+
+#page a{
+     padding: 5px 10px;
+     margin: 0 5px; 
+     text-decoration: none; 
+}
+
 
 #page a:hover {
     color: #007BFF;

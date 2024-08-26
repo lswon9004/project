@@ -10,7 +10,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #ADD8E6; 
+    background-color: #FFFFFF; 
 }
 
 .container {
@@ -18,7 +18,7 @@ body {
     height: 700px;
     margin: 50px auto;
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 3px solid #000000;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -92,11 +92,17 @@ button:hover {
 
 #page {
     text-align: center;
-    margin: 50px;
     display: flex;
     justify-content: center;
-    padding : 10px;
+    margin: 60px;
 }
+
+#page a{
+     padding: 5px 10px;
+     margin: 0 5px; 
+     text-decoration: none; 
+}
+
 
 #page a:hover {
     color: #007BFF;
@@ -174,17 +180,17 @@ button:hover {
           <button class="write" onclick="location.href='/write'">글쓰기</button>
           <button class="main" onclick="location.href='/main'">메인화면</button>
         <!-- 페이지 네비게이션 -->
-        <div id="page">
+           <div id="page">
 				<c:if test="${begin > pageNum }">
-					<a href="/bullboard?p=${begin-1 }">[이전]</a>
+				<a href="/bullboard?p=${begin-1 }"></a>
 				</c:if>
 				<c:forEach begin="${begin }" end="${end}" var="i">
 					<a href="/bullboard?p=${i}">${i}</a>
 				</c:forEach>
 				<c:if test="${end < totalPages }">
-					<a href="/bullboard?p=${end+1}">[다음]</a>
+					<a href="/bullboard?p=${end+1}"></a>
 				</c:if>
-	    </div>
+	       </div>
     </div>
 </body>
 </html>

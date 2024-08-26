@@ -9,7 +9,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #ADD8E6;
+    background-color: #FFFFFF; 
     width: 90%;
     margin: 20px;
     padding: 20px;
@@ -18,7 +18,7 @@ body {
 
 .container {
     background-color: white; 
-    border: 1px solid rgba(0, 0, 0, 0.5); 
+    border: 3px solid #000000;
     border-radius: 10px; 
     padding: 30px; 
     margin: 20px auto; 

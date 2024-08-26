@@ -54,7 +54,7 @@
 
         		<select class="cbutton" id="searchType" name="searchType">
             		<option class="dropdown" value="empno">사원번호</option>
-            		<option class="dropdown" value="ename">사원이름</option>
+            		<option class="dropdown" value="ename">부서이름</option>
         		</select>
 				<input type="text" id="searchInput" name="searchInput" />
         		<button type="button" class="button" id="sButton" onclick="performSearch()">검색</button>
@@ -68,27 +68,24 @@
         <table>
             <thead><!-- 받아올 값의 이름들 -->
                 <tr>
-                    <th><input type="checkbox" id="selectAll"></th>
-                    <th>사원이름</th>
-                    <th>사원번호</th>
-                    <th>부서</th>
-                    <th>부서번호</th>
-                    <th>직급</th>
-                    <th>입사일</th>
-                    <th>주소</th>
+<!--                     <th><input type="checkbox" id="selectAll">부서1</th> -->
+<!--                     <th><input type="checkbox" id="selectAll2">부서2</th> -->
+<!--                     <th><input type="checkbox" id="selectAll3">부서3</th> -->
+					<c:forEach var="emp" items="${elist}">
+                    <th><input type="checkbox" id="selectAll">${emp.deptname}</th>
+                    </c:forEach>
                 </tr>
             </thead>
             <tbody> <!-- 받아온 값을 표시 -->
                 <c:forEach var="emp" items="${elist}">
                     <tr>
-                        <td><input type="checkbox" name="empnos" value="${emp.empno}"></td>
-                        <td><a href="/empDetail/${emp.empno}">${emp.ename}</a></td>
-						<td>${emp.empno}</td>
-                        <td>${emp.deptname}</td>
-                        <td>${emp.deptno}</td> 
-                        <td>${emp.position}</td>
-                        <td><fmt:formatDate value="${emp.hiredate}" pattern="yyyy-MM-dd"/></td>
-                        <td>${emp.address}</td>
+                        <td>
+                        <img src="/upload/${emp.imgPath}" alt="Profile Image" width="100">
+                        <br>
+                        <a href="/empDetail/${emp.empno}"><input type="checkbox" id="test" href="/empDetail/${emp.empno}">${emp.ename},${emp.position}</input>
+                        </a>
+                        </br>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -102,13 +99,13 @@
     
    <div class="pagination">
         <c:if test="${begin > 1}">
-            <a href="emp_manage?p=${begin-1}">[이전]</a>
+            <a href="searchEmps?empno=${param.empno}&ename=${param.ename}&p=${begin-1}">[이전]</a>
         </c:if>
         <c:forEach begin="1" end="${totalPages}" var="i">
-            <a href="emp_manage?p=${i}">${i}</a>
+            <a href="searchEmps?empno=${param.empno}&ename=${param.ename}&p=${i}">${i}</a>
         </c:forEach>
         <c:if test="${end < totalPages}">
-            <a href="emp_manage?p=${end+1}">[다음]</a>
+            <a href="searchEmps?empno=${param.empno}&ename=${param.ename}&p=${end+1}">[다음]</a>
         </c:if>
     </div>
 
@@ -217,7 +214,8 @@ $(document).ready(function(){
 	 // 엔터 키를 눌렀을 때 검색이 되도록 추가된 부분
     $("#searchInput").keypress(function(event) {
         if (event.which === 13) { // 엔터 키의 키 코드는 13입니다.
-            $('#sButton').click(); // 검색 버튼을 클릭합니다.
+        	event.preventDefault();// 기본 폼 제출x
+            $('#sButton').click(); // 검색 버튼클릭
         }
     });
     
@@ -231,7 +229,7 @@ $(document).ready(function(){
     <script type="text/javascript">
         $(document).ready(function(){
             $("#selectAll").click(function(){
-                $("input[type=checkbox]").prop('checked', this.checked);
+                $("input[id=test]").prop('checked', this.checked);
             });
         });
     </script>

@@ -44,6 +44,9 @@ public class ManageService {
     public int updateEmp(ManageDto ModifyDto) {
 		return dao.updateEmp(ModifyDto);
 	}
+    public int staffUpdateEmp(ManageDto staffModifyDto) {
+		return dao.staffUpdateEmp(staffModifyDto);
+	}
     
     public List<ManageDto> getEmpsByIds(int[] empnos) {
         return dao.getEmpsByIds(empnos);

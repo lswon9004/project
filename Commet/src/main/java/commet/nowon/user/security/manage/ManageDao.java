@@ -37,8 +37,11 @@ public interface ManageDao {
     @Select("select e.*, d.deptname, p.authority from emp e left join dept d on e.deptno = d.deptno left join position p on e.position = p.position where e.empno = #{id}")
     ManageDto getempByID(int id); // 사원 번호
     
-    @Update("update emp set deptno=#{deptno}, ename=#{ename}, jop=#{jop}, position=#{position}, phone=#{phone}, email=#{email}, address=#{address}, detailAddr=#{detailAddr}, memo=#{memo}, sal=#{sal}, imgPath=#{imgPath} where empno=#{empno}")
+    @Update("update emp set password=#{password} , deptno=#{deptno}, ename=#{ename}, jop=#{jop}, position=#{position}, phone=#{phone}, email=#{email}, address=#{address}, detailAddr=#{detailAddr}, memo=#{memo}, sal=#{sal}, imgPath=#{imgPath} where empno=#{empno}")
     int updateEmp(ManageDto ModifyDto); // 사원 정보 수정 / 부서이름이 deptno를 dept 에서 join해서 이름을 가져와서 수정 버튼 누를시 있는 데이터를 통제로 보냄 그래서 안넣어둠
+
+    @Update("update emp set password=#{password}, phone=#{phone}, email=#{email}, address=#{address}, detailAddr=#{detailAddr} where empno=#{empno}")
+    int staffUpdateEmp(ManageDto staffModifyDto); // 개인정보수정
 
     @Select({
         "<script>",

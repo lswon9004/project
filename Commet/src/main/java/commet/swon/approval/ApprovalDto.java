@@ -15,6 +15,10 @@ public class ApprovalDto {
 	Date created_date;
 	int approver1_empno;
 	String approval_status1;
+	int approver2_empno;
+	String approval_status2;
 	String final_approval;
 	String approval_comm;
+	String comm2;
+
 }

@@ -112,7 +112,7 @@
                         <table>
                             <tr>
                                 <th>문서번호</th>
-                                <td>자동채번.</td>
+                                <td>${approval_no }</td>
                                 <th>기안일자</th>
                                 <td><fmt:formatDate value="${user.check_in}" pattern="yyyy-MM-dd" /></td>
                             </tr>
@@ -137,6 +137,11 @@
                                 <th>담당자</th>
                                 <td>
                                     <select name="approver1_empno">
+                                        <c:forEach items="${elist}" var="deptno">
+                                            <option value="${deptno}">${deptno}</option>
+                                        </c:forEach>
+                                    </select>
+                                    <select name="approver2_empno">
                                         <c:forEach items="${elist}" var="deptno">
                                             <option value="${deptno}">${deptno}</option>
                                         </c:forEach>

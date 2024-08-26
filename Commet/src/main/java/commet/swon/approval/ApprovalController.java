@@ -50,10 +50,10 @@ public class ApprovalController {
 	}
 	@PostMapping("/approval/insert")
 	public String insert(ApprovalDto dto,@ModelAttribute("user")EmpDto edto,@RequestParam("file")MultipartFile file) {
-		fileUpload(file, dto.getApproval_no());
 		dto.setEmpno(edto.getEmpno());
 		dto.setDeptno(edto.getDeptno());
 		aService.insertApproval(dto);
+		fileUpload(file, dto.getApproval_no());
 		return "redirect:/approval/"+edto.getEmpno();
 	}
 	@GetMapping("/approval/content/{no}")
@@ -196,7 +196,7 @@ public class ApprovalController {
 							   @DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(name = "date",required = false)Date date
 							   ) {
 		
-		aService.updateStatus(dto.getApproval_status1(), dto.getApproval_comm(), dto.getApproval_no(),dto.getApproval_type(),date,dto.getEmpno());  
+		aService.updateStatus(date,dto);  
 		return "redirect:/approval/status";
 	}
 	public boolean fileUpload(MultipartFile file,int no) {

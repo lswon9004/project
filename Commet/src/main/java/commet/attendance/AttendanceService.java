@@ -22,12 +22,12 @@ public class AttendanceService {
     Date startDate =null;
     Date endDate = null;
 
-	public int insertStartTmie(int empno,int deptno) {
+	public int insertStartTmie(int empno,int deptno,int employeeAttendanceNo) {
 		if(dao.scount(empno)>0) {
 			return dao.updateStartTime(empno);
 		}else {
 		
-			return dao.insertStartTmie(empno,deptno);
+			return dao.insertStartTmie(empno,deptno,employeeAttendanceNo);
 		}
 	}
 	public Date startTime(int empno) {

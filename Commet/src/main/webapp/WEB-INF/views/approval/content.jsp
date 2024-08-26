@@ -127,13 +127,14 @@
                                     </c:choose>
                                     </td>
                                 <th>사원 번호</th>
-                                <td>${user.empno}</td>
+                                <td>${dto.empno}</td>
                             </tr>
                            <tr>
                                 <th>결재 제목</th>
                                 <td>${dto.approval_title}</td>
                                 <th>담당자</th>
-                                <td>${dto.approver1_empno}</td>
+                                <td>${dto.approver1_empno}<br>
+                                	${dto.approver2_empno}</td>
                             </tr>
                         </table>
                         <div class="section-title">결재내용</div>
@@ -143,7 +144,12 @@
                         </div>
                         <textarea id="editor" style="width: 100%; height: 100px; pointer-events: none;" readonly="readonly">${dto.approval_content}</textarea>
                         <div class="section-title">결재 의견</div>
-                        <textarea style="width: 100%; height: 100px;" readonly="readonly">${dto.approval_comm}</textarea>
+                        <table>
+                        <tr style="height: 100px;">
+                        <td>${dto.approval_comm}</td>
+                        <td>${dto.comm2}</td>
+                        </tr>
+                        </table>
                         <div class="form-actions">
                             <button onclick="location.href='/approval/update/${dto.approval_no}';">수정</button>
                             <button onclick="location.href='/approval/${user.empno}';">목록</button>

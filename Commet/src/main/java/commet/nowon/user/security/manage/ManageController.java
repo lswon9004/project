@@ -49,7 +49,7 @@ public class ManageController {
         if (count > 0) {
         int perPage = 10; // 한 페이지에 보일 글의 갯수
         int startRow = (page - 1) * perPage;
-
+	    List<ManageDto> deptList = service.searchDept();
         List<ManageDto> list = service.managemain(startRow, dto.getEmpno());
         	m.addAttribute("elist", list);
 
@@ -60,6 +60,7 @@ public class ManageController {
             if (end > totalPages) {
                 end = totalPages;
             }
+		    m.addAttribute("deptList", deptList);
             m.addAttribute("begin", begin);
             m.addAttribute("end", end);
             m.addAttribute("pageNum", pageNum);
@@ -99,9 +100,14 @@ public class ManageController {
     	return "manage/empInfo";
 	}
     
-    @PutMapping("/empModify")//정보수정
+    @PutMapping("/empModify")//사원 정보수정
     public String updateEmp(ManageDto ModifyDto) {
     	service.updateEmp(ModifyDto);
+        return "redirect:/emp_manage";
+    }
+    @PutMapping("/staffModify")//개인정보
+    public String staffUpdateEmp(ManageDto staffModifyDto) {
+    	service.staffUpdateEmp(staffModifyDto);
         return "redirect:/emp_manage";
     }
 	

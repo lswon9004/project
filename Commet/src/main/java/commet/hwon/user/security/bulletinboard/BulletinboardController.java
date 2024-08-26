@@ -78,7 +78,7 @@ public class BulletinboardController {
     	
     	//시작 행과 끝 행 계산
     	int startRow = (page - 1) * perPage;
-    	
+    	model.addAttribute("start", startRow);
     	//게시글 목록 가져오기
     	List<BulletinboardDto> boards = boardService.getAllBoards(startRow);
     	model.addAttribute("boardList", boards);

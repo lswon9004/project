@@ -9,20 +9,22 @@
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #ADD8E6; 
+    background-color: #FFFFFF; 
     margin: 0;
     padding: 0;
 }
 
 .container {
-    max-width: 1200px;
+    width: 900px;
+    height: 700px;
     margin: 50px auto;
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 3px solid #000000;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
+
 
 h2 {
     text-align: center;
@@ -63,16 +65,17 @@ th {
 .button-container {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 10px 15px;
     border: none;
     background-color: #00bfff;
     color: #fff;
     cursor: pointer;
     border-radius: 4px;
+   
 }
 
 button:hover {
@@ -81,10 +84,17 @@ button:hover {
 
 #page {
     text-align: center;
-    margin: 10px;
     display: flex;
     justify-content: center;
+    margin: 300px;
 }
+
+#page a{
+     padding: 5px 10px;
+     margin: 0 5px; 
+     text-decoration: none; 
+}
+
 
 #page a:hover {
     color: #007BFF;
@@ -96,7 +106,7 @@ button:hover {
         <h2>익명 게시판 검색결과</h2>
         <div class="search-container">
         <form action="/search" method="get">
-            <input type="text" name="title" placeholder="제목">
+            <input type="text" name="title" placeholder="제목" size=30>
             <button type="submit">검색</button>
         </form>
         </div>
@@ -115,12 +125,12 @@ button:hover {
             <tbody>
                 <c:forEach var="board" items="${boardList}">
                     <tr>
-                        <td>${board.no}</td>
-                        <td><a href="/content/${board.no}">${board.title}</a></td>
-                        <td>${board.iid}</td>
-                        <td><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></td>
-                        <td>${board.readCount}</td>
-                        <td>
+                        <td style="width: 20px;">${board.no}</td>
+                        <td style="width: 50px;"><a href="/content/${board.no}">${board.title}</a></td>
+                        <td style="width: 50px;">${board.iid}</td>
+                        <td style="width: 50px;"><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></td>
+                        <td style="width: 50px;">${board.readCount}</td>
+                        <td style="width: 50px;">
                         <c:forEach var="likeCount" items="${likeCountList}">
                         		<c:if test="${likeCount.no==board.no}">
                         			<c:if test="${likeCount.count!=null}">
@@ -132,7 +142,7 @@ button:hover {
                         		</c:if>
                         	</c:forEach> 
                         	</td>
-                             <td>
+                             <td style="width: 50px;">
                               <c:forEach var="hateCount" items="${hateCountList}">
                         		<c:if test="${hateCount.board_no==board.no}">
                         			<c:if test="${hateCount.count!=null}">

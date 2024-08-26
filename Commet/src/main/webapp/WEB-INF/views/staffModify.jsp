@@ -184,9 +184,9 @@
     <div class="modal-content">
         <span class="close" onclick="location.href='/main'">&times;</span><!--/main 받아오는 컨트롤러가 없음 만들어야함-->
         <h2>개인정보 수정</h2>
-        <form action="/empInfo" method="post" >
+        <form action="/staffModify" method="post" modelAttribute="staffModifyDto">
             <input type="hidden" name="_method" value="put">
-            
+            <input type="hidden" name="empno" value="${user.empno}">
             <img src="/upload/${user.imgPath}" alt="Profile Image" width="100"><!--로그인한 아이디 정보 가저와야함 메인화면 사진 나오는거랑 비슷하게 하면될듯 -->
             <table>
             <tr>

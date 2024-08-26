@@ -223,6 +223,7 @@
             </tr>
             <tr>
 	    		<td>생년월일:</td><td>
+<!-- 	    		<input type="text" name="birthday" placeholder="생년월일 8자리" required> 입력을 텍스트로 받으려다가 보류-->
 	    		<input type="date" name="birthday" required></td>
     			<td>입사일:</td><td><input type="date" name="hiredate" required></td>
             </tr>

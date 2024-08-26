@@ -10,7 +10,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #ADD8E6; 
+    background-color: #FFFFFF; 
 }
 
 .container {
@@ -18,7 +18,7 @@ body {
     height: 700px;
     margin: 50px auto;
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 3px solid #000000;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -92,11 +92,17 @@ button:hover {
 
 #page {
     text-align: center;
-    margin: 50px;
     display: flex;
     justify-content: center;
-    padding : 10px;
+    margin: 60px;
 }
+
+#page a{
+     padding: 5px 10px;
+     margin: 0 5px; 
+     text-decoration: none; 
+}
+
 
 #page a:hover {
     color: #007BFF;
@@ -109,7 +115,7 @@ button:hover {
         <h2>익명 게시판</h2>
         <div class="search-container">
         <form action="/search" method="get">
-            <input type="text" name="title" placeholder="제목" size=10>
+            <input type="text" name="title" placeholder="제목" size=30>
             <button type="submit">검색</button>
         </form>
         </div>
@@ -136,13 +142,14 @@ button:hover {
 			<c:if test="${count != 0 }">
                 <c:forEach var="board" items="${boardList}">   
                     <tr>
-                        <td>${board.no}</td>
+                        <td style="width: 20px;"><c:out value="${start+1}"/>
+                           <c:set var="start" value="${start+1}" /></td>
                           <!-- 게시글 제목에 하이퍼링크 추가 -->
-                        <td><a href="/content/${board.no}">${board.title}</a></td>
-                        <td>${board.iid}</td>
-                        <td><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></td>
-                        <td>${board.readCount}</td>
-                        <td>
+                        <td style="width: 50px;"><a href="/content/${board.no}">${board.title}</a></td>
+                        <td style="width: 50px;">${board.iid}</td>
+                        <td style="width: 50px;"><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></td>
+                        <td style="width: 50px;">${board.readCount}</td>
+                        <td style="width: 50px;">
                         <c:forEach var="likeCount" items="${likeCountList}">
                         		<c:if test="${likeCount.no==board.no}">
                         			<c:if test="${likeCount.count!=null}">
@@ -154,7 +161,7 @@ button:hover {
                         		</c:if>
                         	</c:forEach> 
                         	</td>
-                        <td>
+                        <td style="width: 50px;">
                         <c:forEach var="hateCount" items="${hateCountList}">
                         		<c:if test="${hateCount.board_no==board.no}">
                         			<c:if test="${hateCount.count!=null}">
@@ -174,17 +181,17 @@ button:hover {
           <button class="write" onclick="location.href='/write'">글쓰기</button>
           <button class="main" onclick="location.href='/main'">메인화면</button>
         <!-- 페이지 네비게이션 -->
-        <div id="page">
+           <div id="page">
 				<c:if test="${begin > pageNum }">
-					<a href="/bullboard?p=${begin-1 }">[이전]</a>
+				<a href="/bullboard?p=${begin-1 }"></a>
 				</c:if>
 				<c:forEach begin="${begin }" end="${end}" var="i">
 					<a href="/bullboard?p=${i}">${i}</a>
 				</c:forEach>
 				<c:if test="${end < totalPages }">
-					<a href="/bullboard?p=${end+1}">[다음]</a>
+					<a href="/bullboard?p=${end+1}"></a>
 				</c:if>
-	    </div>
+	       </div>
     </div>
 </body>
 </html>

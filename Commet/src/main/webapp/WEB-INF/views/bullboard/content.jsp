@@ -9,7 +9,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #ADD8E6;
+    background-color: #FFFFFF; 
     width: 90%;
     margin: 20px;
     padding: 20px;
@@ -18,7 +18,7 @@ body {
 
 .container {
     background-color: white; 
-    border: 1px solid rgba(0, 0, 0, 0.5); 
+    border: 3px solid #000000;
     border-radius: 10px; 
     padding: 30px; 
     margin: 20px auto; 
@@ -257,7 +257,7 @@ p {
             <p>[${reply.id}]</p>           
             <p>${reply.content}</p>
              <label for="password-input"></label>
-            <input type="password" id="pwinput" value="${reply.id}" name="password" placeholder="비밀번호"/> 
+            <input type="password" id="pwinput" name="password" placeholder="비밀번호"/> 
             <button class="delete-reply" data-reply-id="${reply.id}">댓글 삭제</button>
         </div>
        </form>

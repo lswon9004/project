@@ -74,10 +74,16 @@
 												<c:when test="${alist.approval_type ==3 }">문서결재</c:when>
 												<c:when test="${alist.approval_type ==4 }">비품신청</c:when>
 											</c:choose></td>
-										<td><fmt:formatDate value="${alist.created_date }"
-												pattern="yyyy.MM.dd" /></td>
+										<td><fmt:formatDate value="${alist.created_date }" pattern="yyyy.MM.dd" /></td>
 										<td>${alist.empno }</td>
-										<td>${alist.approval_status1 }</td>
+										<td>
+											<c:if test="${dto.approver1_empno==user.empno }">
+												${alist.approval_status1 }
+											</c:if>
+											<c:if test="${dto.approver2_empno==user.empno }">
+												${alist.approval_status2 }
+											</c:if>
+										</td>
 									</tr>
 								</c:forEach>
 							</c:if>

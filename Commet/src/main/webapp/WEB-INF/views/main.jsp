@@ -96,7 +96,7 @@
                     </table>
                 </div>
                 <div class="notes">
-                    <div class="note">
+                    <div class="note" >
                         <p>12:20 부장님과 점심</p>
                         <p>14:50 미팅</p>
                     </div>

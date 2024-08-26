@@ -1,6 +1,28 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<head>
+   <!-- Font Awesome CSS 파일 추가 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>/* 메인CSS로 옮겨도됨 수정하기 편하게 따로 빼둠 */
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 5px;
+            font-size: 10px;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 3px;
+       	/* color: #777; */
+        }
+    </style>
+    
+</head>
 
 <header>
     <div class="user-info"><!-- 박선욱 a-->
@@ -22,20 +44,39 @@
             <c:if test="${user.check_in !=null}">
                 <fmt:formatDate value="${user.check_in}" pattern="HH:mm" />/
             </c:if>
-            <c:if test="${user.check_in==null}">00:00/</c:if>
+            <c:if test="${user.check_in==null}">00:00 / </c:if>
         </p>
         <p id="endTime">
             <c:if test="${user.check_out !=null}">
                 <fmt:formatDate value="${user.check_out}" pattern="HH:mm" />/
             </c:if>
-            <c:if test="${user.check_out==null}">00:00/</c:if>
+            <c:if test="${user.check_out==null}">00:00</c:if>
         </p>
-        <nav>
-            <c:if test="${user.right<3}"><a class="active" href="/main">Home</a></c:if>
-            <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a></c:if>
-            <a href="/staffModify">개인정보수정</a>
-            <a href="/bullboard">익명게시판</a>
-            <a href="/logout">로그아웃</a>
+           <nav>
+            <c:if test="${user.right<3}">
+                <a class="nav-item active" href="/main">
+                    <i class="fas fa-home"></i>
+                    Home
+                </a>
+            </c:if>
+            <c:if test="${user.right>=3}">
+                <a class="nav-item active" href="/adminMain">
+                    <i class="fas fa-home"></i>
+                    Home
+                </a>
+            </c:if>
+            <a class="nav-item" href="/staffModify">
+                <i class="fas fa-user-cog"></i>
+                개인정보수정
+            </a>
+            <a class="nav-item" href="/bullboard">
+                <i class="fas fa-comments"></i>
+                익명게시판
+            </a>
+            <a class="nav-item" href="/logout">
+                <i class="fas fa-sign-out-alt"></i>
+                로그아웃
+            </a>
         </nav>
     </div>
 </header>

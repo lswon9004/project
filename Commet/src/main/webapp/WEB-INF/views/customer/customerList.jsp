@@ -13,12 +13,12 @@
 </head>
 <body>
       <div class="container">
-      <!-- Include header -->
+      <!-- header 부분 -->
         <jsp:include page="/WEB-INF/views/header.jsp" />
         
         <!-- Main content area -->
         <main>
-            <!-- Include aside (sidebar) -->
+            <!-- aside 부분-->
             <jsp:include page="/WEB-INF/views/aside.jsp" />
             
       <!-- 여기서부터 가운데 메인 -->

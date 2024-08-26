@@ -128,7 +128,7 @@
 							<th>결재 제목</th>
 							<td>${dto.approval_title}</td>
 							<th>담당자</th>
-							<td>${dto.approver1_empno}</td>
+							<td>${dto.approver1_empno}<br>${dto.approver2_empno}</td>
 						</tr>
 					</table>
 					<div class="section-title">결재내용</div>
@@ -138,21 +138,32 @@
 						<table>
 							<tr>
 								<td style="font-weight: bold">결재 처리</td>
-								<td><label for="1">승인</label><input type="radio" id="1"
-									name="approval_status1" value="승인" checked="checked"> <label
-									for="2">반려 </label><input type="radio" id="2"
-									name="approval_status1" value="반려"></td>
+								<td>
+									<c:if test="${dto.approver1_empno==user.empno }">
+										<label for="1">승인</label><input type="radio" id="1" name="approval_status1" value="승인" checked="checked">
+								    	<label for="2">반려</label><input type="radio" id="2" name="approval_status1" value="반려">
+									</c:if>
+									<c:if test="${dto.approver2_empno==user.empno }">
+										<label for="1">승인</label><input type="radio" id="1" name="approval_status2" value="승인" checked="checked">
+								    	<label for="2">반려</label><input type="radio" id="2" name="approval_status2" value="반려">
+									</c:if>
+								</td>
 							</tr>
 							<tr>
 								<td style="font-weight: bold">결재 의견</td>
 								<td style="margin: 0 0; padding: 0 0;">
 								<c:if test="${dto.approval_type ==1 }">
-								<input type="date" name="date">
-							</c:if>
+									<input type="date" name="date">
+								</c:if>
 								<input type="hidden" name="empno" value="${dto.empno }">
 								<input type="hidden" name="approval_no" value="${dto.approval_no }">
 								<input type="hidden" name="approval_type" value="${dto.approval_type }">
-								<textarea style="width: 100%; font-size: 15px; border: 0; outline: aliceblue;" name="approval_comm"></textarea>
+								<c:if test="${dto.approver1_empno==user.empno }">
+									<textarea style="width: 100%; font-size: 15px; border: 0; outline: aliceblue;" name="approval_comm"></textarea>
+								</c:if>
+								<c:if test="${dto.approver2_empno==user.empno }">
+									<textarea style="width: 100%; font-size: 15px; border: 0; outline: aliceblue;" name="comm2"></textarea>
+								</c:if>
 								</td>
 							</tr>
 						</table>

@@ -77,7 +77,7 @@
 								</c:choose></td>
 							<td><fmt:formatDate value="${alist.created_date }" pattern="yyyy.MM.dd" /></td>
 							<td>${alist.empno }</td>
-							<td>${alist.approval_status1 }</td>
+							<td>${alist.approval_status1 }/${alist.approval_status2 }</td>
 						</tr>
 					</c:forEach>
 				</c:if>

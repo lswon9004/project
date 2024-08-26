@@ -53,11 +53,8 @@ public class EmpController {
 					service.loginCount(0,dto.getEmpno());
 					dto.setRight(noCheck(dto.getPosition()));
 					m.addAttribute("user", dto);
-					if (noCheck(dto.position) < 3) {
 						result = "/main";
-					} else {
-						result = "/adminMain";
-					}
+				
 				} else {
 					result = "/";
 					service.loginCount(dto.getLoginCount() + 1,no);
@@ -121,7 +118,7 @@ public class EmpController {
 		service.updatepw(empno);
 		return "redirect:/loginform";
 	}
-	@GetMapping("/loginform")
+	@GetMapping("/loginform")  
 	public void getMethodName() {
 	}
 	@GetMapping("/emailCheck")

@@ -2,8 +2,10 @@ package commet;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
+
 
 @SpringBootApplication
 public class CommetApplication {
@@ -15,4 +17,7 @@ public class CommetApplication {
 	 HiddenHttpMethodFilter hiddenHttpMethodFilter() { //PUT 어노테이션 사용 할 수 있게 해주는거
 		return new HiddenHttpMethodFilter();
 	}
+//	   protected SpringApplicationBuilder configure(SpringApplicationBuilder application) { 
+//	      return application.sources(CommetApplication.class);
+//	   }
 }

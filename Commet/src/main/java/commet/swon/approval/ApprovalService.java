@@ -25,7 +25,7 @@ public class ApprovalService {
 		return dao.alist(empno,start);
 	}
 	public int getApproval_no(int empno) {
-		return dao.getApproval_no(empno);
+		return dao.getApproval_no();
 	}
 	public int insertApproval(ApprovalDto dto) {
 		return dao.insertApproval(dto);
@@ -73,15 +73,20 @@ public class ApprovalService {
 		return dao.statusSearchList(approval_title, startDate, endDate, empno, approval_status1, approver1_empno, start);
 	}
 	@Transactional
-	public int updateStatus(String approval_status1, String approval_comm,int no,int approval_type,Date date,int empno) {
-		if((approval_type==1)&&date!=null) {
-			int deptno = EDao.getDeptno(empno);
-			if(Adao.scount(empno)==0) {
-			Adao.insertdata(empno, deptno, date);
+	public int updateStatus(Date date,ApprovalDto dto) {
+		if((dto.getApproval_type()==1)&&date!=null) {
+			int deptno = EDao.getDeptno(dto.getEmpno());
+			if(Adao.scount(dto.getEmpno())==0) {
+			Adao.insertdata(dto.getEmpno(), deptno, date);
 			}else {
-				Adao.updatedata(empno, date);
+				Adao.updatedata(dto.getEmpno(), date);
 			}
 		}
-		return dao.updateStatus(approval_status1, approval_comm, no);
+		if(dto.getApproval_status1()!=null) {
+			return dao.updateStatus1(dto);
+		}else {
+			return dao.updateStatus2(dto);
+		}
+		
 	}
 }

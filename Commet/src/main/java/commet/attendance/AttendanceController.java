@@ -15,12 +15,16 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.google.gson.Gson;
 
+import commet.com.spring.service.AttendanceManagementService;
 import commet.swon.emp.EmpDto;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @SessionAttributes("user")
 public class AttendanceController {
+	@Autowired
+    private AttendanceManagementService aservice;
+    
 	@Autowired
 	AttendanceService service;
 	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -33,10 +37,12 @@ public class AttendanceController {
 	@ResponseBody
 	public String startTime(@RequestParam("empno")int empno, @RequestParam("deptno")int deptno,
 							@ModelAttribute("user")EmpDto dto) {
+	    int employeeAttendanceNo = aservice.generateNextAttendanceNo(dto.getEmpno()); // 사원별로 출근번호를 생성합니다.
+
 		Date startTime = service.startTime(empno);
 		String formattedDate = null;
 		if(startTime==null) {
-			service.insertStartTmie(empno, deptno);
+			service.insertStartTmie(empno, deptno,employeeAttendanceNo);
 			startTime = service.startTime(empno);
 			formattedDate = sdf.format(startTime);
 		}

@@ -11,11 +11,19 @@ import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface AttendanceDao {
-	@Insert("insert into Attendance_Management(empno,deptno,check_in,date,worktype) values(#{empno},#{deptno},now(),current_date, case when time(now()) < '09:20:00' then '정상출근' when time(now()) >= '09:21:00' then '지각' end)")
-	int insertStartTmie(@Param("empno")int empno,@Param("deptno")int deptno);
+	@Insert("insert into Attendance_Management(empno,deptno,check_in,date,worktype, employee_attendance_no) values(#{empno},#{deptno},now(),current_date, case when time(now()) < '09:20:00' then '정상출근' when time(now()) >= '09:21:00' then '지각' end,#{employeeAttendanceNo})")
+	int insertStartTmie(@Param("empno")int empno,@Param("deptno")int deptno,@Param("employeeAttendanceNo") int employeeAttendanceNo);
 	@Select("select check_in from Attendance_Management where empno = #{empno} and date = current_date() ")
 	Date startTime(int empno);
-	@Update("update Attendance_Management set check_out = now() where empno = #{empno} and date = current_date()")
+	@Update("update Attendance_Management set "
+	        + "check_out = now(), "
+	        + "worktype = case "
+	        + "when time(check_in) > '09:21:00' and time(now()) < '18:19:00' then '지각/조퇴' "
+	        + "when time(check_in) > '09:21:00' and time(now()) > '18:19:00' then '지각/정상퇴근' "
+	        + "when time(now()) < '18:19:00' then '조퇴' "
+	        + "else '정상퇴근' "
+	        + "end "
+	        + "where empno = #{empno} and date = current_date()")
 	int updateEndtime(int empno);
 	@Select("select check_out from Attendance_Management where empno = #{empno} and date = current_date() ")
 	Date endTime(int empno);

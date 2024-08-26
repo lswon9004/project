@@ -257,7 +257,7 @@ p {
             <p>[${reply.id}]</p>           
             <p>${reply.content}</p>
              <label for="password-input"></label>
-            <input type="password" id="pwinput" value="${reply.id}" name="password" placeholder="비밀번호"/> 
+            <input type="password" id="pwinput" name="password" placeholder="비밀번호"/> 
             <button class="delete-reply" data-reply-id="${reply.id}">댓글 삭제</button>
         </div>
        </form>

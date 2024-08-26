@@ -115,7 +115,7 @@ button:hover {
         <h2>익명 게시판</h2>
         <div class="search-container">
         <form action="/search" method="get">
-            <input type="text" name="title" placeholder="제목" size=10>
+            <input type="text" name="title" placeholder="제목" size=30>
             <button type="submit">검색</button>
         </form>
         </div>
@@ -142,13 +142,14 @@ button:hover {
 			<c:if test="${count != 0 }">
                 <c:forEach var="board" items="${boardList}">   
                     <tr>
-                        <td>${board.no}</td>
+                        <td style="width: 20px;"><c:out value="${start+1}"/>
+                           <c:set var="start" value="${start+1}" /></td>
                           <!-- 게시글 제목에 하이퍼링크 추가 -->
-                        <td><a href="/content/${board.no}">${board.title}</a></td>
-                        <td>${board.iid}</td>
-                        <td><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></td>
-                        <td>${board.readCount}</td>
-                        <td>
+                        <td style="width: 50px;"><a href="/content/${board.no}">${board.title}</a></td>
+                        <td style="width: 50px;">${board.iid}</td>
+                        <td style="width: 50px;"><fmt:formatDate value="${board.ref_date}" pattern="yyyy-MM-dd"/></td>
+                        <td style="width: 50px;">${board.readCount}</td>
+                        <td style="width: 50px;">
                         <c:forEach var="likeCount" items="${likeCountList}">
                         		<c:if test="${likeCount.no==board.no}">
                         			<c:if test="${likeCount.count!=null}">
@@ -160,7 +161,7 @@ button:hover {
                         		</c:if>
                         	</c:forEach> 
                         	</td>
-                        <td>
+                        <td style="width: 50px;">
                         <c:forEach var="hateCount" items="${hateCountList}">
                         		<c:if test="${hateCount.board_no==board.no}">
                         			<c:if test="${hateCount.count!=null}">

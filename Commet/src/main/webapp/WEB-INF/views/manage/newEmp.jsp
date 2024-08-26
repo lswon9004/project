@@ -223,7 +223,6 @@
             </tr>
             <tr>
 	    		<td>생년월일:</td><td>
-	    		<input type="text" name="birthday" placeholder="생년월일 8자리" required>
 	    		<input type="date" name="birthday" required></td>
     			<td>입사일:</td><td><input type="date" name="hiredate" required></td>
             </tr>

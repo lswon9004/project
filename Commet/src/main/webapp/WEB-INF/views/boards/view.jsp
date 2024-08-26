@@ -16,6 +16,7 @@
         .ck-editor__editable {
         height: 200px;
         }
+        
     </style>
 </head>
 <body>
@@ -30,7 +31,7 @@
             <jsp:include page="/WEB-INF/views/aside.jsp" />
             
             <!-- 여기서부터 가운데 메인 -->
-            <section class="board-main-content">
+            <section class="board-main-content" style="overflow: auto;">
                 <!-- 메인 콘텐츠 영역 -->
               <div class="board-viewtitle">게시글</div>
 	<div class="board-title"></div> <!-- 게시판 제목 지정 -->
@@ -49,8 +50,10 @@
                 <!-- 작성자와 작성일자를 인라인으로 표시 -->
                 
                 <div class="section-title">내용</div>
-                          <textarea id="editor" class="text" id="content" name="content" style="height: 370px;">${board.content}</textarea>
-                </div>
+                <%--           <textarea id="editor" class="text" id="content" name="content" style="height: 370px;">${board.content}</textarea>
+                 --%><div style="overflow: auto;">${board.content}</div>
+                 
+                 </div>
                 <div class="like-dislike"> <!-- 추천 버튼 지정 -->
                     <form id="likeForm" action="${hasLiked ? '/boards/unlike' : '/boards/like'}" method="post">
                         <input type="hidden" name="empno" value="${user.empno}">

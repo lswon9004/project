@@ -255,7 +255,6 @@
 			}
 
 			.header-right nav a {
-				margin: 0 5px;
 				text-decoration: none;
 				color: #00796b;
 				text-decoration: underline;
@@ -300,7 +299,7 @@
 
 		/* 선택된 메뉴 항목 스타일 */
 			.menu li a.active, .menu li a:hover {
-				background-color: #9ae319;;
+				background-color: #19bce366;
 				color: #fff;
 				text-decoration: underline;
 			}/* 1 */
@@ -402,7 +401,7 @@
 		/* 활성화된 페이지 링크 스타일 */
 			.pagination a.active {
 				font-weight: bold; /* 활성화된 페이지 링크를 굵게 표시 */
-				background-color: #007bff; /* 활성화된 페이지 링크 배경색을 파란색으로 설정 */
+				background-color: #00bfff; /* 활성화된 페이지 링크 배경색을 파란색으로 설정 */
 				color: white; /* 활성화된 페이지 링크 텍스트 색상을 흰색으로 설정 */
 			}
 
@@ -421,6 +420,8 @@
 				display: flex;
 				justify-content: end;
     			margin-right: 140px;
+    			margin-bottom: 100px;
+    			
 			}
 
 		/* 게시판 스타일 코드 */

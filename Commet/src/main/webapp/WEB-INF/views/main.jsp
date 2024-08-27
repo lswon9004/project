@@ -159,32 +159,15 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript"> 
 empno = ${user.empno};
-
-date = <%= year %> +'-'+('0'+ <%= month + 1 %>).slice(-2)
-$('#start').click(function(){
-   deptno = ${user.deptno};
-   $.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
-      if (data){         
-         $('#startTime').text(data+'/');
-         console.log(data)
-       }else{
-         alert('이미 출근버튼을 누르셨습니다.')
-      } 
-   })
-})
-$('#end').click(function(){
-   $.getJSON('/endTime',{'empno':empno},function(data){
-      $('#endTime').text(data)
-   })
-})
- function selectDate(date) {
-   $.getJSON('/vacation',{'date':date},function(data){
-	  $('#vlist').text("휴가자")
-      $('#vlist').append("<br>"+data)
-   })
-}
+deptno = ${user.deptno};
+function selectDate(date) {
+	   $.getJSON('/vacation',{'date':date},function(data){
+		  $('#vlist').text("휴가자")
+	      $('#vlist').append("<br>"+data)
+	   })
+	}
 </script>
-
+<script type="text/javascript" src="/js/main.js"></script>
 <!--현재시간 -->
 <script>
     function updateTime() {

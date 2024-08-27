@@ -297,5 +297,10 @@
     	//2.	기본 제출 동작을 막고: Ajax를 사용해 비동기적으로 데이터를 서버에 전송합니다.
     	//3.	서버 응답을 받고: 응답이 성공적이면 창을 닫고, 오류가 발생하면 경고 메시지를 표시합니다.
 	</script>
+	<script type="text/javascript"> 
+empno = ${user.empno};
+deptno = ${user.deptno};
+</script>
+<script type="text/javascript" src="/js/main.js"></script>
 </body>
 </html>

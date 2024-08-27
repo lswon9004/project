@@ -30,4 +30,6 @@ public interface Empdao {
 	int getDeptno(int empno);
 	@Select("select empno,annual from emp")
 	List<EmpDto> annualList();
+	@Select("select empno, ename from emp")
+	List<EmpDto> getEname();
 }

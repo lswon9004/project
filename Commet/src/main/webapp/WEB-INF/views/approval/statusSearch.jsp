@@ -27,19 +27,18 @@
         <form action="/approval/status/search">
         <label for="empno">결제번호:</label>
         <input type="hidden" name="approval_empno" value="${user.empno }">
-        <input type="number" id="empno" name="empno" value="">
+        <input type="number" id="empno" name="empno">
         <label for="approval_title">결재 제목:</label>
         <input type="text" id="approval_title" name="approval_title">
         <label for="startDate">작성일:</label>
         <input type="date" id="startDate" name="startDate">~
         <input type="date" id="endDate" name="endDate">
        <select class="cbutton" name="approval_status1" style="width: 70px">
-								<option class="dropdown">분류</option>
-								<option class="dropdown">요청</option>
-								<option class="dropdown">승인</option>
-								<option class="dropdown">대기</option>
-								<option class="dropdown">반려</option>
-							</select>
+							       <option class="dropdown" <c:if test="${approval_status1=='요청' }">selected="selected" </c:if> >요청</option>
+            <option class="dropdown" <c:if test="${approval_status1=='승인' }">selected="selected" </c:if> >승인</option>
+            <option class="dropdown" <c:if test="${approval_status1=='대기' }">selected="selected" </c:if> >대기</option>
+            <option class="dropdown" <c:if test="${approval_status1=='반려' }">selected="selected" </c:if> >반려</option>
+       </select>
 							<button>조회</button>
 						</form>
     </div>
@@ -51,7 +50,7 @@
                 <th>결재 종류</th>
                 <th>작성일</th>
                 <th>작성자</th>
-                <th>결재 상태</th>
+                <th>결재 상태 </th>
             </tr>
             	
         </thead>
@@ -65,7 +64,7 @@
 					<c:forEach items="${alist}" var="alist">
 						<tr>
 							<td>${alist.approval_no }</td>
-							<td><a href="/approval/statusForm/${alist.approval_no }">${alist.approval_title }</a></td>
+							<td><a href="/approval/statusContent/${alist.approval_no }">${alist.approval_title }</a></td>
 							<td><c:choose>
 									<c:when test="${alist.approval_type ==1 }">연차/휴가신청</c:when>
 									<c:when test="${alist.approval_type ==2 }">출장신청</c:when>
@@ -73,8 +72,18 @@
 									<c:when test="${alist.approval_type ==4 }">비품신청</c:when>
 								</c:choose></td>
 							<td><fmt:formatDate value="${alist.created_date }" pattern="yyyy.MM.dd" /></td>
-							<td>${alist.empno }</td>
-							<td>${alist.approval_status1 }</td>
+							<td><c:forEach items="${ename }" var="ename">
+								<c:if test="${alist.empno ==ename.empno }">
+								${ename.ename }
+								</c:if>
+								</c:forEach></</td>
+							<td>
+											<c:if test="${alist.approver1_empno==user.empno }">
+												${alist.approval_status1 }
+											</c:if>
+											<c:if test="${alist.approver2_empno==user.empno }">
+												${alist.approval_status2 }
+											</c:if></td>
 						</tr>
 					</c:forEach>
 				</c:if>
@@ -84,18 +93,48 @@
                 <div class="pagination">
 		<div id="page">
 				<c:if test="${begin > pageNum }">
-					<a href="/approval/search?p=${begin-1 }&approval_no=${approval_no}&approval_title=${approval_title}&approval_status1=${approval_status1}&startDate=${startDate}&endDate=${endDate}" class="page prv">&lt;</a>
+					<a href="/approval/status/search?p=${begin-1 }&approval_empno=${user.empno}&approval_title=${approval_title}&approval_status1=${approval_status1}&startDate=${startDate}&endDate=${endDate}&empno=${empno}" class="page prv">&lt;</a>
 				</c:if>
 				<c:forEach begin="${begin }" end="${end}" var="i">
-					<a href="/approval/search?p=${i}&approval_no=${approval_no}&approval_title=${approval_title}&approval_status1=${approval_status1}&startDate=${startDate}&endDate=${endDate}">${i}</a>
+					<a href="/approval/status/search?p=${i}&approval_empno=${user.empno}&approval_title=${approval_title}&approval_status1=${approval_status1}&startDate=${startDate}&endDate=${endDate}&empno=${empno}">${i}</a>
 				</c:forEach>
 				<c:if test="${end < totalPages }">
-					<a href="/approval/search?p=${end+1}&approval_no=${approval_no}&approval_title=${approval_title}&approval_status1=${approval_status1}&startDate=${startDate}&endDate=${endDate}" class="page next">&gt;</a>
+					<a href="/approval/status/search?p=${end+1}&approval_empno=${user.empno}&approval_title=${approval_title}&approval_status1=${approval_status1}&startDate=${startDate}&endDate=${endDate}&empno=${empno}" class="page next">&gt;</a>
 				</c:if>
 			</div>
 		</div>
             </section>
         </main>
     </div>
+    
 </body>
+<footer>
+	<p class="footer-text">
+		현재시간 : <span id="current-time" style=""></span>
+	</p>
+	&nbsp;
+	<p class="footer-text">코멧업무포털</p>
+</footer>
+<script type="text/javascript"> 
+empno = ${user.empno};
+deptno = ${user.deptno};
+function updateTime() {
+    const now = new Date();
+    const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        weekday: 'long',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    };
+    const currentTimeString = now.toLocaleDateString('ko-KR', options);
+    document.getElementById('current-time').innerText = currentTimeString;
+}
+
+updateTime();
+setInterval(updateTime, 1000);
+</script>
+<script type="text/javascript" src="/js/main.js"></script>
 </html>

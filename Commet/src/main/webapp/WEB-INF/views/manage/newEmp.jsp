@@ -155,6 +155,18 @@
     		border-radius: 50%; /* 이미지를 동그랗게 보이도록 설정 */
     		object-fit: cover; /* 이미지가 컨테이너를 꽉 채우도록 조정 */
     	}
+        /* 생년월일 칸 사이즈 */
+        .info#info__birth {
+		  display: flex;
+		}
+
+		.info#info__birth select {
+ 		  margin-left : 7px;
+		}
+
+		.info#info__birth select:first-child {
+		  margin-left : 0px;
+		}
         
     </style>
     
@@ -186,8 +198,9 @@
             </div>
         </div>
 
-         <form action="/saveinsert" method="post" modelAttribute="InserEmpDto">
+         <form action="/saveinsert" method="post" modelAttribute="InserEmpDto" onsubmit="combineBirthday()">
             <input type="hidden" name="imgPath" value="${InserEmpDto.imgPath}"> 
+            <input type="hidden" id="birthday" name="birthday">
             <table>
             <tr>
                 <td>사원 이름:</td><td><input type="text" name="ename" required></td>
@@ -213,8 +226,8 @@
 				</td>
             </tr>
             <tr>
-				<td>연락처:</td><td><input type="text" name="phone" required></td>
-				<td>이메일:</td><td><input type="text" name="email" required></td>
+				<td>연락처:</td><td><input type="text" name="phone" oninput="autoHyphen(this)" maxlength="13" placeholder="010-1234-1234" required></td>
+				<td>이메일:</td><td><input type="text" name="email" placeholder="abc@gmail.com" required></td>
             </tr>
             <tr>
  				<td>주소:</td><td><input type="text" id="address" name="address" required>
@@ -222,9 +235,21 @@
   				<td>상세주소:</td><td><input type="text" name="detailAddr" ></td>
             </tr>
             <tr>
-	    		<td>생년월일:</td><td>
-<!-- 	    		<input type="text" name="birthday" placeholder="생년월일 8자리" required> 입력을 텍스트로 받으려다가 보류-->
-	    		<input type="date" name="birthday" required></td>
+	    		<td>생년월일:</td>
+	    		<td>
+	    		<div class="info" id="info__birth" name="birthday">
+  				<select class="box" id="birth-year">
+  				<option disabled selected>출생 연도</option>
+ 				</select>
+ 				<select class="box" id="birth-month">
+  				<option disabled selected>월</option>
+  				</select>
+  				<select class="box" id="birth-day">
+    			<option disabled selected>일</option>
+  				</select>
+				</div>
+				</td>
+<!-- 	    		<input type="date" name="birthday" required></td> -->
     			<td>입사일:</td><td><input type="date" name="hiredate" required></td>
             </tr>
              <tr>
@@ -260,6 +285,85 @@
         }).open();
     }
     </script>
+    <script>
+	const autoHyphen = (target) =>{
+		target.value = target.value
+			.replace(/[^0-9]/g, '')
+			.replace(/^(\d{3})(\d{3,4})(\d{4})$/, "$1-$2-$3")
+	}
+    </script>
     
+    <script>
+ 	// '출생 연도' 셀렉트 박스 option 목록 동적 생성
+    const birthYearEl = document.querySelector('#birth-year')
+    // option 목록 생성 여부 확인
+    isYearOptionExisted = false;
+    birthYearEl.addEventListener('focus', function () {
+      // year 목록 생성되지 않았을 때 (최초 클릭 시)
+      if(!isYearOptionExisted) {
+        isYearOptionExisted = true
+        for(var i = 1940; i <= 2024; i++) {
+          // option element 생성
+          const YearOption = document.createElement('option')
+          YearOption.setAttribute('value', i)
+          YearOption.innerText = i
+          // birthYearEl의 자식 요소로 추가
+          this.appendChild(YearOption);
+        }
+      }
+    });
+    
+ 	//  '월' 셀렉트 박스 option 목록 동적 생성
+    const birthMonthEl = document.querySelector('#birth-month')
+    // option 목록 생성 여부 확인
+    isMonthOptionExisted = false;
+    birthMonthEl.addEventListener('focus', function () {
+      // month 목록 생성되지 않았을 때 (최초 클릭 시)
+      if(!isMonthOptionExisted) {
+        isMonthOptionExisted = true
+        for(var i = 1; i <= 12; i++) {
+          // option element 생성
+          const MonthOption = document.createElement('option')
+          MonthOption.setAttribute('value', i)
+          MonthOption.innerText = i
+          // birthYearEl의 자식 요소로 추가
+          this.appendChild(MonthOption);
+        }
+      }
+    });
+    
+ 	//  '일' 셀렉트 박스 option 목록 동적 생성
+    const dayMonthEl = document.querySelector('#birth-day')
+    // option 목록 생성 여부 확인
+    isDayOptionExisted = false;
+    dayMonthEl.addEventListener('focus', function () {
+      // day 목록 생성되지 않았을 때 (최초 클릭 시)
+      if(!isDayOptionExisted) {
+        isDayOptionExisted = true
+        for(var i = 1; i <= 31; i++) {
+          // option element 생성
+          const DayOption = document.createElement('option')
+          DayOption.setAttribute('value', i)
+          DayOption.innerText = i
+          // birthYearEl의 자식 요소로 추가
+          this.appendChild(DayOption);
+        }
+      }
+    });
+    </script>
+
+	<script>
+		function combineBirthday() {
+    		const year = document.getElementById('birth-year').value;
+    		const month = document.getElementById('birth-month').value;
+    		const day = document.getElementById('birth-day').value;
+
+    		if (year && month && day) {
+        		const birthday = year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+       		 	document.getElementById('birthday').value = birthday;
+    		}
+		}
+</script>
+
 </body>
 </html>

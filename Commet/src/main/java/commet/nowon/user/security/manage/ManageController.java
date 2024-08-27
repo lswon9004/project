@@ -45,14 +45,15 @@ public class ManageController {
     @RequestMapping("/emp_manage") // 직원관리 메인화면
     public String empList(@ModelAttribute("user")EmpDto dto, @RequestParam(name = "p", defaultValue = "1") int page, Model m) {
         // 글이 있는지 체크
-        int count = service.count();
-        if (count > 0) {
-        int perPage = 10; // 한 페이지에 보일 글의 갯수
+        int perPage = 30; // 한 페이지에 보일 글의 갯수
         int startRow = (page - 1) * perPage;
 	    List<ManageDto> deptList = service.searchDept();
         List<ManageDto> list = service.managemain(startRow, dto.getEmpno());
-        	m.addAttribute("elist", list);
+        m.addAttribute("elist", list);
+        m.addAttribute("deptList", deptList);
 
+        int count = service.count();
+        if (count > 0) {
             int pageNum = 5; // 보여질 페이지 번호 수
             int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0); // 전체 페이지 수
             int begin = (page - 1) / pageNum * pageNum + 1;
@@ -60,7 +61,6 @@ public class ManageController {
             if (end > totalPages) {
                 end = totalPages;
             }
-		    m.addAttribute("deptList", deptList);
             m.addAttribute("begin", begin);
             m.addAttribute("end", end);
             m.addAttribute("pageNum", pageNum);
@@ -68,6 +68,7 @@ public class ManageController {
           
         }
         m.addAttribute("count", count);
+        m.addAttribute("currentPage", page);
         return "manage/empList";
     }
 
@@ -123,16 +124,17 @@ public class ManageController {
 	  }
 	  
 	     @GetMapping("/searchEmps")//사원이름 / 사원번호 입력하면 검색하는 메서드 
-	     public String searchEmps(@RequestParam(value = "empno", defaultValue = "0") Integer empno,
+	     public String searchEmps(@RequestParam(value = "deptname", required = false) String deptname,
 	                             @RequestParam(value = "ename", required = false) String ename,
 	                             @RequestParam(name = "p", defaultValue = "1") int page, Model model) {
-	          int perPage = 10; // 한 페이지에 보일 글의 갯수
+	          int perPage = 30; // 한 페이지에 보일 글의 갯수
 	          int startRow = (page - 1) * perPage; // 시작 위치 계산
-
-	          List<ManageDto> searchResults = service.searchEmpsWithPagination(empno, ename, startRow, perPage);
+	          List<ManageDto> deptList = service.searchDept();
+	          List<ManageDto> searchResults = service.searchEmpsWithPagination(deptname, ename, startRow, perPage);
 	          model.addAttribute("elist", searchResults);
+	          model.addAttribute("deptList", deptList);
 
-	          int count = service.countSearchResults(empno, ename);
+	          int count = service.countSearchResults(deptname, ename);
 	          if (count > 0) {
 	              int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0);
 	              int pageNum = 5; // 보여질 페이지 번호 수
@@ -152,12 +154,11 @@ public class ManageController {
 	     return "manage/empList";
 	     }
 
-	  @PostMapping("/downloadEmpExcel") // 엑셀 다운로드 
-	  public void downloadEmpExcel(@RequestParam("empnos") int[] empnos, HttpServletResponse response) throws IOException {
-	  List<ManageDto> empList = service.getEmpsByIds(empnos);
-	  
-	  Workbook workbook = new XSSFWorkbook(); Sheet sheet =
-	  workbook.createSheet("Emps");
+	  @PostMapping("/downloadDeptExcel") // 엑셀 다운로드 
+	  public void downloadDeptExcel(@RequestParam("deptnos") Integer[] deptnos, HttpServletResponse response) throws IOException {
+	  List<ManageDto> empList = service.getEmpsByIds(deptnos);
+	  Workbook workbook = new XSSFWorkbook();
+	  Sheet sheet = workbook.createSheet("Employees");
 	  
 	  // 헤더행 
 	  Row headerRow = sheet.createRow(0);
@@ -193,6 +194,7 @@ public class ManageController {
 		@PostMapping("/saveinsert") //박선욱 작성. db에 저장하는 서비스
 	    public String saveinsert(ManageDto InserEmpDto) {
 	        service.insertEmp(InserEmpDto);
+	        System.out.println(InserEmpDto);
 	        return "redirect:/emp_manage";
 	    }
 		

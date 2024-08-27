@@ -10,12 +10,12 @@ import commet.swon.file.LoginIntercepter;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//
-//        LoginIntercepter loginIntercepter = new LoginIntercepter();
-//        registry.addInterceptor(loginIntercepter)
-//                .addPathPatterns(loginIntercepter.loginEssential)
-//                .excludePathPatterns(loginIntercepter.loginInessential);
-//    }   
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+
+        LoginIntercepter loginIntercepter = new LoginIntercepter();
+        registry.addInterceptor(loginIntercepter)
+                .addPathPatterns(loginIntercepter.loginEssential)
+                .excludePathPatterns(loginIntercepter.loginInessential);
+    }   
 }

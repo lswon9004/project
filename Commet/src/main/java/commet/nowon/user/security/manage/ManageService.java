@@ -32,13 +32,13 @@ public class ManageService {
 		
 		Map<String, Object> m = new HashMap<String, Object>();
 		m.put("start", start);
-		m.put("count", 10);
+		m.put("count", 30);
 		m.put("empno", empno);
 		return dao.managemain(m);
     }
     
-    public int countSearchResults(int empno, String ename) {
-        return dao.countSearchResults(empno, ename);
+    public int countSearchResults(String deptname, String ename) {
+        return dao.countSearchResults(deptname, ename);
     }
    
     public ManageDto getempByID(int id) {
@@ -52,18 +52,18 @@ public class ManageService {
 		return dao.staffUpdateEmp(staffModifyDto);
 	}
     
-    public List<ManageDto> getEmpsByIds(int[] empnos) {
-        return dao.getEmpsByIds(empnos);
+    public List<ManageDto> getEmpsByIds(Integer[] deptnos) {
+        return dao.getEmpsByIds(deptnos);
     }
 
-    public List<ManageDto> searchEmpsWithPagination(int empno, String ename, int start, int count) {
-        return dao.searchEmpsWithPagination(empno, ename, start, count);
+    public List<ManageDto> searchEmpsWithPagination(String deptname, String ename, int start, int count) {
+        return dao.searchEmpsWithPagination(deptname, ename, start, count);
     }
 
    
     
-    public void deleteEmps(int[] emps) {
-    	dao.deleteEmps(emps);
+    public void deleteEmps(int[] empnos) {
+    	dao.deleteEmps(empnos);
     }
     public List<ManageDto> searchDept(){
     	return dao.searchDept();

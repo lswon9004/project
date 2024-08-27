@@ -149,7 +149,7 @@
 
 <div id="myModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="location.href='/emp_manage'">&times;</span>
+        <span class="close" onclick="history.back()">&times;</span>
         <h2>사원정보</h2>
         <form action="/empModify" method="get" >
         	
@@ -188,7 +188,7 @@
             </table>
             <div class="buttons">
                 <button type="submit">수정</button>
-                <button type="button" onclick="location.href='/emp_manage'">닫기</button>
+                <button type="button" onclick="history.back()">닫기</button>
                
             </div>
         </form>

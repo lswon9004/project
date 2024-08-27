@@ -25,7 +25,7 @@
       <section class="main-content">
     		<h2>고객정보</h2>
     		<div class="header-line"></div>
-    	<form action="${pageContext.request.contextPath}/deleteCustomer" method="post">
+    	<form action="/deleteCustomer" method="post">
         <div class="button-container">
             <div class="search-form">
                 			<input type="text" name="customerName" placeholder="고객명" id="customerName">
@@ -58,7 +58,7 @@
                     <th>연락처</th>
                     <th>진행상태</th>
                     <th>접수일자</th>
-                    <th>접수사번</th>
+                    <th>접수자</th>
                 </tr>
             </thead>
             <tbody>
@@ -79,7 +79,11 @@
                             </c:choose>
                         </td>
                         <td><fmt:formatDate value="${customer.registrationDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                           <td>${customer.empno}</td>
+                           <td><c:forEach items="${ename }" var="ename">
+								<c:if test="${customer.empno ==ename.empno }">
+								${ename.ename }
+								</c:if>
+								</c:forEach></td>
                     </tr>
                 </c:forEach>
                 
@@ -222,4 +226,9 @@
     // 매 초마다 시간을 업데이트
     setInterval(updateTime, 1000);
 	</script>
+	<script type="text/javascript"> 
+empno = ${user.empno};
+deptno = ${user.deptno};
+</script>
+<script type="text/javascript" src="/js/main.js"></script>
 	</html>

@@ -126,15 +126,27 @@
                                         <c:when test="${dto.approval_type == 4}">비품신청</c:when>
                                     </c:choose>
                                     </td>
-                                <th>사원 번호</th>
-                                <td>${dto.empno}</td>
+                                <th>사원 이름</th>
+                                <td><c:forEach items="${ename }" var="ename">
+								<c:if test="${dto.empno ==ename.empno }">
+								${ename.ename }
+								</c:if>
+								</c:forEach></td>
                             </tr>
                            <tr>
                                 <th>결재 제목</th>
                                 <td>${dto.approval_title}</td>
                                 <th>담당자</th>
-                                <td>${dto.approver1_empno}<br>
-                                	${dto.approver2_empno}</td>
+                                <td><c:forEach items="${ename }" var="ename">
+								<c:if test="${dto.approver1_empno ==ename.empno }">
+								${ename.ename }/
+								</c:if>
+								</c:forEach><br>
+                                	<c:forEach items="${ename }" var="ename">
+								<c:if test="${dto.approver2_empno ==ename.empno }">
+								${ename.ename }
+								</c:if>
+								</c:forEach></td>
                             </tr>
                         </table>
                         <div class="section-title">결재내용</div>
@@ -195,5 +207,10 @@
         updateTime();
         setInterval(updateTime, 1000);
     </script>
+    <script type="text/javascript"> 
+empno = ${user.empno};
+deptno = ${user.deptno};
+</script>
+<script type="text/javascript" src="/js/main.js"></script>
 </body>
 </html>

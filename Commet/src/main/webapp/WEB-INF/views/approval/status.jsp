@@ -33,7 +33,6 @@
 								id="startDate" name="startDate">~ <input type="date"
 								id="endDate" name="endDate">
 							<select class="cbutton" name="approval_status1" style="width: 70px">
-								<option class="dropdown">분류</option>
 								<option class="dropdown">요청</option>
 								<option class="dropdown">승인</option>
 								<option class="dropdown">대기</option>
@@ -75,12 +74,16 @@
 												<c:when test="${alist.approval_type ==4 }">비품신청</c:when>
 											</c:choose></td>
 										<td><fmt:formatDate value="${alist.created_date }" pattern="yyyy.MM.dd" /></td>
-										<td>${alist.empno }</td>
+										<td><c:forEach items="${ename }" var="ename">
+								<c:if test="${alist.empno ==ename.empno }">
+								${ename.ename }
+								</c:if>
+								</c:forEach></td>
 										<td>
-											<c:if test="${dto.approver1_empno==user.empno }">
+											<c:if test="${alist.approver1_empno==user.empno }">
 												${alist.approval_status1 }
 											</c:if>
-											<c:if test="${dto.approver2_empno==user.empno }">
+											<c:if test="${alist.approver2_empno==user.empno }">
 												${alist.approval_status2 }
 											</c:if>
 										</td>
@@ -138,4 +141,9 @@
 	// 매 초마다 시간을 업데이트
 	setInterval(updateTime, 1000);
 </script>
+<script type="text/javascript"> 
+empno = ${user.empno};
+deptno = ${user.deptno};
+</script>
+<script type="text/javascript" src="/js/main.js"></script>
 </html>

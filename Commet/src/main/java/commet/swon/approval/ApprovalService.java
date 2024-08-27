@@ -42,11 +42,17 @@ public class ApprovalService {
 		if(approval_status1.equals("요청")) {
 			approval_status1 = "";
 		}
+		if(!approval_title.equals("")||approval_title!=null) {
+			approval_title = "%"+approval_title+"%";
+		}
 		return dao.searchCount(no, approval_title, startDate, endDate, empno,approval_status1);
 	}
 	public List<ApprovalDto> searchApproval(int no, String approval_title, 
 			   String approval_status1, Date startDate,
 			   Date endDate, int empno, int start){
+		if(!approval_title.equals("")||approval_title!=null) {
+			approval_title = "%"+approval_title+"%";
+		}
 		if(approval_status1.equals("요청")) {
 			approval_status1 = "";
 		}
@@ -60,6 +66,9 @@ public class ApprovalService {
 	}
 	public int statusSearchCount(String approval_title,Date startDate,Date endDate,int empno,
 			 		String approval_status1,int approver1_empno) {
+		if(!approval_title.equals("")||approval_title!=null) {
+			approval_title = "%"+approval_title+"%";
+		}
 		if(approval_status1.equals("요청")) {
 			approval_status1 = "";
 		}
@@ -67,6 +76,9 @@ public class ApprovalService {
 	}
 	public List<ApprovalDto> statusSearchList(String approval_title,Date startDate,Date endDate,int empno,
 			 		String approval_status1,int approver1_empno, int start){
+		if(!approval_title.equals("")||approval_title!=null) {
+			approval_title = "%"+approval_title+"%";
+		}
 		if(approval_status1.equals("요청")) {
 			approval_status1 = "";
 		}

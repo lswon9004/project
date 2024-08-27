@@ -77,42 +77,16 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="user-info">
-               <img src="/upload/${user.imgPath}" alt="User Profile">
-                <div>
-                    <p>이름: ${user.ename }</p>
-                    <p>직책: ${user.position }</p>
-                    <p>사번: ${user.empno }</p>
-                    <p>${user.ename }님 환영합니다.</p>
-                </div>
-            </div>
-            <h1>코멧 업무포털</h1>
-            <div class="header-right">
-                <button id="start">업무시작</button>
-                <button id="end">업무종료</button>
-                <p id="startTime"><c:if test="${startTime !=null}"><fmt:formatDate value="${startTime}" pattern="HH:mm" />/</c:if><c:if test="${startTime==null}">00:00</c:if></p>
-                <p id="endTime">00:00</p>
-                <nav>
-                    <c:if test="${user.right<3}"><a class="active" href="/main">Home</a></c:if>
-                    <c:if test="${user.right>=3}"><a class="active" href="/adminMain">Home</a></c:if>
-                    <a href="/bullboard">익명게시판</a>
-                    <a href="/logout">로그아웃</a>
-                </nav>
-            </div>
-        </header>
+   <div class="container">
+      <!-- Include header -->
+        <jsp:include page="/WEB-INF/views/header.jsp" />
+        
+        <!-- Main content area -->
         <main>
-            <aside>
-                <ul class="menu">
-                    <li><a href="/searchCustomers">통합업무</a></li>
-                    <li><a href="/attendance/managementList">근태현황</a></li>
-                    <li><a href="/boards" class="active">게시판</a></li>
-                    <li><a href="/approval/${user.empno}">전자결재</a></li>
-                    <c:if test="${user.right>=2 }"> <li><a href="/approval/status">결재승인</a></li></c:if>
-                    <c:if test="${user.right>=3 }"> <li><a href="/emp_manage">직원관리</a></li></c:if>
-                </ul>
-            </aside>
+
+            <!-- Include aside (sidebar) -->
+            <jsp:include page="/WEB-INF/views/aside.jsp" />
+            
             <section class="board-main-content">
             <div class="board-viewtitle">글쓰기</div>
             <div class="board-title"></div>
@@ -120,7 +94,8 @@
                     <form action="/boards/write" method="post">
                         <div class="form-group">
                             <label for="empno">작성자 번호</label>
-                            <input type="text" id="empno" name="empno" required readonly="readonly" style="pointer-events: none;" value="${user.empno}">
+                            ${user.ename }
+                            <input type="hidden" id="empno" name="empno" required readonly="readonly" style="pointer-events: none;" value="${user.empno}">
                         </div>
                         <div class="form-group">
                             <label for="title">제목</label>
@@ -206,4 +181,9 @@ function selectDate(date) {
     updateTime();
     setInterval(updateTime, 1000);
 </script>
+<script type="text/javascript"> 
+empno = ${user.empno};
+deptno = ${user.deptno};
+</script>
+<script type="text/javascript" src="/js/main.js"></script>
 </html>

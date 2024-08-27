@@ -32,7 +32,7 @@
         .logo-container img {
             width: 25px;
             height: 25px;
-            margin-right: 10px;
+            margin-right: 6px;
             margin-top: 15px;
         }
 
@@ -59,7 +59,9 @@
     
     <h1><img src="/css/logo/logo.png" alt="Company Logo" >
         코멧<c:if test="${user.right>=3}"> 관리자</c:if> 업무포털
+          
     </h1>
+  
     
     </div>
     <div class="header-right">
@@ -91,5 +93,8 @@
                 로그아웃
             </a>
         </nav>
+        
     </div>
+    
+    
 </header>

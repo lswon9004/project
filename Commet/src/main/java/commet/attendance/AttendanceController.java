@@ -1,6 +1,7 @@
 package commet.attendance;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import com.google.gson.Gson;
 
 import commet.com.spring.service.AttendanceManagementService;
 import commet.swon.emp.EmpDto;
+import commet.swon.emp.EmpService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -24,7 +26,8 @@ import jakarta.servlet.http.HttpServletRequest;
 public class AttendanceController {
 	@Autowired
     private AttendanceManagementService aservice;
-    
+	@Autowired
+	EmpService eService;
 	@Autowired
 	AttendanceService service;
 	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -59,7 +62,17 @@ public class AttendanceController {
 	@GetMapping("/vacation")
 	@ResponseBody
 	public String vacation(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd")Date date){
+		List<EmpDto> getEname = eService.getEname();
 		List<Integer> vlist = service.vacationList(date);
-		return gson.toJson(vlist);
+		List<String> elist = new ArrayList<>();
+		for(int i:vlist) {
+			for (EmpDto dto:getEname) {
+				if (i==dto.getEmpno()) {
+					elist.add(dto.getEname());
+				}
+			}
+		}
+		
+		return gson.toJson(elist);
 	}
 }

@@ -34,11 +34,10 @@
 								name="startDate">~ <input type="date" id="endDate"
 								name="endDate">
 								<select class="cbutton" name="approval_status1" style="width: 70px;">
-        	<option class="dropdown">분류</option>
-            <option class="dropdown">요청</option>
-            <option class="dropdown">승인</option>
-            <option class="dropdown">대기</option>
-            <option class="dropdown">반려</option>
+            <option class="dropdown" <c:if test="${approval_status1=='요청' }">selected="selected" </c:if> >요청</option>
+            <option class="dropdown" <c:if test="${approval_status1=='승인' }">selected="selected" </c:if> >승인</option>
+            <option class="dropdown" <c:if test="${approval_status1=='대기' }">selected="selected" </c:if> >대기</option>
+            <option class="dropdown" <c:if test="${approval_status1=='반려' }">selected="selected" </c:if> >반려</option>
         </select>
 							<button type="submit">조회</button>
 						</form>
@@ -52,7 +51,7 @@
 								<th>결재제목</th>
 								<th>결재 종류</th>
 								<th>작성일</th>
-								<th>작성자</th>
+								<th>담당자</th>
 								<th>결재 상태</th>
 							</tr>
 
@@ -76,8 +75,17 @@
 											</c:choose></td>
 										<td><fmt:formatDate value="${alist.created_date }"
 												pattern="yyyy.MM.dd" /></td>
-										<td>${alist.empno }</td>
-										<td>${alist.approval_status1 }</td>
+										<td><c:forEach items="${ename }" var="ename">
+								<c:if test="${alist.approver1_empno ==ename.empno }">
+								${ename.ename }/
+								</c:if>
+								</c:forEach>
+								<c:forEach items="${ename }" var="ename">
+								<c:if test="${alist.approver2_empno ==ename.empno }">
+								${ename.ename }
+								</c:if>
+								</c:forEach></td>
+										<td>${alist.approval_status1 }/${alist.approval_status2 }</td>
 									</tr>
 								</c:forEach>
 							</c:if>

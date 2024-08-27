@@ -121,13 +121,26 @@
                                     </c:choose>
                                     </td>
                                 <th>사원 번호</th>
-                                <td>${dto.empno }</td>
+                                <td><c:forEach items="${ename }" var="ename">
+								<c:if test="${dto.empno ==ename.empno }">
+								${ename.ename }
+								</c:if>
+								</c:forEach></td>
                             </tr>
                            <tr>
                                 <th>결재 제목</th>
                                 <td>${dto.approval_title}</td>
                                 <th>담당자</th>
-                                <td>${dto.approver1_empno}<br>${dto.approver2_empno}</td>
+                                <td><c:forEach items="${ename }" var="ename">
+								<c:if test="${dto.approver1_empno ==ename.empno }">
+								${ename.ename }/
+								</c:if>
+								</c:forEach><br>
+                                	<c:forEach items="${ename }" var="ename">
+								<c:if test="${dto.approver2_empno ==ename.empno }">
+								${ename.ename }
+								</c:if>
+								</c:forEach></td>
                             </tr>
                         </table>
                         <div>
@@ -142,12 +155,12 @@
         						<td style="font-weight: bold">결재 처리</td>
         						<td>
         							<c:if test="${dto.approver1_empno==user.empno }">
-										<label for="1">승인</label><input type="radio" id="1" name="approval_status1" value="승인" checked="checked">
-								    	<label for="2">반려</label><input type="radio" id="2" name="approval_status1" value="반려">
+										<label for="1">승인</label><input type="radio" id="1" name="approval_status1" value="승인" checked="checked" readonly="readonly">
+								    	<label for="2">반려</label><input type="radio" id="2" name="approval_status1" value="반려" readonly="readonly">
 									</c:if>
 									<c:if test="${dto.approver2_empno==user.empno }">
-										<label for="1">승인</label><input type="radio" id="1" name="approval_status2" value="승인" checked="checked">
-								    	<label for="2">반려</label><input type="radio" id="2" name="approval_status2" value="반려">
+										<label for="1">승인</label><input type="radio" id="1" name="approval_status2" value="승인" checked="checked" readonly="readonly">
+								    	<label for="2">반려</label><input type="radio" id="2" name="approval_status2" value="반려" readonly="readonly">
 									</c:if>
 									</td>
         					</tr>

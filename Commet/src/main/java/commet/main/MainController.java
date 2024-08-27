@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import commet.swon.approval.ApprovalDto;
 import commet.swon.approval.ApprovalService;
+import commet.swon.emp.EmpDto;
+import commet.swon.emp.EmpService;
 
 
 
@@ -20,9 +22,14 @@ public class MainController {
 	
 	@Autowired
 	ApprovalService aservice;
-	
+	@Autowired
+	EmpService eService;
 	@GetMapping("/approval/{empno}")
 	public String approval(@PathVariable("empno")int empno,@RequestParam(name="p", defaultValue = "1") int page,Model m) {
+		
+		List<EmpDto> getEname = eService.getEname();
+		m.addAttribute("ename", getEname);
+		
 		int count = aservice.Acount(empno);
 		if(count>0) {
 			int perPage = 10; // 한 페이지에 보일 글의 갯수

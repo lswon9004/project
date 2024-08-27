@@ -58,6 +58,8 @@ public class ApprovalController {
 	}
 	@GetMapping("/approval/content/{no}")
 	public String content(@PathVariable("no")int no, Model m) {
+		List<EmpDto> getEname = eService.getEname();
+		m.addAttribute("ename", getEname);
 		FilesDto fDto = service.selectFile(no);
 		m.addAttribute("fdto", fDto);
 		ApprovalDto dto = aService.oneApproval(no);
@@ -66,6 +68,8 @@ public class ApprovalController {
 	}
 	@GetMapping("/approval/update/{no}")//a
 	public String updatecontent(@PathVariable("no")int no, Model m) {
+		List<EmpDto> getEname = eService.getEname();
+		m.addAttribute("ename", getEname);
 		FilesDto fDto = service.selectFile(no);
 		ApprovalDto dto = aService.oneApproval(no);
 		m.addAttribute("file", fDto);
@@ -79,14 +83,16 @@ public class ApprovalController {
 		return"redirect:/approval/content/"+no;
 	}
 	@GetMapping("/approval/search")
-	public String approvalSearch(@RequestParam(name = "approval_no")String approval_no,
-								 @RequestParam(name = "approval_title")String approval_title,
-								 @RequestParam(name = "approval_status1")String approval_status1,
+	public String approvalSearch(@RequestParam(name = "approval_no",required = false)String approval_no,
+								 @RequestParam(name = "approval_title",required = false)String approval_title,
+								 @RequestParam(name = "approval_status1",required = false)String approval_status1,
 								 @DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(name = "startDate",required = false)Date startDate,
 								 @DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(name = "endDate",required = false)Date endDate,
 								 @RequestParam(name="p", defaultValue = "1") int page,
 								 @ModelAttribute("user")EmpDto dto, Model m) {
-		approval_title = "%"+approval_title+"%";
+		List<EmpDto> getEname = eService.getEname();
+		m.addAttribute("ename", getEname);
+		
 		int no = 0;
 		if(!approval_no.equals("")) {
 		no = Integer.parseInt(approval_no);
@@ -124,6 +130,8 @@ public class ApprovalController {
 	@GetMapping("/approval/status")
 	public void status(@RequestParam(name="p", defaultValue = "1") int page,
 					   @ModelAttribute("user")EmpDto dto, Model m) {
+		List<EmpDto> getEname = eService.getEname();
+		m.addAttribute("ename", getEname);
 		int count = aService.aStatusCount(dto.getEmpno());
 		if (count>0){
 			int perPage = 10; // 한 페이지에 보일 글의 갯수
@@ -145,22 +153,28 @@ public class ApprovalController {
 		m.addAttribute("count", count);
 	}
 	@GetMapping("/approval/status/search")
-	public String approvalStatusSearch(@RequestParam(name = "approval_title")String approval_title,
+	public String approvalStatusSearch(@RequestParam(name = "approval_title",required = false)String approval_title,
 			 @RequestParam(name = "approval_status1")String approval_status1,
 			 @DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(name = "startDate",required = false)Date startDate,
 			 @DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(name = "endDate",required = false)Date endDate,
 			 @RequestParam(name="p", defaultValue = "1") int page,@RequestParam("empno")String empno ,
-			 @RequestParam("approval_empno")int approval_empno,Model m) {
+			 @RequestParam("approval_empno")String approval_empno,Model m) {
+		List<EmpDto> getEname = eService.getEname();
+		m.addAttribute("ename", getEname);
+		
 		int no = 0;
-		approval_title = "%"+approval_title+"%";
 		if(!empno.equals("")) {
 			no = Integer.parseInt(empno);
 		}
-		int count = aService.statusSearchCount(approval_title, startDate, endDate, no, approval_status1, approval_empno);
+		int ano = 0;
+		if(!approval_empno.equals("")) {
+			ano = Integer.parseInt(approval_empno);
+		}
+		int count = aService.statusSearchCount(approval_title, startDate, endDate, no, approval_status1, ano);
 		if(count>0) {
 			int perPage = 10; // 한 페이지에 보일 글의 갯수
 			int startRow = (page - 1) * perPage;//인덱스 번호
-			List<ApprovalDto> alist = aService.statusSearchList(approval_title, startDate, endDate, no, approval_status1, approval_empno, startRow);
+			List<ApprovalDto> alist = aService.statusSearchList(approval_title, startDate, endDate, no, approval_status1, ano, startRow);
 			m.addAttribute("alist", alist);
 			int pageNum = 5;
 			int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0); //전체 페이지 수	
@@ -168,6 +182,17 @@ public class ApprovalController {
 			int end = begin + pageNum -1;
 			if(end > totalPages) {
 				end = totalPages;
+			}
+			m.addAttribute("empno", no);
+			m.addAttribute("approval_title", approval_title);
+			m.addAttribute("approval_status1", approval_status1);
+			m.addAttribute("approval_empno", approval_empno);
+			m.addAttribute("empno", empno);
+			if(startDate !=null) {
+			m.addAttribute("startDate", sdf.format(startDate));
+			}
+			if (endDate !=null) {							
+			m.addAttribute("endDate", sdf.format(endDate));
 			}
 			m.addAttribute("begin", begin);
 			m.addAttribute("end", end);
@@ -179,12 +204,16 @@ public class ApprovalController {
 	}
 	@GetMapping("/approval/statusForm/{no}")
 	public String statusForm(@PathVariable("no")int no, Model m) {
+		List<EmpDto> getEname = eService.getEname();
+		m.addAttribute("ename", getEname);
 		ApprovalDto dto = aService.oneApproval(no);
 		m.addAttribute("dto", dto);
 		return "/approval/statusForm";
 	}
 	@GetMapping("/approval/statusContent/{no}")
 	public String statusContent(@PathVariable("no")int no, Model m) {
+		List<EmpDto> getEname = eService.getEname();
+		m.addAttribute("ename", getEname);
 		FilesDto fDto = service.selectFile(no);
 		m.addAttribute("fdto", fDto);
 		ApprovalDto dto = aService.oneApproval(no);

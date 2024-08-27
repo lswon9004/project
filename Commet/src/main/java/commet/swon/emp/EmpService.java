@@ -30,9 +30,7 @@ public class EmpService {
 		String dtoEmail = dao.emailCheck(empno);
 		if (email.equals(dtoEmail)) {
 			return true;
-		}
-		
-		
+		}		
 		return false;
 	}
 	public int updatepw(int empno) {
@@ -40,5 +38,8 @@ public class EmpService {
 	}
 	public List<EmpDto> alist(){
 		return dao.annualList();
+	}
+	public List<EmpDto> getEname(){
+		return dao.getEname();
 	}
 }

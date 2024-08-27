@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import commet.swon.emp.EmpDto;
+import commet.swon.emp.EmpService;
 import commet.user.security.comment.CommentDto;
 import commet.user.security.comment.CommentService;
 import commet.user.security.like.LikeService;
@@ -27,7 +28,8 @@ public class BoardController {
     public EmpDto getDto() {
         return new EmpDto();
     }
-    
+    @Autowired
+	EmpService eService;
     // 서비스 클래스 의존성 주입
     @Autowired
     private BoardService boardService; //BoardService 객체 주입
@@ -41,6 +43,8 @@ public class BoardController {
     // 게시판 목록을 조회하여 페이지에 전달하는 메서드
     @GetMapping("/boards")
     public String list(@RequestParam(name = "p", defaultValue = "1") int page, Model model) {
+    	List<EmpDto> getEname = eService.getEname();
+    	model.addAttribute("ename", getEname);
         int count = boardService.count(); // 총 게시물 수 조회
         if(count>0) {
         int perPage = 10; // 페이지 당 게시물 수 설정
@@ -70,6 +74,9 @@ public class BoardController {
                          @RequestParam(name = "author", required = false) String author,
                          @RequestParam(name = "date", required = false) String date,
                          Model model) {
+    	
+    	List<EmpDto> getEname = eService.getEname();
+    	model.addAttribute("ename", getEname);
         int count = boardService.searchCount(title, author, date); // 검색 조건에 맞는 총 게시물 수 조회
         if(count>0) {
         	int perPage = 10; // 페이지 당 게시물 수 설정
@@ -128,6 +135,8 @@ public class BoardController {
     @GetMapping("/boards/{no}")
     public String viewBoard(@PathVariable("no") int no, Model model, @ModelAttribute("user") EmpDto dto) {
         BoardDto board = boardService.getBoard(no);
+        List<EmpDto> getEname = eService.getEname();
+    	model.addAttribute("ename", getEname);
         if (board != null) { 
             boardService.readcount(no); // 조회수 증가
             List<CommentDto> clist = commentService.getCommentsByBoardNo(no); // 해당 게시물의 댓글 목록 조회
@@ -146,6 +155,8 @@ public class BoardController {
     // 게시물 수정 폼 페이지로 이동하는 메서드
     @GetMapping("/boards/edit/{no}")
     public String editForm(@PathVariable("no") int no, Model model) {
+    	List<EmpDto> getEname = eService.getEname();
+    	model.addAttribute("ename", getEname);
         BoardDto board = boardService.getBoard(no); // 게시물 번호에 따른 게시물 조회
         model.addAttribute("board", board); // 모델에 게시물 정보 추가
         return "boards/edit"; // 게시물 수정 폼 페이지로 이동

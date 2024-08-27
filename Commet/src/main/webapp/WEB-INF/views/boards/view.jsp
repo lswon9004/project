@@ -38,7 +38,11 @@
             <div class="board-detail"> <!-- 게시글 상세 내용 표시 a-->
             <div class="section-inline-section"> 
             <div class="right">
-                      <div><strong>작성자:</strong> ${user.empno}</div>
+                      <div><strong>작성자:</strong> <c:forEach items="${ename }" var="ename">
+								<c:if test="${board.empno ==ename.empno }">
+								${ename.ename }
+								</c:if>
+								</c:forEach></div>
                      <div><strong>작성일자:</strong>
                         <fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd HH시mm분ss초" /></div>
                     </div>
@@ -218,4 +222,9 @@ $('#likeForm button').on('click', function(e) { // 추천 버튼이 클릭될 �
     // 매 초마다 시간을 업데이트
     setInterval(updateTime, 1000);
 </script>
+<script type="text/javascript"> 
+empno = ${user.empno};
+deptno = ${user.deptno};
+</script>
+<script type="text/javascript" src="/js/main.js"></script>
 </html>

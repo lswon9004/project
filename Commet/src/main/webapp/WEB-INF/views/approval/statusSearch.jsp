@@ -106,5 +106,35 @@
             </section>
         </main>
     </div>
+    
 </body>
+<footer>
+	<p class="footer-text">
+		현재시간 : <span id="current-time" style=""></span>
+	</p>
+	&nbsp;
+	<p class="footer-text">코멧업무포털</p>
+</footer>
+<script type="text/javascript"> 
+empno = ${user.empno};
+deptno = ${user.deptno};
+function updateTime() {
+    const now = new Date();
+    const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        weekday: 'long',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    };
+    const currentTimeString = now.toLocaleDateString('ko-KR', options);
+    document.getElementById('current-time').innerText = currentTimeString;
+}
+
+updateTime();
+setInterval(updateTime, 1000);
+</script>
+<script type="text/javascript" src="/js/main.js"></script>
 </html>

@@ -94,7 +94,8 @@
                     <form action="/boards/write" method="post">
                         <div class="form-group">
                             <label for="empno">작성자 번호</label>
-                            <input type="text" id="empno" name="empno" required readonly="readonly" style="pointer-events: none;" value="${user.empno}">
+                            ${user.ename }
+                            <input type="hidden" id="empno" name="empno" required readonly="readonly" style="pointer-events: none;" value="${user.empno}">
                         </div>
                         <div class="form-group">
                             <label for="title">제목</label>
@@ -180,4 +181,9 @@ function selectDate(date) {
     updateTime();
     setInterval(updateTime, 1000);
 </script>
+<script type="text/javascript"> 
+empno = ${user.empno};
+deptno = ${user.deptno};
+</script>
+<script type="text/javascript" src="/js/main.js"></script>
 </html>

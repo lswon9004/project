@@ -31,13 +31,13 @@ public interface ManageDao {
     @Select("select count(*) from emp")
     int count(); // 전체 글 갯수
 
-    @Select("select e.*, d.deptname from emp e left join dept d on e.deptno = d.deptno order by e.empno desc limit #{start}, #{count}")
+    @Select("select e.*, d.* from emp e left join dept d on e.deptno = d.deptno order by e.empno desc limit #{start}, #{count}")
     List<ManageDto> managemain(Map<String,Object> m); // 글 목록 리스트 최신 글이 먼저 보이게 order by empno desc 걸어둠
 
     @Select("select e.*, d.deptname, p.authority from emp e left join dept d on e.deptno = d.deptno left join position p on e.position = p.position where e.empno = #{id}")
     ManageDto getempByID(int id); // 사원 번호
     
-    @Update("update emp set password=#{password} , deptno=#{deptno}, ename=#{ename}, jop=#{jop}, position=#{position}, phone=#{phone}, email=#{email}, address=#{address}, detailAddr=#{detailAddr}, memo=#{memo}, sal=#{sal}, imgPath=#{imgPath} where empno=#{empno}")
+    @Update("update emp set deptno=#{deptno}, ename=#{ename}, jop=#{jop}, position=#{position}, phone=#{phone}, email=#{email}, address=#{address}, detailAddr=#{detailAddr}, memo=#{memo}, sal=#{sal}, imgPath=#{imgPath} where empno=#{empno}")
     int updateEmp(ManageDto ModifyDto); // 사원 정보 수정 / 부서이름이 deptno를 dept 에서 join해서 이름을 가져와서 수정 버튼 누를시 있는 데이터를 통제로 보냄 그래서 안넣어둠
 
     @Update("update emp set password=#{password}, phone=#{phone}, email=#{email}, address=#{address}, detailAddr=#{detailAddr} where empno=#{empno}")
@@ -60,8 +60,8 @@ public interface ManageDao {
 	   "<script>",
 	   "select * from emp natural join dept",
 	   "<where>",
-	   "<if test=\"empno != null and empno != 0\">",
-	   "empno LIKE CONCAT('%', #{empno}, '%')",
+	   "<if test=\"deptname != null and deptname != ''\">",
+	   "deptname LIKE CONCAT('%', #{deptname}, '%')",
 	   "</if>",
 	   "<if test=\"ename != null and ename != ''\">",
 	   "ename LIKE CONCAT('%', #{ename}, '%')",
@@ -71,7 +71,7 @@ public interface ManageDao {
 	    "limit #{start}, #{count}",
 	   "</script>"
    })
-   List<ManageDto> searchEmpsWithPagination(@Param("empno") Integer empno, @Param("ename") String ename, @Param("start") int start, @Param("count") int count);
+   List<ManageDto> searchEmpsWithPagination(@Param("deptname") String deptname, @Param("ename") String ename, @Param("start") int start, @Param("count") int count);
    
    // 검색된 결과의 전체 수를 가져오기 위한 메서드
    @Select({
@@ -79,8 +79,8 @@ public interface ManageDao {
 	   "select count(*) from emp e",
 	   "left join dept d on e.deptno = d.deptno",
 	   "<where>",
-	   "<if test=\"empno != null and empno != 0\">",
-	   "e.empno LIKE CONCAT('%', #{empno}, '%')",
+	   "<if test=\"deptname != null and deptname != ''\">",
+	   "d.deptname LIKE CONCAT('%', #{deptname}, '%')",
 	   "</if>",
 	   "<if test=\"ename != null and ename != ''\">",
 	   "e.ename LIKE CONCAT('%', #{ename}, '%')",
@@ -88,7 +88,7 @@ public interface ManageDao {
 	   "</where>",
 	   "</script>"
    })
-   int countSearchResults(@Param("empno") Integer empno, @Param("ename") String ename);
+   int countSearchResults(@Param("deptname") String deptname, @Param("ename") String ename);
 
 
    	// 고객 삭제

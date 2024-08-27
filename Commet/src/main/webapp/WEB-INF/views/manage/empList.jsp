@@ -33,6 +33,13 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        caption {
+ 		caption-side: top;
+ 		padding: 10px;
+ 		font-weight: bold;
+ 		text-align: middle;
+		}
+
     </style>
 </head>
 <body>
@@ -53,8 +60,8 @@
             <div class="search-form">
 
         		<select class="cbutton" id="searchType" name="searchType">
-            		<option class="dropdown" value="empno">사원번호</option>
-            		<option class="dropdown" value="ename">부서이름</option>
+            		<option class="dropdown" value="deptname">부서이름</option>
+            		<option class="dropdown" value="ename">사원이름</option>
         		</select>
 				<input type="text" id="searchInput" name="searchInput" />
         		<button type="button" class="button" id="sButton" onclick="performSearch()">검색</button>
@@ -65,36 +72,37 @@
                 <input type="submit" class="button" value="삭제"/>
             </div>
         </div>
+        
+        <c:forEach var="dept" items="${deptList}">
+    	<!-- 각 부서에 해당하는 직원이 있는지 확인 -->
+    		<c:set var="hasEmployees" value="false"/>
+    		<c:forEach var="emp" items="${elist}">
+        		<c:if test="${emp.deptno == dept.deptno}">
+            		<c:set var="hasEmployees" value="true"/>
+        		</c:if>
+    		</c:forEach>
+       	<!-- 직원이 있는 경우에만 부서 이름과 테이블을 출력 -->
+		<c:if test="${hasEmployees}">
         <table>
-            <thead><!-- 받아올 값의 이름들 -->
-                <tr>
-<!--                     <th><input type="checkbox" id="selectAll">부서1</th> -->
-<!--                     <th><input type="checkbox" id="selectAll2">부서2</th> -->
-<!--                     <th><input type="checkbox" id="selectAll3">부서3</th> -->
-					<c:forEach var="emp" items="${elist}">
-                    <th><input type="checkbox" id="selectAll">${emp.deptname}</th>
-                    </c:forEach>
-                </tr>
-            </thead>
-            <tbody> <!-- 받아온 값을 표시 -->
-                <c:forEach var="emp" items="${elist}">
+        <caption value="${dept.deptno}">${dept.deptname}</caption>
                     <tr>
-                        <td>
-                        <img src="/upload/${emp.imgPath}" alt="Profile Image" width="100">
-                        <br>
-                        <a href="/empDetail/${emp.empno}"><input type="checkbox" id="test" href="/empDetail/${emp.empno}">${emp.ename},${emp.position}</input>
-                        </a>
-                        </br>
-                        </td>
+                        	<c:forEach var="emp" items="${elist}">
+                        		<c:if test="${emp.deptno == dept.deptno}">
+                        			<th>
+                        				<img src="/upload/${emp.imgPath}" alt="Profile Image" width="100">
+                        				<br>
+                        				<a href="/empDetail/${emp.empno}" name="empnos" value="${emp.empno}">
+                        				${emp.ename} (${emp.position})
+                       					</a>
+                        				</br>
+                        			</th>
+                        		</c:if>
+                        	</c:forEach>             
                     </tr>
-                </c:forEach>
-            </tbody>
-             <c:if test="${count == 0}">
-					<tr>
-						<td colspan="5" class="tac">등록된 게시글이 없습니다.</td>
-					</tr>
-				</c:if>
         </table>
+         </c:if>
+		</c:forEach>
+
     </form>
     
    <div class="pagination">
@@ -116,15 +124,14 @@
             const searchInput = document.getElementById('searchInput').value.trim();// 입력 값을 trim()으로 처리
             
             let url = '/searchEmps?';
-            if (searchType === 'empno') {
-                if (isNaN(searchInput) || searchInput === '') { // 숫자가 아니거나 빈 값인 경우 예외 처리
-                    alert('정확한 사원번호를 입력하세요.');
+            if (searchType === 'deptname') {
+                if (searchInput === '') { // 숫자가 아니거나 빈 값인 경우 예외 처리
+                    alert('정확한 부서이름을 입력하세요.');
                     return;
                 }
-                url += 'empno=' + searchInput;
+                url += 'deptname=' + searchInput;
             } else if (searchType === 'ename') {
             	 if (searchInput === '') { //빈 값인 경우 예외 처리
-					System.out.print(ename);
             		 alert('정확한 사원이름을 입력하세요.');
                      return;
                  }

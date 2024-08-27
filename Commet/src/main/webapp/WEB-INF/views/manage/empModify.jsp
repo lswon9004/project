@@ -143,9 +143,7 @@
             background-color: #ccc;
         }
         
-        /* 숨겨진 등록 버튼 */
-/*         #submitButton { */
-/*             display: none; */
+
     </style>
     
 </head>
@@ -153,7 +151,7 @@
 
 <div id="myModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="location.href='/emp_manage'">&times;</span>
+        <span class="close" onclick="history.back()">&times;</span>
         <h2>사원정보</h2>
         <img src="/upload/${empInfo.imgPath}" alt="Profile Image" width="100">
                     <!-- 사진 업로드 폼 -->
@@ -223,9 +221,8 @@
             </tr> 
             </table>
             <div class="buttons">
-                <button type="button" onclick="enableEdit()" id="modify">수정</button>
                 <button type="submit" id="submitButton">등록</button>
-                <button type="button" onclick="location.href='/emp_manage'">닫기</button>
+                <button type="button" onclick="history.back()">닫기</button>
                
             </div>
         </form>
@@ -234,22 +231,8 @@
 
     <!-- Daum 주소 검색 API 스크립트 추가 -->
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>    
-    <!-- 글수정시 수정버튼을 눌렀을때만 수정 가능 하게 하는 기능인데 -->
-    <script>
-    function enableEdit() {
-        const inputs = document.querySelectorAll('input, textarea, select');
-        inputs.forEach(input => {
-            input.removeAttribute('readonly');
-            if (input.tagName.toLowerCase() === 'select') {
-                input.removeAttribute('disabled');
-            }
-        });
 
-        document.getElementById('addressSearchBtn').style.display = 'inline-block';
-        document.getElementById('submitButton').style.display = 'inline-block'; // 등록 버튼 보이기
-        document.getElementById('modify').style.display = 'none'; // 수정 버튼 숨기기
-    }
-    
+    <script>    
     function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {

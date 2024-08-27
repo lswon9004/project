@@ -20,6 +20,27 @@
             margin-bottom: 3px;
        	/* color: #777; */
         }
+        
+        /* 	로고부분 */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* 왼쪽 정렬 */
+        }
+
+		
+        .logo-container img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            margin-top: 15px;
+        }
+
+        .hero_title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
     </style>
     
 </head>
@@ -33,10 +54,14 @@
             <p>사번: ${user.empno }</p>
             <p>${user.ename }님 환영합니다.</p>
         </div>
-    </div>
-    <h1>
+    </div> 
+    <div class="flex_col1 logo-container">
+    
+    <h1><img src="/css/logo/logo.png" alt="Company Logo" >
         코멧<c:if test="${user.right>=3}"> 관리자</c:if> 업무포털
     </h1>
+    
+    </div>
     <div class="header-right">
         <button id="start">업무시작</button>
         <button id="end">업무종료</button>

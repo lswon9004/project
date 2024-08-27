@@ -198,8 +198,9 @@
             </div>
         </div>
 
-         <form action="/saveinsert" method="post" modelAttribute="InserEmpDto">
+         <form action="/saveinsert" method="post" modelAttribute="InserEmpDto" onsubmit="combineBirthday()">
             <input type="hidden" name="imgPath" value="${InserEmpDto.imgPath}"> 
+            <input type="hidden" id="birthday" name="birthday">
             <table>
             <tr>
                 <td>사원 이름:</td><td><input type="text" name="ename" required></td>
@@ -236,7 +237,7 @@
             <tr>
 	    		<td>생년월일:</td>
 	    		<td>
-	    		<div class="info" id="info__birth">
+	    		<div class="info" id="info__birth" name="birthday">
   				<select class="box" id="birth-year">
   				<option disabled selected>출생 연도</option>
  				</select>
@@ -350,6 +351,19 @@
       }
     });
     </script>
+
+	<script>
+		function combineBirthday() {
+    		const year = document.getElementById('birth-year').value;
+    		const month = document.getElementById('birth-month').value;
+    		const day = document.getElementById('birth-day').value;
+
+    		if (year && month && day) {
+        		const birthday = year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+       		 	document.getElementById('birthday').value = birthday;
+    		}
+		}
+</script>
 
 </body>
 </html>

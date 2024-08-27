@@ -47,13 +47,13 @@ public interface ManageDao {
         "<script>",
         "SELECT e.*, d.deptname FROM emp e",
         "LEFT JOIN dept d ON e.deptno = d.deptno",
-        "WHERE e.empno IN ",
+        "WHERE e.deptno IN ",
         "<foreach item='id' collection='array' open='(' separator=',' close=')'>",
         "#{id}",
         "</foreach>",
         "</script>"
     })
-    List<ManageDto> getEmpsByIds(int[] empnos); // 고객 정보 조회
+    List<ManageDto> getEmpsByIds(Integer[] deptnos); // 고객 정보 조회
 
    // 사원이름과 번호로 검색하는것 
    @Select({

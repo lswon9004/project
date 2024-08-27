@@ -42,6 +42,8 @@ public class ApprovalController {
 	EmpService eService;
 	@GetMapping("/approvalWrite")
 	public String approvalWrite(@ModelAttribute("user")EmpDto dto, Model m) {
+		List<EmpDto> getEname = eService.getEname();
+		m.addAttribute("ename", getEname);
 		int approval_no = aService.getApproval_no(dto.getEmpno());
 		List<Integer> elist = eService.getNoList(dto.getDeptno());
 		m.addAttribute("elist", elist);

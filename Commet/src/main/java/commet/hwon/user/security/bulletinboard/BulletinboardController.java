@@ -64,43 +64,42 @@ public class BulletinboardController {
     // 게시글 목록을 보여줌
     @GetMapping("/bullboard")
     public String board(@RequestParam(name="p", defaultValue = "1") int page, Model model) {
-    	System.out.println(page);
 
     	int count = boardService.count(); //전체 게시글 수
-    	int perPage = 10; // 한페이지에 보일 글의 갯수
-    	int pageNum = 5; // 페이지 네비게이션에서 보여줄 페이지 번호 개수
-    	int totalPages =0;
-    	//전체 페이지 수 계산
     	if(count!=0) {
-    	 totalPages = (int) Math.ceil((double) count / perPage);
-    	 int startRow = (page - 1) * perPage;
-     	model.addAttribute("start", startRow);
+    		int perPage = 10; // 한페이지에 보일 글의 갯수
+        	int pageNum = 5; // 페이지 네비게이션에서 보여줄 페이지 번호 개수
+        	int startRow = (page - 1) * perPage;
+        	model.addAttribute("start", startRow);
      	//게시글 목록 가져오기
      	List<BulletinboardDto> boards = boardService.getAllBoards(startRow);
     	model.addAttribute("boardList", boards);
-
+		int totalPages = count / perPage + (count % perPage > 0 ? 1 : 0); //전체 페이지 수	
+		int begin = (page - 1) / pageNum * pageNum + 1;
+		int end = begin + pageNum -1;
+		if(end > totalPages) {
+			end = totalPages;
+		}
     	//현재 페이지가 범위를 초과하지 않도록 조정
-    	if(page > totalPages) {
-    		page = totalPages;
-    	}}
+    	
+    	List<Map<String, Integer>> likeCountList = likeService.likeCountList();
+   	 List<Map<String, Integer>> hateCountList = hateService.hateCountList();
+   	model.addAttribute("likeCountList", likeCountList);
+   	model.addAttribute("hateCountList", hateCountList);
+   	
+   	//페이지 네비게이션 시작 및 끝 번호 계산
+   	
+   	//모델에 필요한 속성 추가
+   	model.addAttribute("count", count);
+   	model.addAttribute("begin", begin);
+   	model.addAttribute("end", end);
+   	model.addAttribute("totalPages", totalPages);
+   	model.addAttribute("currentPage", page);
+   	
+    	}
     	//시작 행과 끝 행 계산
     	
-    	 List<Map<String, Integer>> likeCountList = likeService.likeCountList();
-    	 List<Map<String, Integer>> hateCountList = hateService.hateCountList();
-    	model.addAttribute("likeCountList", likeCountList);
-    	model.addAttribute("hateCountList", hateCountList);
-    	
-    	//페이지 네비게이션 시작 및 끝 번호 계산
-    	int begin = (page - 1) / pageNum * pageNum + 1;
-    	int end = Math.min(begin + pageNum - 1, totalPages);
-    	
-    	//모델에 필요한 속성 추가
-    	model.addAttribute("count", count);
-    	model.addAttribute("begin", begin);
-    	model.addAttribute("end", end);
-    	model.addAttribute("totalPages", totalPages);
-    	model.addAttribute("currentPage", page);
-    	
+    	 
     	return "/bullboard/list"; //jsp 페이지로 리턴
         
     }

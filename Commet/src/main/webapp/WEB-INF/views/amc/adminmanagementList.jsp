@@ -188,4 +188,9 @@ $('#end').click(function(){
     // 매 초마다 시간을 업데이트
     setInterval(updateTime, 1000);
 </script>
+<script type="text/javascript"> 
+empno = ${user.empno};
+deptno = ${user.deptno};
+</script>
+<script type="text/javascript" src="/js/main.js"></script>
 </html>

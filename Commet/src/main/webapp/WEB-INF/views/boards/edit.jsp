@@ -35,7 +35,7 @@
                 <div class="board-detail">
                     <div class="section-inline-section">
                         <div class="right">
-                            <div><strong>작성자:</strong> ${user.empno}</div>
+                            <div><strong>작성자:</strong> ${user.ename}1</div>
                             <div><strong>작성일자:</strong>
                                 <fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd HH시mm분ss초" /></div>
                         </div>
@@ -48,7 +48,7 @@
                                 <textarea id="editor" class="text" id="content" name="content">${board.content}</textarea>
                         </div>
                         <div class="form-actions" style="display: ruby-text;">
-                        <button onclick="location.href='/boards'">목록</button>
+                        <button type="button" onclick="location.href='/boards'">목록</button>
                         <button type="submit">완료</button>
                         </div>
                 		
@@ -75,34 +75,7 @@
     }).catch(error => {
         console.error(error);
     });
-empno = ${user.empno};
-$('#start').click(function(){
-	deptno = ${user.deptno};
-	$.getJSON("/startTime",{'empno':empno,'deptno':deptno},function(data){
-		if (data){			
-			$('#startTime').text(data+'/');						
-		 }else{
-			alert('이미 출근버튼을 누르셨습니다.')
-			alert(date)
-		} 
-	})
 
-})
-$('#end').click(function() {
-    $.getJSON('/endTime', {
-        'empno': empno
-    }, function(data) {
-        $('#endTime').text(data)
-    })
-})
-
-function selectDate(date) {
-    $.getJSON('/vacation', {
-        'date': date
-    }, function(data) {
-        $('#vlist').append(datea)
-    })
-}
 </script>
 <script>
     function updateTime() {
@@ -123,4 +96,9 @@ function selectDate(date) {
     updateTime();
     setInterval(updateTime, 1000);
 </script>
+<script type="text/javascript"> 
+empno = ${user.empno};
+deptno = ${user.deptno};
+</script>
+<script type="text/javascript" src="/js/main.js"></script>
 </html>

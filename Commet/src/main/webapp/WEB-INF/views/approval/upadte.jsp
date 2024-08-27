@@ -193,5 +193,10 @@
         updateTime();
         setInterval(updateTime, 1000);
     </script>
+    <script type="text/javascript"> 
+empno = ${user.empno};
+deptno = ${user.deptno};
+</script>
+<script type="text/javascript" src="/js/main.js"></script>
 </body>
 </html>

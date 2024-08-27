@@ -83,7 +83,11 @@
                             </c:choose>
                         </td>
                         <td><fmt:formatDate value="${customer.registrationDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                           <td>${customer.empno}</td>
+                           <td><c:forEach items="${ename }" var="ename">
+								<c:if test="${customer.empno ==ename.empno }">
+								${ename.ename }
+								</c:if>
+								</c:forEach></td>
                     </tr>
                 </c:forEach>
                 
@@ -222,4 +226,9 @@
     // 매 초마다 시간을 업데이트
     setInterval(updateTime, 1000);
 </script>
+<script type="text/javascript"> 
+empno = ${user.empno};
+deptno = ${user.deptno};
+</script>
+<script type="text/javascript" src="/js/main.js"></script>
 </html>

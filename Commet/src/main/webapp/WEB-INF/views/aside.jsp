@@ -18,7 +18,7 @@
  <aside>  <!-- 각 a태그에 id값을 할당해서 스크립트로 현재상태 스타일링 -->
     <ul class="menu">
     
-        <li><a href="/searchCustomers" id="menu-searchCustomers"><i class="fas fa-users"></i>고객문의</a></li>
+        <li><a href="/customerList" id="menu-searchCustomers"><i class="fas fa-users"></i>고객문의</a></li>
         <li><a href="/attendance/managementList" id="menu-managementList"><i class="fas fa-clock"></i>근태현황</a></li>
         <c:if test="${user.right >= 2}">
         <li><a href="/attendance/adminManagementList" id="menu-adminManagementList"><i class="fas fa-user-tie"></i>전체사원근태현황</a></li>

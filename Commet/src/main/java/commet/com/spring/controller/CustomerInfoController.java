@@ -23,8 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import commet.com.spring.dto.CustomerInfoDTO;
-import commet.com.spring.dto.EmpDto;
 import commet.com.spring.service.CustomerInfoService;
+import commet.swon.emp.EmpDto;
+import commet.swon.emp.EmpService;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -38,7 +39,8 @@ public class CustomerInfoController {
     public EmpDto getDto() {
        return new EmpDto();
     }
-	
+	@Autowired
+	EmpService eService;
 	@GetMapping("/customerForm") // 새로운 CustomerInfoDTO 객체를 모델에 추가하여 고객 정보 입력 폼을 표시
 	public String showForm(Model model) {
 		model.addAttribute("customerInfo", new CustomerInfoDTO()); // 새로운DTO 객체를 모델이 추가
@@ -148,7 +150,8 @@ public class CustomerInfoController {
 		public String customerList(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 	 											@RequestParam(value = "pageSize", required = false, defaultValue = "8") int pageSize,Model model) {
 		
-			
+			List<EmpDto> getEname = eService.getEname();
+			model.addAttribute("ename", getEname);
 			int start = (page - 1) * pageSize;
 			List<CustomerInfoDTO> list = Service.customerList(page, pageSize);
 			int totalCustomers = Service.count();
@@ -176,7 +179,8 @@ public class CustomerInfoController {
 		int totalCustomers = Service.countSearchCustomers(customerName, contact ,empno);
 	    int totalPages = (int) Math.ceil((double) totalCustomers / pageSize);
 	    
-	    
+	    List<EmpDto> getEname = eService.getEname();
+		model.addAttribute("ename", getEname);
 	    model.addAttribute("blist", searchResults);
 	    model.addAttribute("currentPage", page);
 	    model.addAttribute("totalPages", totalPages);
@@ -190,7 +194,8 @@ public class CustomerInfoController {
 	public String filterByStatus( @RequestParam(value = "status", required = false) String status,
 											@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 											@RequestParam(value = "pageSize", required = false, defaultValue = "8") int pageSize,Model model) {
-		 	
+		List<EmpDto> getEname = eService.getEname();
+		model.addAttribute("ename", getEname);
 			int start = (page - 1) * pageSize;
 		 	int totalCustomers2 = Service.countCustomersByStatus(status);
 		    int totalPages = (int) Math.ceil((double) totalCustomers2 / pageSize);

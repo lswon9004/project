@@ -37,8 +37,8 @@ public class ManageService {
 		return dao.managemain(m);
     }
     
-    public int countSearchResults(int empno, String ename) {
-        return dao.countSearchResults(empno, ename);
+    public int countSearchResults(String deptname, String ename) {
+        return dao.countSearchResults(deptname, ename);
     }
    
     public ManageDto getempByID(int id) {
@@ -56,8 +56,8 @@ public class ManageService {
         return dao.getEmpsByIds(empnos);
     }
 
-    public List<ManageDto> searchEmpsWithPagination(int empno, String ename, int start, int count) {
-        return dao.searchEmpsWithPagination(empno, ename, start, count);
+    public List<ManageDto> searchEmpsWithPagination(String deptname, String ename, int start, int count) {
+        return dao.searchEmpsWithPagination(deptname, ename, start, count);
     }
 
    

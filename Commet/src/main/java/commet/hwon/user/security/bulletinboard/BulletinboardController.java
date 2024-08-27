@@ -130,6 +130,7 @@ public class BulletinboardController {
         return "/bullboard/update";
     }
     
+    //게시글의 비밀번호 확인하는 메서드, 맞을 경우 수정폼, 틀릴 경우 홈 리다이렉션
     @GetMapping("/pwCheck/{no}")
     @ResponseBody
     public String pwCheck(@PathVariable("no") int no,@RequestParam("pw")String pw, Model model) {
@@ -196,8 +197,6 @@ public class BulletinboardController {
         return "/bullboard/search";
     }
     
-    
- 
 }
         
   

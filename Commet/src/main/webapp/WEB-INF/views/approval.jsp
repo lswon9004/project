@@ -29,14 +29,13 @@
                     <div class="form-container">
     <form action="/approval/search">
         <label for="approval_no">결재번호:</label>
-        <input type="text" id="approval_no" name="approval_no">
+        <input type="number" id="approval_no" name="approval_no">
         <label for="approval_title">결재 제목:</label>
         <input type="text" id="approval_title" name="approval_title">
         <label for="startDate">작성일:</label>
         <input type="date" id="startDate" name="startDate"> ~
         <input type="date" id="endDate" name="endDate">
         <select class="cbutton" name="approval_status1" style="width: 70px;">
-        	<option class="dropdown">분류</option>
             <option class="dropdown">요청</option>
             <option class="dropdown">승인</option>
             <option class="dropdown">대기</option>
@@ -53,7 +52,7 @@
                 <th>결재제목</th>
                 <th>결재 종류</th>
                 <th>작성일</th>
-                <th>작성자</th>
+                <th>담당자</th>
                 <th>결재 상태</th>
             </tr>
             	
@@ -76,7 +75,16 @@
 									<c:when test="${alist.approval_type ==4 }">비품신청</c:when>
 								</c:choose></td>
 							<td><fmt:formatDate value="${alist.created_date }" pattern="yyyy.MM.dd" /></td>
-							<td>${alist.empno }</td>
+							<td><c:forEach items="${ename }" var="ename">
+								<c:if test="${alist.approver1_empno ==ename.empno }">
+								${ename.ename }/
+								</c:if>
+								</c:forEach>
+								<c:forEach items="${ename }" var="ename">
+								<c:if test="${alist.approver2_empno ==ename.empno }">
+								${ename.ename }
+								</c:if>
+								</c:forEach> </td>
 							<td>${alist.approval_status1 }/${alist.approval_status2 }</td>
 						</tr>
 					</c:forEach>
@@ -106,6 +114,8 @@
 </footer>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
  <script>
+ empno = ${user.empno};
+ deptno = ${user.deptno};
     function updateTime() {
         const now = new Date();
         const options = { 
@@ -127,4 +137,5 @@
     // 매 초마다 시간을 업데이트
     setInterval(updateTime, 1000);
 </script>
+<script type="text/javascript" src="/js/main.js"></script>
 </html>

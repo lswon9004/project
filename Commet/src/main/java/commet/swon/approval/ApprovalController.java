@@ -130,8 +130,11 @@ public class ApprovalController {
 		return "/approval/search";
 	}
 	@GetMapping("/approval/status")
-	public void status(@RequestParam(name="p", defaultValue = "1") int page,
+	public String status(@RequestParam(name="p", defaultValue = "1") int page,
 					   @ModelAttribute("user")EmpDto dto, Model m) {
+		if(dto.getRight()<3) {
+			return "/main";
+		}
 		List<EmpDto> getEname = eService.getEname();
 		m.addAttribute("ename", getEname);
 		int count = aService.aStatusCount(dto.getEmpno());
@@ -153,6 +156,7 @@ public class ApprovalController {
 			m.addAttribute("totalPages", totalPages);
 		}
 		m.addAttribute("count", count);
+		return "/approval/status";
 	}
 	@GetMapping("/approval/status/search")
 	public String approvalStatusSearch(@RequestParam(name = "approval_title",required = false)String approval_title,
@@ -205,7 +209,10 @@ public class ApprovalController {
 		return "/approval/statusSearch";
 	}
 	@GetMapping("/approval/statusForm/{no}")
-	public String statusForm(@PathVariable("no")int no, Model m) {
+	public String statusForm(@PathVariable("no")int no,@ModelAttribute("user")EmpDto user, Model m) {
+		if(user.getRight()<3) {
+			return "/main";
+		}
 		List<EmpDto> getEname = eService.getEname();
 		m.addAttribute("ename", getEname);
 		ApprovalDto dto = aService.oneApproval(no);
@@ -213,7 +220,10 @@ public class ApprovalController {
 		return "/approval/statusForm";
 	}
 	@GetMapping("/approval/statusContent/{no}")
-	public String statusContent(@PathVariable("no")int no, Model m) {
+	public String statusContent(@PathVariable("no")int no,@ModelAttribute("user")EmpDto user, Model m) {
+		if(user.getRight()<3) {
+			return "/main";
+		}
 		List<EmpDto> getEname = eService.getEname();
 		m.addAttribute("ename", getEname);
 		FilesDto fDto = service.selectFile(no);

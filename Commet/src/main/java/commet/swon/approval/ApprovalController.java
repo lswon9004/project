@@ -171,7 +171,7 @@ public class ApprovalController {
 		int no = 0;
 		if(!empno.equals("")) {
 			no = Integer.parseInt(empno);
-		}
+		}  
 		int ano = 0;
 		if(!approval_empno.equals("")) {
 			ano = Integer.parseInt(approval_empno);

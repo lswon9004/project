@@ -49,7 +49,11 @@ public class AdminAttendanceManagementController {
     @GetMapping("/adminManagementList")
     public String getAllAttendance(@ModelAttribute("user")EmpDto dto,
     											@RequestParam(name = "p", defaultValue = "1") int page,Model m) {
-    		int acount = service.acount(dto.getDeptno());
+    	if(dto.getRight()<3) {
+			return "redirect:/main";
+		}	
+    	
+    	int acount = service.acount(dto.getDeptno());
     		if (acount > 0) {
 			int perPage = 8;
 			int startRow = (page - 1) * perPage;
@@ -84,8 +88,11 @@ public class AdminAttendanceManagementController {
         @RequestParam(name = "empno", required = false) Integer empno,
         @RequestParam(name = "p", defaultValue = "1") int page, 
         Model model) {
-
-        int count = service.aSCount(empno);
+    	if(dto.getRight()<3) {
+			return "redirect:/main";
+		}	
+        
+    	int count = service.aSCount(empno);
         if (count > 0) {
             int perPage = 10;
             int startRow = (page - 1) * perPage;

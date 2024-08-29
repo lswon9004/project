@@ -50,7 +50,7 @@ public class AdminAttendanceManagementController {
     public String getAllAttendance(@ModelAttribute("user")EmpDto dto,
     											@RequestParam(name = "p", defaultValue = "1") int page,Model m) {
     	if(dto.getRight()<3) {
-			return "/main";
+			return "redirect:/main";
 		}	
     	
     	int acount = service.acount(dto.getDeptno());
@@ -89,7 +89,7 @@ public class AdminAttendanceManagementController {
         @RequestParam(name = "p", defaultValue = "1") int page, 
         Model model) {
     	if(dto.getRight()<3) {
-			return "/main";
+			return "redirect:/main";
 		}	
         
     	int count = service.aSCount(empno);

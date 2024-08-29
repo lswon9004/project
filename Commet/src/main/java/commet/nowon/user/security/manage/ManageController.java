@@ -45,7 +45,7 @@ public class ManageController {
     @RequestMapping("/emp_manage") // 직원관리 메인화면
     public String empList(@ModelAttribute("user")EmpDto dto, @RequestParam(name = "p", defaultValue = "1") int page, Model m) {
     	if(dto.getRight()<3) {
-			return "/main";
+			return "redirect:/main";
 		}//권한체크
     	
     	// 글이 있는지 체크

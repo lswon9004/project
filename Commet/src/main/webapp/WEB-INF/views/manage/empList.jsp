@@ -43,28 +43,6 @@ caption {
 	font-weight: bold;
 	text-align: middle;
 }
-
-.hidden-checkbox {
-	display: none;
-}
-
-  table th {
-				background: #ffffff; /* view.jsp의 테이블 헤더 색 */
-				color: #000000;
-				font-family: 'Noto Sans KR', sans-serif; /* th 태그와 동일한 글씨체 */
-				font-weight: bold; /* th 태그와 동일한 글씨 굵기 */
-				border-radius: 10px;
-				
-			}
-			
-			     /* 테이블 헤더 및 데이터 셀 스타일 */
-        th, td {
-            	border: 0px solid #ffffff; /* 셀 경계선에 색상 적용 */
-            	padding: 14px 20px; /* 셀 내부에 여백 추가 */
-            	text-align: center; /* 텍스트를 중앙 정렬 */
-            	background: rgb(254, 255, 255); 
-            	
-        	}
 </style>
 </head>
 <body>
@@ -93,8 +71,8 @@ caption {
 						</div>
 						<div>
 							<input type="button" class="button"
-								onclick="location.href='/insert'" value="등록" /> <input
-								type="button" class="button" id="downloadButton"
+								onclick="location.href='/insert'" value="등록" /> 
+							<input type="button" class="button" id="downloadButton"
 								onclick="downloadExcel()" value="엑셀 다운로드" />
 						</div>
 					</div>
@@ -111,8 +89,8 @@ caption {
 						<c:if test="${hasEmployees}">
 							<table>
 								<caption>
-									<input type="checkbox" class="dept-checkbox hidden-checkbox"
-										name="deptnos" value="${dept.deptno}" />  ${dept.deptname}
+									<input type="checkbox" class="dept-checkbox"
+										name="deptnos" value="${dept.deptno}" /> ${dept.deptname}
 								</caption>
 								<tr>
 								
@@ -186,19 +164,7 @@ caption {
 <script>
     // 엑셀 다운로드
     function downloadExcel() {
-        const checkboxes = document.querySelectorAll('.dept-checkbox.hidden-checkbox');
-
-        if (checkboxes.length > 0) {
-            // 체크박스를 보이게 설정
-            checkboxes.forEach(checkbox => {
-                checkbox.classList.remove('hidden-checkbox');
-                checkbox.style.display = 'inline';  // 체크박스를 보이게 합니다.
-            });
-
-            alert('다운로드할 부서를 선택하세요.');
-
-            // 엑셀 다운로드 버튼 클릭 시 체크박스를 보이고, 이후 버튼을 다시 눌렀을 때 다운로드 실행
-            document.getElementById('downloadButton').onclick = function() {
+            
                 const selectedCheckboxes = document.querySelectorAll('.dept-checkbox:checked');
                 
                 if (selectedCheckboxes.length === 0) {
@@ -213,7 +179,7 @@ caption {
 
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = '${pageContext.request.contextPath}/downloadDeptExcel';
+                form.action = '/downloadDeptExcel';
                 form.style.display = 'none';
 
                 deptnos.forEach(deptno => {
@@ -226,9 +192,8 @@ caption {
 
                 document.body.appendChild(form);
                 form.submit();
-            };
         }
-    }
+    
 	</script>
 
 <script type="text/javascript"> 

@@ -44,9 +44,7 @@ caption {
 	text-align: middle;
 }
 
-.hidden-checkbox {
-	display: none;
-}
+
 </style>
 </head>
 <body>
@@ -75,8 +73,8 @@ caption {
 						</div>
 						<div>
 							<input type="button" class="button"
-								onclick="location.href='/insert'" value="등록" /> <input
-								type="button" class="button" id="downloadButton"
+								onclick="location.href='/insert'" value="등록" /> 
+							<input type="button" class="button" id="downloadButton"
 								onclick="downloadExcel()" value="엑셀 다운로드" />
 						</div>
 					</div>
@@ -93,7 +91,7 @@ caption {
 						<c:if test="${hasEmployees}">
 							<table>
 								<caption>
-									<input type="checkbox" class="dept-checkbox hidden-checkbox"
+									<input type="checkbox" class="dept-checkbox"
 										name="deptnos" value="${dept.deptno}" /> ${dept.deptname}
 								</caption>
 								<tr>
@@ -167,19 +165,7 @@ caption {
 <script>
     // 엑셀 다운로드
     function downloadExcel() {
-        const checkboxes = document.querySelectorAll('.dept-checkbox.hidden-checkbox');
-
-        if (checkboxes.length > 0) {
-            // 체크박스를 보이게 설정
-            checkboxes.forEach(checkbox => {
-                checkbox.classList.remove('hidden-checkbox');
-                checkbox.style.display = 'inline';  // 체크박스를 보이게 합니다.
-            });
-
-            alert('다운로드할 부서를 선택하세요.');
-
-            // 엑셀 다운로드 버튼 클릭 시 체크박스를 보이고, 이후 버튼을 다시 눌렀을 때 다운로드 실행
-            document.getElementById('downloadButton').onclick = function() {
+            
                 const selectedCheckboxes = document.querySelectorAll('.dept-checkbox:checked');
                 
                 if (selectedCheckboxes.length === 0) {
@@ -194,7 +180,7 @@ caption {
 
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = '${pageContext.request.contextPath}/downloadDeptExcel';
+                form.action = '/downloadDeptExcel';
                 form.style.display = 'none';
 
                 deptnos.forEach(deptno => {
@@ -207,9 +193,8 @@ caption {
 
                 document.body.appendChild(form);
                 form.submit();
-            };
         }
-    }
+    
 	</script>
 
 <script type="text/javascript"> 

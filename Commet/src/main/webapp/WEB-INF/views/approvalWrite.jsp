@@ -127,7 +127,7 @@
                                     </select>
                                 </td>
                                 <th>사원 번호</th>
-                                <td>${user.empno}</td>
+                                <td>${user.ename}</td>
                             </tr>
                             <tr>
                                 <th>결재 제목</th>
@@ -138,13 +138,20 @@
                                 <td>
                                     <select name="approver1_empno">
                                         <c:forEach items="${elist}" var="deptno">
-                                            <option value="${deptno}">${deptno}</option>
+                                           <c:forEach items="${ename }" var="ename">
+	<c:if test="${deptno==ename.empno }">
+              <option value="${deptno}">${ename.ename}</option>
+	</c:if>
+</c:forEach>
                                         </c:forEach>
                                     </select>
                                     <select name="approver2_empno">
                                         <c:forEach items="${elist}" var="deptno">
-                                            <option value="${deptno}">${deptno}</option>
-                                        </c:forEach>
+<c:forEach items="${ename }" var="ename">
+	<c:if test="${deptno==ename.empno }">
+              <option value="${deptno}">${ename.ename}</option>
+	</c:if>
+</c:forEach>                                        </c:forEach>
                                     </select>
                                 </td>
                             </tr>

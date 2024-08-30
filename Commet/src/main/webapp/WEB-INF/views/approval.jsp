@@ -27,7 +27,7 @@
             <div class="header-line"></div>
                 <div class="status-overview">
                     <div class="form-container">
-    <form action="/approval/search">
+    	<form action="/approval/search">
         <label for="approval_no">결재번호:</label>
         <input type="number" id="approval_no" name="approval_no">
         <label for="approval_title">결재 제목:</label>

@@ -65,6 +65,7 @@
     text-align: center;
     margin-bottom: 10px;
     margin-top: 10px;
+    margin-right: 28px;
   }
 
   .text11 {
@@ -152,6 +153,7 @@
   /* 버튼 호버(마우스를 올렸을 때) 스타일 */
 .btn:hover {
 	background-color: #0056b3; /* 버튼 배경색을 어두운 파란색으로 변경 */
+	
 }
 
   .btn1 {

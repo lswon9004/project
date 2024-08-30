@@ -47,7 +47,11 @@ public class ManageController {
 	
     @RequestMapping("/emp_manage") // 직원관리 메인화면
     public String empList(@ModelAttribute("user")EmpDto dto, @RequestParam(name = "p", defaultValue = "1") int page, Model m) {
-        // 글이 있는지 체크
+    	if(dto.getRight()<3) {
+			return "redirect:/main";
+		}//권한체크
+    	
+    	// 글이 있는지 체크
         int perPage = 30; // 한 페이지에 보일 글의 갯수
         int startRow = (page - 1) * perPage;
 	    List<ManageDto> deptList = service.searchDept();

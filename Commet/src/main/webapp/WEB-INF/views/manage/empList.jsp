@@ -43,8 +43,6 @@ caption {
 	font-weight: bold;
 	text-align: middle;
 }
-
-
 </style>
 </head>
 <body>
@@ -95,6 +93,7 @@ caption {
 										name="deptnos" value="${dept.deptno}" /> ${dept.deptname}
 								</caption>
 								<tr>
+								
 									<c:forEach var="emp" items="${elist}">
 										<c:if test="${emp.deptno == dept.deptno}">
 											<th><img src="/upload/${emp.imgPath}"

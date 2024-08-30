@@ -149,8 +149,8 @@
                     num = data[0];
                     $('#dd').empty()
                     $('#dd').append(" <input type='text' id='checknumber' name='checknumber' placeholder='인증번호'> ");
-                    $('#dd').append(" <input type='button' id='btn2' onclick='numberCheck()' value='인증번호 발급'> ");
-                    $('#dd').append("<input type='button' id='btn3' onclick='numberCheck2()' value='인증번호 확인'> ")
+                    $('#dd').append(" <input type='button' id='btn2' onclick='numberCheck()' value='인증번호 발급'><br> ");
+                    $('#dd').append(" <input type='button' id='btn3' onclick='numberCheck2()' value='인증번호 확인'> ")
                     $('#btn2').val('인증번호 재발급');
                     alert("메일이 전송되었습니다. 인증번호를 입력하세요.");                   
                  }

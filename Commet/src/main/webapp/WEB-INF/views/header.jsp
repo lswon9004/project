@@ -13,12 +13,28 @@
             text-align: center;
             padding: 5px;
             font-size: 10px;
+            font-weight: bold; /* 글씨체를 굵게 설정 */
+            color: #000; /* 기본 텍스트 색상 */
+            transition: color 0.3s, background-color 0.3s; /* 부드러운 전환 효과 */
         }
 
         .nav-item i {
             font-size: 20px;
             margin-bottom: 3px;
+             color: #000; /* 기본 아이콘 색상 */
+            transition: color 0.3s; /* 부드러운 전환 효과 */
+    
        	/* color: #777; */
+        }
+        
+         /* Hover 시 스타일 */
+        .nav-item:hover {
+            color: #0056b3; /* Hover 시 텍스트 색상 변경 */
+           
+        }
+        
+        .nav-item:hover i {
+            color: #0056b3; /* Hover 시 아이콘 색상 변경 */
         }
         
         /* 	로고부분 */
@@ -45,7 +61,7 @@
     
 </head>
 
-<header>
+<header style="border-radius: 150px;">
     <div class="user-info"><!-- 박선욱 a-->
         <img src="/upload/${user.imgPath}" alt="User Profile">
         <div>

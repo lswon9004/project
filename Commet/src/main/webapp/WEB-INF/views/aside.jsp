@@ -39,7 +39,7 @@
         var currentPath = window.location.pathname;
         
         // 경로와 메뉴 항목을 비교하여 'active' 클래스를 추가합니다.
-        if (currentPath.includes("/searchCustomers")) {
+        if (currentPath.includes("/customerList")) {
             document.getElementById("menu-searchCustomers").classList.add("active");
         } else if (currentPath.includes("/attendance/managementList")) {
             document.getElementById("menu-managementList").classList.add("active");

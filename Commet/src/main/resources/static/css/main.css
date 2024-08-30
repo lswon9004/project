@@ -17,7 +17,6 @@
         }
 		
 		
-		
 		* {
 				margin: 0;
 				padding: 0;
@@ -43,8 +42,9 @@
     			align-items: center; /* 버튼들을 세로로 중앙 정렬 */
 			}
 		
-		h1{
-				margin-left: 350px;
+/*내가*/		h1{
+				margin-bottom: 0px;
+				margin-left: 250px;
 			}
 			
  		/* 제목(h2) 스타일 */
@@ -66,18 +66,28 @@
          table {
             	width: 100%; /* 테이블의 너비를 전체 화면에 맞춤 */
             	border-collapse: collapse; /* 인접한 테이블 셀 간의 경계를 합침 */
+            	
         	}
         
         /* 테이블 헤더 및 데이터 셀 스타일 */
-        th, td {
+        th, 
+        
+        
+        
+        
+        td {
             	border: 1px solid #ddd; /* 셀 경계선에 색상 적용 */
-            	padding: 14px; /* 셀 내부에 여백 추가 */
+            	padding: 10px; /* 셀 내부에 여백 추가 */
             	text-align: center; /* 텍스트를 중앙 정렬 */
+            	background: rgb(254, 255, 255); 
+            	
         	}
         
         /* 테이블 헤더 스타일 */
         th {
             	background-color: #f2f2f2; /* 헤더 배경색 설정 */
+            	
+            	
 			}
         
         /* 이전 달과 다음 달의 날짜 스타일 (달력) */
@@ -85,11 +95,12 @@
             	color: #ccc; /* 이전/다음 달 날짜를 흐리게 표시 */
         	}
         	
-        table th {
+ /*내가*/       table th {
 				background: #e0f7fa; /* view.jsp의 테이블 헤더 색 */
-				color: #000;
+				color: #000000;
 				font-family: 'Noto Sans KR', sans-serif; /* th 태그와 동일한 글씨체 */
 				font-weight: bold; /* th 태그와 동일한 글씨 굵기 */
+				
 			}
 			
 		/* 버튼 그룹 스타일 */
@@ -121,7 +132,6 @@
     			display: block;
 			}
 
-		/* 진행상태 스타일 */
 		.cbutton {
 				margin: 2px; /* 버튼 주위에 여백 추가 */
 				padding: 5px;
@@ -134,6 +144,7 @@
 				width: 100px;
     			height: 34px;
 			}
+			
 		.button{
 				margin: 5px;
 				padding: 9px 18px;
@@ -214,31 +225,43 @@
 				height: 100vh; /* 화면 전체 높이를 사용 */
 			}
 
-		header { /* 메인상당스타일 */
+/*내가*/		header { /* 메인상단스타일 */
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
 				padding: 0px 10px;
-				  	background-color: #e0f7fa; 
+				background-color: #e0f7fa; /*#e0f7fa*/
 				width: 100%;
 				height: 11%;
+ 				border-radius: 100%;
+				border-top: 10px solid #f1f3f5;  /*위쪽 보더 추가 */
+				border-right:15px solid #f1f3f5;
+				border-left:5px solid #f1f3f5;
+    			/* border-bottom: 10px solid #f1f3f5; */  /*아래쪽 보더 추가 */
+    			box-shadow: 50px 0 0 100px #f1f3f5; /*이중테두리*/
 			}
 
 		footer {
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				background-color: #e0f7fa;
+				background-color: #e0f7fa;;
 				width: 100%;
 				min-height: 3.5%;
 				position: relative;
 				transform: translateY(-100%);
+				
+			}
+			
+			.footer-text {
+				font-size: 14px;
+				color: #000000;
 			}
 
 		.user-info {
 				display: flex;
 				align-items: center;
-				margin-top:15px;
+/* 				margin-top:1px; */
 				margin-left:10px;
 			}
 
@@ -283,10 +306,11 @@
 				text-decoration: underline;
 			}
 
-			main {
+/*내가*/	main {
 				display: flex;
 				flex: 1;
 				height: 71%;
+				background-color:#f1f3f5;
 			}
 
 			aside {
@@ -299,6 +323,7 @@
     			border-bottom: 2px solid #f0f0f5; /* 아래쪽 라인 */
     			margin-left: 20px; /* 왼쪽에 20px 여백 추가 */
     			margin-top: 20px; /* 위쪽에 20px 여백 추가 */
+    			border-radius: 15px;/*모서리둥글게*/
 			}
 
 			.menu {
@@ -318,6 +343,7 @@
 				padding: 10px 15px;
 				display: block;
 				border-radius: 4px;
+				transition: color 0.3s; /* 부드러운 전환 효과 */
 			}
 
 		/* 선택된 메뉴 항목 스타일 */
@@ -326,11 +352,9 @@
 				color: #fff;
 				text-decoration: underline;
 			}/* 1 */
-
-			.footer-text {
-				font-size: 14px;
-				color: #777;
-			}
+	
+		
+			
 
 			.main-content {
 				flex: 1;
@@ -338,6 +362,7 @@
     			padding-right: 70px;
     			padding-bottom: 33px;
     			padding-top: 15px;
+    			
 			}
 
 			.status-overview {
@@ -354,13 +379,15 @@
 				border: 1px solid #ddd;
 				padding: 10px; /* 기존 8px에서 10px로 패딩을 늘려서 가독성 향상 */
 				text-align: center;
+				
 			}
 
 		/* 테이블 헤더 색상과 배경색 통일 */
-			.status-overview th {
-				background-color: #e0f7fa;
-				color: #333;
+/*내가*/			.status-overview th {
+				background-color: #e0f7fa;;
+				color: rgb(0, 0, 0);
 				font-weight: bold;
+				padding: 10px; /* 셀 내부에 여백 추가 */
 			}
 
 			.notes {

@@ -47,6 +47,24 @@ caption {
 .hidden-checkbox {
 	display: none;
 }
+
+  table th {
+				background: #ffffff; /* view.jsp의 테이블 헤더 색 */
+				color: #000000;
+				font-family: 'Noto Sans KR', sans-serif; /* th 태그와 동일한 글씨체 */
+				font-weight: bold; /* th 태그와 동일한 글씨 굵기 */
+				border-radius: 10px;
+				
+			}
+			
+			     /* 테이블 헤더 및 데이터 셀 스타일 */
+        th, td {
+            	border: 0px solid #ffffff; /* 셀 경계선에 색상 적용 */
+            	padding: 14px 20px; /* 셀 내부에 여백 추가 */
+            	text-align: center; /* 텍스트를 중앙 정렬 */
+            	background: rgb(254, 255, 255); 
+            	
+        	}
 </style>
 </head>
 <body>
@@ -94,9 +112,10 @@ caption {
 							<table>
 								<caption>
 									<input type="checkbox" class="dept-checkbox hidden-checkbox"
-										name="deptnos" value="${dept.deptno}" /> ${dept.deptname}
+										name="deptnos" value="${dept.deptno}" />  ${dept.deptname}
 								</caption>
 								<tr>
+								
 									<c:forEach var="emp" items="${elist}">
 										<c:if test="${emp.deptno == dept.deptno}">
 											<th><img src="/upload/${emp.imgPath}"

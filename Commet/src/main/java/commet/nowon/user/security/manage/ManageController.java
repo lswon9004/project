@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -163,6 +166,13 @@ public class ManageController {
 	  List<ManageDto> empList = service.getEmpsByIds(deptnos);
 	  Workbook workbook = new XSSFWorkbook();
 	  Sheet sheet = workbook.createSheet("Employees");
+
+	    // CreationHelper를 사용해 날짜 형식을 생성
+	    CreationHelper createHelper = workbook.getCreationHelper();
+
+	    // 날짜 형식 지정
+	    CellStyle dateCellStyle = workbook.createCellStyle();
+	    dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
 	  
 	  // 헤더행 
 	  Row headerRow = sheet.createRow(0);
@@ -182,7 +192,11 @@ public class ManageController {
 		  row.createCell(1).setCellValue(emp.getEname());
 		  row.createCell(2).setCellValue(emp.getEmail());
 		  row.createCell(3).setCellValue(emp.getAddress());
-		  row.createCell(4).setCellValue(emp.getBirthday());
+		  // 생년월일 셀
+	      Cell birthdayCell = row.createCell(4);
+	      birthdayCell.setCellValue(emp.getBirthday());
+	      birthdayCell.setCellStyle(dateCellStyle);  // 날짜 형식 설정
+	      
 	  	  row.createCell(5).setCellValue(emp.getPhone());
 	  }
 

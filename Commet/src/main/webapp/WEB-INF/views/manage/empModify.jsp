@@ -170,7 +170,7 @@ textarea {
 					<tr>
 						<td>사원 이름:</td>
 						<td><input type="text" name="ename" value="${empInfo.ename}"
-							required readonly></td>
+							required></td>
 						<td>사원 번호:</td>
 						<td><input type="text" name="empno" value="${empInfo.empno}"
 							readonly></td>

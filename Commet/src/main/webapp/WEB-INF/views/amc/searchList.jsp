@@ -158,7 +158,7 @@ $('#end').click(function(){
                 });
             });
         });
-    </script>
+    </script> 
      <script>
     function updateTime() {
         const now = new Date();

@@ -141,7 +141,7 @@
 </script>
 
 	<!-- 근태현황 출근버튼 -->
-   	<script>
+  <!--  	<script>
    	empno = ${user.empno};
    	$('#start').click(function(){
    	    $.post("/attendance/checkInStatus", function(data){
@@ -161,7 +161,7 @@
    	        $('#endTime').text(data)
    	    })
    	});
-    </script>
+    </script> -->
     
  <!--    실시간 시간 표시해 주는 스크립트 -->
     <script>

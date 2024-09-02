@@ -124,7 +124,7 @@
 
 	<!--메인화면에서 출근 버튼을 눌렀을때 발생 되는 스크립트문-->
  	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script type="text/javascript"> 
+	 <script type="text/javascript"> 
 		empno = ${user.empno};
 		$('#start').click(function(){
 			deptno = ${user.deptno};
@@ -147,7 +147,7 @@
 		$('#vlist').append(datea)
 		})
 	}
-	</script>
+	</script> 
 
  <!-- jQuery를 사용하여 “전체 선택” 체크박스를 클릭하면 모든 체크박스를 선택하거나 선택 해제할 수 있도록 스크립트를 추가 및 검색 기능 -->
     <script type="text/javascript">

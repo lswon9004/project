@@ -56,6 +56,7 @@
             <thead>
                 <tr>
                 	<th>번호</th>
+                	<th>사원명</th>
                     <th>사원번호</th>
                     <th>출근일자</th>
                     <th>출근시간</th>
@@ -68,7 +69,7 @@
             <tbody>
                 <c:if test="${count == 0}">
                     <tr>
-                        <td colspan="8" class="tac">데이터가 없습니다.</td>
+                        <td colspan="9" class="tac">데이터가 없습니다.</td>
                     </tr>
                 </c:if>
                 <c:if test="${count > 0}">
@@ -76,6 +77,7 @@
                         <tr>
                         	<td><c:out value="${start}"/>
 									<c:set var="start" value="${start+1}" /></td>
+							<td>${attendance.ename}</td>
                         	<td>${attendance.empno}</td>
                             <td><fmt:formatDate value="${attendance.date}" pattern="yyyy-MM-dd"/></td>
                             <td><fmt:formatDate value="${attendance.check_in}" pattern="HH:mm:ss"/></td>

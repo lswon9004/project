@@ -70,12 +70,7 @@
         	}
         
         /* 테이블 헤더 및 데이터 셀 스타일 */
-        th, 
-        
-        
-        
-        
-        td {
+        th, td {
             	border: 1px solid #ddd; /* 셀 경계선에 색상 적용 */
             	padding: 10px; /* 셀 내부에 여백 추가 */
             	text-align: center; /* 텍스트를 중앙 정렬 */
@@ -362,6 +357,7 @@
     			padding-right: 70px;
     			padding-bottom: 33px;
     			padding-top: 15px;
+    			overflow-y: auto; /* 컨테이너 내부에 수직 스크롤 생성 */
     			
 			}
 

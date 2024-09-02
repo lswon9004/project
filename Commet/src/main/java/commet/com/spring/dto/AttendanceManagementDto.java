@@ -8,6 +8,7 @@ import lombok.Data;
 public class AttendanceManagementDto {
     
 	private int attendance_no; // 출퇴근번호
+	private String ename;//사원이름
     private int empno; // 사원번호
     private int deptno; // 부서번호
     private Date date; // 날짜
@@ -23,5 +24,7 @@ public class AttendanceManagementDto {
     private int absence; // 결근
     private String worktype; // 출근현황
     private int employee_attendance_no; // 출근번호
+  
+    
   
 }

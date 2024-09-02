@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -35,12 +34,16 @@ public class CustomerInfoController {
 	@Autowired
 	private CustomerInfoService Service;
 	
+	@Autowired
+	EmpService eService;
+	
+	
+	
 	@ModelAttribute("user") // @SessionAttributes 로그인정보 받아 오는 메서드
     public EmpDto getDto() {
        return new EmpDto();
     }
-	@Autowired
-	EmpService eService;
+
 	@GetMapping("/customerForm") // 새로운 CustomerInfoDTO 객체를 모델에 추가하여 고객 정보 입력 폼을 표시
 	public String showForm(Model model) {
 		model.addAttribute("customerInfo", new CustomerInfoDTO()); // 새로운DTO 객체를 모델이 추가
@@ -79,8 +82,10 @@ public class CustomerInfoController {
 	}
 
 	@GetMapping("/downloadExcel") // 엑셀 다운로드
-	public void downloadExcel(HttpServletResponse response) throws IOException {
+	public void downloadExcel(HttpServletResponse response , Model model) throws IOException {
 	    List<CustomerInfoDTO> customerList = Service.getAllCustomers();
+		List<EmpDto> getEname = eService.getEname();
+		model.addAttribute("ename", getEname);
 	    Workbook workbook = new XSSFWorkbook();
 	    Sheet sheet = workbook.createSheet("Customers");
 
@@ -95,6 +100,7 @@ public class CustomerInfoController {
 	    headerRow.createCell(6).setCellValue("진행상태");
 	    headerRow.createCell(7).setCellValue("접수일자");
 	    headerRow.createCell(8).setCellValue("접수사번");
+	    headerRow.createCell(9).setCellValue("접수자");
 
 	    // 날짜 형식 지정 (yyyy/MM/dd HH:mm:ss)
 	    CellStyle dateTimeCellStyle = workbook.createCellStyle();
@@ -134,6 +140,7 @@ public class CustomerInfoController {
 	        registrationDateCell.setCellStyle(dateTimeCellStyle);
 	        
 	        row.createCell(8).setCellValue(customer.getEmpno());
+	        row.createCell(9).setCellValue(customer.getEname());
 	        
 	    }
 

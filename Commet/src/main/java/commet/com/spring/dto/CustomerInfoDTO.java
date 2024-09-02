@@ -21,6 +21,7 @@ public class CustomerInfoDTO {
     private String memo;
     private Integer empno;
     private String zipcode;
+    private String ename;
     
     
     

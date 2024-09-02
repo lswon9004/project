@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class LoginIntercepter implements HandlerInterceptor {
-	public List<String> loginEssential = Arrays.asList("/**");
+	public List<String> loginEssential = Arrays.asList("/amc/**","/approval/**","/boards/**","/bullboard/**","/customer/**","/manage/**","/approval","/globalError","/approvalWrite","/staffModify");
 
 	public List<String> loginInessential = Arrays.asList("/main", "/findpw","/send","/emailCheck","/login","/loginform","/css/**","/js/**","/");
 

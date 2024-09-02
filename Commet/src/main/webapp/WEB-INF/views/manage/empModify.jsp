@@ -170,7 +170,7 @@ textarea {
 					<tr>
 						<td>사원 이름:</td>
 						<td><input type="text" name="ename" value="${empInfo.ename}"
-							required readonly></td>
+							required></td>
 						<td>사원 번호:</td>
 						<td><input type="text" name="empno" value="${empInfo.empno}"
 							readonly></td>
@@ -205,7 +205,7 @@ textarea {
 						<td><input type="text" id="address" name="address"
 							value="${empInfo.address}">
 							<button type="button" id="addressSearchBtn"
-								onclick="execDaumPostcode()" style="display: none;">주소
+								onclick="execDaumPostcode()">주소
 								검색</button></td>
 						<td>상세주소:</td>
 						<td><input type="text" name="detailAddr"

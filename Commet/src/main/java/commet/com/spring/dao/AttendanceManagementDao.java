@@ -25,12 +25,13 @@ public interface AttendanceManagementDao {
 	Integer getMaxEmployeeAttendanceNo(@Param("empno") int empno);
 
 	//출근버튼 클릭시 입력 될 값들
-	@Insert("INSERT INTO Attendance_Management (empno, deptno, employee_attendance_no, date, check_in, worktype) VALUES (#{empno}, #{deptno}, #{employeeAttendanceNo}, current_date(), now(), "
+	@Insert("INSERT INTO Attendance_Management (ename ,empno, deptno, employee_attendance_no, date, check_in, worktype) VALUES (#{ename},#{empno}, #{deptno}, #{employeeAttendanceNo}, current_date(), now(), "
 	        + "CASE "
 	        + "WHEN TIME(now()) < '09:20:00' THEN '정상출근' "
 	        + "WHEN TIME(now()) >= '09:21:00' THEN '지각' "
 	        + "END)")
-	int insertStartTime(@Param("empno") int empno, 
+	int insertStartTime(@Param("ename") String ename, 
+						@Param("empno") int empno, 
 	                    @Param("deptno") int deptno, 
 	                    @Param("employeeAttendanceNo") int employeeAttendanceNo);
 	
@@ -93,7 +94,7 @@ public interface AttendanceManagementDao {
 	   int updateStartTime(int empno);
 	
 		//연차 . 잔여연차 받아 오는 부분
-	 	@Select("select count(*) as c ,empno from attendance_management where worktype = '휴가' AND date BETWEEN #{startDate} AND #{endDate} group by empno")
+	 	@Select("select count(*) as c ,empno from Attendance_Management where worktype = '휴가' AND date BETWEEN #{startDate} AND #{endDate} group by empno")
 		List<Map<String, Integer>> leaveCount(@Param("empno")int empno,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 		}
 	

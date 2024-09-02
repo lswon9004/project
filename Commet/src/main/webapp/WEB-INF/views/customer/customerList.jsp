@@ -58,7 +58,9 @@
                     <th>연락처</th>
                     <th>진행상태</th>
                     <th>접수일자</th>
+                    <th>접수사번</th>
                     <th>접수자</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -78,18 +80,22 @@
                                 <c:otherwise>${customer.status}</c:otherwise>
                             </c:choose>
                         </td>
+                       
                         <td><fmt:formatDate value="${customer.registrationDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                            <td>${customer.empno}</td>
+                            
                            <td><c:forEach items="${ename }" var="ename">
 								<c:if test="${customer.empno ==ename.empno }">
 								${ename.ename }
 								</c:if>
 								</c:forEach></td>
+								
                     </tr>
                 </c:forEach>
                 
                 <c:if test="${count == 0}">
 					<tr>
-						<td colspan="8" class="tac">데이터가 없습니다.</td>
+						<td colspan="9" class="tac">데이터가 없습니다.</td>
 					</tr>
 				</c:if>
                 

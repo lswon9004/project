@@ -49,14 +49,12 @@ public class AttendanceController {
 			startTime = service.startTime(empno);
 			formattedDate = sdf.format(startTime);
 		}
-		dto.setCheck_in(startTime);
 		return gson.toJson(formattedDate);
 	}
 	@GetMapping("/endTime")
 	@ResponseBody
 	public String endTime(@RequestParam("empno")int empno,	@ModelAttribute("user")EmpDto dto) {
 		Date endtime = service.endTime(empno);
-		dto.setCheck_out(endtime);
 		return gson.toJson(sdf.format(endtime));
 	}
 	@GetMapping("/vacation")

@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class LoginIntercepter implements HandlerInterceptor {
 	public List<String> loginEssential = Arrays.asList("/**");
 
-	public List<String> loginInessential = Arrays.asList("/main", "/findpw","/send","/login","/loginform","/css/**","/js/**","/");
+	public List<String> loginInessential = Arrays.asList("/main", "/findpw","/send","/emailCheck","/login","/loginform","/css/**","/js/**","/");
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

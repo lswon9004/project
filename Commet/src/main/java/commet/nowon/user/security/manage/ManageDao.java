@@ -22,7 +22,7 @@ public interface ManageDao {
 	@Select("select * from Dept")//부서 검색
 	List<ManageDto> searchDept();
 	
-	@Select("select * from Dosition")// 직급검색
+	@Select("select * from Position")// 직급검색
 	List<ManageDto> searchPosition();
 	
     @Insert("insert into emp(ename, empno, deptno, jop, position, imgPath, phone, email, address, detailAddr, birthday, hiredate, sal, memo) values(#{ename}, (SELECT COALESCE(MAX(empno) + 1, 1) FROM (SELECT empno FROM emp) AS temp), #{deptno}, #{jop}, #{position}, #{imgPath}, #{phone}, #{email}, #{address}, #{detailAddr}, #{birthday}, #{hiredate}, #{sal}, #{memo})")
@@ -34,7 +34,7 @@ public interface ManageDao {
     @Select("select e.*, d.* from emp e left join Dept d on e.deptno = d.deptno order by e.empno desc limit #{start}, #{count}")
     List<ManageDto> managemain(Map<String,Object> m); // 글 목록 리스트 최신 글이 먼저 보이게 order by empno desc 걸어둠
 
-    @Select("select e.*, d.deptname, p.authority from emp e left join Dept d on e.deptno = d.deptno left join position p on e.position = p.position where e.empno = #{id}")
+    @Select("select e.*, d.deptname, p.authority from emp e left join Dept d on e.deptno = d.deptno left join Position p on e.position = p.position where e.empno = #{id}")
     ManageDto getempByID(int id); // 사원 번호
     
     @Update("update emp set deptno=#{deptno}, ename=#{ename}, jop=#{jop}, position=#{position}, phone=#{phone}, email=#{email}, address=#{address}, detailAddr=#{detailAddr}, memo=#{memo}, sal=#{sal}, imgPath=#{imgPath} where empno=#{empno}")

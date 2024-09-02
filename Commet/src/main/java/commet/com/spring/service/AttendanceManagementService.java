@@ -39,14 +39,14 @@ public class AttendanceManagementService {
 	 	}
 	 	
 	 	//출근
-	 	public void checkIn(int empno, int deptno, int employeeAttendanceNo) {
+	 	public void checkIn(String ename , int empno, int deptno, int employeeAttendanceNo) {
 	 		if (hasCheckedInToday(empno)) {
 	 			Date startTime = dao.startTime(empno);
 	 			if(startTime==null) {
 	 				dao.updateStartTime(empno);
 	 			}
 	 		}else {
-	 			dao.insertStartTime(empno, deptno, employeeAttendanceNo);
+	 			dao.insertStartTime(ename , empno, deptno, employeeAttendanceNo);
 	 			}
 	 	}
 	 	

@@ -43,6 +43,15 @@ caption {
 	font-weight: bold;
 	text-align: middle;
 }
+
+ table th {
+				background: #ffffff; /* view.jsp의 테이블 헤더 색 */
+				color: #000000;
+				font-family: 'Noto Sans KR', sans-serif; /* th 태그와 동일한 글씨체 */
+				font-weight: bold; /* th 태그와 동일한 글씨 굵기 */
+				
+			}
+			
 </style>
 </head>
 <body>

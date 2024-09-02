@@ -59,15 +59,12 @@
                     <th>진행상태</th>
                     <th>접수일자</th>
                     <th>접수사번</th>
+                    <th>접수자</th>
                 </tr>
             </thead>
             <tbody>
-             <c:if test="${count == 0}">
-					<tr>
-						<td colspan="8" class="tac">데이터가 없습니다.</td>
-					</tr>
-				</c:if>
-                <c:forEach var="customer" items="${blist}">
+             
+                 <c:forEach var="customer" items="${blist}">
                     <tr>
                         <td><input type="checkbox" name="customerIds" value="${customer.customerID}"></td>
                         <td>${customer.customerID}</td>
@@ -82,7 +79,9 @@
                                 <c:otherwise>${customer.status}</c:otherwise>
                             </c:choose>
                         </td>
+                       
                         <td><fmt:formatDate value="${customer.registrationDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                            <td>${customer.empno}</td>
                            <td><c:forEach items="${ename }" var="ename">
 								<c:if test="${customer.empno ==ename.empno }">
 								${ename.ename }
@@ -90,6 +89,12 @@
 								</c:forEach></td>
                     </tr>
                 </c:forEach>
+                
+                <c:if test="${count == 0}">
+					<tr>
+						<td colspan="9" class="tac">데이터가 없습니다.</td>
+					</tr>
+				</c:if>
                 
             </tbody>
         </table>

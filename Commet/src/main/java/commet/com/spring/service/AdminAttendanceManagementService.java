@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import commet.com.spring.dao.AdminAttendanceManagementDao;
 import commet.com.spring.dto.AttendanceManagementDto;
+import commet.nowon.user.security.manage.ManageDto;
 
 @Service
 public class AdminAttendanceManagementService {
@@ -83,5 +84,8 @@ public class AdminAttendanceManagementService {
 			}
 			return dao.leaveCount(empno, startDate, endDate);
 		}
+	    
+	   
+	    
 	  
 }

@@ -19,10 +19,10 @@ import commet.com.spring.dto.EmpDto;
 @Mapper
 public interface ManageDao {
 
-	@Select("select * from dept")//부서 검색
+	@Select("select * from Dept")//부서 검색
 	List<ManageDto> searchDept();
 	
-	@Select("select * from position")// 직급검색
+	@Select("select * from Dosition")// 직급검색
 	List<ManageDto> searchPosition();
 	
     @Insert("insert into emp(ename, empno, deptno, jop, position, imgPath, phone, email, address, detailAddr, birthday, hiredate, sal, memo) values(#{ename}, (SELECT COALESCE(MAX(empno) + 1, 1) FROM (SELECT empno FROM emp) AS temp), #{deptno}, #{jop}, #{position}, #{imgPath}, #{phone}, #{email}, #{address}, #{detailAddr}, #{birthday}, #{hiredate}, #{sal}, #{memo})")
@@ -31,10 +31,10 @@ public interface ManageDao {
     @Select("select count(*) from emp")
     int count(); // 전체 글 갯수
 
-    @Select("select e.*, d.* from emp e left join dept d on e.deptno = d.deptno order by e.empno desc limit #{start}, #{count}")
+    @Select("select e.*, d.* from emp e left join Dept d on e.deptno = d.deptno order by e.empno desc limit #{start}, #{count}")
     List<ManageDto> managemain(Map<String,Object> m); // 글 목록 리스트 최신 글이 먼저 보이게 order by empno desc 걸어둠
 
-    @Select("select e.*, d.deptname, p.authority from emp e left join dept d on e.deptno = d.deptno left join position p on e.position = p.position where e.empno = #{id}")
+    @Select("select e.*, d.deptname, p.authority from emp e left join Dept d on e.deptno = d.deptno left join position p on e.position = p.position where e.empno = #{id}")
     ManageDto getempByID(int id); // 사원 번호
     
     @Update("update emp set deptno=#{deptno}, ename=#{ename}, jop=#{jop}, position=#{position}, phone=#{phone}, email=#{email}, address=#{address}, detailAddr=#{detailAddr}, memo=#{memo}, sal=#{sal}, imgPath=#{imgPath} where empno=#{empno}")
@@ -46,7 +46,7 @@ public interface ManageDao {
     @Select({
         "<script>",
         "SELECT e.*, d.deptname FROM emp e",
-        "LEFT JOIN dept d ON e.deptno = d.deptno",
+        "LEFT JOIN Dept d ON e.deptno = d.deptno",
         "WHERE e.deptno IN ",
         "<foreach item='id' collection='array' open='(' separator=',' close=')'>",
         "#{id}",
@@ -58,7 +58,7 @@ public interface ManageDao {
    // 사원이름과 번호로 검색하는것 
    @Select({
 	   "<script>",
-	   "select * from emp natural join dept",
+	   "select * from emp natural join Dept",
 	   "<where>",
 	   "<if test=\"deptname != null and deptname != ''\">",
 	   "deptname LIKE CONCAT('%', #{deptname}, '%')",
@@ -77,7 +77,7 @@ public interface ManageDao {
    @Select({
 	   "<script>",
 	   "select count(*) from emp e",
-	   "left join dept d on e.deptno = d.deptno",
+	   "left join Dept d on e.deptno = d.deptno",
 	   "<where>",
 	   "<if test=\"deptname != null and deptname != ''\">",
 	   "d.deptname LIKE CONCAT('%', #{deptname}, '%')",

@@ -106,7 +106,6 @@ public class AttendanceManagementController {
     		    int employeeAttendanceNo = service.generateNextAttendanceNo(user.getEmpno()); // 사원별로 출근번호를 생성합니다.
     		    service.checkIn(user.getEname() , user.getEmpno(), user.getDeptno(), employeeAttendanceNo);// 출근 기록을 DB에 저장합니다.
     		    Date startTime = aservice.startTime(user.getEmpno()); // 현재출근시간 들고오는 메서드
-				user.setCheck_in(startTime); //현재출근시간을 세션정보에 저장하는 메서드
     		return "redirect:/attendance/managementList";
     }
     

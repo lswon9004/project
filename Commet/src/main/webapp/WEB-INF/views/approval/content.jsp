@@ -114,7 +114,7 @@
                                 <th>문서번호</th>
                                 <td>${dto.approval_no}</td>
                                 <th>기안일자</th>
-                                <td><fmt:formatDate value="${user.check_in}" pattern="yyyy-MM-dd" /></td>
+                                <td><fmt:formatDate value="${dto.created_date}" pattern="yyyy-MM-dd" /></td>
                             </tr>
                             <tr>
                                 <th>서류 종류</th>

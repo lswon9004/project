@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,6 +97,11 @@
         }
     </style>
 </head>
+<%
+    Date date = new Date();
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    String currentDate = formatter.format(date);
+%>
 <body>
     <div class="container">
       <!-- Include header -->
@@ -114,7 +121,7 @@
                                 <th>문서번호</th>
                                 <td>${approval_no }</td>
                                 <th>기안일자</th>
-                                <td><fmt:formatDate value="${user.check_in}" pattern="yyyy-MM-dd" /></td>
+                                <td> <%= currentDate %></td>
                             </tr>
                             <tr>
                                 <th>서류 종류</th>

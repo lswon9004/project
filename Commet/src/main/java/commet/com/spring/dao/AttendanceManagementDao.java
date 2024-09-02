@@ -93,7 +93,7 @@ public interface AttendanceManagementDao {
 	   int updateStartTime(int empno);
 	
 		//연차 . 잔여연차 받아 오는 부분
-	 	@Select("select count(*) as c ,empno from attendance_management where worktype = '휴가' AND date BETWEEN #{startDate} AND #{endDate} group by empno")
+	 	@Select("select count(*) as c ,empno from Attendance_Management where worktype = '휴가' AND date BETWEEN #{startDate} AND #{endDate} group by empno")
 		List<Map<String, Integer>> leaveCount(@Param("empno")int empno,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 		}
 	

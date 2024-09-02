@@ -3,12 +3,13 @@ package commet;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 
 @SpringBootApplication
-public class CommetApplication {
+public class CommetApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CommetApplication.class, args);
@@ -20,4 +21,8 @@ public class CommetApplication {
 //	   protected SpringApplicationBuilder configure(SpringApplicationBuilder application) { 
 //	      return application.sources(CommetApplication.class);
 //	   }
+	@Override 
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) { 
+	return application.sources(CommetApplication.class);
+	}
 }

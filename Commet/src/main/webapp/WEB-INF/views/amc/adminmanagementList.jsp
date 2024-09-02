@@ -123,7 +123,7 @@
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript"> 
+ <script type="text/javascript"> 
 empno = ${user.empno};
 
 $('#start').click(function(){
@@ -147,10 +147,10 @@ $('#end').click(function(){
 		$('#vlist').append(datea)
 	})
 }
-</script>
+</script> 
 
  
-   	<script>
+   	 <script>
         $(document).ready(function() {
             $("#checkInButton").click(function(event) {
                 event.preventDefault(); // 기본 동작을 막음
@@ -168,6 +168,7 @@ $('#end').click(function(){
             });
         });
     </script>
+    
     <script>
     function updateTime() {
         const now = new Date();

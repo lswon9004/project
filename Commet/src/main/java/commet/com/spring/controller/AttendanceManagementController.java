@@ -163,7 +163,7 @@ public class AttendanceManagementController {
         model.addAttribute("count", count); //모델에 검색결과 추가 이 기능 추가로 검색 기능 해결 요소의 개수를 반환 즉 검색된 출근기록 반환
         return "amc/searchList";
         
-    }//search
+    }//search2
 
 
     // 엑셀 다운로드
@@ -226,19 +226,6 @@ public class AttendanceManagementController {
 		workbook.write(response.getOutputStream());
 		workbook.close();
 		
-	}//downloadExcel
-
-//    엑셀 출력이 잘 안될경우 아래 코드로 수정
-//    Cell checkInCell = row.createCell(2);
-//    if (attendance.getCheck_in() != null) {
-//        checkInCell.setCellValue(attendance.getCheck_in());
-//        checkInCell.setCellStyle(timeCellStyle);
-//    }
-//
-//    Cell checkOutCell = row.createCell(3);
-//    if (attendance.getCheck_out() != null) {
-//        checkOutCell.setCellValue(attendance.getCheck_out());
-//        checkOutCell.setCellStyle(timeCellStyle);
-//    }
+	}
 	
-}//class
+}

@@ -129,7 +129,7 @@
 
 	<!--메인화면에서 출근 버튼을 눌렀을때 발생 되는 스크립트문-->
  	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript"> 
+	 <script type="text/javascript"> 
 		empno = ${user.empno};
 		$('#start').click(function(){
 			deptno = ${user.deptno};

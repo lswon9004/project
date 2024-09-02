@@ -151,7 +151,7 @@ $('#end').click(function(){
 </script>
 
  
-   	<script>
+ 	<script>
         $(document).ready(function() {
             $("#checkInButton").click(function(event) {
                 event.preventDefault(); // 기본 동작을 막음
@@ -168,7 +168,7 @@ $('#end').click(function(){
                 });
             });
         });
-    </script>
+    </script> 
      <script>
     function updateTime() {
         const now = new Date();

@@ -41,7 +41,7 @@ public interface BulletinboardDao {
     void increaseReadCount(int no);
     
     //특정 번호(no)와 비밀번호를 가진 게시글 삭제
-   @Delete("DELETE FROM Bulletin_Board WHERE no = #{no} and password = #{password}")
+   @Delete("DELETE FROM Bulletin_Board WHERE no = #{no} and password = #{password}")   
     int deleteboard(@Param("no")int no, @Param("password")String password);
    
    //제목과 내용으로 게시글을 검색하고, 검색 결과를 페이지네이션함

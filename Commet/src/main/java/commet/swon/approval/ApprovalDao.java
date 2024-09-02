@@ -72,18 +72,18 @@ public interface ApprovalDao {
 			 		@Param("empno")int empno,
 			 		@Param("approval_status1")String approval_status1);
 	
-	@Select("select ifnull((max(approval_no)+1),1) from approval")
+	@Select("select ifnull((max(approval_no)+1),1) from Approval")
 	int getApproval_no();
-	@Insert("insert into approval(empno,deptno,approval_title,approval_content,approver1_empno,approval_type,approver2_empno) "
+	@Insert("insert into Approval(empno,deptno,approval_title,approval_content,approver1_empno,approval_type,approver2_empno) "
 			+ "values(#{empno},#{deptno},#{approval_title},#{approval_content},#{approver1_empno},#{approval_type},#{approver2_empno})")
 	int insertApproval(ApprovalDto dto);
-	@Select("select * from approval where approval_no = #{approval_no}")
+	@Select("select * from Approval where approval_no = #{approval_no}")
 	ApprovalDto oneApproval(int approval_no);
-	@Update("update approval set approval_content = #{approval_content}, approval_type = #{approval_type} where approval_no = #{approval_no}")
+	@Update("update Approval set approval_content = #{approval_content}, approval_type = #{approval_type} where approval_no = #{approval_no}")
 	int updateApproval(@Param("approval_content")String approval_content,@Param("approval_no")int approval_no,@Param("approval_type")int approval_type );
-	@Select("select * from approval where approver1_empno = #{empno} or (approver2_empno = #{empno} and approval_status1='승인') order by created_date desc limit #{start} , 10")
+	@Select("select * from Approval where approver1_empno = #{empno} or (approver2_empno = #{empno} and approval_status1='승인') order by created_date desc limit #{start} , 10")
 	List<ApprovalDto> approvalStatus(@Param("empno")int empno,@Param("start")int start);
-	@Select("select count(*) from approval where approver1_empno = #{empno} or (approver2_empno = #{empno} and approval_status1 ='승인')")
+	@Select("select count(*) from Approval where approver1_empno = #{empno} or (approver2_empno = #{empno} and approval_status1 ='승인')")
 	int aStatusCount(int empno);
 	@Select({
 	    "<script>",
@@ -140,8 +140,8 @@ public interface ApprovalDao {
 			 		@Param("approval_status1")String approval_status1,
 			 		@Param("approver1_empno")int approver1_empno,
 			 		@Param("start")int start);
-	@Update("update approval set approval_status1 = #{approval_status1}, approval_comm =#{approval_comm} where approval_no = #{approval_no}")
+	@Update("update Approval set approval_status1 = #{approval_status1}, approval_comm =#{approval_comm} where approval_no = #{approval_no}")
 	int updateStatus1(ApprovalDto dto);
-	@Update("update approval set approval_status2 = #{approval_status2}, approval_comm =#{approval_comm} where approval_no = #{approval_no}")
+	@Update("update Approval set approval_status2 = #{approval_status2}, approval_comm =#{approval_comm} where approval_no = #{approval_no}")
 	int updateStatus2(ApprovalDto dto);
 }

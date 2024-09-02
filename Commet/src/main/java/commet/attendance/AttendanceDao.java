@@ -34,25 +34,25 @@ public interface AttendanceDao {
 	@Update("Update Attendance_Management set worktype = '휴가' where empno = #{empno} and date = #{date}")
 	int updatedata(@Param("empno")int empno,@Param("date")Date date);
 	@Select("SELECT COUNT(*) AS work_days "
-			+ "FROM attendance_management "
+			+ "FROM Attendance_Management "
 			+ "WHERE empno = #{empno} "
 			+ "AND check_in IS NOT NULL "
 			+ "AND date BETWEEN #{startDate} AND #{endDate}")
 	int AttCount(@Param("empno")int empno,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 	@Select("SELECT COUNT(*) AS work_days "
-			+ "FROM attendance_management "
+			+ "FROM Attendance_Management "
 			+ "WHERE empno = #{empno} "
 			+ "AND worktype ='지각' "
 			+ "AND date BETWEEN #{startDate} AND #{endDate}")
 	int TardinessCount(@Param("empno")int empno,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
-	@Select("select count(*) from attendance_management where empno = #{empno} and date = current_date")
+	@Select("select count(*) from Attendance_Management where empno = #{empno} and date = current_date")
 	int scount(int empno);
-	@Update("update attendance_management set check_in = now() where empno =#{empno} and date = current_date")
+	@Update("update Attendance_Management set check_in = now() where empno =#{empno} and date = current_date")
 	int updateStartTime(int empno);
-	@Select("select count(*) from attendance_management where empno = #{empno} and worktype = '병가' AND date BETWEEN #{startDate} AND #{endDate}")
+	@Select("select count(*) from Attendance_Management where empno = #{empno} and worktype = '병가' AND date BETWEEN #{startDate} AND #{endDate}")
 	int sick_leaveCount(@Param("empno")int empno,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
-	@Select("select count(*) from attendance_management where empno = #{empno} and worktype = '휴가' AND date BETWEEN #{startDate} AND #{endDate}")
+	@Select("select count(*) from Attendance_Management where empno = #{empno} and worktype = '휴가' AND date BETWEEN #{startDate} AND #{endDate}")
 	int leaveCount(@Param("empno")int empno,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
-	@Select("select count(*) from attendance_management where empno = #{empno} and worktype = '결근' AND date BETWEEN #{startDate} AND #{endDate}")
+	@Select("select count(*) from Attendance_Management where empno = #{empno} and worktype = '결근' AND date BETWEEN #{startDate} AND #{endDate}")
 	int abCount(@Param("empno")int empno,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 }

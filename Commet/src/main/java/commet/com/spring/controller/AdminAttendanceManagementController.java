@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import commet.attendance.AttendanceService;
 import commet.com.spring.dto.AttendanceManagementDto;
+import commet.com.spring.dto.CustomerInfoDTO;
 import commet.com.spring.service.AdminAttendanceManagementService;
+import commet.nowon.user.security.manage.ManageDto;
+import commet.nowon.user.security.manage.ManageService;
 import commet.swon.emp.EmpDto;
 import commet.swon.emp.EmpService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,35 +36,41 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping("/attendance")
 @SessionAttributes("user")
 public class AdminAttendanceManagementController {
-//11
-    @Autowired
-    private AdminAttendanceManagementService service;
-    @Autowired
-	AttendanceService aservice;
-    @Autowired
-    EmpService eservice;
-    // @SessionAttributes 로그인정보 받아 오는 메서드
-    @ModelAttribute("user") 
-    public EmpDto getDto() {
-       return new EmpDto();
-    }
+	
+    		@Autowired
+    		private AdminAttendanceManagementService service;
+    		
+    		@Autowired
+    		AttendanceService aservice;
+    		
+    		@Autowired
+    		EmpService eservice;
+    		
+    		@Autowired 
+    		ManageService Service;
+    		
+    		// @SessionAttributes 로그인정보 받아 오는 메서드
+    		@ModelAttribute("user") 
+    		public EmpDto getDto() {
+    			return new EmpDto();
+    		}
     
-    //관리자근태현황 페이징
-    @GetMapping("/adminManagementList")
-    public String getAllAttendance(@ModelAttribute("user")EmpDto dto,
+    		//관리자근태현황 페이징
+    		@GetMapping("/adminManagementList")
+    		public String getAllAttendance(@ModelAttribute("user")EmpDto dto,
     											@RequestParam(name = "p", defaultValue = "1") int page,Model m) {
-    	if(dto.getRight()<3) {
-			return "redirect:/main";
-		}	
+    			if(dto.getRight()<3) {
+    			return "redirect:/main";
+    		}	
     	
-    	int acount = service.acount(dto.getDeptno());
+    		int acount = service.acount(dto.getDeptno());
     		if (acount > 0) {
 			int perPage = 8;
 			int startRow = (page - 1) * perPage;
     	
-    	 List<AttendanceManagementDto> allAttendance = service.getAllAttendance(startRow, dto.getDeptno()); // 페이징 처리된 모든 사원의 근태 현황
-         m.addAttribute("allAttendance", allAttendance);
-         m.addAttribute("start", startRow+1);
+			List<AttendanceManagementDto> allAttendance = service.getAllAttendance(startRow, dto.getDeptno()); // 페이징 처리된 모든 사원의 근태 현황
+			m.addAttribute("allAttendance", allAttendance);
+			m.addAttribute("start", startRow+1);
              int pageNum = 5;
              int totalPages = acount / perPage + (acount % perPage > 0 ? 1 : 0);
              int begin = (page - 1) / pageNum * pageNum + 1;
@@ -77,23 +87,23 @@ public class AdminAttendanceManagementController {
              m.addAttribute("end", end);
              m.addAttribute("pageNum", pageNum);
              m.addAttribute("totalPages", totalPages);
-    	}
+    		}
 			m.addAttribute("count", acount);
 			return "amc/adminmanagementList";
-    	}
+    		}
     
-    // 관리자 검색페이징
-    @GetMapping("/search")
-    public String search(@ModelAttribute("user")EmpDto dto,
-        @RequestParam(name = "empno", required = false) Integer empno,
-        @RequestParam(name = "p", defaultValue = "1") int page, 
-        Model model) {
-    	if(dto.getRight()<3) {
-			return "redirect:/main";
-		}	
+    		// 관리자 검색페이징
+    		@GetMapping("/search")
+    		public String search(@ModelAttribute("user")EmpDto dto,
+    										@RequestParam(name = "empno", required = false) Integer empno,
+    											@RequestParam(name = "p", defaultValue = "1") int page, 
+    	   Model model) {
+    	   if(dto.getRight()<3) {
+		   return "redirect:/main";
+    	   }	
         
-    	int count = service.aSCount(empno);
-        if (count > 0) {
+    	   int count = service.aSCount(empno);
+    	   if (count > 0) {
             int perPage = 10;
             int startRow = (page - 1) * perPage;
             List<AttendanceManagementDto> filteredAttendanceList = service.getAttendanceByEmpNo(empno,  startRow);
@@ -132,13 +142,14 @@ public class AdminAttendanceManagementController {
 
 		// 헤더행
 		Row headerRow = sheet.createRow(0);
-		headerRow.createCell(0).setCellValue("사원번호");
-		headerRow.createCell(1).setCellValue("출근일자");
-		headerRow.createCell(2).setCellValue("출근시간");
-		headerRow.createCell(3).setCellValue("퇴근시간");
-		headerRow.createCell(4).setCellValue("근무유형");
-		headerRow.createCell(5).setCellValue("연차사용");
-		headerRow.createCell(6).setCellValue("잔여연차");
+		headerRow.createCell(0).setCellValue("사원명");
+		headerRow.createCell(1).setCellValue("사원번호");
+		headerRow.createCell(2).setCellValue("출근일자");
+		headerRow.createCell(3).setCellValue("출근시간");
+		headerRow.createCell(4).setCellValue("퇴근시간");
+		headerRow.createCell(5).setCellValue("근무유형");
+		headerRow.createCell(6).setCellValue("연차사용");
+		headerRow.createCell(7).setCellValue("잔여연차");
 		
 		// 날짜 형식 지정
 	    CellStyle dateCellStyle = workbook.createCellStyle();
@@ -154,24 +165,27 @@ public class AdminAttendanceManagementController {
 	    int rowNum = 1;
 	    for (AttendanceManagementDto attendance : attendanceList) {
 	        Row row = sheet.createRow(rowNum++);
-	        row.createCell(0).setCellValue(attendance.getEmpno());
+	        
+	        row.createCell(0).setCellValue(attendance.getEname());
+	        
+	        row.createCell(1).setCellValue(attendance.getEmpno());
 
-	        Cell dateCell = row.createCell(1);
+	        Cell dateCell = row.createCell(2);
 	        dateCell.setCellValue(attendance.getDate());
 	        dateCell.setCellStyle(dateCellStyle);
 
-	        Cell checkInCell = row.createCell(2);
+	        Cell checkInCell = row.createCell(3);
 	            checkInCell.setCellValue(attendance.getCheck_in());
 	            checkInCell.setCellStyle(timeCellStyle);
 
-	        Cell checkOutCell = row.createCell(3);
+	        Cell checkOutCell = row.createCell(4);
 	            checkOutCell.setCellValue(attendance.getCheck_out());
 	            checkOutCell.setCellStyle(timeCellStyle);
 
-	        row.createCell(4).setCellValue(attendance.getWorktype());
-	        row.createCell(5).setCellValue(attendance.getAnnual_leave());
+	        row.createCell(5).setCellValue(attendance.getWorktype());
+	        row.createCell(6).setCellValue(attendance.getAnnual_leave());
 	        // 잔여연차는 추가로 설정
-	        row.createCell(6).setCellValue("");
+	        row.createCell(7).setCellValue("");
 		}//attendance
 
 		// 콘텐츠 유형과 첨부 파일 헤더를 설정
@@ -191,6 +205,8 @@ public class AdminAttendanceManagementController {
         model.addAttribute("message", resultMessage);
         return "redirect:/attendance/adminManagementList";
     }
+    
+  
     
     
 }//class

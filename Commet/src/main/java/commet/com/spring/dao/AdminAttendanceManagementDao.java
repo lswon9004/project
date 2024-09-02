@@ -10,12 +10,19 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import commet.com.spring.dto.AttendanceManagementDto;
+import commet.com.spring.dto.CustomerInfoDTO;
+import commet.nowon.user.security.manage.ManageDto;
 
 @Mapper
 public interface AdminAttendanceManagementDao {
+	
+
+		
 	//관리자가 볼 페이지 메서드 근태현황 전체출력 페이징처리
 	@Select("SELECT * FROM Attendance_Management WHERE deptno = #{deptno} ORDER BY attendance_no DESC LIMIT #{start}, 8")
 	List<AttendanceManagementDto> getAllAttendance(@Param("start") int start, @Param("deptno") int deptno);
+	
+	
 	
 	//관리자 전체 페이지 출력될 카운팅
 	@Select("select count(*) from Attendance_Management  where deptno = #{deptno}")
@@ -59,6 +66,7 @@ public interface AdminAttendanceManagementDao {
  	List<AttendanceManagementDto> getAllManagement2(); 
  	
  	//연차 . 잔여연차 받아 오는 부분
- 	@Select("select count(*) as c ,empno from attendance_management where worktype = '휴가' AND date BETWEEN #{startDate} AND #{endDate} group by empno")
+ 	@Select("select count(*) as c ,empno from Attendance_Management where worktype = '휴가' AND date BETWEEN #{startDate} AND #{endDate} group by empno")
 	List<Map<String, Integer>> leaveCount(@Param("empno")int empno,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 	}
+

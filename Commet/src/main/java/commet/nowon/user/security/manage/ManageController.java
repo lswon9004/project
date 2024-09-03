@@ -233,12 +233,13 @@ public class ManageController {
 	        File newFile = null;
 
 	        try {
-	            String path = ResourceUtils.getFile("classpath:static/upload/").toPath().toString();
+	            String path = request.getServletContext().getRealPath("/img/");
 	            newFile = new File(path, newFileName);
 	            photo.transferTo(newFile);
 	        } catch (IOException | IllegalStateException e) {
 	            e.printStackTrace();
 	        }
+	        System.out.println(newFile.getPath());
 
 	        if (newFile != null) {
 			    List<ManageDto> deptList = service.searchDept();
@@ -246,11 +247,9 @@ public class ManageController {
 			    model.addAttribute("positionList", positionList);
 			    model.addAttribute("deptList", deptList);
 	            model.addAttribute("photoPath", "/upload/" + newFileName);
-				String filePath = request.getServletContext().getRealPath("empImg"); 
 				ManageDto dto = new ManageDto();
 				dto.setImgPath(newFileName);
 				model.addAttribute("InserEmpDto", dto);
-				File file = new File(filePath);
 	        }
 	            return "manage/newEmp";
 	    }
@@ -263,12 +262,13 @@ public class ManageController {
 			ManageDto empInfo = service.getempByID(no); 
 	        
 	        try {
-	            String path = ResourceUtils.getFile("classpath:static/upload/").toPath().toString();
-	            newFile = new File(path, newFileName);
+	        	String path =  request.getServletContext().getRealPath("/img/");
+	        	newFile = new File(path, newFileName);
 	            photo.transferTo(newFile);
 	        } catch (IOException | IllegalStateException e) {
 	            e.printStackTrace();
 	        }
+	        System.out.println(newFile.getPath());
 
 	        if (newFile != null) {
 			    List<ManageDto> deptList = service.searchDept();
@@ -276,10 +276,8 @@ public class ManageController {
 			    model.addAttribute("positionList", positionList);
 			    model.addAttribute("deptList", deptList);
 	            model.addAttribute("photoPath", "/upload/" + newFileName);
-				String filePath = request.getServletContext().getRealPath("empImg"); 
 				empInfo.setImgPath(newFileName);
 				model.addAttribute("empInfo", empInfo);
-				File file = new File(filePath);
 
 	        }
 	            return "manage/empModify";

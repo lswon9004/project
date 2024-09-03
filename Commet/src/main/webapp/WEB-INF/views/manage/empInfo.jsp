@@ -152,7 +152,7 @@ textarea {
 				<%--             <img src="/upload/${empInfo.imgPath}" alt="Profile Image" width="100"> --%>
 				<c:choose>
 					<c:when test="${empInfo.imgPath != null}">
-						<img src="/upload/${empInfo.imgPath}" alt="Profile Image"
+						<img src="/img/${empInfo.imgPath}" alt="Profile Image"
 							width="100">
 					</c:when>
 					<c:otherwise>

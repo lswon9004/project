@@ -24,6 +24,7 @@ import commet.swon.emp.EmpService;
 import commet.swon.file.FilesDto;
 import commet.swon.file.FilesService;
 import commet.swon.img.ImgController;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -51,11 +52,11 @@ public class ApprovalController {
 		return "/approvalWrite";
 	}
 	@PostMapping("/approval/insert")
-	public String insert(ApprovalDto dto,@ModelAttribute("user")EmpDto edto,@RequestParam("file")MultipartFile file) {
+	public String insert(ApprovalDto dto,@ModelAttribute("user")EmpDto edto,@RequestParam("file")MultipartFile file, HttpServletRequest request) {
 		dto.setEmpno(edto.getEmpno());
 		dto.setDeptno(edto.getDeptno());
 		aService.insertApproval(dto);
-		fileUpload(file, dto.getApproval_no());
+		fileUpload(file, dto.getApproval_no(),request);
 		return "redirect:/approval/"+edto.getEmpno();
 	}
 	@GetMapping("/approval/content/{no}")
@@ -240,18 +241,19 @@ public class ApprovalController {
 		aService.updateStatus(date,dto);  
 		return "redirect:/approval/status";
 	}
-	public boolean fileUpload(MultipartFile file,int no) {
+	public boolean fileUpload(MultipartFile file,int no, HttpServletRequest request) {
 		String newFileName = ImgController.makeFileName(file.getOriginalFilename());
 		String fname = file.getOriginalFilename();
         File newFile = null;
         String path = null;
         try {
-            path = ResourceUtils.getFile("classpath:static/upload/document/").toPath().toString();
+            path = request.getServletContext().getRealPath("/documents/");
             newFile = new File(path, newFileName);
             file.transferTo(newFile);
         } catch (IOException | IllegalStateException e) {
             e.printStackTrace();
         }
+        System.out.println(newFile.getPath());
         if (newFile != null) {
         	service.insertfile(no, newFileName, fname);
         	return true;

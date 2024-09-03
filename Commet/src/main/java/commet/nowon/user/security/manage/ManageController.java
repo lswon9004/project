@@ -115,6 +115,13 @@ public class ManageController {
     }
     @PutMapping("/staffModify")//개인정보
     public String staffUpdateEmp(ManageDto staffModifyDto) {
+        // 현재 비밀번호 가져오기
+        String currentPassword = service.getCurrentPassword(staffModifyDto.getEmpno());
+
+        // 입력된 비밀번호가 비어 있으면 기존 비밀번호 사용
+        if (staffModifyDto.getPassword() == null || staffModifyDto.getPassword().trim().isEmpty()) {
+            staffModifyDto.setPassword(currentPassword);
+        }
     	service.staffUpdateEmp(staffModifyDto);
         return "redirect:/emp_manage";
     }

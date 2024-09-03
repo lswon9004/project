@@ -48,9 +48,14 @@ public class ManageService {
     public int updateEmp(ManageDto ModifyDto) {
 		return dao.updateEmp(ModifyDto);
 	}
+    
     public int staffUpdateEmp(ManageDto staffModifyDto) {
 		return dao.staffUpdateEmp(staffModifyDto);
 	}
+    
+    public String getCurrentPassword(int empno) {
+        return dao.getPasswordByEmpno(empno);
+    }
     
     public List<ManageDto> getEmpsByIds(Integer[] deptnos) {
         return dao.getEmpsByIds(deptnos);

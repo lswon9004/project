@@ -49,9 +49,12 @@ public interface AdminAttendanceManagementDao {
     int getAttendanceCountByEmpNo(@Param("empno") int empno);
     
     //결근사원등록
-    @Insert("INSERT INTO Attendance_Management (empno, deptno, date, worktype) " +
-            "VALUES (#{empno}, #{deptno}, current_date(), '결근')")
-    int insertAbsentRecord2(@Param("empno") int empno, @Param("deptno") int deptno);
+    @Insert("INSERT INTO Attendance_Management (ename , empno, deptno, date, worktype) " +
+            "VALUES (#{ename} , #{empno}, #{deptno}, current_date(), '결근')")
+    int insertAbsentRecord2(@Param("ename") String ename,@Param("empno") int empno, @Param("deptno") int deptno);
+    
+    @Select("SELECT ename FROM emp WHERE empno = #{empno}")
+    String getEmpNameByEmpno(@Param("empno") int empno);
     
     // 출근 여부 확인 메서드(결근처리 관련 메서드)
     @Select("SELECT COUNT(*) FROM Attendance_Management WHERE empno = #{empno} AND date = current_date() AND check_in IS NOT NULL")

@@ -296,7 +296,7 @@ p {
        <button class="condel" type="submit">글삭제</button>
        
        <input id="pw" type="password" placeholder="비밀번호" size=10 />
-       <button class="upda" onclick="update()">수정</button>
+       <button class="upda" onclick="update()">글수정</button>
      </form>
        <br>
       <hr>

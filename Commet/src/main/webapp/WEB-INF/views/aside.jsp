@@ -20,13 +20,15 @@
     
         <li><a href="/customerList" id="menu-searchCustomers"><i class="fas fa-users"></i>고객문의</a></li>
         <li><a href="/attendance/managementList" id="menu-managementList"><i class="fas fa-clock"></i>근태현황</a></li>
-        <c:if test="${user.right >= 2}">
+        <c:if test="${user.right >= 3}">
         <li><a href="/attendance/adminManagementList" id="menu-adminManagementList"><i class="fas fa-user-tie"></i>전체사원근태현황</a></li>
         </c:if>
-        <li><a href="/boards" id="menu-boards"><i class="fas fa-comments"></i>게시판</a></li>
+        <li><a href="/boards" id="menu-boards"><i class="fas fa-comments"></i>공지사항</a></li>
         <li><a href="/approval/${user.empno}" id="menu-approval"><i class="fas fa-file-alt"></i>전자결재</a></li>
         <c:if test="${user.right >= 2}">
         <li><a href="/approval/status" id="menu-approvalStatus"><i class="fas fa-check-square"></i>결재승인</a></li>
+       	</c:if>               
+        <c:if test="${user.right >= 3}">
         <li><a href="/emp_manage" id="menu-empManage"><i class="fas fa-user-cog"></i>직원관리</a></li>
         </c:if>
     </ul>

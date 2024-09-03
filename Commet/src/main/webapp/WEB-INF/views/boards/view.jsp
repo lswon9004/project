@@ -101,7 +101,7 @@
 		</form>
 			</div>
             </div>
-            <div class="actions"> <!-- 페이지 하단의 액션 버튼을 지정 -->
+            <div class="actions" style="margin-right: 60px;"> <!-- 페이지 하단의 액션 버튼을 지정 -->
                 <button onclick="location.href='/boards'">목록</button>
                 <c:if test="${board.empno == user.empno}">
                     <button onclick="location.href='/boards/edit/${board.no}'">수정</button>

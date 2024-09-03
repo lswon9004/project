@@ -24,7 +24,7 @@
 
           <!--   여기서부터 가운데 메인 -->
             <section class="main-content">
-            		<h2>게시판</h2>
+            		<h2>공지사항</h2>
             		<div class="header-line"></div>
                 <!-- 메인 콘텐츠 영역 -->
 				<div class="search-form">

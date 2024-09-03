@@ -220,7 +220,7 @@
             </table>
             <div class="buttons">
                 <button type="button" onclick="enableEdit()" id="modify">수정</button>
-                <button type="submit" id="submitButton">등록</button>
+                <button type="submit" id="submitButton">완료</button>
                 <button type="button" onclick="location.href='/main'">닫기</button><!--/main 받아오는 컨트롤러가 없음 만들어야함-->
             </div>
         </form>

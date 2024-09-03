@@ -94,8 +94,9 @@
                     <form action="/boards/write" method="post">
                         <div class="form-group">
                             <label for="empno">작성자 번호</label>
-                            ${user.ename }
+                            <input type="text" id="empno" name="empno123" required readonly="readonly" style="pointer-events: none;" value="${user.ename}">
                             <input type="hidden" id="empno" name="empno" required readonly="readonly" style="pointer-events: none;" value="${user.empno}">
+                       
                         </div>
                         <div class="form-group">
                             <label for="title">제목</label>

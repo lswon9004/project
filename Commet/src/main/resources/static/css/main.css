@@ -465,7 +465,6 @@
 			.actions { /* 게시글 상세보기 하단의 액션 버튼 */
 				display: flex;
 				justify-content: end;
-    			margin-right: 140px;
     			margin-bottom: 100px;
     			
 			}
@@ -474,7 +473,7 @@
     	.board-main-content{
    				 flex: 1;
     			padding: 15px;
-    			padding-left: 150px;
+    			padding-left: 85px;
     		}
     		
     	.board-viewtitle {

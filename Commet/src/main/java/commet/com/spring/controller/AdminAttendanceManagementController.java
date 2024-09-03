@@ -201,7 +201,16 @@ public class AdminAttendanceManagementController {
     //결근처리 empno 이름이 같아서 버튼을 클릭시 계속 정보가 변경됨 그래서 eno 로 변경
     @PostMapping("/markAbsent2")
     public String markAsAbsent(@RequestParam("eno") int no, @ModelAttribute("user") EmpDto user, Model model) {
-        String resultMessage = service.markAsAbsent2(no, user.getDeptno());
+    	 // 사원번호를 이용하여 사원의 이름(ename)을 가져옵니다.
+        String ename = service.getEmpNameByEmpno(no);
+        
+        if (ename == null) {
+            model.addAttribute("message", "유효하지 않은 사원번호입니다.");
+            return "redirect:/attendance/adminManagementList";
+        }
+        
+        
+        String resultMessage = service.markAsAbsent2(user.getEname() ,no,user.getDeptno());
         model.addAttribute("message", resultMessage);
         return "redirect:/attendance/adminManagementList";
     }

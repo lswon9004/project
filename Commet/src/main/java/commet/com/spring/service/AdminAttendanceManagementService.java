@@ -52,7 +52,7 @@ public class AdminAttendanceManagementService {
 	    }
 	    
 	    //결근사원등록
-	    public String markAsAbsent2(int empno, int deptno) {
+	    public String markAsAbsent2(String ename,int empno, int deptno) {
 	    	int checkedInCount = dao.checkIfCheckedInToday(empno);
 	        if (checkedInCount > 0) {  // 이미 출근한 경우
 	            return "이미 출근한 사원은 결근 처리할 수 없습니다.";
@@ -63,8 +63,12 @@ public class AdminAttendanceManagementService {
 	            return "이미 결근 처리가 되어 있습니다.";
 	        }
 	        
-	        dao.insertAbsentRecord2(empno, deptno); //결근처리
+	        dao.insertAbsentRecord2(ename ,empno, deptno); //결근처리
 	        return "결근 처리가 완료되었습니다.";
+	    }
+	    
+	    public String getEmpNameByEmpno(int empno) {
+	        return dao.getEmpNameByEmpno(empno);
 	    }
 	    
 	    

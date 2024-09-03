@@ -185,7 +185,7 @@
     <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
     <script>
     ClassicEditor.create( document.querySelector( '#editor' ), {
-        language: "ko", ckfinder:{uploadUrl:'http://localhost:8083/img/upload'}
+        language: "ko", ckfinder:{uploadUrl:'http://3.35.5.76:8083/upload'}
       }).then(editer => {
     	  window.editer = editer
       }).catch(error => {

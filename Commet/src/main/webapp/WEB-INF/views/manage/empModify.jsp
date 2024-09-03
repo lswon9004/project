@@ -147,7 +147,7 @@ textarea {
 		<div class="modal-content">
 			<span class="close" onclick="document.location.href='/emp_manage'">&times;</span>
 			<h2>사원정보</h2>
-			<img src="/upload/${empInfo.imgPath}" alt="Profile Image" width="100">
+			<img src="/img/${empInfo.imgPath}" alt="Profile Image" width="100">
 			<!-- 사진 업로드 폼 -->
 			<form action="/modify/uploadPhoto" method="post"
 				enctype="multipart/form-data">

@@ -193,7 +193,7 @@
             <!-- 사진 미리보기 -->
             <div class="photo-preview">
                 <c:if test="${not empty InserEmpDto.imgPath}">
-                    <img id="previewImage" src="/upload/${InserEmpDto.imgPath}" alt="">
+                    <img id="previewImage" src="/img/${InserEmpDto.imgPath}" alt="">
                 </c:if>
             </div>
         </div>

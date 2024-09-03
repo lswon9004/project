@@ -105,7 +105,7 @@ caption {
 								
 									<c:forEach var="emp" items="${elist}">
 										<c:if test="${emp.deptno == dept.deptno}">
-											<th><img src="/upload/${emp.imgPath}"
+											<th><img src="/img/${emp.imgPath}"
 												alt="Profile Image" width="100"> <br> <a
 												href="/empDetail/${emp.empno}" name="empnos"
 												value="${emp.empno}"> ${emp.ename} (${emp.position}) </a> </br></th>

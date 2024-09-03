@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import commet.swon.file.FilesDto;
 import commet.swon.file.FilesService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
@@ -28,17 +29,18 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ImgController {
 	@Autowired
 	FilesService service;
-	@PostMapping("/img/upload")
+	@PostMapping("/upload")
 	@ResponseBody
-	public Map<String, Object> imgUloader(@RequestParam("upload")MultipartFile img){
-		return imgUload(img);
+	public Map<String, Object> imgUloader(@RequestParam("upload")MultipartFile img, HttpServletRequest request){
+		return imgUload(img,request);
 	}
-	Map<String, Object> imgUload(MultipartFile img){
+	
+	Map<String, Object> imgUload(MultipartFile img, HttpServletRequest request){
 		String newFileName = makeFileName(img.getOriginalFilename());
         File newFile = null;
         String path = null;
         try {
-            path = ResourceUtils.getFile("classpath:static/upload/").toPath().toString();
+            path = request.getServletContext().getRealPath("/img");
             newFile = new File(path, newFileName);
             img.transferTo(newFile);
         } catch (IOException | IllegalStateException e) {
@@ -47,23 +49,26 @@ public class ImgController {
         if (newFile == null) {
         	return null;
         }
+        System.out.println(newFile.getPath());
         Map<String, Object> json = new HashMap<String, Object>();
         json.put("uploaded", 1);
         json.put("fileName", newFileName);
-        json.put("url", "/upload" + "/" + newFileName);
+        json.put("url", "/img" + "/" + newFileName);
         return json;
 	}
 	 @GetMapping("/fileDownload/{no}")
 	    public void fileDownload(@PathVariable("no") int no,
-	                             HttpServletResponse response) throws IOException {
+	                             HttpServletResponse response, HttpServletRequest request) throws IOException {
 		 FilesDto dto = service.downFile(no);
 		 String path = null;
 	        try {
-	            path = ResourceUtils.getFile("classpath:static/upload/document/").toPath().toString();
-	        } catch (IOException | IllegalStateException e) {
+	            path = request.getServletContext().getRealPath("/documents/");
+	            
+	        } catch (IllegalStateException e) {
 	            e.printStackTrace();
 	        }
 	        File f = new File(path, dto.getPath());
+	        System.out.println(f.getPath());
 	        // file 다운로드 설정
 	        response.setContentType("application/download");
 	        response.setContentLength((int)f.length());

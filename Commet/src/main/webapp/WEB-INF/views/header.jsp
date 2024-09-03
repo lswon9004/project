@@ -63,7 +63,7 @@
 
 <header style="border-radius: 150px;">
     <div class="user-info"><!-- 박선욱 a-->
-        <img src="/upload/${user.imgPath}" alt="User Profile">
+        <img src="/img/${user.imgPath}" alt="User Profile">
         <div>
             <p>이름: ${user.ename }</p>
             <p>직책: ${user.position }</p>

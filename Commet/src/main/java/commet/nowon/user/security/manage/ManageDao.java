@@ -43,6 +43,9 @@ public interface ManageDao {
     @Update("update emp set password=#{password}, phone=#{phone}, email=#{email}, address=#{address}, detailAddr=#{detailAddr} where empno=#{empno}")
     int staffUpdateEmp(ManageDto staffModifyDto); // 개인정보수정
 
+    @Select("SELECT password FROM emp WHERE empno = #{empno}")
+    String getPasswordByEmpno(int empno); // 기존 비밀번호 가저오기
+    
     @Select({
         "<script>",
         "SELECT e.*, d.deptname FROM emp e",

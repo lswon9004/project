@@ -201,7 +201,7 @@
 
             </tr>
             <tr>
-				<td>연락처:</td><td><input type="text" name="phone" value="${user.email}" readonly></td>
+				<td>연락처:</td><td><input type="text" name="phone" value="${user.phone}" readonly></td>
 				<td>이메일:</td><td><input type="text" name="email" value="${user.email}" readonly></td>
             </tr>
             <tr>

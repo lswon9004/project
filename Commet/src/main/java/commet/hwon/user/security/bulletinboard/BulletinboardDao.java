@@ -18,7 +18,7 @@ public interface BulletinboardDao {
     void save(@Param("title")String title,@Param("content")String content,@Param("iid")String iid,@Param("password")String password);
    
     //데이터베이스에서 모든 게시글을 조회하는 메서드 , start와 count 페이지네이션 사용
-    @Select("SELECT * FROM Bulletin_Board order by ref_date limit #{start} ,10")    
+    @Select("SELECT * FROM Bulletin_Board order by ref_date DESC limit #{start} ,10")    
     List<BulletinboardDto> findAll(@Param("start")int start);
     
     //게시글의 총 수를 반환함

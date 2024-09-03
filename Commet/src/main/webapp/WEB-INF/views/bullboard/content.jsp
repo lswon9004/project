@@ -313,7 +313,7 @@ p {
     <script>
     ClassicEditor.create(document.querySelector('#editor'), {
         language: "ko",
-        ckfinder: { uploadUrl: 'http://3.36.5.76:8083/upload' }
+        ckfinder: { uploadUrl: 'http://localhost/upload' }
     }).then(editor => {
         window.editor = editor;
         editor.enableReadOnlyMode('#editor'); // 읽기 전용 모드 설정

@@ -72,7 +72,11 @@
                 <!-- 각 댓글을 지정하며, 댓글 수정 및 삭제 폼을 포함함 -->
                     <div class="comment"> 
                         <p>${comment.text}</p>
-                        <div class="meta">작성자: ${comment.empno} | 작성일: <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" /></div>
+                        <div class="meta">작성자: <c:forEach items="${ename }" var="ename">
+								<c:if test="${comment.empno ==ename.empno }">
+								${ename.ename }
+								</c:if>
+								</c:forEach> | 작성일: <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" /></div>
                         <c:if test="${comment.empno == user.empno}">
                             <div class="comment-actions">
                                 <form class="comment-update-form" method="post" style="display: inline;">
@@ -125,7 +129,7 @@
     <script>
     ClassicEditor.create(document.querySelector('#editor'), {
         language: "ko",
-        ckfinder: { uploadUrl: 'http://3.36.5.76:8083/upload' }
+        ckfinder: { uploadUrl: 'http://localhost:8083/upload' }
     }).then(editor => {
         window.editor = editor;
         editor.enableReadOnlyMode('#editor'); // 읽기 전용 모드 설정

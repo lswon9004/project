@@ -187,7 +187,7 @@
         <form action="/staffModify" method="post" modelAttribute="staffModifyDto">
             <input type="hidden" name="_method" value="put">
             <input type="hidden" name="empno" value="${user.empno}">
-            <img src="/upload/${user.imgPath}" alt="Profile Image" width="100"><!--로그인한 아이디 정보 가저와야함 메인화면 사진 나오는거랑 비슷하게 하면될듯 -->
+            <img src="/img/${user.imgPath}" alt="Profile Image" width="100"><!--로그인한 아이디 정보 가저와야함 메인화면 사진 나오는거랑 비슷하게 하면될듯 -->
             <table>
             <tr>
                 <td>사원 이름:</td><td>${user.ename}</td>

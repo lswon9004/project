@@ -89,7 +89,7 @@ function move(){
 	}
 	$.getJSON('/login',{'no':no,'pw':pw},function(data){
 		if(data ==='/'){
-			alert('failed')
+			alert('사번 또는 비빌번호가 일치하지 않습니다.')
 		}else{
 		location.href=data
 		}

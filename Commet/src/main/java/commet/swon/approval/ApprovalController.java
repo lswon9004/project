@@ -133,7 +133,7 @@ public class ApprovalController {
 	@GetMapping("/approval/status")
 	public String status(@RequestParam(name="p", defaultValue = "1") int page,
 					   @ModelAttribute("user")EmpDto dto, Model m) {
-		if(dto.getRight()<3) {
+		if(dto.getRight()<2) {
 			return "redirect:/main";
 		}
 		List<EmpDto> getEname = eService.getEname();
@@ -211,7 +211,7 @@ public class ApprovalController {
 	}
 	@GetMapping("/approval/statusForm/{no}")
 	public String statusForm(@PathVariable("no")int no,@ModelAttribute("user")EmpDto user, Model m) {
-		if(user.getRight()<3) {
+		if(user.getRight()<2) {
 			return "redirect:/main";
 		}
 		List<EmpDto> getEname = eService.getEname();
@@ -222,7 +222,7 @@ public class ApprovalController {
 	}
 	@GetMapping("/approval/statusContent/{no}")
 	public String statusContent(@PathVariable("no")int no,@ModelAttribute("user")EmpDto user, Model m) {
-		if(user.getRight()<3) {
+		if(user.getRight()<2) {
 			return "/main";
 		}
 		List<EmpDto> getEname = eService.getEname();

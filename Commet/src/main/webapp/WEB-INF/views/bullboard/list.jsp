@@ -152,10 +152,10 @@ button:hover {
                         <td style="width: 50px;">
                         <c:forEach var="likeCount" items="${likeCountList}">
                         		<c:if test="${likeCount.no==board.no}">
-                        			<c:if test="${likeCount.count!=null}">
+                        			<c:if test="${likeCount.count!=0}">
                         				${likeCount.count }
                         			</c:if>
-                        			<c:if test="${likeCount.count==null}">
+                        			<c:if test="${likeCount.count==0}">
                         				0
                         			</c:if>
                         		</c:if>
@@ -164,10 +164,10 @@ button:hover {
                         <td style="width: 50px;">
                         <c:forEach var="hateCount" items="${hateCountList}">
                         		<c:if test="${hateCount.board_no==board.no}">
-                        			<c:if test="${hateCount.count!=null}">
+                        			<c:if test="${hateCount.count!=0}">
                         				${hateCount.count }
                         			</c:if>
-                        			<c:if test="${hateCount.count==null}">
+                        			<c:if test="${hateCount.count==0}">
                         				0
                         			</c:if>
                         		</c:if>
